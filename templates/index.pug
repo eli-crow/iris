@@ -1,4 +1,10 @@
 extends base.pug
-
 block main
-	canvas#main-iris
+	.picker
+		.picker-modes
+			p.picker-label Iris
+		.picker-main
+			.picker-wheel-wrapper
+				canvas.picker-wheel#main-iris
+				.picker-indicator
+			.picker-inputs#picker-inputs

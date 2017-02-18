@@ -21,13 +21,11 @@ class Iris
 			});
 
 		this.setMode('differentHue');
-		this._currentPalette.draw();
 	}
-
 
 	onResize() {
 		const cs = window.getComputedStyle(this._canvas);
-		for(let name in palettes) {
+		for(let name in this.palettes) {
 			palettes[name].setUniform('resolution', [cs.width, cs.height]);
 		}
 	}
@@ -35,6 +33,7 @@ class Iris
 	setMode (modeName) {
 		this._currentPalette = this.palettes[modeName];
 		this._currentPalette.activate();
+		this._currentPalette.draw();
 	}
 }
 
