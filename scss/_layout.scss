@@ -1,0 +1,11 @@
+html, body {
+  background-color: $neutral;
+  font-family: sans-serif;
+}
+
+hr {
+  border: none;
+  border-top: $rule-stack-groove;
+  height: 0;
+  margin: 0 0 $padding-1 0;
+}

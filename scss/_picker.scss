@@ -1,0 +1,68 @@
+.picker 
+{
+  display: flex;
+  float: left;
+  
+  position: relative;
+  margin-top: 6rem;
+  
+  background-color: white;
+  border-radius: $radius-2;
+  
+  > .picker-modes {
+    flex: 0 1 2rem;
+    padding: $padding-1;
+
+    border-right: $rule-stack-groove;
+
+    > .picker-label {
+      color: $neutral-dark-1;
+      text-align: right;
+      
+      transform: rotate(-90deg) translateX(-50%);
+    }
+  }
+
+  > .picker-main {
+    flex: 1 1 auto;
+
+    > .picker-wheel-wrapper {      
+      position: relative;
+      
+      > .picker-wheel {
+        height: 18rem;
+        width: 18rem;
+        
+        margin: $padding-1 ($picker-indicator-width + $padding-1) $padding-1 $padding-1;
+        
+        background-color: $neutral-dark-1;
+        border-radius: 50%;
+      }
+       
+      > .picker-indicator {
+        position: absolute;
+        height: 10rem;
+        width: $picker-indicator-width;
+        
+        top: 50%;
+        right: 0;
+        
+        background-color: $theme-one;
+        border-top-left-radius: $radius-2;
+        border-bottom-left-radius: $radius-2;
+         
+        transform: translateY(-50%);
+      }
+    }
+     
+    > .picker-inputs {
+      padding: $padding-1;
+       
+      border-top: $rule-stack-groove;
+       
+      input {
+        width: 100%;
+      }
+    }
+  }
+}
