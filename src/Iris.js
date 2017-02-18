@@ -1,4 +1,4 @@
-const IrisPalette = require('./IrisPalette');
+const IrisPalette = require('./IrisPalette.js');
 
 const WEBGL_CONTEXT = "webgl";
 
@@ -20,9 +20,10 @@ class Iris
 				hue: {type: '1f', value: 0.5}
 			});
 
-		this._currentPalette = this.palettes.differentHue;
+		this.setMode('differentHue');
 		this._currentPalette.draw();
 	}
+
 
 	onResize() {
 		const cs = window.getComputedStyle(this._canvas);

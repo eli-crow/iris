@@ -2,8 +2,8 @@ module.exports.uniformByType = function(gl, type, location, value) {
 	switch(type)
 	{
 		case '1f': gl.uniform1f(location, value); break;
-		case '2f': gl.uniform2f(location, value); break;
-		case '3f': gl.uniform3f(location, value); break;
+		case '2f': gl.uniform2f(location, ...value); break;
+		case '3f': gl.uniform3f(location, ...value); break;
 	}
 };
 
@@ -30,4 +30,5 @@ module.exports.createAndLinkProgram = function(gl, vertexShader, fragmentShader)
 		const info = gl.getProgramInfoLog(program);
 		throw "could not compile WebGL program. \n\n" + info;
 	}
+	return program;
 };

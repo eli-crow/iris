@@ -1,4 +1,4 @@
-const Iris = require('./iris.js');
+const Iris = require('./Iris.js');
 
 const iris = new Iris(document.getElementById('main-iris'));
 
@@ -7,3 +7,5 @@ const iris = new Iris(document.getElementById('main-iris'));
 // const inputs = new InputList('picker-inputs');
 // // inputs.add(hueSlider);
 // inputs.add(lightnessSlider);
+// 
+window.iris = iris;

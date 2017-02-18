@@ -1,7 +1,8 @@
 precision lowp float;
 
+uniform vec2 resolution;
 uniform float hue;
 
 void main() {
-	gl_FragColor = vec4(vec3(hue), 1.0);
+	gl_FragColor = vec4(hue, resolution, 1.0);
 }
