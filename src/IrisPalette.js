@@ -13,13 +13,14 @@ class IrisPalette
 		gl.useProgram(this.program);
 
 		this._uniforms = {};
+		this.uniforms = {};
 		this.addUniform('resolution', {type: '2f', value: [0,0]});
 		for (let name in uniforms) this.addUniform(name, uniforms[name]);
 
 		this._positionLocation = gl.getAttribLocation(this.program, 'position');
 
 		this._buffer = gl.createBuffer();
-		this._pts = primatives.circle(1, 50);
+		this._pts = primatives.circle(1, 100);
 	}
 
 	activate() {
@@ -34,18 +35,28 @@ class IrisPalette
 		const gl = this.gl;
 		gl.drawArrays(gl.TRIANGLE_FAN, 0, this._pts.length/2);
 	}
-	getUniform (name) {
-		return this._uniforms[name].value;
-	}
-	setUniform (name, value) {
-		const uniform = this._uniforms[name];
-		uniform.value = value;
-		glutils.uniformByType(this.gl, uniform.type, uniform.location, uniform.value);
-	}
+
 	addUniform(name, descriptor) {
-		descriptor.location = this.gl.getUniformLocation(this.program, name);
-		this._uniforms[name] = descriptor;
-		this.setUniform(name, descriptor.value);
+		const self = this;
+
+		descriptor.location = self.gl.getUniformLocation(self.program, name);
+		const _uniform = self._uniforms[name] = descriptor;
+
+		//at get/set interface to uniforms object.
+		Object.defineProperty(self.uniforms, name, {
+			get: function () {
+				return self._uniforms[name].value;
+			},
+			set: function (value) {
+				const _uniform = self._uniforms[name];
+				glutils.uniformByType(self.gl, _uniform.type, _uniform.location, value);
+				_uniform.value = value;
+				self.draw();
+			}
+		});
+
+
+		glutils.uniformByType(self.gl, _uniform.type, _uniform.location, _uniform.value);
 	}
 }
 

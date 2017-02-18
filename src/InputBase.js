@@ -13,8 +13,6 @@ class InputBase extends PanelElement
     for (let name in attributes) html += ` ${name}="${attributes[name]}"`;
     html += '>';
 
-    console.log(html);
-
     const tempEl = document.createElement('div');
     tempEl.innerHTML = html;
     this._element = tempEl.children[0];
