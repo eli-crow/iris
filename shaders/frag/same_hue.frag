@@ -20,9 +20,9 @@ void main() {
 		sigmoidBlend( 
 			LCH2RGB(irisLCH),
 			LCH2RGB(vec3(0.5, 1.0, hue)),
-			max(0.0, (dist - indicator_radius - PLATEAU) * blend_reach),
-			indicator_radius,
-			1.0
+			max(0.0, (dist - indicator_radius) * blend_reach),
+			indicator_radius + PLATEAU,
+			1.0 - PLATEAU
 		),
 		1.0
 	);

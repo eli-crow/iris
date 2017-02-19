@@ -19,16 +19,18 @@ class InputBase extends PanelElement
     this._element.addEventListener(ONINPUT_EVENTNAME, this.onInput.bind(this), false);
     this._element.addEventListener('change', this.onChange.bind(this), false);
   }
+
   onInput () {
     let val = +this._element.value; 
-    val = this.transform ? this.transform(val) : val;
+    if (typeof this.transform === 'function') val = this.transform(val);
     this._reactor.dispatchEvent('input', val)
   }
   onChange () {
     let val = +this._element.value; 
-    val = this.transform ? this.transform(val) : val;
+    if (typeof this.transform === 'function') val = this.transform(val);
     this._reactor.dispatchEvent('change', val)
   }
+
   on (eventname, callback) {
     this._reactor.addEventListener(eventname, callback);
     return this;
@@ -37,6 +39,7 @@ class InputBase extends PanelElement
     this._reactor.removeEventListener(eventname, callback);
     return this;
   }
+
   bind (object, prop, transform) {
     if (prop in object) {
       this._reactor.addEventListener('input', function (val) {
@@ -47,14 +50,17 @@ class InputBase extends PanelElement
     //TODO: change name of label
     return this;
   }
+
   transform (transform) {
     this.transform = transform;
     return this;
   }
+
   name (name) {
     this._name = name;
     return this;
   }
+
   appendTo (element) {
     element.appendChild(this._element);
     return this;

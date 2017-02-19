@@ -33,13 +33,15 @@ class Iris
 		this.onResize();
 		this.setMode('sameHue');
 
-
-
 		const hueSlider = new Slider(0, 0, 360, 1)
 			.bind(this.palettes['sameHue'].uniforms, "hue")
 			.transform(x => x/180*Math.PI);
 
+		const lightnessSlider = new Slider(0.5, 0, 1, 1/255)
+			.bind(this.palettes['sameLightness'].uniforms, "lightness");
+
 		const inputs = new PanelGroup(inputContainer);
+		inputs.add(lightnessSlider);
 		inputs.add(hueSlider);
 	}
 
@@ -58,7 +60,6 @@ class Iris
 		const ps = this._pupil.style;
 		const pw = INDICATOR_RADIUS * width;
 		const ph = INDICATOR_RADIUS * height;
-		console.log(canvas.offsetLeft);
 		ps.left = (width/2 + canvas.offsetLeft - pw/2) + 'px';
 		ps.top = (height/2 + canvas.offsetTop - ph/2) + 'px';
 		ps.width = pw + 'px';
