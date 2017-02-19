@@ -8,9 +8,10 @@ $ambient: #321B09;
 $neutral: #f2f2f2;
 $neutral-dark-1: darken($neutral, 5%);
 $neutral-dark-2: darken($neutral, 15%);
-$theme-one: #32EBBA;
+$theme-1: #32EBBA;
 
 $rule-stack-groove: solid 1px $neutral-dark-1;
+$rule-stack-underline: solid 3px $theme-1;
 
 $radius-1: 3px;
 $radius-2: 5px;

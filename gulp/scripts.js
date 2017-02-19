@@ -1,8 +1,6 @@
 const gulp = require('gulp')
-const babel = require('gulp-babel')
 const plumber = require('gulp-plumber')
 const webpack = require('webpack-stream')	
-const sourcemaps = require('gulp-sourcemaps')
 const path = require('path');
 
 const paths = {
@@ -16,6 +14,7 @@ config.babel = {
 }
 config.webpack = {
 	watch: true,
+	devtool: 'inline-source-map',
 	entry: {
 		app: "./src/entry.js"
 	},
@@ -24,7 +23,11 @@ config.webpack = {
 	},
 	module: {
 		loaders: [
-			{ test: /\.(glsl|frag|vert)$/, loader: 'shader'}
+			{ test: /\.(glsl|frag|vert)$/, loader: 'shader'},
+			{ test: /\.js$/, loader: 'babel-loader',
+				exclude: /(node_modules|bower_components)/,
+				query: { presets: ['es2015']}
+			}
 		]
 	},
 	glsl: {
@@ -35,10 +38,7 @@ config.webpack = {
 
 gulp.task('scripts', () => {
 	gulp.src(paths.src)
-	  .pipe(plumber())
-	  .pipe(webpack(config.webpack))
-	  .pipe(sourcemaps.init())
-	  .pipe(babel(config.babel))
-	  .pipe(sourcemaps.write())
-	  .pipe(gulp.dest(paths.dest))
+		.pipe(plumber())
+		.pipe(webpack(config.webpack))
+		.pipe(gulp.dest(paths.dest))
 });

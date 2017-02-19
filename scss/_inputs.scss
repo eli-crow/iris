@@ -1,4 +1,5 @@
 @import "mixins/inputs";
+@import "mixins/clearfix";
 
 input + input {
 	margin-top: 0.618rem;
@@ -33,5 +34,23 @@ input[type=range].colorfulness {
 input[type=range].lightness {
 	@include range-track {
 		background: linear-gradient(to right, black, #B6B6B6, white);
+	}
+}
+
+
+
+.iris-button-group {
+	@include clearfix;
+	margin-bottom: $padding-1;
+}
+.iris-button {
+	float: left;
+	margin-right: 1rem;
+	
+	cursor: pointer;
+	border-bottom: $rule-stack-underline;
+
+	> p {
+		font-size: 0.9rem;
 	}
 }

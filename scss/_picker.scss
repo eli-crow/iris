@@ -12,7 +12,7 @@
 		0px 10px 50px transparentize($ambient, 0.95),
 		0px 2px 2px transparentize($ambient, 0.7);
 	border-radius: $radius-2;
-
+	
 	transform: translateX(-50%);
 	
 	> .picker-modes {
@@ -64,7 +64,7 @@
 				top: 50%;
 				right: -1px;
 				
-				background-color: $theme-one;
+				background-color: $theme-1;
 				border-top-left-radius: $radius-2;
 				border-bottom-left-radius: $radius-2;
 				 

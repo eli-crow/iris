@@ -1,6 +1,10 @@
 const IrisPalette = require('./IrisPalette.js');
 const Slider = require('./Slider.js');
+const Button = require('./Button.js');
+const ButtonGroup = require('./ButtonGroup.js');
 const PanelGroup = require('./PanelGroup.js');
+const Spacer = require('./Spacer.js');
+const fnutils = require('./fnutils.js');
 
 const WEBGL_CONTEXT = "webgl";
 const INDICATOR_RADIUS = 0.25;
@@ -37,15 +41,23 @@ class Iris
 			.classes('lightness')
 			.bind(this.palettes['sameLightness'].uniforms, "lightness")
 			.transform(x => x*1.17 - 0.17);
-
 		const hueSlider = new Slider(0, 0, 360, 1)
 			.classes('hue')
 			.bind(this.palettes['sameHue'].uniforms, "hue")
 			.transform(x => x/180*Math.PI);
 
-		const inputs = new PanelGroup(inputContainer);
-		inputs.add(lightnessSlider);
-		inputs.add(hueSlider);
+		const lightnessModeButton = new Button('Same Lightness')
+			.bind(() => this.setMode('sameLightness'));
+		const hueModeButton = new Button('Same Hue')
+			.bind(() => this.setMode('sameHue'));
+		const modeButtonGroup = new ButtonGroup()
+			.add(lightnessModeButton, hueModeButton);
+
+		const inputs = new PanelGroup(inputContainer)
+			.add(modeButtonGroup)
+			.add(new Spacer())
+			.add(lightnessSlider)
+			.add(hueSlider)
 	}
 
 	onResize() {

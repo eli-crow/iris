@@ -11,6 +11,7 @@ class PanelGroup
 			this._element.appendChild(panelElement._element);
 			this._panelElements.push(panelElement);
 		}
+		return this;
 	}
 }
 
