@@ -1,7 +1,7 @@
 const glutils = require('./glutils.js');
 const primatives = require('./primatives');
 
-// maintains own uniforms and gl state.
+// maintains own programs, uniforms, geometry, and attributes.
 class IrisPalette
 {
 	constructor (gl, fragmentSrc, vertexSrc, uniforms) {
@@ -9,8 +9,8 @@ class IrisPalette
 
 		const vertShader = glutils.createShader(gl, vertexSrc, gl.VERTEX_SHADER);
 		const fragShader = glutils.createShader(gl, fragmentSrc, gl.FRAGMENT_SHADER);
-		this.program = glutils.createAndLinkProgram(gl, vertShader, fragShader);
-		gl.useProgram(this.program);
+		this._program = glutils.createAndLinkProgram(gl, vertShader, fragShader);
+		gl.useProgram(this._program);
 
 		this._uniforms = {};
 		this.uniforms = {};
@@ -18,19 +18,19 @@ class IrisPalette
 		this.addUniform('blend_reach', {type: '1f', value: 1});
 		for (let name in uniforms) this.addUniform(name, uniforms[name]);
 
-		this._positionLocation = gl.getAttribLocation(this.program, 'position');
+		this._positionLocation = gl.getAttribLocation(this._program, 'position');
 
 		this._buffer = gl.createBuffer();
 		this._pts = primatives.circle(1, 100);
+	}
 
-		// for (var i = 0, ii = this._pts.length; i < ii; i+=2) {
-		// 	console.log(this._pts[i] + ', ' + this._pts[i+1]);
-		// }
+	use () {
+		this.gl.useProgram(this._program)
 	}
 
 	activate() {
 		const gl = this.gl;
-		gl.useProgram(this.program);
+		gl.useProgram(this._program);
 		gl.enableVertexAttribArray(this._positionLocation);
 		gl.bindBuffer(gl.ARRAY_BUFFER, this._buffer);
 		gl.bufferData(gl.ARRAY_BUFFER, this._pts, gl.STATIC_DRAW);
@@ -44,7 +44,7 @@ class IrisPalette
 	addUniform(name, descriptor) {
 		const self = this;
 
-		descriptor.location = self.gl.getUniformLocation(self.program, name);
+		descriptor.location = self.gl.getUniformLocation(self._program, name);
 		const _uniform = self._uniforms[name] = descriptor;
 
 		//at get/set interface to uniforms object.

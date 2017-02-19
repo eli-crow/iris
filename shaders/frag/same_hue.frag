@@ -1,11 +1,9 @@
-precision lowp float;
-
 $common_globals
-uniform float hue;
-
 $cie_conversions
 $cos01
 $sigmoidBlend
+
+uniform float hue;
 
 void main() {
 	$common_variables

@@ -25,10 +25,10 @@
 			text-align: right;
 			letter-spacing: 0.5px;
 		
-			color: white;
+			color: #888;
 			text-shadow: 
-				0px 0px 2px transparentize($ambient, 0.7),
-				-1px 0px 10px transparentize($ambient, 0.8);
+				0px 0px 2px transparentize($ambient, 0.5),
+				-1px 0px 10px transparentize($ambient, 0.6);
 
 			transform: rotate(-90deg) translateX(-50%);
 		}
@@ -58,11 +58,11 @@
 			 
 			> .picker-indicator {
 				position: absolute;
-				height: 10rem;
+				height: $picker-indicator-height;
 				width: $picker-indicator-width;
 				
 				top: 50%;
-				right: 0;
+				right: -1px;
 				
 				background-color: $theme-one;
 				border-top-left-radius: $radius-2;

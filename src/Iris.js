@@ -31,14 +31,17 @@ class Iris
 		this._canvas.insertAdjacentElement('afterend', this._pupil);
 
 		this.onResize();
-		this.setMode('sameHue');
-
-		const hueSlider = new Slider(0, 0, 360, 1)
-			.bind(this.palettes['sameHue'].uniforms, "hue")
-			.transform(x => x/180*Math.PI);
+		this.setMode('sameLightness');
 
 		const lightnessSlider = new Slider(0.5, 0, 1, 1/255)
-			.bind(this.palettes['sameLightness'].uniforms, "lightness");
+			.classes('lightness')
+			.bind(this.palettes['sameLightness'].uniforms, "lightness")
+			.transform(x => x*1.17 - 0.17);
+
+		const hueSlider = new Slider(0, 0, 360, 1)
+			.classes('hue')
+			.bind(this.palettes['sameHue'].uniforms, "hue")
+			.transform(x => x/180*Math.PI);
 
 		const inputs = new PanelGroup(inputContainer);
 		inputs.add(lightnessSlider);
@@ -51,7 +54,9 @@ class Iris
 		const width = parseInt(cs.width);
 		const height = parseInt(cs.height);
 		for(let name in this.palettes) {
-			this.palettes[name].uniforms['resolution'] = [width, height];
+			const palette = this.palettes[name];
+			palette.use();
+			palette.uniforms['resolution'] = [width, height];
 		}
 		canvas.width = width;
 		canvas.height = height;

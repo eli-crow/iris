@@ -1,0 +1,20 @@
+@mixin input-reset {
+	input[type=range] {
+		-webkit-appearance: none;
+		width: 100%; 
+		background: transparent; 
+
+		&:focus { outline: none; }
+		&::-webkit-slider-thumb { -webkit-appearance: none; }
+		&::-ms-track {
+			width: 100%;
+			cursor: pointer;
+
+			background: transparent; 
+			border-color: transparent;
+			color: transparent;
+		}
+	}
+}
+
+@include input-reset;
