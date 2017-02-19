@@ -1,6 +1,8 @@
 const glutils = require('./glutils.js');
 const primatives = require('./primatives');
 
+const INDICATOR_RADIUS = 0.25;
+
 // maintains own uniforms and gl state.
 class IrisPalette
 {
@@ -15,12 +17,18 @@ class IrisPalette
 		this._uniforms = {};
 		this.uniforms = {};
 		this.addUniform('resolution', {type: '2f', value: [0,0]});
+		this.addUniform('blend_reach', {type: '1f', value: 1});
+		this.addUniform('indicator_radius', {type: '1f', value: INDICATOR_RADIUS});
 		for (let name in uniforms) this.addUniform(name, uniforms[name]);
 
 		this._positionLocation = gl.getAttribLocation(this.program, 'position');
 
 		this._buffer = gl.createBuffer();
 		this._pts = primatives.circle(1, 100);
+
+		// for (var i = 0, ii = this._pts.length; i < ii; i+=2) {
+		// 	console.log(this._pts[i] + ', ' + this._pts[i+1]);
+		// }
 	}
 
 	activate() {

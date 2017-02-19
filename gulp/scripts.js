@@ -3,7 +3,7 @@ const babel = require('gulp-babel')
 const plumber = require('gulp-plumber')
 const webpack = require('webpack-stream')	
 const sourcemaps = require('gulp-sourcemaps')
-
+const path = require('path');
 
 const paths = {
 	src: './src/**/*.js',
@@ -24,8 +24,11 @@ config.webpack = {
 	},
 	module: {
 		loaders: [
-			{ test: /\.glsl$|\.frag$|\.vert$/, loader: 'webpack-glsl'}
+			{ test: /\.(glsl|frag|vert)$/, loader: 'shader'}
 		]
+	},
+	glsl: {
+		chunkPath: path.resolve("./shaders/includes")
 	}
 }
 

@@ -2,8 +2,9 @@ const InputBase = require('./InputBase.js');
 
 class Slider extends InputBase 
 {
-  constructor (min, max, step = 1) {
+  constructor (value, min, max, step = 1) {
     super('range', {
+    	value: value,
     	min: min,
     	max: max,
     	step: step

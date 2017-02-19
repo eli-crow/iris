@@ -1,8 +1,8 @@
 precision lowp float;
 
-uniform vec2 resolution;
-uniform float lightness;
+$common_globals
+uniform vec2 lightness;
 
-void main() {
-	gl_FragColor = vec4(lightness, resolution, 1.0);
+void main () {
+
 }

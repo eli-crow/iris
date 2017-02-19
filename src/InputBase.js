@@ -44,8 +44,11 @@ class InputBase extends PanelElement
         object[prop] = xform ? xform(val) : val;
       });
     }
-    
     //TODO: change name of label
+    return this;
+  }
+  transform (transform) {
+    this.transform = transform;
     return this;
   }
   name (name) {

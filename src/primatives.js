@@ -10,6 +10,7 @@ module.exports.circle = function (radius, nPts, x=0, y=0) {
 	pts[nPts*2 + 1] = pts[3];
 	return pts;
 }
+
 module.exports.rectangle = function (width, height, x=0, y=0) {
 	return new Float32Array([
 		x, y,
