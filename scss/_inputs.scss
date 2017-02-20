@@ -18,6 +18,7 @@ input[type=range] {
 	@include range-track {
 		border: $rule-stack-groove;
 		border-radius: 5px;
+		border-color: $neutral-dark-1 !important;
 	}
 }
 
@@ -46,7 +47,7 @@ input[type=range].lightness {
 .iris-button {
 	float: left;
 	margin-right: 2rem;
-	padding: 0.4rem;
+	padding: 0.3rem;
 	
 	cursor: pointer;
 	border-top: $rule-stack-underline;

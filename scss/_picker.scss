@@ -18,7 +18,8 @@
 	user-select: none;
 	
 	> .picker-left {
-		flex: 0 1 2rem;
+		flex: 0 1 auto;
+		width: $picker-indicator-width;
 		padding: $padding-1;
 
 		border-right: $rule-stack-groove;
@@ -33,7 +34,7 @@
 				0px 0px 2px transparentize($ambient, 0.5),
 				-1px 0px 10px transparentize($ambient, 0.6);
 
-			transform: rotate(-90deg) translateX(-50%);
+			transform: rotate(-90deg) translateX(-1rem);
 		}
 
 		> .picker-modes {
@@ -56,7 +57,7 @@
 			> .picker-wheel {
 				height: $picker-wheel-diameter;
 				width: $picker-wheel-diameter;
-				margin: $padding-2 ($picker-indicator-width + $padding-2) $padding-2 $padding-2;
+				margin: $padding-1 ($picker-indicator-width + $padding-1) $padding-1 $padding-1;
 
 				border-radius: 50%;
 				cursor: crosshair;
