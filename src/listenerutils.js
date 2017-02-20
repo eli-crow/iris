@@ -65,13 +65,14 @@ module.exports.simplePointer = (events) => {
 };
 
 function applyNormPos (e, rect) {
-	e.relX  = e.clientX - rect.left;
-	e.relY  = e.clientY - rect.top;
+	e.relX  = Math.floor(e.clientX - rect.left);
+	e.relY  = Math.floor(e.clientY - rect.top);
 	e.normX = e.relX / rect.width * 2 - 1;
 	e.normY = e.relY / rect.height * 2 - 1;
 }
 module.exports.normalPointer = (context, events) => {
 	let rect;
+	const moveCtx = events.contained ? context : window;
 	const moveHandler = function (e) {
 		applyNormPos(e, rect);
 		events.move(e);
@@ -81,7 +82,7 @@ module.exports.normalPointer = (context, events) => {
 			applyNormPos(e, rect);
 			events.up(e);
 		}
-		if (events.move) window.removeEventListener('mousemove', moveHandler, false);
+		if (events.move) moveCtx.removeEventListener('mousemove', moveHandler, false);
 		window.removeEventListener('mouseup', upHandler, false);
 	}
 
@@ -91,7 +92,7 @@ module.exports.normalPointer = (context, events) => {
 			applyNormPos(e, rect);
 			events.down(e);
 		}
-		if (events.move) window.addEventListener('mousemove', moveHandler, false);
+		if (events.move) moveCtx.addEventListener('mousemove', moveHandler, false);
 		window.addEventListener('mouseup', upHandler, false);
 	}, false);
 	

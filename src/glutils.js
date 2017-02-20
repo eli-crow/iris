@@ -1,9 +1,19 @@
-module.exports.uniformByType = function(gl, type, location, value) {
+// Todo: check for gl context name
+const GL_CONTEXT_NAME = 'webgl';
+
+module.exports.getPixel = function (canvas, x, y) {
+	const gl = canvas.getContext(GL_CONTEXT_NAME);
+	var pixel = new Uint8Array(4);
+	gl.readPixels(x, canvas.height - y, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
+	return [pixel[0], pixel[1], pixel[2], pixel[3] / 255];
+}
+
+module.exports.uniformByType = function(gl, type, location, values) {
 	switch(type)
 	{
-		case '1f': gl.uniform1f(location, value); break;
-		case '2f': gl.uniform2f(location, ...value); break;
-		case '3f': gl.uniform3f(location, ...value); break;
+		case '1f': gl.uniform1f(location, values); break;
+		case '2f': gl.uniform2f(location, ...values); break;
+		case '3f': gl.uniform3f(location, ...values); break;
 	}
 };
 

@@ -1,5 +1,6 @@
 const IrisPalette = require('./IrisPalette.js');
 const fnutils = require('./fnutils.js');
+const glutils = require('./glutils.js');
 const listenerutils = require('./listenerutils.js');
 
 const WEBGL_CONTEXT = "webgl";
@@ -10,35 +11,38 @@ const passthrough = require('../shaders/vert/passthrough.vert');
 class Iris
 {
 	constructor (canvas) {
-		this._gl = canvas.getContext(WEBGL_CONTEXT);
-		this._canvas = canvas;
-		
-		this._pupil = document.createElement('div');
-		this._pupil.classList.add('pupil');
-		this._canvas.insertAdjacentElement('afterend', this._pupil);
+		const self = this;
 
-		this.palettes = {};
-		this.palettes['sameLightness'] =
-			new IrisPalette('Same Lightness', this._gl, require('../shaders/frag/same_lightness.frag'), passthrough, {
+		self._gl = canvas.getContext(WEBGL_CONTEXT, {preserveDrawingBuffer: true});
+		self._canvas = canvas;
+		
+		self._pupil = document.createElement('div');
+		self._pupil.classList.add('pupil');
+		self._canvas.insertAdjacentElement('afterend', self._pupil);
+
+		self.palettes = {};
+		self.palettes['sameLightness'] =
+			new IrisPalette('Different Hues', self._gl, require('../shaders/frag/same_lightness.frag'), passthrough, {
 				lightness: {type: '1f', value: 0.5},
 				indicator_radius: {type: '1f', value: INDICATOR_RADIUS}
 			});
-		this.palettes['sameHue'] = 
-			new IrisPalette('Same Hue', this._gl, require('../shaders/frag/same_hue.frag'), passthrough, {
+		self.palettes['sameHue'] = 
+			new IrisPalette('Same Hue', self._gl, require('../shaders/frag/same_hue.frag'), passthrough, {
 				hue: {type: '1f', value: 0.5},
 				indicator_radius: {type: '1f', value: INDICATOR_RADIUS}
 			});
-		this._currentPalette = null;
+		self._currentPalette = null;
 
-		this.onResize();
-		this.setMode('sameHue');
+		self.onResize();
+		self.setMode('sameHue');
 
 		listenerutils.normalPointer(canvas, {
+			contained: true,
 			down: function (e) {
 
 			}, 
 			move: function (e) {
-
+				const p = glutils.getPixel(self._canvas, e.relX, e.relY);
 			},
 			up: function (e) {
 

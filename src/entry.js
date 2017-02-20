@@ -12,8 +12,7 @@ const iris = new Iris(irisElement, irisInputs);
 
 const modeButtonGroup = new ButtonGroup();
 for (let paletteID in iris.palettes) {
-	const palette = iris.palettes[paletteID];
-	const btn = new Button(palette.name)
+	const btn = new Button(iris.palettes[paletteID].name)
 		.bind(() => iris.setMode(paletteID));
 	modeButtonGroup.add(btn);
 }
