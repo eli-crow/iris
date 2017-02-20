@@ -41,6 +41,10 @@ class Iris
 		self.onResize();
 		self.setMode('sameHue');
 
+		self._pupil.addEventListener('click', () => {
+			reactor.dispatchEvent('pick', glutils.getPixel(self._canvas, self._canvas.width/2, self._canvas.height/2))
+		});
+
 		listenerutils.normalPointer(canvas, {
 			contained: true,
 			down: function (e) {
@@ -50,7 +54,7 @@ class Iris
 				reactor.dispatchEvent('pick', glutils.getPixel(self._canvas, e.relX, e.relY));
 			},
 			up: function (e) {
-
+				reactor.dispatchEvent('pickend', glutils.getPixel(self._canvas, e.relX, e.relY));
 			}
 		});
 	}

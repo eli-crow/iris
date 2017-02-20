@@ -13,6 +13,11 @@ class PanelGroup
 		}
 		return this;
 	}
+	hideAll () {
+		for (var i = 0, ii = this._panelElements.length; i < ii; i++) {
+			this._panelElements[i].hide();
+		}
+	}
 }
 
 module.exports = PanelGroup;

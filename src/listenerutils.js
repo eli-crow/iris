@@ -67,10 +67,12 @@ module.exports.simplePointer = (events) => {
 const POINTER_EVENTNAME = 'mouse';
 
 function applyNormPos (e, rect) {
-	e.relX  = Math.floor(e.clientX - rect.left);
-	e.relY  = Math.floor(e.clientY - rect.top);
-	e.normX = e.relX / rect.width * 2 - 1;
-	e.normY = e.relY / rect.height * 2 - 1;
+	e.relX  	= Math.floor(e.clientX - rect.left);
+	e.relY  	= Math.floor(e.clientY - rect.top);
+	e.centerX = e.relX - rect.width / 2;
+	e.centerY = e.relY - rect.height / 2;
+	e.normX 	= e.relX / rect.width * 2 - 1;
+	e.normY 	= e.relY / rect.height * 2 - 1;
 }
 module.exports.normalPointer = (context, events) => {
 	let rect;

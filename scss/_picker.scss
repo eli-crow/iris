@@ -39,11 +39,11 @@
 		> .picker-modes {
 			position: absolute;
 
-			top: calc(50% + 6rem);
-			left: 1.25rem;
+			top: 50%;
+			left: 0;
 
-			transform-origin: left center;
-			transform: rotate(-90deg);
+			transform-origin: left top;
+			transform: rotate(-90deg) translateX(-50%);
 		}
 	}
 

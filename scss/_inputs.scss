@@ -1,8 +1,8 @@
 @import "mixins/inputs";
 @import "mixins/clearfix";
 
-input + input {
-	margin-top: 0.618rem;
+input {
+	margin: 0.25rem 0;
 }
 
 input[type=range] {
@@ -23,17 +23,17 @@ input[type=range] {
 
 input[type=range].hue {
 	@include range-track {
-		background: linear-gradient(to right, #FF6395, #FF6637, #E48802, #48B12F, #00BFC9, #568FFF, #F46CDF, #FF6092);
+		background: $gradient-hsl-hue;
 	}
 }
 input[type=range].colorfulness {
 	@include range-track {
-		background: linear-gradient(to right, black, #B6B6B6, white);
+		background: linear-gradient(to right, black, lightgray, white);
 	}
 }
 input[type=range].lightness {
 	@include range-track {
-		background: linear-gradient(to right, black, #B6B6B6, white);
+		background: linear-gradient(to right, black, lightgray, white);
 	}
 }
 
