@@ -31,9 +31,9 @@ class Iris
 		self.on  = reactor.addEventListener.bind(reactor);
 		self.off = reactor.removeEventListener.bind(reactor);
 		
-		self._pupil = document.createElement('div');
-		self._pupil.classList.add('picker-pupil');
-		canvas.insertAdjacentElement('afterend', self._pupil);
+		const pupil = self._pupil = document.createElement('div');
+		pupil.classList.add('picker-pupil');
+		canvas.insertAdjacentElement('afterend', pupil);
 
 		const highlight = self._highlight = document.createElement('div');
 		highlight.classList.add('picker-hilight');
@@ -55,12 +55,14 @@ class Iris
 		self.onResize();
 		self.setMode('sameLightness');
 
-		self._pupil.addEventListener('click', () => {
+		pupil.addEventListener('click', () => {
 			reactor.dispatchEvent('pickend', glutils.getPixel(canvas, canvas.width/2, canvas.height/2));
 			domutils.setVendorCss(self._highlight, 'transform',`translate3d(${canvas.width/2+1}px,${canvas.height/2+1}px, 0px)`);
 		}, false);
 
 		function dispatchColors (event, e, shouldMoveHilight) {
+
+
 			const c = glutils.getPixel(canvas, e.relX, e.relY);
 			if (c[3] === 1) 
 				reactor.dispatchEvent(event, c); //if alpha == 1

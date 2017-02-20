@@ -7,7 +7,11 @@ uniform float hue;
 void main() {
 	$common_variables
 
-	vec3 irisHSL = vec3 (hue, 0.0, cos(theta + PI/2.0) * 0.5 + 0.5);
+	vec3 irisHSL = vec3 (
+		  hue
+		, cos(theta - PI)	    * 0.5 + 0.5
+		, cos(theta + PI/2.0) * 0.5 + 0.5
+	);
 	
 	gl_FragColor = vec4(
 		sigmoidBlend( 
