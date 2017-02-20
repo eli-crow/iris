@@ -14,18 +14,23 @@ class Iris
 	constructor (canvas) {
 		const self = this;
 
+		self.palettes = {};
 		self._gl = canvas.getContext(WEBGL_CONTEXT, {preserveDrawingBuffer: true});
 		self._canvas = canvas;
+		self._currentPalette = null;
 
 		const reactor = self._reactor = new Reactor(['pick', 'pickend']);
-		self.on = reactor.addEventListener.bind(reactor);
+		self.on  = reactor.addEventListener.bind(reactor);
 		self.off = reactor.removeEventListener.bind(reactor);
 		
 		self._pupil = document.createElement('div');
-		self._pupil.classList.add('pupil');
-		self._canvas.insertAdjacentElement('afterend', self._pupil);
+		self._pupil.classList.add('picker-pupil');
+		canvas.insertAdjacentElement('afterend', self._pupil);
 
-		self.palettes = {};
+		self._highlight = document.createElement('div');
+		self._highlight.classList.add('picker-hilight');
+		canvas.insertAdjacentElement('afterend', self._highlight);
+
 		self.palettes['sameLightness'] =
 			new IrisPalette('Colors', self._gl, require('../shaders/frag/same_lightness.frag'), passthrough, {
 				lightness: {type: '1f', value: 0.5},
@@ -33,32 +38,26 @@ class Iris
 			});
 		self.palettes['sameHue'] = 
 			new IrisPalette('Tones', self._gl, require('../shaders/frag/same_hue.frag'), passthrough, {
-				hue: {type: '1f', value: 0.5},
+				hue: {type: '1f', value: 0},
 				indicator_radius: {type: '1f', value: INDICATOR_RADIUS}
 			});
-		self._currentPalette = null;
 
 		self.onResize();
-		self.setMode('sameHue');
+		self.setMode('sameLightness');
 
 		self._pupil.addEventListener('click', () => {
-			reactor.dispatchEvent('pick', glutils.getPixel(self._canvas, self._canvas.width/2, self._canvas.height/2))
+			reactor.dispatchEvent('pick', glutils.getPixel(canvas, canvas.width/2, canvas.height/2))
 		});
 
+		function dispatchColors (event, e) {
+			const c = glutils.getPixel(canvas, e.relX, e.relY);
+			if (c[3] === 1) reactor.dispatchEvent(event, c);
+		}
 		listenerutils.normalPointer(canvas, {
 			contained: true,
-			down: function (e) {
-				const c = glutils.getPixel(self._canvas, e.relX, e.relY);
-				if (c[3] === 1) reactor.dispatchEvent('pick', c);
-			}, 
-			move: function (e) {
-				const c = glutils.getPixel(self._canvas, e.relX, e.relY);
-				if (c[3] === 1) reactor.dispatchEvent('pick', c);
-			},
-			up: function (e) {
-				const c = glutils.getPixel(self._canvas, e.relX, e.relY);
-				reactor.dispatchEvent('pickend', c);
-			}
+			down: e => dispatchColors('pick', e), 
+			move: e => dispatchColors('pick', e),
+			up:   e => dispatchColors('pickend', e)
 		});
 	}
 
