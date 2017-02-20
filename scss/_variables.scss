@@ -9,16 +9,9 @@ $neutral-dark-1: darken($neutral, 5%);
 $neutral-dark-2: darken($neutral, 15%);
 $theme-1: #32EBBA;
 
+$gradient-neutral-white: linear-gradient(to bottom, $neutral, white 30%);
 $gradient-hcl-hue: linear-gradient(to right, #FF6395, #FF6637, #E48802, #48B12F, #00BFC9, #568FFF, #F46CDF, #FF6092);
-$gradient-hsl-hue: linear-gradient(to right, 
-	hsl(0deg,100%,50%), 
-	hsl(60deg,100%,50%), 
-	hsl(120deg,100%,50%), 
-	hsl(180deg,100%,50%), 
-	hsl(240deg,100%,50%), 
-	hsl(300deg,100%,50%), 
-	hsl(360deg,100%,50%)
-);
+$gradient-hsl-hue: linear-gradient(to right, hsl(0deg,100%,50%), hsl(60deg,100%,50%), hsl(120deg,100%,50%), hsl(180deg,100%,50%), hsl(240deg,100%,50%), hsl(300deg,100%,50%), hsl(360deg,100%,50%));
 
 $rule-stack-groove: solid 1px transparentize($ambient, 0.9);
 $rule-stack-underline: solid 2px $theme-1;
@@ -29,6 +22,6 @@ $radius-2: 5px;
 //------------------------------------------------------ Picker
 $picker-color: white;
 $picker-indicator-width: 2rem;
-$picker-indicator-height: 12rem;
-$picker-wheel-diameter: 18rem;
+$picker-indicator-height: 10rem;
+$picker-wheel-diameter: 16rem;
 $picker-pupil-diameter: 80px;

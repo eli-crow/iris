@@ -1,39 +1,23 @@
 @mixin range-setup ($thumb-width, $thumb-height, $track-height) {
-	&::-webkit-slider-runnable-track {
-	  width: 100%;
-	  height: $track-height;
-	  cursor: pointer;
-	}
-	&::-moz-range-track {
-	  width: 100%;
-	  height: $track-height;
-	  cursor: pointer;
-	}
+	&::-webkit-slider-runnable-track { height: $track-height; }
+	&::-moz-range-track { height: $track-height; }
 	&::-ms-track {
-	  width: 100%;
 	  height: $track-height;
-	  cursor: pointer;
-	  background: transparent;
-	  border-color: transparent;
 	  border-width: 2*$track-height 0;
-	  color: transparent;
 	}
 
 	&::-webkit-slider-thumb {
 		width: $thumb-width;
 		height: $thumb-height;
 		margin-top: $track-height/2.5 - $thumb-height/2;
-		cursor: pointer;
 	}
 	&::-moz-range-thumb {
 		width: $thumb-width;
 		height: $thumb-height;
-		cursor: pointer;
 	}
 	&::-ms-thumb {
 		width: $thumb-width;
 		height: $thumb-height;
-		cursor: pointer;
 	}
 }
 

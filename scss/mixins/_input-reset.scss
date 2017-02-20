@@ -5,15 +5,26 @@
 		background: transparent; 
 
 		&:focus { outline: none; }
-		&::-webkit-slider-thumb { -webkit-appearance: none; }
-		&::-ms-track {
+		
+		@mixin track{
 			width: 100%;
 			cursor: pointer;
-
+		}
+		&::-webkit-slider-runnable-track { @include track; }
+		&::-moz-range-track { @include track; }
+		&::-ms-track { 
+			@include track; 
 			background: transparent; 
 			border-color: transparent;
 			color: transparent;
 		}
+
+		@mixin thumb {
+			cursor: pointer;
+		}
+		&::-webkit-slider-thumb { @include thumb; -webkit-appearance: none; }
+		&::-moz-range-thumb { @include thumb; }
+		&::-ms-thumb { @include thumb; }
 	}
 }
 
