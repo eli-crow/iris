@@ -48,13 +48,16 @@ class Iris
 		listenerutils.normalPointer(canvas, {
 			contained: true,
 			down: function (e) {
-				reactor.dispatchEvent('pick', glutils.getPixel(self._canvas, e.relX, e.relY));
+				const c = glutils.getPixel(self._canvas, e.relX, e.relY);
+				if (c[3] === 1) reactor.dispatchEvent('pick', c);
 			}, 
 			move: function (e) {
-				reactor.dispatchEvent('pick', glutils.getPixel(self._canvas, e.relX, e.relY));
+				const c = glutils.getPixel(self._canvas, e.relX, e.relY);
+				if (c[3] === 1) reactor.dispatchEvent('pick', c);
 			},
 			up: function (e) {
-				reactor.dispatchEvent('pickend', glutils.getPixel(self._canvas, e.relX, e.relY));
+				const c = glutils.getPixel(self._canvas, e.relX, e.relY);
+				reactor.dispatchEvent('pickend', c);
 			}
 		});
 	}
