@@ -35,17 +35,19 @@ const inputs = new PanelGroup(irisInputs)
 //for now
 const sameLightnessButton = new Button('Colors')
 	.bind(() => {
+		selectedModeElement = sameLightnessButton._element;
 		hueSlider.hide();
 		lightnessSlider.unhide();
-		sameLightnessButton._element.style.borderTopColor = UNDERLINE_COLOR;
+		sameLightnessButton._element.style.borderTopColor = currentColor;
 		sameHueButton._element.style.borderTopColor = 'transparent';
 		iris.setMode('sameLightness');
 	});
 const sameHueButton = new Button('Tones')
 	.bind(() => {
+		selectedModeElement = sameHueButton._element;
 		lightnessSlider.hide();
 		hueSlider.unhide();
-		sameHueButton._element.style.borderTopColor = UNDERLINE_COLOR;
+		sameHueButton._element.style.borderTopColor = currentColor;
 		sameLightnessButton._element.style.borderTopColor = 'transparent';
 		iris.setMode('sameHue');
 	});
@@ -56,10 +58,13 @@ const modeButtonGroup = new ButtonGroup()
 const modes = new PanelGroup(irisModes)
 	.add(modeButtonGroup);
 
-
+let selectedModeElement = sameLightnessButton._element;
+let currentColor;
 iris.on(['pick', 'pickend'], function (data) {
 	const rgba =`rgba(${data.slice(0,3).join(',')}, 1)`;
 	irisIndicator.style.backgroundColor = rgba;
+	selectedModeElement.style.borderColor = rgba;
+	currentColor = rgba;
 })
 
 window.iris = iris;
