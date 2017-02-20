@@ -64,18 +64,11 @@ module.exports.simplePointer = (events) => {
 	}, false);
 };
 
-function getContextRect (context) {
-	const rect = context.getBoundingClientRect();
-	return {
-		x: rect.left + rect.width/2,
-		y: rect.top + rect.height/2,
-		width: rect.width,
-		height: rect.height
-	};
-}
 function applyNormPos (e, rect) {
-	e.normX = (e.clientX - rect.x) / rect.width * 2;
-	e.normY = (e.clientY - rect.y) / rect.height * 2;
+	e.relX  = e.clientX - rect.left;
+	e.relY  = e.clientY - rect.top;
+	e.normX = e.relX / rect.width * 2 - 1;
+	e.normY = e.relY / rect.height * 2 - 1;
 }
 module.exports.normalPointer = (context, events) => {
 	let rect;
@@ -83,21 +76,23 @@ module.exports.normalPointer = (context, events) => {
 		applyNormPos(e, rect);
 		events.move(e);
 	};
-
-	context.addEventListener('mousedown', (e) => {
-		rect = getContextRect(context);
-		if (events.down) {
-			applyNormPos(e, rect);
-			events.down(e);
-		}
-		if (events.move) window.addEventListener('mousemove', moveHandler, false);
-	}, false);
-
-	window.addEventListener('mouseup', (e) => {
+	const upHandler = function (e) {
 		if (events.up) {
 			applyNormPos(e, rect);
 			events.up(e);
 		}
 		if (events.move) window.removeEventListener('mousemove', moveHandler, false);
+		window.removeEventListener('mouseup', upHandler, false);
+	}
+
+	context.addEventListener('mousedown', (e) => {
+		rect = context.getBoundingClientRect();
+		if (events.down) {
+			applyNormPos(e, rect);
+			events.down(e);
+		}
+		if (events.move) window.addEventListener('mousemove', moveHandler, false);
+		window.addEventListener('mouseup', upHandler, false);
 	}, false);
+	
 };
