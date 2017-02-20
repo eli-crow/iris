@@ -55,6 +55,8 @@
 			position: relative;
 			
 			> .picker-wheel {
+				-webkit-tap-highlight-color: rgba(0,0,0,0);
+
 				height: $picker-wheel-diameter;
 				width: $picker-wheel-diameter;
 				margin: $padding-1 ($picker-indicator-width + $padding-1) $padding-1 $padding-1;
@@ -63,16 +65,29 @@
 				cursor: crosshair;
 			}
 
+			// managed in Iris.js
 			> .picker-pupil {
-				//position managed in Iris.js
 				position: absolute;
 				top: 0;
 				left: 0;
 
-				cursor: pointer;
 				// cursor: move;
-				border: solid 2px hsla(0, 0%, 0%, 0.25);
+				cursor: pointer;
+				border: solid 4px hsla(0, 0%, 0%, 0.25);
 				border-radius: 50%;
+			}
+
+			// managed in Iris.js
+			> .picker-hilight {
+				position: absolute;
+				top: 0;
+				left: 0;
+
+				// cursor: move;
+				border: solid 4px white;
+				border-radius: 50%;
+
+				pointer-events: none;
 			}
 			 
 			> .picker-indicator {

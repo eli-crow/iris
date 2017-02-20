@@ -31,8 +31,12 @@ class Reactor
 		}
 	}
 	addEventListener(eventName, callback){
-		this.events[eventName].attachCallback(callback);
-		return callback;
+		if (eventName.constructor === Array) {
+			for (var i = 0, ii = eventName.length; i < ii; i++) {
+				this.events[eventName[i]].attachCallback(callback);
+			}
+		}
+		else this.events[eventName].attachCallback(callback);
 	}
 	removeEventListener(eventName, callback){
 		this.events[eventName].detachCallback(callback);

@@ -9,3 +9,10 @@ module.exports.getAbsoluteOffset = function (element) {
 	}
 	return offset;
 }
+module.exports.setVendorCss = function (element, property, value) {
+	element.style[property] = value;
+	element.style["webkit" + property] = value;
+	element.style["moz" + property] = value;
+	element.style["ms" + property] = value;
+	element.style["o" + property] = value;
+};

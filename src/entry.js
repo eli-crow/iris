@@ -11,7 +11,7 @@ const irisModes = document.getElementById('picker-modes');
 const irisIndicator = document.getElementById('picker-indicator');
 const iris = new Iris(irisElement, irisInputs);
 
-iris.on('pick', function (data) {
+iris.on(['pick', 'pickend'], function (data) {
 	irisIndicator.style.backgroundColor = `rgba(${data.slice(0,3).join(',')}, 1)`;
 })
 
