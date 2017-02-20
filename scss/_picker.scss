@@ -7,7 +7,7 @@
 	left: 50%;
 	margin-top: 10rem;
 	
-	background-color: white;
+	background-color: $picker-color;
 	box-shadow: 
 		0px 10px 50px transparentize($ambient, 0.95),
 		0px 2px 2px transparentize($ambient, 0.7);
@@ -25,7 +25,7 @@
 			text-align: right;
 			letter-spacing: 0.5px;
 		
-			color: #888;
+			color: $picker-color;
 			text-shadow: 
 				0px 0px 2px transparentize($ambient, 0.5),
 				-1px 0px 10px transparentize($ambient, 0.6);

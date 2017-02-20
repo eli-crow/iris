@@ -10,13 +10,14 @@ $neutral-dark-1: darken($neutral, 5%);
 $neutral-dark-2: darken($neutral, 15%);
 $theme-1: #32EBBA;
 
-$rule-stack-groove: solid 1px $neutral-dark-1;
+$rule-stack-groove: solid 1px transparentize($ambient, 0.9);
 $rule-stack-underline: solid 3px $theme-1;
 
 $radius-1: 3px;
 $radius-2: 5px;
 
 //------------------------------------------------------ Picker
+$picker-color: white;
 $picker-indicator-width: 2rem;
 $picker-indicator-height: 14rem;
 $picker-wheel-diameter: 18rem;

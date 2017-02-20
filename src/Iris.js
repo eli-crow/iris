@@ -5,20 +5,24 @@ const ButtonGroup = require('./ButtonGroup.js');
 const PanelGroup = require('./PanelGroup.js');
 const Spacer = require('./Spacer.js');
 const fnutils = require('./fnutils.js');
+const listenerutils = require('./listenerutils.js');
 
 const WEBGL_CONTEXT = "webgl";
 const INDICATOR_RADIUS = 0.25;
+const passthrough = require('../shaders/vert/passthrough.vert');
 
 //manages the canvas and manages its IrisPalettes.
 class Iris
 {
 	constructor (canvas, inputContainer) {
-		this.palettes = {};
-		this._currentPalette = null;
-		this._canvas = canvas;
 		this._gl = canvas.getContext(WEBGL_CONTEXT);
+		this._canvas = canvas;
+		
+		this._pupil = document.createElement('div');
+		this._pupil.classList.add('pupil');
+		this._canvas.insertAdjacentElement('afterend', this._pupil);
 
-		const passthrough = require('../shaders/vert/passthrough.vert');
+		this.palettes = {};
 		this.palettes['sameLightness'] =
 			new IrisPalette(this._gl, require('../shaders/frag/same_lightness.frag'), passthrough, {
 				lightness: {type: '1f', value: 0.5},
@@ -29,10 +33,7 @@ class Iris
 				hue: {type: '1f', value: 0.5},
 				indicator_radius: {type: '1f', value: INDICATOR_RADIUS}
 			});
-
-		this._pupil = document.createElement('div');
-		this._pupil.classList.add('pupil');
-		this._canvas.insertAdjacentElement('afterend', this._pupil);
+		this._currentPalette = null;
 
 		this.onResize();
 		this.setMode('sameLightness');
@@ -58,6 +59,19 @@ class Iris
 			.add(new Spacer())
 			.add(lightnessSlider)
 			.add(hueSlider)
+
+		function onPointerDown (e) {
+
+		}
+		function onPointerMove (e) {
+			console.log(e.normX);
+		}
+		function onPointerUp (e) {
+
+		}
+		listenerutils.normalPointer(canvas, {
+			down: onPointerDown, move: onPointerMove, up: onPointerUp
+		});
 	}
 
 	onResize() {
