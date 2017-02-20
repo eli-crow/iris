@@ -1,7 +1,8 @@
 const IrisPalette = require('./IrisPalette.js');
+const Reactor = require('./Reactor.js');
 const fnutils = require('./fnutils.js');
 const glutils = require('./glutils.js');
-const listenerutils = require('./listenerutils.js');
+const listenerutils = require('./listenerutils.js')
 
 const WEBGL_CONTEXT = "webgl";
 const INDICATOR_RADIUS = 0.25;
@@ -15,6 +16,10 @@ class Iris
 
 		self._gl = canvas.getContext(WEBGL_CONTEXT, {preserveDrawingBuffer: true});
 		self._canvas = canvas;
+
+		const reactor = self._reactor = new Reactor(['pick', 'pickend']);
+		self.on = reactor.addEventListener.bind(reactor);
+		self.off = reactor.removeEventListener.bind(reactor);
 		
 		self._pupil = document.createElement('div');
 		self._pupil.classList.add('pupil');
@@ -22,12 +27,12 @@ class Iris
 
 		self.palettes = {};
 		self.palettes['sameLightness'] =
-			new IrisPalette('Different Hues', self._gl, require('../shaders/frag/same_lightness.frag'), passthrough, {
+			new IrisPalette('Colors', self._gl, require('../shaders/frag/same_lightness.frag'), passthrough, {
 				lightness: {type: '1f', value: 0.5},
 				indicator_radius: {type: '1f', value: INDICATOR_RADIUS}
 			});
 		self.palettes['sameHue'] = 
-			new IrisPalette('Same Hue', self._gl, require('../shaders/frag/same_hue.frag'), passthrough, {
+			new IrisPalette('Tones', self._gl, require('../shaders/frag/same_hue.frag'), passthrough, {
 				hue: {type: '1f', value: 0.5},
 				indicator_radius: {type: '1f', value: INDICATOR_RADIUS}
 			});
@@ -39,10 +44,10 @@ class Iris
 		listenerutils.normalPointer(canvas, {
 			contained: true,
 			down: function (e) {
-
+				reactor.dispatchEvent('pick', glutils.getPixel(self._canvas, e.relX, e.relY));
 			}, 
 			move: function (e) {
-				const p = glutils.getPixel(self._canvas, e.relX, e.relY);
+				reactor.dispatchEvent('pick', glutils.getPixel(self._canvas, e.relX, e.relY));
 			},
 			up: function (e) {
 

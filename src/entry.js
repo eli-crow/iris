@@ -8,7 +8,12 @@ const Spacer = require('./Spacer.js');
 const irisElement = document.getElementById('main-iris');
 const irisInputs = document.getElementById('picker-inputs');
 const irisModes = document.getElementById('picker-modes');
+const irisIndicator = document.getElementById('picker-indicator');
 const iris = new Iris(irisElement, irisInputs);
+
+iris.on('pick', function (data) {
+	irisIndicator.style.backgroundColor = `rgba(${data.slice(0,3).join(',')}, 1)`;
+})
 
 const modeButtonGroup = new ButtonGroup();
 for (let paletteID in iris.palettes) {

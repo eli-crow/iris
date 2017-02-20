@@ -14,6 +14,8 @@
 	border-radius: $radius-2;
 	
 	transform: translateX(-50%);
+
+	user-select: none;
 	
 	> .picker-left {
 		flex: 0 1 2rem;
@@ -25,6 +27,7 @@
 			text-align: right;
 			letter-spacing: 0.5px;
 		
+			cursor: pointer;
 			color: $picker-color;
 			text-shadow: 
 				0px 0px 2px transparentize($ambient, 0.5),
@@ -53,8 +56,10 @@
 			> .picker-wheel {
 				height: $picker-wheel-diameter;
 				width: $picker-wheel-diameter;
-				
 				margin: $padding-2 ($picker-indicator-width + $padding-2) $padding-2 $padding-2;
+
+				border-radius: 50%;
+				cursor: crosshair;
 			}
 
 			> .pupil {
@@ -62,6 +67,8 @@
 				position: absolute;
 				top: 0;
 				left: 0;
+
+				cursor: move;
 				border: solid 2px transparentize(black, 0.75);
 				border-radius: 50%;
 			}
