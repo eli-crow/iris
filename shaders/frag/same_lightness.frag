@@ -1,6 +1,5 @@
 $common_globals
 $cie_conversions
-$cos01
 $sigmoidBlend
 
 uniform float lightness;

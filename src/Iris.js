@@ -1,9 +1,4 @@
 const IrisPalette = require('./IrisPalette.js');
-const Slider = require('./Slider.js');
-const Button = require('./Button.js');
-const ButtonGroup = require('./ButtonGroup.js');
-const PanelGroup = require('./PanelGroup.js');
-const Spacer = require('./Spacer.js');
 const fnutils = require('./fnutils.js');
 const listenerutils = require('./listenerutils.js');
 
@@ -14,7 +9,7 @@ const passthrough = require('../shaders/vert/passthrough.vert');
 //manages the canvas and manages its IrisPalettes.
 class Iris
 {
-	constructor (canvas, inputContainer) {
+	constructor (canvas) {
 		this._gl = canvas.getContext(WEBGL_CONTEXT);
 		this._canvas = canvas;
 		
@@ -24,53 +19,30 @@ class Iris
 
 		this.palettes = {};
 		this.palettes['sameLightness'] =
-			new IrisPalette(this._gl, require('../shaders/frag/same_lightness.frag'), passthrough, {
+			new IrisPalette('Same Lightness', this._gl, require('../shaders/frag/same_lightness.frag'), passthrough, {
 				lightness: {type: '1f', value: 0.5},
 				indicator_radius: {type: '1f', value: INDICATOR_RADIUS}
 			});
 		this.palettes['sameHue'] = 
-			new IrisPalette(this._gl, require('../shaders/frag/same_hue.frag'), passthrough, {
+			new IrisPalette('Same Hue', this._gl, require('../shaders/frag/same_hue.frag'), passthrough, {
 				hue: {type: '1f', value: 0.5},
 				indicator_radius: {type: '1f', value: INDICATOR_RADIUS}
 			});
 		this._currentPalette = null;
 
 		this.onResize();
-		this.setMode('sameLightness');
+		this.setMode('sameHue');
 
-		const lightnessSlider = new Slider(0.5, 0, 1, 1/255)
-			.classes('lightness')
-			.bind(this.palettes['sameLightness'].uniforms, "lightness")
-			.transform(x => x*1.17 - 0.17);
-		const hueSlider = new Slider(0, 0, 360, 1)
-			.classes('hue')
-			.bind(this.palettes['sameHue'].uniforms, "hue")
-			.transform(x => x/180*Math.PI);
-
-		const lightnessModeButton = new Button('Same Lightness')
-			.bind(() => this.setMode('sameLightness'));
-		const hueModeButton = new Button('Same Hue')
-			.bind(() => this.setMode('sameHue'));
-		const modeButtonGroup = new ButtonGroup()
-			.add(lightnessModeButton, hueModeButton);
-
-		const inputs = new PanelGroup(inputContainer)
-			.add(modeButtonGroup)
-			.add(new Spacer())
-			.add(lightnessSlider)
-			.add(hueSlider)
-
-		function onPointerDown (e) {
-
-		}
-		function onPointerMove (e) {
-			console.log(e.normX);
-		}
-		function onPointerUp (e) {
-
-		}
 		listenerutils.normalPointer(canvas, {
-			down: onPointerDown, move: onPointerMove, up: onPointerUp
+			down: function (e) {
+
+			}, 
+			move: function (e) {
+
+			},
+			up: function (e) {
+
+			}
 		});
 	}
 

@@ -4,8 +4,9 @@ const primatives = require('./primatives');
 // maintains own programs, uniforms, geometry, and attributes.
 class IrisPalette
 {
-	constructor (gl, fragmentSrc, vertexSrc, uniforms) {
+	constructor (name, gl, fragmentSrc, vertexSrc, uniforms) {
 		this.gl = gl;
+		this.name = name;
 
 		const vertShader = glutils.createShader(gl, vertexSrc, gl.VERTEX_SHADER);
 		const fragShader = glutils.createShader(gl, fragmentSrc, gl.FRAGMENT_SHADER);

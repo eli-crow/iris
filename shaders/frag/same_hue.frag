@@ -9,8 +9,8 @@ void main() {
 	$common_variables
 
 	vec3 irisLCH = vec3 ( 
-		  clamp( cos01(theta + PI/2.0) * 2.0 - 1.0,  -1.0, 1.0)
-		, clamp( cos01(theta - PI) * 2.0 - 1.0,       0.0, 1.0)
+		  clamp( cos(theta + PI/2.0),  -1.0, 1.0)
+		, clamp( cos(theta - PI)    ,   0.0, 1.0)
 		, hue
 	);
 

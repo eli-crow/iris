@@ -15,7 +15,7 @@
 	
 	transform: translateX(-50%);
 	
-	> .picker-modes {
+	> .picker-left {
 		flex: 0 1 2rem;
 		padding: $padding-1;
 
@@ -31,6 +31,16 @@
 				-1px 0px 10px transparentize($ambient, 0.6);
 
 			transform: rotate(-90deg) translateX(-50%);
+		}
+
+		> .picker-modes {
+			position: absolute;
+
+			top: calc(50% + 6rem);
+			left: 1.25rem;
+
+			transform-origin: left center;
+			transform: rotate(-90deg);
 		}
 	}
 

@@ -45,10 +45,11 @@ input[type=range].lightness {
 }
 .iris-button {
 	float: left;
-	margin-right: 1rem;
+	margin-right: 2rem;
+	padding: 0.4rem;
 	
 	cursor: pointer;
-	border-bottom: $rule-stack-underline;
+	border-top: $rule-stack-underline;
 
 	> p {
 		font-size: 0.9rem;
