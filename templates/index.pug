@@ -1,5 +1,12 @@
 extends base.pug
 block main
+	.brush-canvases
+		img.brush-data#brush-shape-bristles(src = "./img/brush.png")
+		canvas#guides
+		canvas#art
+		.brush-controls
+			.iris-button#clear-canvas Clear
+
 	.picker
 		.picker-left
 			p.picker-label Iris

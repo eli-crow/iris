@@ -1,0 +1,2079 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"center",
+				"centerX\t(listenerutils.js)"
+			],
+			[
+				"norm",
+				"normY"
+			],
+			[
+				"sameLi",
+				"sameLightnessButton"
+			],
+			[
+				"backg",
+				"backgroundColor"
+			],
+			[
+				"pal",
+				"paletteID"
+			],
+			[
+				"sw",
+				"switchMode"
+			],
+			[
+				"hs",
+				"hsl.z"
+			],
+			[
+				"backgro",
+				"backgroundColor〔variable〕"
+			],
+			[
+				"white",
+				"white-space"
+			],
+			[
+				"onMouse",
+				"onMouseDown"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"const",
+				"constructor\t(ButtonGroup.js)"
+			],
+			[
+				"but",
+				"ButtonGroup.js"
+			],
+			[
+				"bord",
+				"border-radius"
+			],
+			[
+				"border-rad",
+				"border-radius"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"bac",
+				"background-color\t(_picker.scss)"
+			],
+			[
+				"tra",
+				"transparentize\ttransparentize()"
+			],
+			[
+				"tran",
+				"transparentize\ttransparentize()"
+			],
+			[
+				"Iris",
+				"IrisPalette"
+			],
+			[
+				"comm",
+				"comm-subsection\tComment - Subsection comment"
+			],
+			[
+				"kSelectorAIToolMouse",
+				"kSelectorAIToolMouseDrag\t(AITool.h)"
+			],
+			[
+				"gl",
+				"gl_FragCoord"
+			],
+			[
+				"sAI",
+				"sAIUser\t(IrisPanelController.cpp)"
+			],
+			[
+				"kLAB",
+				"kAILabColorSpace\t(AIColorConversion.h)"
+			],
+			[
+				"rgb",
+				"rgbComponents"
+			],
+			[
+				"srcCol",
+				"srcColorSpace"
+			],
+			[
+				"int",
+				"int32\t(AIUnicodeString.h)"
+			],
+			[
+				"AIColorConversionS",
+				"AIColorConversionSpaceValue\t(AIColorConversion.h)"
+			],
+			[
+				"GetCur",
+				"GetCurrentColor\t(AIPaintStyle.h)"
+			],
+			[
+				"offset",
+				"offsetX"
+			],
+			[
+				"__l",
+				"__lastX"
+			],
+			[
+				"padd",
+				"padding-bottom"
+			],
+			[
+				"fra",
+				"fragSrc"
+			],
+			[
+				"stroke",
+				"strokeColor"
+			],
+			[
+				"vec",
+				"vec4"
+			],
+			[
+				"v",
+				"vec4"
+			],
+			[
+				"set",
+				"setColor"
+			],
+			[
+				"for",
+				"for\tfor (…) {…} (Improved Native For-Loop)"
+			],
+			[
+				"cons",
+				"console"
+			],
+			[
+				"blend",
+				"blend_reach"
+			],
+			[
+				"ble",
+				"blend_reach"
+			],
+			[
+				"rgba",
+				"rgba256"
+			],
+			[
+				"onAdjust",
+				"onAdjustLighntessChroma"
+			],
+			[
+				"onAdjus",
+				"onAdjustEndLightnessChroma"
+			],
+			[
+				"of",
+				"offsetX"
+			],
+			[
+				"get",
+				"getOffset"
+			],
+			[
+				"pupi",
+				"pupilColor"
+			],
+			[
+				"proto",
+				"prototype"
+			],
+			[
+				"parentNo",
+				"parentNode: Node\tNode"
+			],
+			[
+				"user-sele",
+				"-webkit-user-select: 〔property〕"
+			],
+			[
+				"__",
+				"__currentPupilColor"
+			],
+			[
+				"box",
+				"box-sizing"
+			],
+			[
+				"defineP",
+				"defineProperty( o: Object, p: string, attrs: any ): Object\tObject"
+			],
+			[
+				"w",
+				"wh100\tWidth and Height 100%"
+			],
+			[
+				"atan",
+				"atan2( y: number, x: number ): number\tMath"
+			],
+			[
+				"prot",
+				"prototype"
+			],
+			[
+				"COLOR",
+				"COLOR_SPHERE"
+			],
+			[
+				"LCH",
+				"LCH2RGB"
+			],
+			[
+				"off",
+				"offsetY"
+			],
+			[
+				"getEle",
+				"getElementById( elementId: DOMString ): Element\tDocument"
+			],
+			[
+				"COL",
+				"COLOR2"
+			],
+			[
+				"COLO",
+				"COLOR1"
+			],
+			[
+				"vertex",
+				"vertexShaderSource"
+			],
+			[
+				"jack",
+				"jackHeight"
+			],
+			[
+				"ja",
+				"jackWidth"
+			],
+			[
+				"text",
+				"text-indent"
+			],
+			[
+				"pad",
+				"padding"
+			],
+			[
+				"bq",
+				"blockquote\tTag"
+			],
+			[
+				"ab",
+				"absolute"
+			],
+			[
+				"do",
+				"domi\tTemplate \"dom-if\""
+			],
+			[
+				"e",
+				"expand\t(readmore.js)"
+			],
+			[
+				"getElem",
+				"getElementsByClassName( classNames: DOMString ): HTMLCollection\tDocument"
+			],
+			[
+				"marg",
+				"margin-top"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"inline",
+				"inline-block"
+			],
+			[
+				"dis",
+				"display\t(main.css)"
+			],
+			[
+				"fibo",
+				"fiboPercent\t(_ratio.scss)"
+			],
+			[
+				"Unit",
+				"UnityEngine\t(HandPlayer.cs)"
+			],
+			[
+				"Proc",
+				"ProceduralHouse\t(ProceduralHouse.cs)"
+			],
+			[
+				"EditorL",
+				"EditorGUILayout\tEditorGUILayout"
+			],
+			[
+				"Ed",
+				"Editor\tEditor"
+			],
+			[
+				"Editor",
+				"EditorGUILayout\tEditorGUILayout"
+			],
+			[
+				"Procedurla",
+				"ProceduralHouse\t(ProceduralHouse.cs)"
+			],
+			[
+				"UnityE",
+				"UnityEditor\tUnityEditor"
+			],
+			[
+				"rec",
+				"RecalculateNormals()\tvoid"
+			],
+			[
+				"Proce",
+				"ProceduralGeometry\t(ProceduralGeometry.cs)"
+			],
+			[
+				"geom",
+				"geometry"
+			],
+			[
+				"Vec",
+				"Vector2"
+			],
+			[
+				"Ve",
+				"Vector2"
+			],
+			[
+				"log",
+				"Log(object message)\tvoid"
+			],
+			[
+				"loc",
+				"localScale\tVector3 { get; set; }"
+			],
+			[
+				"De",
+				"Debug\tDebug"
+			],
+			[
+				"Tra",
+				"TransitionPosition"
+			],
+			[
+				"Enab",
+				"EnableDollComponents"
+			],
+			[
+				"Doll",
+				"DollhouseCharacter"
+			],
+			[
+				"Shr",
+				"Shrink"
+			],
+			[
+				"D",
+				"DollhouseCharacterInputManager\t(DollhouseCharacter.cs)"
+			],
+			[
+				"_",
+				"_inputManager"
+			],
+			[
+				"shrink",
+				"shrinkSpeed"
+			],
+			[
+				"Shrinker",
+				"ShrinkerOptions"
+			],
+			[
+				"sync",
+				"syncScale"
+			],
+			[
+				"SHR",
+				"SHRUNK_SCALE"
+			],
+			[
+				"curre",
+				"currentScale"
+			],
+			[
+				"mar",
+				"margin-bottom"
+			],
+			[
+				"margin-",
+				"margin-left"
+			],
+			[
+				"ligh",
+				"lightbox-main"
+			],
+			[
+				"over",
+				"overflow"
+			],
+			[
+				"key",
+				"keydown\t.keydown()"
+			],
+			[
+				"query",
+				"querySelector"
+			],
+			[
+				"lightbox",
+				"lightbox-main\t(index.html)"
+			],
+			[
+				"sidebar",
+				"sidebar-wrapper\t(index.html)"
+			],
+			[
+				"poi",
+				"pointer-events"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"bakc",
+				"background-color"
+			],
+			[
+				"rel",
+				"relative"
+			],
+			[
+				"padding",
+				"padding-left"
+			],
+			[
+				"impor",
+				"important\t(index.html)"
+			],
+			[
+				"reveal",
+				"revealEl"
+			],
+			[
+				"bind",
+				"bindDrawerInteraction〔function〕"
+			],
+			[
+				"inset-w",
+				"inset-shadow"
+			],
+			[
+				"ingre",
+				"ingredients.opportunity"
+			],
+			[
+				"ingred",
+				"ingredients.src"
+			],
+			[
+				"source",
+				"sourcemaps"
+			],
+			[
+				"inje",
+				"injectSectionHeirarchyInto"
+			],
+			[
+				"toc",
+				"tocHierarchy"
+			],
+			[
+				"tabl",
+				"tableOfContents\t(main.js)"
+			],
+			[
+				"requirem",
+				"requirement-list\t(index.html)"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/SASS Build/SASS - Compressed.sublime-build",
+					""
+				],
+				[
+					"Packages/SASS Build/SASS.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/SASS Build/SASS - Compressed.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 354.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"glsl",
+				"Set Syntax: GLSL"
+			],
+			[
+				"ren",
+				"File: Rename"
+			],
+			[
+				"new",
+				"File: New File Relative to Current View"
+			],
+			[
+				"new ",
+				"File: New File Relative to Current View"
+			],
+			[
+				"tabs",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"tab",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"new fil",
+				"File: New File Relative to Current View"
+			],
+			[
+				"del",
+				"File: Delete"
+			],
+			[
+				"de",
+				"File: Delete"
+			],
+			[
+				"new file",
+				"File: New File Relative to Current View"
+			],
+			[
+				"javas",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"new f",
+				"File: New File Relative to Current View"
+			],
+			[
+				"vari",
+				"Snippet: \n\t\tSymbol.iterator loop. Variable stores reference to current value.\n\t"
+			],
+			[
+				"du",
+				"File: Duplicate"
+			],
+			[
+				"rena",
+				"File: Rename"
+			],
+			[
+				"re",
+				"File: Rename"
+			],
+			[
+				"renam",
+				"File: Rename"
+			],
+			[
+				"new fi",
+				"File: New File Relative to Current View"
+			],
+			[
+				"dele",
+				"File: Delete"
+			],
+			[
+				"rename",
+				"File: Rename"
+			],
+			[
+				"newf",
+				"File: New File Relative to Current View"
+			],
+			[
+				"new file re",
+				"File: New File Relative to Current View"
+			],
+			[
+				"move",
+				"File: Move"
+			],
+			[
+				"renaem",
+				"File: Rename"
+			],
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"pug",
+				"Set Syntax: Pug"
+			],
+			[
+				"html",
+				"Set Syntax: HTML"
+			],
+			[
+				"gu",
+				"Gulp"
+			],
+			[
+				"ne",
+				"File: New File Relative to Current View"
+			],
+			[
+				"hide",
+				"Gulp: Hide panel"
+			],
+			[
+				"gul",
+				"Gulp"
+			],
+			[
+				"kll",
+				"Gulp: Kill running tasks"
+			],
+			[
+				"enab",
+				"Package Control: Enable Package"
+			],
+			[
+				"material",
+				"Material Theme: Configuration"
+			],
+			[
+				"materia",
+				"Material Theme: Configuration"
+			],
+			[
+				"mater",
+				"Material Theme: Advanced configuration"
+			],
+			[
+				"show info",
+				"OmniSharpSublime: Show Info Panel"
+			],
+			[
+				"hide in",
+				"OmniSharpSublime: Hide Info Panel"
+			],
+			[
+				"show inf",
+				"OmniSharpSublime: Show Info Panel"
+			],
+			[
+				"omnish",
+				"OmniSharpSublime: Show Info Panel"
+			],
+			[
+				"build",
+				"OmniSharpSublime: Build"
+			],
+			[
+				"show",
+				"OmniSharpSublime: Show Info Panel"
+			],
+			[
+				"omni",
+				"OmniSharpSublime: Clean"
+			],
+			[
+				"dis",
+				"Package Control: Disable Package"
+			],
+			[
+				"dle",
+				"File: Delete"
+			],
+			[
+				"snip",
+				"SnippetMaker: Make Snippet"
+			],
+			[
+				"kil",
+				"Gulp: Kill running tasks"
+			],
+			[
+				"wrap",
+				"Word Wrap: Toggle"
+			],
+			[
+				"inc",
+				"Emmet: Increment Number by 1"
+			],
+			[
+				"delete",
+				"File: Delete"
+			],
+			[
+				"rean",
+				"TodoReview: Project and Open Files"
+			],
+			[
+				"publi",
+				"Nodejs::NPM::Publish"
+			],
+			[
+				"sni",
+				"SnippetMaker: Make Snippet"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"incre",
+				"Emmet: Increment Number by 1"
+			],
+			[
+				"edi",
+				"SnippetMaker: Edit Snippet"
+			],
+			[
+				"hid",
+				"Gulp: Hide panel"
+			],
+			[
+				"g",
+				"Gulp"
+			],
+			[
+				"rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"canc",
+				"Build: Cancel"
+			],
+			[
+				"conve",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"disa",
+				"Package Control: Disable Package"
+			],
+			[
+				"r",
+				"File: Rename"
+			],
+			[
+				"c++",
+				"Set Syntax: C++"
+			],
+			[
+				"",
+				"Build: New Build System"
+			],
+			[
+				"dupli",
+				"File: Duplicate"
+			],
+			[
+				"disab",
+				"Package Control: Disable Package"
+			],
+			[
+				"dia",
+				"Snippet: paper-dialog"
+			],
+			[
+				"kill",
+				"Gulp: Kill running tasks"
+			],
+			[
+				"gulp",
+				"Gulp"
+			],
+			[
+				"todo",
+				"TodoReview: Project Files"
+			],
+			[
+				"klil",
+				"Gulp: Kill running tasks"
+			],
+			[
+				"git",
+				"Set Syntax: Git"
+			],
+			[
+				"npm",
+				"Nodejs::NPM::Command"
+			],
+			[
+				"enable",
+				"Package Control: Enable Package"
+			],
+			[
+				"convert",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"newfile relate",
+				"File: New File Relative to Current View"
+			],
+			[
+				"pic",
+				"Color Picker"
+			],
+			[
+				"upper",
+				"Convert Case: Upper Case"
+			],
+			[
+				"new file ",
+				"File: New File Relative to Current View"
+			],
+			[
+				"set s",
+				"Set Syntax: SCSS"
+			],
+			[
+				"new file rel",
+				"File: New File Relative to Current View"
+			],
+			[
+				"conver",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"satisf",
+				"Package Control: Satisfy Dependencies"
+			],
+			[
+				"setsyntaxbra",
+				"Set Syntax: Brainfuck"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"set",
+				"Set Syntax: SCSS"
+			],
+			[
+				"setsyn",
+				"Set Syntax: SCSS"
+			],
+			[
+				"new fol",
+				"File: New Folder Relative to Current View"
+			],
+			[
+				"new fle",
+				"File: New File Relative to Current View"
+			],
+			[
+				"new fole",
+				"File: New Folder Relative to Project Root"
+			],
+			[
+				"to",
+				"TodoReview: Project Files"
+			],
+			[
+				"edit",
+				"SnippetMaker: Edit Snippet"
+			],
+			[
+				"make",
+				"SnippetMaker: Make Snippet"
+			],
+			[
+				"nwe file",
+				"File: New File Relative to Current View"
+			],
+			[
+				"term",
+				"Terminal: Open in project folder"
+			],
+			[
+				"termina",
+				"Terminal: Open in project folder"
+			],
+			[
+				"brow",
+				"Preferences: Browse Packages"
+			],
+			[
+				"key bin",
+				"Preferences: Key Bindings"
+			],
+			[
+				"tit",
+				"Convert Case: Title Case"
+			],
+			[
+				"title",
+				"Convert Case: Title Case"
+			],
+			[
+				"beaut",
+				"HTMLBeautify"
+			],
+			[
+				"word w",
+				"Word Wrap: Toggle"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"prev",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"previe",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"package control",
+				"Package Control: Install Package"
+			],
+			[
+				"config",
+				"Material Theme: Configuration"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"new folder",
+				"File: New Folder Relative to Project Root"
+			],
+			[
+				"add",
+				"Project: Add Folder"
+			],
+			[
+				"satisfy",
+				"Package Control: Satisfy Dependencies"
+			],
+			[
+				"preview",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"prevview",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"markdow",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"doc",
+				"DocBlockr: Decorate line comment"
+			],
+			[
+				"command",
+				"PackageDev: New Commands File"
+			],
+			[
+				"indent",
+				"Indent XML"
+			],
+			[
+				"intall",
+				"Package Control: Install Package"
+			],
+			[
+				"intel",
+				"SublimeCodeIntel: Reset"
+			],
+			[
+				"disable",
+				"Package Control: Disable Package"
+			],
+			[
+				"tmtheme",
+				"Material Theme: Activate theme"
+			],
+			[
+				"refresh",
+				"Side Bar: Refresh"
+			],
+			[
+				"browse",
+				"Preferences: Browse Packages"
+			],
+			[
+				"packages s",
+				"Package Control: Discover Packages"
+			],
+			[
+				"sideb",
+				"Side Bar: Refresh"
+			],
+			[
+				"snippet",
+				"SnippetMaker: Make Snippet"
+			]
+		],
+		"width": 682.0
+	},
+	"console":
+	{
+		"height": 145.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/EliCrow/Desktop/Web/Iris/Iris"
+	],
+	"file_history":
+	[
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/listenerutils.js",
+		"/Users/EliCrow/Desktop/Web/Experiments/Eyeriss/index.html",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/frag/same_lightness.frag",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/frag/same_hue.frag",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/IrisPalette.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Iris.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/entry.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/common_globals.glsl",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/IrisPaletteSpec.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/InputBase.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Slider.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/slider.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/fnutils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_picker.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_inputs.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_variables.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_layout.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/gulp/scripts.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Reactor.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/domutils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/mixins/_input-range.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/mixins/_input-reset.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/PanelGroup.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/PanelElement.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/cie_conversions.glsl",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/hsl_2_rgb.glsl",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/sigmoidBlend.glsl",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/index.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/glutils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Spacer.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/ButtonGroup.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Button.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/ButtonRadioGroup.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/common_variables.glsl",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/mixins/_inputs.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/compiled.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_typography.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/mixins/_material-shadow.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/frag/sameHue.frag",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/primatives.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/frag/differentHue.frag",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/vert/passthrough.vert",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/sigmoid.glsl",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/cos_01.glsl",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/PanelElement.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/primativesSpec.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/ReactorSpec.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/DifferentHuePalette.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/primativesspec.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/DifferentHueProgram.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/test/IrisPaletteTests.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/base.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/picker.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/mixins/_clearfix.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/gulp/styles.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/gulp/serve.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/dist/index.html",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/gulp/views.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/picker-base.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/gulpfile.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/scripts",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/entry.js",
+		"/Users/EliCrow/Desktop/Web/_assets/Smallplates/examples/examples.sp",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/Iris.js",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIToolbox.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/IrisPlugin/Source/IrisPlugin.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AITool.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIToolNames.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/common/source/Plugin.cpp",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIPluginGroup.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/IrisPlugin/Source/IrisSuites.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/IrisPlugin/Source/IrisSuites.cpp",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/node_modules/local-listener-utils/listener-utils.js",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIDrawArt.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AITypes.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/IrisPlugin/Source/IrisPanelController.cpp",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/IrisPlugin/Source/IrisPlugin.cpp",
+		"/Users/EliCrow/Desktop/Web/Maennerchor Damenchor/germanclub/germanclub.sublime-project",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/shaders/iris.frag",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/shaders/iris_core.glsl",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/shaders/uniforms.glsl",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIColor.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIMenu.h",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/shaders/partials/conversions.glsl",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/Hazel.js",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/libs/CSInterface.js",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIPathStyle.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIPaintStyle.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AINotifier.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/common/source/SDKPlugPlug.cpp",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIDocumentView.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIMenuCommandNotifiers.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/common/source/HtmlUIController.cpp",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIColorConversion.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIUnicodeString.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/common/source/Suites.cpp",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AICustomColor.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIColorSpace.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIOverrideColorConversion.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/IrisPlugin/Source/IrisPanelController.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIUser.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/common/source/IllustratorSDK.cpp",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIRealMath.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AICSXSExtension.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/common/source/AppContext.cpp",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AICSXS.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/IrisPlugin/Source/IrisID.h",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/IrisPlugin/IrisPlugin.sublime-project",
+		"/Users/EliCrow/Desktop/Development/OpenGLTest/CSGLTest.sublime-project",
+		"/Users/EliCrow/Desktop/Development/OpenGLTest/Source/Main.cs",
+		"/Users/EliCrow/Desktop/Development/OpenGLTest/csgltest.sln",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/CSXS/manifest.xml",
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/DrawArt/Source/DrawArtPlugin.cpp",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/Glass.js",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/css/range-inputs.css",
+		"/Users/EliCrow/Desktop/Web/colorjack/colorjack.sublime-project",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/index.html",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/css/styles.css",
+		"/Users/EliCrow/Library/Application Support/Sublime Text 3/Packages/User/cond.sublime-snippet",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/libs/themeManager.js",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/Hilight.js",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/iris.sublime-project",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/debug/index.html",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/mac/mac_key_interest.js",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/mac/key_codes.js",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/shaders/partials/shaping_functions.glsl",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/gulpfile.js",
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/shaders/shapes/shapes.glsl"
+	],
+	"find":
+	{
+		"height": 28.0
+	},
+	"find_in_files":
+	{
+		"height": 179.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"normY",
+			"uniforms",
+			"object",
+			"self",
+			"function",
+			"this",
+			"object",
+			"self._pupil",
+			"Width",
+			"none",
+			"backgroundColor",
+			"array",
+			"false",
+			".",
+			"+ HILIGHT_RADIUS",
+			"pupil",
+			"position",
+			"function",
+			"self.palettes",
+			"self._canvas",
+			"_hilight",
+			"padd",
+			"2",
+			"\t\t\twidth: 100%;\n\t\t\tcursor: pointer;",
+			"X",
+			"none",
+			");",
+			"hsl",
+			"#FF6395",
+			"#",
+			"modes",
+			"hue",
+			"Hue",
+			"hue",
+			"hsl.x",
+			"= ",
+			"H",
+			"var_2",
+			"var_1",
+			"Hue_2_RGB",
+			"vH )",
+			"255",
+			"canvas",
+			"_reactor",
+			"this",
+			"fn",
+			"value",
+			"256",
+			"inputC",
+			"this",
+			"* 2.0 - 1.0",
+			"cs.height",
+			"cs.heigh",
+			"cs.height",
+			"cs.width",
+			"onMouse",
+			"onMouseDown",
+			"{context: window, handler:",
+			"move.context",
+			"on.",
+			"on",
+			"handler",
+			"descriptor",
+			"var",
+			"(",
+			"this._canvas",
+			"Mouse",
+			"1/255",
+			",3",
+			"(",
+			"^",
+			"var_B",
+			"var_G",
+			"var_R",
+			"var_Z",
+			"var_Y",
+			"var_X",
+			"^3",
+			"var_Z",
+			"var_X",
+			"CIE-L",
+			"var_Y",
+			"buttons",
+			"\t.",
+			"\t",
+			"inputs",
+			"buttons[i]",
+			"scope",
+			"}",
+			"this._element",
+			"self.program",
+			"this.program",
+			"input[type=range]",
+			"black",
+			"range",
+			"$height",
+			"$width",
+			"neutral",
+			"1",
+			"lightness",
+			"LCH2RGB",
+			"= ",
+			"hueSlider",
+			"pupil.style",
+			"this._pupil.",
+			"50%",
+			"18rem",
+			"this._",
+			"INDICATOR_RADIUS",
+			"console",
+			"lightness",
+			"uniform",
+			"this",
+			"lightness",
+			"this._uniforms",
+			"circle",
+			"GLProgram",
+			"$indicator-width",
+			"webpack",
+			"Menu",
+			"AIToolMessage",
+			"GetCurrentToolNa",
+			"getcurrenttool",
+			"AIToolHandle",
+			"eyedrop",
+			"drawcolorstyle",
+			"drawcoloroptions",
+			"AIEyedropper"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"htmlPPLib",
+			"Iris",
+			"",
+			"onpupiladjusted",
+			"this.glass.draw",
+			"this._currentColorMode",
+			"lch[0]",
+			"lch[1]",
+			"[2]",
+			"self",
+			"this._uniforms",
+			"this.glass",
+			"__currentPupilColor",
+			"mainCanvasSleazel",
+			"irisGlass",
+			"irisCanvas",
+			"Glass",
+			"Color",
+			"colors",
+			"SHRINK_SPEED",
+			"SHRUNK_SCALE",
+			"Daily Report",
+			"imagemin",
+			"Daily Report",
+			"Pinup",
+			"\\n</p>",
+			"\\n<p>",
+			"<p>\\n",
+			"$material-lift-curve",
+			"name",
+			"",
+			"Element",
+			"mono-item-image",
+			"__scrollables",
+			"ImageItemDataObject",
+			"ImageDataObject",
+			"ItemDataObject",
+			"this._itemInside",
+			"this._helperElement",
+			"this._data",
+			"options",
+			"let ",
+			"let",
+			"Array<ItemDatum>",
+			"ItemDatum",
+			"",
+			"ItemDatum",
+			"itemDatum",
+			"this",
+			"",
+			"this",
+			"this._activeItem",
+			"_activeItem",
+			"this"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 64.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.doc":
+	{
+		"height": 0.0
+	},
+	"output.errorlist":
+	{
+		"height": 48.0
+	},
+	"output.exec":
+	{
+		"height": 98.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.gulp_output":
+	{
+		"height": 126.0
+	},
+	"output.nodejs":
+	{
+		"height": 150.0
+	},
+	"output.package_dev":
+	{
+		"height": 98.0
+	},
+	"output.settings_documentation_panel":
+	{
+		"height": 98.0
+	},
+	"output.variable_get":
+	{
+		"height": 156.0
+	},
+	"pinned_build_system": "",
+	"project": "iris.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"list",
+				"src/listenerutils.js"
+			],
+			[
+				"iris.js",
+				"src/Iris.js"
+			],
+			[
+				"samel",
+				"shaders/frag/same_lightness.frag"
+			],
+			[
+				"sameh",
+				"shaders/frag/same_hue.frag"
+			],
+			[
+				"common",
+				"shaders/includes/common_globals.glsl"
+			],
+			[
+				"irisp",
+				"src/IrisPalette.js"
+			],
+			[
+				"diff",
+				"shaders/frag/same_lightness.frag"
+			],
+			[
+				"irispal",
+				"spec/IrisPaletteSpec.js"
+			],
+			[
+				"inputb",
+				"src/InputBase.js"
+			],
+			[
+				"slidej",
+				"src/Slider.js"
+			],
+			[
+				"slider",
+				"templates/slider.pug"
+			],
+			[
+				"same",
+				"shaders/frag/same_hue.frag"
+			],
+			[
+				"fnu",
+				"src/fnutils.js"
+			],
+			[
+				"ent",
+				"src/entry.js"
+			],
+			[
+				"pal",
+				"src/IrisPalette.js"
+			],
+			[
+				"",
+				"spec/IrisPaletteSpec.js"
+			],
+			[
+				"palette",
+				"spec/IrisPaletteSpec.js"
+			],
+			[
+				"iris",
+				"src/Iris.js"
+			],
+			[
+				"sameli",
+				"shaders/frag/same_lightness.frag"
+			],
+			[
+				"samehue",
+				"shaders/frag/same_hue.frag"
+			],
+			[
+				"var",
+				"scss/_variables.scss"
+			],
+			[
+				"input",
+				"scss/_inputs.scss"
+			],
+			[
+				"picker",
+				"scss/_picker.scss"
+			],
+			[
+				"en",
+				"src/entry.js"
+			],
+			[
+				"varia",
+				"scss/_variables.scss"
+			],
+			[
+				"layout",
+				"scss/_layout.scss"
+			],
+			[
+				"entr",
+				"src/entry.js"
+			],
+			[
+				"util",
+				"src/listenerutils.js"
+			],
+			[
+				"vari",
+				"scss/_variables.scss"
+			],
+			[
+				"scr",
+				"gulp/scripts.js"
+			],
+			[
+				"reacto",
+				"src/Reactor.js"
+			],
+			[
+				"domu",
+				"src/domutils.js"
+			],
+			[
+				"pic",
+				"scss/_picker.scss"
+			],
+			[
+				"inputs",
+				"scss/_inputs.scss"
+			],
+			[
+				"inputr",
+				"scss/mixins/_input-range.scss"
+			],
+			[
+				"inputres",
+				"scss/mixins/_input-reset.scss"
+			],
+			[
+				"panel",
+				"src/PanelElement.js"
+			],
+			[
+				"panelg",
+				"src/PanelGroup.js"
+			],
+			[
+				"cie",
+				"shaders/includes/cie_conversions.glsl"
+			],
+			[
+				"glob",
+				"shaders/includes/common_globals.glsl"
+			],
+			[
+				"sigm",
+				"shaders/includes/sigmoidBlend.glsl"
+			],
+			[
+				"pick",
+				"scss/_picker.scss"
+			],
+			[
+				"ind",
+				"templates/index.pug"
+			],
+			[
+				"listeneru",
+				"src/listenerutils.js"
+			],
+			[
+				"glu",
+				"src/glutils.js"
+			],
+			[
+				"variables",
+				"scss/_variables.scss"
+			],
+			[
+				"inputscs",
+				"scss/_inputs.scss"
+			],
+			[
+				"entry",
+				"src/entry.js"
+			],
+			[
+				"samli",
+				"shaders/frag/same_lightness.frag"
+			],
+			[
+				"dom",
+				"src/domutils.js"
+			],
+			[
+				"layou",
+				"scss/_layout.scss"
+			],
+			[
+				"spa",
+				"src/Spacer.js"
+			],
+			[
+				"slide",
+				"src/Slider.js"
+			],
+			[
+				"variab",
+				"scss/_variables.scss"
+			],
+			[
+				"button",
+				"src/Button.js"
+			],
+			[
+				"buttong",
+				"src/ButtonGroup.js"
+			],
+			[
+				"inputbas",
+				"src/InputBase.js"
+			],
+			[
+				"panelele",
+				"src/PanelElement.js"
+			],
+			[
+				"scri",
+				"gulp/scripts.js"
+			],
+			[
+				"gul",
+				"gulp/scripts.js"
+			],
+			[
+				"panelel",
+				"src/PanelElement.js"
+			],
+			[
+				"range",
+				"scss/mixins/_input-range.scss"
+			],
+			[
+				"inp",
+				"scss/_inputs.scss"
+			],
+			[
+				"irip",
+				"src/IrisPalette.js"
+			],
+			[
+				"vair",
+				"shaders/includes/common_variables.glsl"
+			],
+			[
+				"inputsscs",
+				"scss/_inputs.scss"
+			],
+			[
+				"inputrese",
+				"scss/mixins/_input-reset.scss"
+			],
+			[
+				"inputs.",
+				"scss/_inputs.scss"
+			],
+			[
+				"typ",
+				"scss/_typography.scss"
+			],
+			[
+				"iri",
+				"src/Iris.js"
+			],
+			[
+				"saml",
+				"shaders/frag/same_lightness.frag"
+			],
+			[
+				"iris.j",
+				"src/Iris.js"
+			],
+			[
+				"prim",
+				"src/primatives.js"
+			],
+			[
+				"passt",
+				"shaders/vert/passthrough.vert"
+			],
+			[
+				"commonv",
+				"shaders/includes/common_variables.glsl"
+			],
+			[
+				"sigmoid",
+				"shaders/includes/sigmoidBlend.glsl"
+			],
+			[
+				"irispa",
+				"src/IrisPalette.js"
+			],
+			[
+				"ind.",
+				"templates/index.pug"
+			],
+			[
+				"panelgro",
+				"src/PanelGroup.js"
+			],
+			[
+				"inpub",
+				"src/InputBase.js"
+			],
+			[
+				"slid",
+				"src/Slider.js"
+			],
+			[
+				"in.",
+				"templates/index.pug"
+			],
+			[
+				"element",
+				"PanelElement.js"
+			],
+			[
+				"prims",
+				"spec/primativesSpec.js"
+			],
+			[
+				"prima",
+				"src/primatives.js"
+			],
+			[
+				"samh",
+				"shaders/frag/sameHue.frag"
+			],
+			[
+				"gluti",
+				"src/glutils.js"
+			],
+			[
+				"main",
+				"templates/index.pug"
+			],
+			[
+				"glutils",
+				"src/glutils.js"
+			],
+			[
+				"irispals",
+				"spec/IrisPaletteSpec.js"
+			],
+			[
+				"passth",
+				"shaders/vert/passthrough.vert"
+			],
+			[
+				"glut",
+				"src/glutils.js"
+			],
+			[
+				"base",
+				"templates/base.pug"
+			],
+			[
+				"serve",
+				"gulp/serve.js"
+			],
+			[
+				"sty",
+				"gulp/styles.js"
+			],
+			[
+				"styl",
+				"gulp/styles.js"
+			],
+			[
+				"vie",
+				"gulp/views.js"
+			],
+			[
+				"plugingro",
+				"illustratorapi/illustrator/AIPluginGroup.h"
+			],
+			[
+				"aidocument",
+				"illustratorapi/illustrator/AIDocument.h"
+			],
+			[
+				"irispanel",
+				"Source/IrisPanelController.cpp"
+			],
+			[
+				"irissuit",
+				"Source/IrisSuites.cpp"
+			],
+			[
+				"irissui",
+				"Source/IrisSuites.h"
+			],
+			[
+				"toolname",
+				"illustratorapi/illustrator/AIToolNames.h"
+			],
+			[
+				"irisplugin",
+				"Source/IrisPlugin.h"
+			],
+			[
+				"plugin",
+				"source/Plugin.cpp"
+			],
+			[
+				"aitoolbox",
+				"illustratorapi/illustrator/AIToolbox.h"
+			],
+			[
+				"aitool",
+				"illustratorapi/illustrator/AITool.h"
+			],
+			[
+				"art",
+				"illustratorapi/illustrator/AIDrawArt.h"
+			],
+			[
+				"aidraw",
+				"illustratorapi/illustrator/AIDrawArt.h"
+			],
+			[
+				"toolnam",
+				"illustratorapi/illustrator/AIToolNames.h"
+			],
+			[
+				"tool",
+				"illustratorapi/illustrator/AITool.h"
+			],
+			[
+				"iriscontro",
+				"Source/IrisPanelController.cpp"
+			],
+			[
+				"plu",
+				"source/Plugin.cpp"
+			],
+			[
+				"unif",
+				"com.elicrow.iris/shaders/uniforms.glsl"
+			],
+			[
+				"irisc",
+				"com.elicrow.iris/shaders/iris_core.glsl"
+			],
+			[
+				"aimenu",
+				"illustratorapi/illustrator/AIMenu.h"
+			],
+			[
+				"iris.fr",
+				"com.elicrow.iris/shaders/iris.frag"
+			],
+			[
+				"conversions",
+				"com.elicrow.iris/shaders/partials/conversions.glsl"
+			],
+			[
+				"haz",
+				"com.elicrow.iris/js/Hazel.js"
+			],
+			[
+				"hz",
+				"com.elicrow.iris/js/Hazel.js"
+			],
+			[
+				"hazel",
+				"com.elicrow.iris/js/Hazel.js"
+			],
+			[
+				"aipain",
+				"illustratorapi/illustrator/AIPaintStyle.h"
+			],
+			[
+				"documen",
+				"illustratorapi/illustrator/AIDocumentView.h"
+			],
+			[
+				"notifier",
+				"illustratorapi/illustrator/AINotifier.h"
+			],
+			[
+				"notifi",
+				"illustratorapi/illustrator/AIMenuCommandNotifiers.h"
+			],
+			[
+				"pathsty",
+				"illustratorapi/illustrator/AIPathStyle.h"
+			],
+			[
+				"paintst",
+				"illustratorapi/illustrator/AIPaintStyle.h"
+			],
+			[
+				"sdkp",
+				"source/SDKPlugPlug.cpp"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Desktop/Web/Maennerchor Damenchor/germanclub/germanclub.sublime-project"
+			],
+			[
+				"coo",
+				"~/Desktop/Web/colorjack/colorjack.sublime-project"
+			],
+			[
+				"pro",
+				"~/Desktop/Web/germanclub/germanclub.sublime-project"
+			],
+			[
+				"pin",
+				"~/Desktop/Web/Pinup Discover/PinupDiscover.sublime-workspace"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 274.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

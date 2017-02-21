@@ -63,14 +63,17 @@ class Iris
 		}, false);
 
 		function dispatchColors (event, e, shouldMoveHilight) {
+			const angle = Math.atan2(e.normY, e.normX);
+			const dist = Math.sqrt(Math.pow(e.centerX,  2) + Math.pow(e.centerY, 2));
+			
 			const c = glutils.getPixel(canvas, e.relX, e.relY);
 			if (c[3] === 1) 
 				reactor.dispatchEvent(event, c); //if alpha == 1
 			if (shouldMoveHilight) 
-				domutils.setVendorCss(self._highlight, 'transform',`translate3d(${e.relX}px,${e.relY}px, 0px)`);
+				domutils.setVendorCss(self._highlight, 'transform', `translate3d(${e.relX}px,${e.relY}px, 0px)`);
 		}
 		listenerutils.normalPointer(canvas, {
-			contained: true,
+			contained: false,
 			down: e => dispatchColors('pick', e, true), 
 			move: e => dispatchColors('pick', e, true),
 			up:   e => dispatchColors('pickend', e, false)

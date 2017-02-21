@@ -1,24 +1,30 @@
 const Iris = require('./Iris.js');
+
 const Slider = require('./Slider.js');
 const Button = require('./Button.js');
 const ButtonGroup = require('./ButtonGroup.js');
 const PanelGroup = require('./PanelGroup.js');
 const Spacer = require('./Spacer.js');
 
+const Brush = require('./Brush.js');
+
 const fnutils = require('./fnutils.js');
 
+
 const UNDERLINE_COLOR = '#D3CDC9';
+
+
 
 const irisElement = document.getElementById('main-iris');
 const irisInputs = document.getElementById('picker-inputs');
 const irisModes = document.getElementById('picker-modes');
 const irisIndicator = document.getElementById('picker-indicator');
 const iris = new Iris(irisElement, irisInputs);
+window.iris = iris;
 
-const lightnessSlider = new Slider(0.5, 0, 1, 1/255)
+const lightnessSlider = new Slider(0.5, -.17, 1, 1/255)
 	.classes('lightness')
 	.bind(iris.palettes['sameLightness'].uniforms, "lightness")
-	.transform(x => x*1.17 - 0.17);
 const hueSlider = new Slider(0, 0, 360, 1)
 	.classes('hue')
 	.bind(iris.palettes['sameHue'].uniforms, "hue")
@@ -69,4 +75,34 @@ iris.on(['pick', 'pickend'], function (data) {
 	currentColor = rgba;
 })
 
-window.iris = iris;
+
+const brushCanvas = document.getElementById('art');
+const brushCtx = brushCanvas.getContext('2d');
+brushCanvas.width = window.innerWidth;
+brushCanvas.height = window.innerHeight;
+
+const brush = new Brush(brushCanvas);
+brush.minSize = 3;
+brush.pressureSensitivity = 39;
+brush.speedSensitivity = -50;
+brush.angleSensitivity = 0;
+
+iris.on('pickend', brush.setBrushColor);
+
+var controls = {
+  clear: function () {
+    brushCtx.clearRect(0, 0, brushCanvas.width, brushCanvas.height);
+  },
+  resizeCanvas: function () {
+    brushCanvas.width  = window.innerWidth;
+    brushCanvas.height = window.innerHeight;
+  }
+};
+
+controls.resizeCanvas();
+window.addEventListener('resize', function() {
+  controls.resizeCanvas();
+});
+document.getElementById('clear-canvas').addEventListener('click', function () {
+	controls.clear();
+});
