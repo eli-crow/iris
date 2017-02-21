@@ -5,6 +5,8 @@ const ButtonGroup = require('./ButtonGroup.js');
 const PanelGroup = require('./PanelGroup.js');
 const Spacer = require('./Spacer.js');
 
+const fnutils = require('./fnutils.js');
+
 const UNDERLINE_COLOR = '#D3CDC9';
 
 const irisElement = document.getElementById('main-iris');
@@ -62,7 +64,7 @@ let selectedModeElement = sameLightnessButton._element;
 let currentColor;
 iris.on(['pick', 'pickend'], function (data) {
 	const rgba =`rgba(${data.slice(0,3).join(',')}, 1)`;
-	irisIndicator.style.backgroundColor = rgba;
+	irisIndicator.style.backgroundColor   = rgba;
 	selectedModeElement.style.borderColor = rgba;
 	currentColor = rgba;
 })

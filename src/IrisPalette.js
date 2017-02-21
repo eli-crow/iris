@@ -11,12 +11,12 @@ class IrisPalette
 		const vertShader = glutils.createShader(gl, vertexSrc, gl.VERTEX_SHADER);
 		const fragShader = glutils.createShader(gl, fragmentSrc, gl.FRAGMENT_SHADER);
 		this._program = glutils.createAndLinkProgram(gl, vertShader, fragShader);
-		gl.useProgram(this._program);
 
+		this.use();
 		this._uniforms = {};
 		this.uniforms = {};
 		this.addUniform('resolution', {type: '2f', value: [0,0]});
-		this.addUniform('blend_reach', {type: '1f', value: 1});
+		this.addUniform('blend_focus', {type: '1f', value: 0});
 		for (let name in uniforms) this.addUniform(name, uniforms[name]);
 
 		this._positionLocation = gl.getAttribLocation(this._program, 'position');
@@ -41,6 +41,8 @@ class IrisPalette
 		const gl = this.gl;
 		gl.drawArrays(gl.TRIANGLE_FAN, 0, this._pts.length/2);
 	}
+
+	
 
 	addUniform(name, descriptor) {
 		const self = this;

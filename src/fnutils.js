@@ -7,3 +7,7 @@ module.exports.curry = function (fn, thisarg = window) {
 		fn.apply(thisarg, args);
 	}
 }
+module.exports.isFunction = function (functionToCheck) {
+	 var getType = {};
+	 return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+}

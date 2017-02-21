@@ -9,6 +9,8 @@ const WEBGL_CONTEXT = "webgl";
 const INDICATOR_RADIUS = 0.25;
 const HILIGHT_RADIUS = 7.5;
 const passthrough = require('../shaders/vert/passthrough.vert');
+const sameLightness = require('../shaders/frag/same_lightness.frag');
+const sameHue = require('../shaders/frag/same_hue.frag');
 
 //manages the canvas and manages its IrisPalettes.
 class Iris
@@ -42,12 +44,12 @@ class Iris
 		canvas.insertAdjacentElement('afterend', self._highlight);
 
 		self.palettes['sameLightness'] =
-			new IrisPalette('Colors', self._gl, require('../shaders/frag/same_lightness.frag'), passthrough, {
+			new IrisPalette('Colors', self._gl, sameLightness, passthrough, {
 				lightness: {type: '1f', value: 0.5},
 				indicator_radius: {type: '1f', value: INDICATOR_RADIUS}
 			});
 		self.palettes['sameHue'] = 
-			new IrisPalette('Tones', self._gl, require('../shaders/frag/same_hue.frag'), passthrough, {
+			new IrisPalette('Tones', self._gl, sameHue, passthrough, {
 				hue: {type: '1f', value: 0},
 				indicator_radius: {type: '1f', value: INDICATOR_RADIUS}
 			});
@@ -61,8 +63,6 @@ class Iris
 		}, false);
 
 		function dispatchColors (event, e, shouldMoveHilight) {
-
-
 			const c = glutils.getPixel(canvas, e.relX, e.relY);
 			if (c[3] === 1) 
 				reactor.dispatchEvent(event, c); //if alpha == 1

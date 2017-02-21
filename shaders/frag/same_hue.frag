@@ -17,7 +17,7 @@ void main() {
 		sigmoidBlend( 
 			HSL2RGB(irisHSL),
 			HSL2RGB(vec3(hue, 1.0, 0.5)), 
-			max(0.0, (dist - indicator_radius) * blend_reach)* (1.0 + indicator_radius),
+			max(0.0, (dist - indicator_radius) * (1.0 - blend_focus) * (1.0 + indicator_radius)) + PLATEAU ,
 			indicator_radius + PLATEAU,
 			1.0 - PLATEAU
 		),

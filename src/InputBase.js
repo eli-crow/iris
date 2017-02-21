@@ -1,5 +1,6 @@
 const PanelElement = require('./PanelElement.js');
 const Reactor = require('./Reactor.js');
+const fnutils = require('./fnutils.js');
 
 const ONINPUT_EVENTNAME = "oninput" in document.body ? 'input' : 'change';
 
@@ -40,13 +41,18 @@ class InputBase extends PanelElement
 		return this;
 	}
 
-	bind (object, prop, transform) {
-		if (prop in object) {
-			this._reactor.addEventListener('input', function (val) {
-				var xform = transform;
-				object[prop] = xform ? xform(val) : val;
+	bind (subject, prop) {
+		if (fnutils.isFunction(subject)) {
+			this._reactor.addEventListener('input', val => {
+				subject(val);
 			});
 		}
+		else if (prop in subject) {
+			this._reactor.addEventListener('input', val => {
+				subject[prop] = val;
+			});
+		}
+		
 		//TODO: change name of label
 		return this;
 	}
