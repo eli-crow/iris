@@ -1,4 +1,5 @@
 const domutils = require('./domutils.js');
+const fnutils = require('./fnutils.js');
 
 // machine for simplifying mouse input.
 const getMouseListenerObject = function (descriptor, event) {
@@ -16,7 +17,6 @@ const getMouseListenerObject = function (descriptor, event) {
 	else if (button.default) return button.default;
 	else return;
 }
-
 const createMouseListenerMachine = function (descriptor) {
 	return function (e) {
 		const on = getMouseListenerObject(descriptor, e);
@@ -37,67 +37,59 @@ const createMouseListenerMachine = function (descriptor) {
 		upContext.addEventListener('mouseup', upFunction, false);
 	};
 };
-
-
 module.exports.mouse = function (downContext, descriptor) {
 	var downFunction = createMouseListenerMachine(descriptor);
 	downContext.addEventListener('mousedown', downFunction, false);
 	return downFunction;
 };
 
-module.exports.simplePointer = (events) => {
-	const down = events.down;
-	const move = events.move;
-	const up   = events.up;
-	const downContext = down.context || window;
-	const moveContext = move.context || window;
-	const upContext = up.context || window;
-	
-	downContext.addEventListener('mousedown', e => {
-		if (down && down.handler) down.handler(e);
-		if (move && move.handler) moveContext.addEventListener('mousemove', move.handler, false);
-	}, false);
 
-	upContext.addEventListener('mouseup', e => {
-		if (up   && up.handler)   up.handler(e);
-		if (move && move.handler) moveContext.removeEventListener('mousemove', move.handler, false);
-	}, false);
-};
+const POINTER_EVENTNAME = 'pointer';
 
-const POINTER_EVENTNAME = 'mouse';
 
-function applyNormPos (e, rect) {
-	e.relX  	= Math.floor(e.clientX - rect.left);
-	e.relY  	= Math.floor(e.clientY - rect.top);
-	e.centerX = e.relX - rect.width / 2;
-	e.centerY = e.relY - rect.height / 2;
-	e.normX 	= e.relX / rect.width * 2 - 1;
-	e.normY 	= e.relY / rect.height * 2 - 1;
-}
-module.exports.normalPointer = (context, events) => {
+module.exports.simplePointer = (context, events, transform) => {
 	let rect;
+	const xformIsFn = fnutils.isFunction(transform);
 	const moveCtx = events.contained ? context : window;
-	const moveHandler = function (e) {
-		applyNormPos(e, rect);
+
+	let moveHandler;
+	if (events.move) moveHandler = function (e) {
+		if (events.preventDefault) e.preventDefault();
+		if (events.stopPropagation) e.stopPropagation();
+		if (xformIsFn) transform(e, rect);
 		events.move(e);
 	};
 	const upHandler = function (e) {
+		if (events.preventDefault) e.preventDefault();
+		if (events.stopPropagation) e.stopPropagation();
 		if (events.up) {
-			applyNormPos(e, rect);
+			if (xformIsFn) transform(e, rect);
 			events.up(e);
 		}
-		if (events.move) moveCtx.removeEventListener(POINTER_EVENTNAME + 'move', moveHandler, false);
+		if (moveHandler) moveCtx.removeEventListener(POINTER_EVENTNAME + 'move', moveHandler, false);
 		window.removeEventListener(POINTER_EVENTNAME + 'up', upHandler, false);
-	}
+	};
 
 	context.addEventListener(POINTER_EVENTNAME + 'down', (e) => {
+		if (events.preventDefault) e.preventDefault();
+		if (events.stopPropagation) e.stopPropagation();
 		rect = context.getBoundingClientRect();
 		if (events.down) {
-			applyNormPos(e, rect);
+			if (xformIsFn) transform(e, rect);
 			events.down(e);
 		}
-		if (events.move) moveCtx.addEventListener(POINTER_EVENTNAME + 'move', moveHandler, false);
+		if (moveHandler) moveCtx.addEventListener(POINTER_EVENTNAME + 'move', moveHandler, false);
 		window.addEventListener(POINTER_EVENTNAME + 'up', upHandler, false);
 	}, false);
-	
-};
+}
+
+module.exports.normalPointer = (context, events) => {
+	module.exports.simplePointer(context, events, (e, rect) => {
+		e.relX  	= Math.floor(e.clientX - rect.left);
+		e.relY  	= Math.floor(e.clientY - rect.top);
+		e.centerX = e.relX - rect.width / 2;
+		e.centerY = e.relY - rect.height / 2;
+		e.normX 	= e.relX / rect.width * 2 - 1;
+		e.normY 	= e.relY / rect.height * 2 - 1;
+	});
+}
