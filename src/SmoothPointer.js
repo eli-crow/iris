@@ -1,5 +1,7 @@
 const Reactor = require('./Reactor.js');
 const arrayutils = require('./arrayutils.js');
+const mathutils = require('./mathutils.js');
+const fnutils = require('./fnutils.js');
 
 //todo: pull in  modernizr to test for existence.
 const POINTER_EVENTNAME = 'pointer';
@@ -15,23 +17,6 @@ var sin = Math.sin,
     random = Math.random,
     sign = Math.sign;
 
-function getCubicPoints(input, output) {
-  var a0,a1,a2;
-  function component (t, y0, y1, y2, y3) {
-    a0 = y3 - y2 - y0 + y1;
-    a1 = y0 - y1 - a0;
-    a2 = y2 - y0;
-    return(a0*t*t*t + a1*t*t + a2*t + y1);
-  }
-   
-  for(var i=0, ii = output.length; i < ii; i+=2) {
-    var t = (i * .5 +.25) / (ii/2);
-    output[i]   = component(t, input[0], input[2], input[4], input[6]);
-    output[i+1] = component(t, input[1], input[3], input[5], input[7]);
-  }
-  return output;
-}
-
 function SmoothPointer(context, options)
 { 
   var self = this;
@@ -46,6 +31,10 @@ function SmoothPointer(context, options)
 	var _reactor = new Reactor(['down', 'move', 'up']);
 	this.on = _reactor.addEventListener.bind(_reactor);
 	this.off = _reactor.removeEventListener.bind(_reactor);
+
+  if (fnutils.isFunction(options['down'])) this.on('down', options['down']);
+  if (fnutils.isFunction(options['move'])) this.on('move', options['move']);
+  if (fnutils.isFunction(options['up']))   this.on('up',   options['up']);
 
 	function onPointerDown(e) {
 	  _buffer[0] = _buffer[2] = _buffer[4] = _buffer[6] = e.clientX;
@@ -72,7 +61,7 @@ function SmoothPointer(context, options)
 		  _buffer[1] += diffy * (1 - self._smoothing);
       
 		  _reactor.dispatchEvent('move', {
-        pts: getCubicPoints(_buffer, self._interpolatedPts),
+        pts: mathutils.getCubicPoints(_buffer, self._interpolatedPts),
         squaredSpeed: _squaredSpeed,
         pressure: e.pressure || 0,
         direction: atan2(diffy, diffx) + PI
