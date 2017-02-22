@@ -6,7 +6,7 @@ const domutils = require('./domutils.js');
 const listenerutils = require('./listenerutils.js')
 
 const WEBGL_CONTEXT = "webgl";
-const INDICATOR_RADIUS = 0.25;
+const PUPIL_RADIUS = 0.25;
 const HILIGHT_RADIUS = 7.5;
 const passthrough = require('../shaders/vert/passthrough.vert');
 const sameLightness = require('../shaders/frag/same_lightness.frag');
@@ -46,12 +46,12 @@ class Iris
 		self.palettes['sameLightness'] =
 			new IrisPalette('Colors', self._gl, sameLightness, passthrough, {
 				lightness: {type: '1f', value: 0.5},
-				indicator_radius: {type: '1f', value: INDICATOR_RADIUS}
+				indicator_radius: {type: '1f', value: PUPIL_RADIUS}
 			});
 		self.palettes['sameHue'] = 
 			new IrisPalette('Tones', self._gl, sameHue, passthrough, {
 				hue: {type: '1f', value: 0},
-				indicator_radius: {type: '1f', value: INDICATOR_RADIUS}
+				indicator_radius: {type: '1f', value: PUPIL_RADIUS}
 			});
 
 		self.onResize();
@@ -67,7 +67,7 @@ class Iris
 			const dist = Math.sqrt(Math.pow(e.centerX,  2) + Math.pow(e.centerY, 2));
 			
 			const c = glutils.getPixel(canvas, e.relX, e.relY);
-			if (c[3] === 1) 
+			if (c[3] >= 255) 
 				reactor.dispatchEvent(event, c); //if alpha == 1
 			if (shouldMoveHilight) 
 				domutils.setVendorCss(self._highlight, 'transform', `translate3d(${e.relX}px,${e.relY}px, 0px)`);
@@ -95,8 +95,8 @@ class Iris
 		this._gl.viewport(0,0, width, height);
 
 		const ps  = this._pupil.style;
-		const pw  = INDICATOR_RADIUS * width;
-		const ph  = INDICATOR_RADIUS * height;
+		const pw  = PUPIL_RADIUS * width;
+		const ph  = PUPIL_RADIUS * height;
 		ps.left   = (width/2 + canvas.offsetLeft - pw/2) + 'px';
 		ps.top    = (height/2 + canvas.offsetTop - ph/2) + 'px';
 		ps.width  = pw + 'px';

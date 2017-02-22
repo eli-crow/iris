@@ -5,7 +5,7 @@ module.exports.getPixel = function (canvas, x, y) {
 	const gl = canvas.getContext(GL_CONTEXT_NAME);
 	var pixel = new Uint8Array(4);
 	gl.readPixels(x, canvas.height - y, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
-	return [pixel[0], pixel[1], pixel[2], pixel[3] / 255];
+	return [pixel[0], pixel[1], pixel[2], pixel[3]];
 }
 
 module.exports.uniformByType = function(gl, type, location, values) {

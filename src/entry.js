@@ -10,10 +10,7 @@ const Brush = require('./Brush.js');
 
 const fnutils = require('./fnutils.js');
 
-
 const UNDERLINE_COLOR = '#D3CDC9';
-
-
 
 const irisElement = document.getElementById('main-iris');
 const irisInputs = document.getElementById('picker-inputs');
@@ -87,7 +84,7 @@ brush.pressureSensitivity = 39;
 brush.speedSensitivity = -50;
 brush.angleSensitivity = 0;
 
-iris.on('pickend', brush.setBrushColor);
+iris.on('pickend', brush.setBrushColor.bind(brush));
 
 var controls = {
   clear: function () {
