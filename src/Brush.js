@@ -24,7 +24,7 @@ class Brush
 
     this.pointer = new SmoothPointer(canvas, {
       minDistance: 2,
-      steps: 15,
+      steps: 30,
       smoothedProps: ['pressure'],
       down: e => {
         if (this.erase) _ctx.globalCompositeOperation = 'destination-out';
@@ -71,8 +71,9 @@ class Brush
           Math.cos((Math.PI - e.direction + this.calligAngle)*symm) *.5 +.5
         );
 
-    for (var i = 0, ii = pts.length; i<ii; i+=e.nComponents) {
+    for (var i = 0, ii = pts.definedLength; i<ii; i+=e.nComponents) {
       const size = this.minSize + Math.max(0, sensitivity + this.pressureSensitivity * pts[i+2]);
+      // console.log(size);
       canvasutils.drawTexture(
         this._ctx  , this._tex,
         pts[i]    , pts[i + 1],

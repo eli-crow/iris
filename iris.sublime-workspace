@@ -4,6 +4,34 @@
 		"selected_items":
 		[
 			[
+				"jasmin",
+				"jasmine-fixture/"
+			],
+			[
+				"ptA",
+				"ptArray1"
+			],
+			[
+				"is",
+				"isArray( arg: any ): boolean\tArray"
+			],
+			[
+				"temp",
+				"tempCanvas"
+			],
+			[
+				"crea",
+				"createElement〔function〕"
+			],
+			[
+				"z",
+				"z-index"
+			],
+			[
+				"const",
+				"constructor\t(Iris.js)"
+			],
+			[
 				"center",
 				"centerX\t(listenerutils.js)"
 			],
@@ -46,10 +74,6 @@
 			[
 				"font",
 				"font-size"
-			],
-			[
-				"const",
-				"constructor\t(ButtonGroup.js)"
 			],
 			[
 				"but",
@@ -490,30 +514,6 @@
 			[
 				"ingre",
 				"ingredients.opportunity"
-			],
-			[
-				"ingred",
-				"ingredients.src"
-			],
-			[
-				"source",
-				"sourcemaps"
-			],
-			[
-				"inje",
-				"injectSectionHeirarchyInto"
-			],
-			[
-				"toc",
-				"tocHierarchy"
-			],
-			[
-				"tabl",
-				"tableOfContents\t(main.js)"
-			],
-			[
-				"requirem",
-				"requirement-list\t(index.html)"
 			]
 		]
 	},
@@ -544,9 +544,73 @@
 	"command_palette":
 	{
 		"height": 354.0,
-		"last_filter": "",
+		"last_filter": "dle",
 		"selected_items":
 		[
+			[
+				"dle",
+				"File: Delete"
+			],
+			[
+				"del",
+				"ANF: Delete File"
+			],
+			[
+				"revea",
+				"File: Reveal"
+			],
+			[
+				"dele",
+				"File: Delete"
+			],
+			[
+				"edit",
+				"SnippetMaker: Edit Snippet"
+			],
+			[
+				"new file",
+				"File: New File Relative to Current View"
+			],
+			[
+				"new",
+				"File: New File Relative to Current View"
+			],
+			[
+				"rename",
+				"File: Rename"
+			],
+			[
+				"new fil",
+				"File: New File Relative to Current View"
+			],
+			[
+				"make",
+				"SnippetMaker: Make Snippet"
+			],
+			[
+				"move",
+				"File: Move"
+			],
+			[
+				"new fi",
+				"File: New File Relative to Current View"
+			],
+			[
+				"javs",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"renam",
+				"File: Rename"
+			],
+			[
+				"iris",
+				"A File Icon: Revert to a Freshly Installed State"
+			],
+			[
+				"new ",
+				"File: New File Relative to Current View"
+			],
 			[
 				"glsl",
 				"Set Syntax: GLSL"
@@ -554,14 +618,6 @@
 			[
 				"ren",
 				"File: Rename"
-			],
-			[
-				"new",
-				"File: New File Relative to Current View"
-			],
-			[
-				"new ",
-				"File: New File Relative to Current View"
 			],
 			[
 				"tabs",
@@ -572,20 +628,8 @@
 				"Indentation: Convert to Tabs"
 			],
 			[
-				"new fil",
-				"File: New File Relative to Current View"
-			],
-			[
-				"del",
-				"File: Delete"
-			],
-			[
 				"de",
 				"File: Delete"
-			],
-			[
-				"new file",
-				"File: New File Relative to Current View"
 			],
 			[
 				"javas",
@@ -612,32 +656,12 @@
 				"File: Rename"
 			],
 			[
-				"renam",
-				"File: Rename"
-			],
-			[
-				"new fi",
-				"File: New File Relative to Current View"
-			],
-			[
-				"dele",
-				"File: Delete"
-			],
-			[
-				"rename",
-				"File: Rename"
-			],
-			[
 				"newf",
 				"File: New File Relative to Current View"
 			],
 			[
 				"new file re",
 				"File: New File Relative to Current View"
-			],
-			[
-				"move",
-				"File: Move"
 			],
 			[
 				"renaem",
@@ -726,10 +750,6 @@
 			[
 				"dis",
 				"Package Control: Disable Package"
-			],
-			[
-				"dle",
-				"File: Delete"
 			],
 			[
 				"snip",
@@ -920,14 +940,6 @@
 				"TodoReview: Project Files"
 			],
 			[
-				"edit",
-				"SnippetMaker: Edit Snippet"
-			],
-			[
-				"make",
-				"SnippetMaker: Make Snippet"
-			],
-			[
 				"nwe file",
 				"File: New File Relative to Current View"
 			],
@@ -1046,21 +1058,9 @@
 			[
 				"browse",
 				"Preferences: Browse Packages"
-			],
-			[
-				"packages s",
-				"Package Control: Discover Packages"
-			],
-			[
-				"sideb",
-				"Side Bar: Refresh"
-			],
-			[
-				"snippet",
-				"SnippetMaker: Make Snippet"
 			]
 		],
-		"width": 682.0
+		"width": 962.0
 	},
 	"console":
 	{
@@ -1075,47 +1075,62 @@
 		"show_minimap": false,
 		"show_open_files": false,
 		"show_tabs": false,
-		"side_bar_visible": false,
+		"side_bar_visible": true,
 		"status_bar_visible": false
 	},
 	"expanded_folders":
 	[
-		"/Users/EliCrow/Desktop/Web/Iris/Iris"
+		"/Users/EliCrow/Desktop/Web/Iris/Iris",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/helpers",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/support"
 	],
 	"file_history":
 	[
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/listenerutils.js",
-		"/Users/EliCrow/Desktop/Web/Experiments/Eyeriss/index.html",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/helpers/jasmine-fixture.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Iris.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/helpers",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/frag/same_lightness.frag",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Brush.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/SmoothPointer.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/entry.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/mathutils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/mathutilsSpec.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/listenerutils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/utils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/PanelGroup.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Pupil.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/glutils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Button.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/fnutils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/canvasutils.js",
+		"/Users/EliCrow/Library/Application Support/Sublime Text 3/Packages/User/req.sublime-snippet",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_picker.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/index.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_layout.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_inputs.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/arrayutils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Guides.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_variables.scss",
+		"/Users/EliCrow/Desktop/Web/Experiments/Eyeriss/index.html",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/frag/same_hue.frag",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/IrisPalette.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Iris.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/entry.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/common_globals.glsl",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/IrisPaletteSpec.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/InputBase.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Slider.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/slider.pug",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/fnutils.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_picker.scss",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_inputs.scss",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_variables.scss",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_layout.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/gulp/scripts.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Reactor.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/domutils.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/mixins/_input-range.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/mixins/_input-reset.scss",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/PanelGroup.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/PanelElement.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/cie_conversions.glsl",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/hsl_2_rgb.glsl",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/sigmoidBlend.glsl",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/index.pug",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/glutils.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Spacer.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/ButtonGroup.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Button.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/ButtonRadioGroup.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/common_variables.glsl",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/mixins/_inputs.scss",
@@ -1199,23 +1214,11 @@
 		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/DrawArt/Source/DrawArtPlugin.cpp",
 		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/Glass.js",
 		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/css/range-inputs.css",
-		"/Users/EliCrow/Desktop/Web/colorjack/colorjack.sublime-project",
-		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/index.html",
-		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/css/styles.css",
-		"/Users/EliCrow/Library/Application Support/Sublime Text 3/Packages/User/cond.sublime-snippet",
-		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/libs/themeManager.js",
-		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/Hilight.js",
-		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/iris.sublime-project",
-		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/debug/index.html",
-		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/mac/mac_key_interest.js",
-		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/mac/key_codes.js",
-		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/shaders/partials/shaping_functions.glsl",
-		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/gulpfile.js",
-		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/shaders/shapes/shapes.glsl"
+		"/Users/EliCrow/Desktop/Web/colorjack/colorjack.sublime-project"
 	],
 	"find":
 	{
-		"height": 28.0
+		"height": 70.0
 	},
 	"find_in_files":
 	{
@@ -1230,6 +1233,95 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"0",
+			"currentComponent",
+			";",
+			" = ",
+			"offset",
+			"X",
+			"_nBufferComponents",
+			"smoothedProperties",
+			"= ",
+			"params",
+			".map(x => Math.random() * 100)",
+			"powerSum",
+			"dist",
+			"sum",
+			"[c",
+			"C",
+			"c",
+			"const ",
+			"let",
+			"iterate",
+			"maxIterations",
+			"nIterations",
+			"let",
+			"this._squaredSpeed",
+			"preventDefault",
+			"_n_bufferComponents",
+			"this._reactor",
+			"buffer",
+			"Buffer",
+			"buffer",
+			"this._buffer",
+			"events.move",
+			"_reactor",
+			"_squaredSpeed",
+			"_buffer",
+			"self",
+			"function",
+			"nBufferComponents",
+			"nBufferC",
+			"_buffer",
+			"2",
+			"output[i+c]",
+			"var",
+			"success",
+			"buffer",
+			"i",
+			"j",
+			"i",
+			"size",
+			"self",
+			"shouldMoveHilight",
+			"img",
+			"image",
+			"this.tempCanvas",
+			"this.tempCtx",
+			"max",
+			"event",
+			"dispatchCol",
+			"INDICATOR_RADIUS",
+			"this",
+			"img",
+			"this.tempCtx",
+			"this.tempCanvas",
+			"brushImg",
+			"this.brushImg",
+			"brushImg",
+			"tempCtx",
+			"tempCanvas",
+			"drawBrush",
+			"maxSi",
+			"move",
+			"down",
+			"']);\n",
+			"drawt",
+			"drawte",
+			"canvasutils",
+			"data",
+			"tex",
+			"img",
+			"canvas",
+			"this",
+			"e =>",
+			"PI",
+			";\n",
+			"self",
+			"function",
+			"_buffer",
+			"self._interpolatedPts",
+			"rotate",
 			"normY",
 			"uniforms",
 			"object",
@@ -1268,96 +1360,7 @@
 			"= ",
 			"H",
 			"var_2",
-			"var_1",
-			"Hue_2_RGB",
-			"vH )",
-			"255",
-			"canvas",
-			"_reactor",
-			"this",
-			"fn",
-			"value",
-			"256",
-			"inputC",
-			"this",
-			"* 2.0 - 1.0",
-			"cs.height",
-			"cs.heigh",
-			"cs.height",
-			"cs.width",
-			"onMouse",
-			"onMouseDown",
-			"{context: window, handler:",
-			"move.context",
-			"on.",
-			"on",
-			"handler",
-			"descriptor",
-			"var",
-			"(",
-			"this._canvas",
-			"Mouse",
-			"1/255",
-			",3",
-			"(",
-			"^",
-			"var_B",
-			"var_G",
-			"var_R",
-			"var_Z",
-			"var_Y",
-			"var_X",
-			"^3",
-			"var_Z",
-			"var_X",
-			"CIE-L",
-			"var_Y",
-			"buttons",
-			"\t.",
-			"\t",
-			"inputs",
-			"buttons[i]",
-			"scope",
-			"}",
-			"this._element",
-			"self.program",
-			"this.program",
-			"input[type=range]",
-			"black",
-			"range",
-			"$height",
-			"$width",
-			"neutral",
-			"1",
-			"lightness",
-			"LCH2RGB",
-			"= ",
-			"hueSlider",
-			"pupil.style",
-			"this._pupil.",
-			"50%",
-			"18rem",
-			"this._",
-			"INDICATOR_RADIUS",
-			"console",
-			"lightness",
-			"uniform",
-			"this",
-			"lightness",
-			"this._uniforms",
-			"circle",
-			"GLProgram",
-			"$indicator-width",
-			"webpack",
-			"Menu",
-			"AIToolMessage",
-			"GetCurrentToolNa",
-			"getcurrenttool",
-			"AIToolHandle",
-			"eyedrop",
-			"drawcolorstyle",
-			"drawcoloroptions",
-			"AIEyedropper"
+			"var_1"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1515,16 +1518,148 @@
 		"selected_items":
 		[
 			[
+				"iris",
+				"src/Iris.js"
+			],
+			[
+				"sameli",
+				"shaders/frag/same_lightness.frag"
+			],
+			[
+				"brush",
+				"src/Brush.js"
+			],
+			[
+				"en",
+				"src/entry.js"
+			],
+			[
+				"matsp",
+				"spec/mathutilsSpec.js"
+			],
+			[
+				"math",
+				"spec/mathutilsSpec.js"
+			],
+			[
 				"list",
 				"src/listenerutils.js"
 			],
 			[
-				"iris.js",
-				"src/Iris.js"
+				"ent",
+				"src/entry.js"
+			],
+			[
+				"mathu",
+				"spec/mathutilsSpec.js"
+			],
+			[
+				"mat",
+				"src/mathutils.js"
+			],
+			[
+				"liste",
+				"src/listenerutils.js"
+			],
+			[
+				"point",
+				"src/SmoothPointer.js"
+			],
+			[
+				"brus",
+				"src/Brush.js"
+			],
+			[
+				"matu",
+				"spec/mathutilsSpec.js"
+			],
+			[
+				"smooth",
+				"src/SmoothPointer.js"
+			],
+			[
+				"panel",
+				"src/PanelGroup.js"
+			],
+			[
+				"glut",
+				"src/glutils.js"
+			],
+			[
+				"entr",
+				"src/entry.js"
+			],
+			[
+				"fnu",
+				"src/fnutils.js"
+			],
+			[
+				"canv",
+				"src/canvasutils.js"
+			],
+			[
+				"pick",
+				"scss/_picker.scss"
+			],
+			[
+				"ind",
+				"templates/index.pug"
+			],
+			[
+				"in",
+				"templates/index.pug"
+			],
+			[
+				"layout",
+				"scss/_layout.scss"
+			],
+			[
+				"panelg",
+				"src/PanelGroup.js"
+			],
+			[
+				"input",
+				"scss/_inputs.scss"
+			],
+			[
+				"array",
+				"src/arrayutils.js"
+			],
+			[
+				"pic",
+				"scss/_picker.scss"
+			],
+			[
+				"br",
+				"src/Brush.js"
+			],
+			[
+				"smoot",
+				"src/SmoothPointer.js"
+			],
+			[
+				"layou",
+				"scss/_layout.scss"
+			],
+			[
+				"inde",
+				"templates/index.pug"
+			],
+			[
+				"util",
+				"src/listenerutils.js"
 			],
 			[
 				"samel",
 				"shaders/frag/same_lightness.frag"
+			],
+			[
+				"vari",
+				"scss/_variables.scss"
+			],
+			[
+				"iris.js",
+				"src/Iris.js"
 			],
 			[
 				"sameh",
@@ -1563,14 +1698,6 @@
 				"shaders/frag/same_hue.frag"
 			],
 			[
-				"fnu",
-				"src/fnutils.js"
-			],
-			[
-				"ent",
-				"src/entry.js"
-			],
-			[
 				"pal",
 				"src/IrisPalette.js"
 			],
@@ -1583,14 +1710,6 @@
 				"spec/IrisPaletteSpec.js"
 			],
 			[
-				"iris",
-				"src/Iris.js"
-			],
-			[
-				"sameli",
-				"shaders/frag/same_lightness.frag"
-			],
-			[
 				"samehue",
 				"shaders/frag/same_hue.frag"
 			],
@@ -1599,35 +1718,11 @@
 				"scss/_variables.scss"
 			],
 			[
-				"input",
-				"scss/_inputs.scss"
-			],
-			[
 				"picker",
 				"scss/_picker.scss"
 			],
 			[
-				"en",
-				"src/entry.js"
-			],
-			[
 				"varia",
-				"scss/_variables.scss"
-			],
-			[
-				"layout",
-				"scss/_layout.scss"
-			],
-			[
-				"entr",
-				"src/entry.js"
-			],
-			[
-				"util",
-				"src/listenerutils.js"
-			],
-			[
-				"vari",
 				"scss/_variables.scss"
 			],
 			[
@@ -1643,10 +1738,6 @@
 				"src/domutils.js"
 			],
 			[
-				"pic",
-				"scss/_picker.scss"
-			],
-			[
 				"inputs",
 				"scss/_inputs.scss"
 			],
@@ -1659,14 +1750,6 @@
 				"scss/mixins/_input-reset.scss"
 			],
 			[
-				"panel",
-				"src/PanelElement.js"
-			],
-			[
-				"panelg",
-				"src/PanelGroup.js"
-			],
-			[
 				"cie",
 				"shaders/includes/cie_conversions.glsl"
 			],
@@ -1677,14 +1760,6 @@
 			[
 				"sigm",
 				"shaders/includes/sigmoidBlend.glsl"
-			],
-			[
-				"pick",
-				"scss/_picker.scss"
-			],
-			[
-				"ind",
-				"templates/index.pug"
 			],
 			[
 				"listeneru",
@@ -1713,10 +1788,6 @@
 			[
 				"dom",
 				"src/domutils.js"
-			],
-			[
-				"layou",
-				"scss/_layout.scss"
 			],
 			[
 				"spa",
@@ -1879,10 +1950,6 @@
 				"shaders/vert/passthrough.vert"
 			],
 			[
-				"glut",
-				"src/glutils.js"
-			],
-			[
 				"base",
 				"templates/base.pug"
 			],
@@ -1961,70 +2028,6 @@
 			[
 				"iriscontro",
 				"Source/IrisPanelController.cpp"
-			],
-			[
-				"plu",
-				"source/Plugin.cpp"
-			],
-			[
-				"unif",
-				"com.elicrow.iris/shaders/uniforms.glsl"
-			],
-			[
-				"irisc",
-				"com.elicrow.iris/shaders/iris_core.glsl"
-			],
-			[
-				"aimenu",
-				"illustratorapi/illustrator/AIMenu.h"
-			],
-			[
-				"iris.fr",
-				"com.elicrow.iris/shaders/iris.frag"
-			],
-			[
-				"conversions",
-				"com.elicrow.iris/shaders/partials/conversions.glsl"
-			],
-			[
-				"haz",
-				"com.elicrow.iris/js/Hazel.js"
-			],
-			[
-				"hz",
-				"com.elicrow.iris/js/Hazel.js"
-			],
-			[
-				"hazel",
-				"com.elicrow.iris/js/Hazel.js"
-			],
-			[
-				"aipain",
-				"illustratorapi/illustrator/AIPaintStyle.h"
-			],
-			[
-				"documen",
-				"illustratorapi/illustrator/AIDocumentView.h"
-			],
-			[
-				"notifier",
-				"illustratorapi/illustrator/AINotifier.h"
-			],
-			[
-				"notifi",
-				"illustratorapi/illustrator/AIMenuCommandNotifiers.h"
-			],
-			[
-				"pathsty",
-				"illustratorapi/illustrator/AIPathStyle.h"
-			],
-			[
-				"paintst",
-				"illustratorapi/illustrator/AIPaintStyle.h"
-			],
-			[
-				"sdkp",
-				"source/SDKPlugPlug.cpp"
 			]
 		],
 		"width": 0.0

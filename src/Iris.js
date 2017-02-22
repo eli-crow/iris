@@ -12,7 +12,7 @@ const passthrough = require('../shaders/vert/passthrough.vert');
 const sameLightness = require('../shaders/frag/same_lightness.frag');
 const sameHue = require('../shaders/frag/same_hue.frag');
 
-//manages the canvas and manages its IrisPalettes.
+//manages the canvas and its own IrisPalettes.
 class Iris
 {
 	constructor (canvas) {

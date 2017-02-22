@@ -19,9 +19,10 @@ const irisIndicator = document.getElementById('picker-indicator');
 const iris = new Iris(irisElement, irisInputs);
 window.iris = iris;
 
-const lightnessSlider = new Slider(0.5, -.17, 1, 1/255)
+const lightnessSlider = new Slider(0.5, 0, 1, 1/255)
 	.classes('lightness')
 	.bind(iris.palettes['sameLightness'].uniforms, "lightness")
+	.transform(x => x * 1.17 - 0.17)
 const hueSlider = new Slider(0, 0, 360, 1)
 	.classes('hue')
 	.bind(iris.palettes['sameHue'].uniforms, "hue")
@@ -79,10 +80,11 @@ brushCanvas.width = window.innerWidth;
 brushCanvas.height = window.innerHeight;
 
 const brush = new Brush(brushCanvas);
-brush.minSize = 3;
-brush.pressureSensitivity = 39;
-brush.speedSensitivity = -50;
+brush.minSize = 8;
+brush.pressureSensitivity = 4;
+brush.speedSensitivity = 2;
 brush.angleSensitivity = 0;
+brush.pointer.smoothing = 0.15;
 
 iris.on('pickend', brush.setBrushColor.bind(brush));
 

@@ -21,7 +21,8 @@ function cubicComponent (t, y0, y1, y2, y3) {
  * @return {array}             a buffer of points interpolated between y2 and y3
  */
 module.exports.getCubicPoints = function getCubicPoints(input, nSteps, nComponents, output) {
-  output = output || new Array(nComponents * nSteps);
+  const definedLength = nComponents * nSteps;
+  output = output || new Array(definedLength);
 
   for (let c = 0; c < nComponents; ++c) {
     const y0 = input[0*nComponents + c];
@@ -33,6 +34,7 @@ module.exports.getCubicPoints = function getCubicPoints(input, nSteps, nComponen
     }
   }
 
+  output.definedLength = definedLength;
   return output;
 };
 
@@ -54,3 +56,8 @@ module.exports.getCubicPointsEquidistant = function (input, nComponents, nIterat
 
   return output;
 };
+
+
+module.exports.clamp = function (x, a, b) {
+  return Math.min(Math.max(x, a), b);
+}

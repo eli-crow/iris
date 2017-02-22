@@ -2117,6 +2117,14 @@ jasmine-core@~2.5.2:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.5.2.tgz#6f61bd79061e27f43e6f9355e44b3c6cab6ff297"
 
+jasmine-fixture@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/jasmine-fixture/-/jasmine-fixture-2.0.0.tgz#b6d0c5a3bb4834d23dd137464ef96f04f93bbd60"
+
+jasmine-jquery@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/jasmine-jquery/-/jasmine-jquery-2.1.1.tgz#d4095e646944a26763235769ab018d9f30f0d47b"
+
 jasmine@^2.5.3:
   version "2.5.3"
   resolved "https://registry.yarnpkg.com/jasmine/-/jasmine-2.5.3.tgz#5441f254e1fc2269deb1dfd93e0e57d565ff4d22"
