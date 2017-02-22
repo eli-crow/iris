@@ -16,68 +16,62 @@ const sameHue = require('../shaders/frag/same_hue.frag');
 class Iris
 {
 	constructor (canvas) {
-		const self = this;
-
-		self.palettes = {};
-		self._gl = canvas.getContext(WEBGL_CONTEXT, {
+		this._gl = canvas.getContext(WEBGL_CONTEXT, {
 			preserveDrawingBuffer: true,
 			depth: false,
 			antialias: false,
 			premultipliedAlpha: true,
 			alpha: true
 		});
-		self._canvas = canvas;
-		self._currentPalette = null;
+		this._canvas = canvas;
+		this._currentPalette = null;
 
-		const reactor = self._reactor = new Reactor(['pick', 'pickend']);
-		self.on  = reactor.addEventListener.bind(reactor);
-		self.off = reactor.removeEventListener.bind(reactor);
+		const reactor = this._reactor = new Reactor(['pick', 'pickend']);
+		this.on  = reactor.addEventListener.bind(reactor);
+		this.off = reactor.removeEventListener.bind(reactor);
 		
-		const pupil = self._pupil = document.createElement('div');
+		const pupil = this._pupil = document.createElement('div');
 		pupil.classList.add('picker-pupil');
 		canvas.insertAdjacentElement('afterend', pupil);
 
-		const highlight = self._highlight = document.createElement('div');
+		const highlight = this._highlight = document.createElement('div');
 		highlight.classList.add('picker-hilight');
 		highlight.style.width  = HILIGHT_RADIUS * 2 + 'px';
 		highlight.style.height = HILIGHT_RADIUS * 2 + 'px';
-		canvas.insertAdjacentElement('afterend', self._highlight);
+		canvas.insertAdjacentElement('afterend', this._highlight);
 
-		self.palettes['sameLightness'] =
-			new IrisPalette('Colors', self._gl, sameLightness, passthrough, {
+		this.palettes = {};
+		this.palettes['sameLightness'] =
+			new IrisPalette('Colors', this._gl, sameLightness, passthrough, {
 				lightness: {type: '1f', value: 0.5},
 				indicator_radius: {type: '1f', value: PUPIL_RADIUS}
 			});
-		self.palettes['sameHue'] = 
-			new IrisPalette('Tones', self._gl, sameHue, passthrough, {
+		this.palettes['sameHue'] = 
+			new IrisPalette('Tones', this._gl, sameHue, passthrough, {
 				hue: {type: '1f', value: 0},
 				indicator_radius: {type: '1f', value: PUPIL_RADIUS}
 			});
 
-		self.onResize();
-		self.setMode('sameLightness');
+		this.onResize();
+		this.setMode('sameLightness');
 
-		pupil.addEventListener('click', () => {
-			reactor.dispatchEvent('pickend', glutils.getPixel(canvas, canvas.width/2, canvas.height/2));
-			domutils.setVendorCss(self._highlight, 'transform',`translate3d(${canvas.width/2+1}px,${canvas.height/2+1}px, 0px)`);
-		}, false);
-
-		function dispatchColors (event, e, shouldMoveHilight) {
-			const angle = Math.atan2(e.normY, e.normX);
-			const dist = Math.sqrt(Math.pow(e.centerX,  2) + Math.pow(e.centerY, 2));
-			
-			const c = glutils.getPixel(canvas, e.relX, e.relY);
-			if (c[3] >= 255) 
-				reactor.dispatchEvent(event, c); //if alpha == 1
-			if (shouldMoveHilight) 
-				domutils.setVendorCss(self._highlight, 'transform', `translate3d(${e.relX}px,${e.relY}px, 0px)`);
-		}
 		listenerutils.normalPointer(canvas, {
 			contained: false,
-			down: e => dispatchColors('pick', e, true), 
-			move: e => dispatchColors('pick', e, true),
-			up:   e => dispatchColors('pickend', e, false)
+			down: e => this.dispatchColors('pick', e, true), 
+			move: e => this.dispatchColors('pick', e, true),
+			up:   e => this.dispatchColors('pickend', e, false)
 		});
+	}
+
+	dispatchColors (eventName, e, updateHilight) {
+		const angle = Math.atan2(e.normY, e.normX);
+		const dist = Math.sqrt(Math.pow(e.centerX,  2) + Math.pow(e.centerY, 2));
+		
+		const c = glutils.getPixel(this._canvas, e.relX, e.relY);
+		if (c[3] >= 255) 
+			this._reactor.dispatchEvent(eventName, c); //if alpha == 1
+		if (updateHilight) 
+			domutils.setVendorCss(this._highlight, 'transform', `translate3d(${e.relX}px,${e.relY}px, 0px)`);
 	}
 
 	onResize() {
