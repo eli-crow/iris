@@ -7,18 +7,24 @@ const listenerutils = require('./listenerutils.js');
 //todo: pull in  modernizr to test for existence.
 const POINTER_EVENTNAME = 'pointer';
 
+const __defaults = {
+  smmothedProps: [],
+  minDistance: 2,
+  steps: 5,
+}
+
 class SmoothPointer
 { 
   constructor(context, options) {
-    var _nBufferComponents = 2;
-    this._steps = options['steps'] || 5;
-    this._minSquaredDistance = Math.pow(options['minDistance'], 2) || 400;
-    this._interpolatedPts = new Array(_nBufferComponents * this._steps);
-    this._smoothing = 0.3;
-    this._squaredSpeed = 0;
+    const smoothedProps = ['clientX', 'clientY'].concat(options['smoothedProps'] || __defaults['smoothedProps']);
+    const nComponents = smoothedProps.length;
+    const _buffer = new Array(4 * nComponents);
 
-    const _buffer = new Array(8);
-  
+    this._steps = options['steps'] || __defaults['steps'];
+    this._minSquaredDistance = Math.pow(options['minDistance'] || __defaults['steps'], 2);
+    this._interpolatedPts = new Array(nComponents * this._steps);
+    this._smoothing = 0.3;
+
     const _reactor = new Reactor(['down', 'move', 'up']);
     this.on  = _reactor.addEventListener.bind(_reactor);
     this.off = _reactor.removeEventListener.bind(_reactor);
@@ -27,39 +33,48 @@ class SmoothPointer
     if (fnutils.isFunction(options['move'])) this.on('move', options['move']);
     if (fnutils.isFunction(options['up']))   this.on('up',   options['up']);
 
+    let _squaredSpeed = 0;
     listenerutils.simplePointer(context, {
       contained: false,
       preventDefault: true,
       stopPropagation: true,
 
       down: e => {
-        _buffer[0] = _buffer[2] = _buffer[4] = _buffer[6] = e.clientX;
-        _buffer[1] = _buffer[3] = _buffer[5] = _buffer[7] = e.clientY;
-        
+        for (let i = 0, ii = nComponents; i < ii; ++i) {
+          const prop = e[smoothedProps[i]];
+          _buffer[i + ii * 0] = prop;
+          _buffer[i + ii * 1] = prop;
+          _buffer[i + ii * 2] = prop;
+          _buffer[i + ii * 3] = prop;
+        }
         _reactor.dispatchEvent('down', e);
       },
 
       move: e => {
-        this._squaredSpeed = Math.abs(
-            Math.pow(e.clientX - _buffer[0], 2) 
-          + Math.pow(e.clientY - _buffer[1], 2) 
+        let diffX = e.clientX - _buffer[0];
+        let diffY = e.clientY - _buffer[1];
+        _squaredSpeed = Math.abs(
+            Math.pow(diffX, 2) 
+          + Math.pow(diffY, 2) 
         );
-        if (this._squaredSpeed < this._minSquaredDistance) return;
+        if (_squaredSpeed < this._minSquaredDistance) return;
 
-        arrayutils.rotateArray(_buffer, _nBufferComponents);
-        var diffx = e.clientX - _buffer[0];
-        var diffy = e.clientY - _buffer[1];
-        _buffer[0] += diffx * (1 - this._smoothing);
-        _buffer[1] += diffy * (1 - this._smoothing);
-        
+        arrayutils.rotateArray(_buffer, nComponents);
+        for (let i = 0, ii = nComponents; i < ii; ++i) {
+          const prop = e[smoothedProps[i]];
+          var diff = prop - _buffer[i];
+          _buffer[i] += diff * (1 - this._smoothing);
+        }
+
         _reactor.dispatchEvent('move', {
-          pts: mathutils.getCubicPoints(_buffer, this._steps, _nBufferComponents, this._interpolatedPts),
-          squaredSpeed: this._squaredSpeed,
-          pressure: e.pressure || 0,
-          direction: Math.atan2(diffy, diffx) + Math.PI
+          nComponents: nComponents,
+          pts: mathutils.getCubicPoints(_buffer, this._steps, nComponents, this._interpolatedPts),
+          squaredSpeed: _squaredSpeed,
+          pressure: e.pressure || 1,
+          direction: Math.atan2(diffY, diffX) + Math.PI
         });
       },
-      
+
       up: e => _reactor.dispatchEvent('up', e)
     })
   }
