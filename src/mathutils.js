@@ -1,3 +1,7 @@
+module.exports.clamp = function (x, a, b) {
+  return Math.min(Math.max(x, a), b);
+}
+
 module.exports.distance = function (ptArray1, ptArray2) {
   let squareSum = 0;
   for (var i = 0, ii = ptArray1.length; i < ii; ++i) 
@@ -40,24 +44,52 @@ module.exports.getCubicPoints = function getCubicPoints(input, nSteps, nComponen
 
 
 
-module.exports.getCubicPointsEquidistant = function (input, nComponents, nIterations, output) {
-  output = output || [];
+// module.exports.getCubicPointsEquidistant = function (input, nComponents, nIterations, output) {
+//   output = output || [];
 
-  function iterate (pts) {
-    for (var i = 0, ii = pts.length; i < ii; i++) {
-      pts[i];
-    }
+//   function iterate (pts) {
+//     for (var i = 0, ii = pts.length; i < ii; i++) {
+//       pts[i];
+//     }
+//   }
+
+//   let intermediatePts = [input.slice(0)];
+//   for (let i = 0; i < nIterations; i++) {
+//     intermediatePts = iterate(intermediatePts);
+//   } 
+
+//   return output;
+// };
+
+module.exports.getSinePoints2d = function(width, amplitude, nPts, xOffset, yOffset, output) {
+  output = output || new Array(nPts * 2);
+
+  for (let i = 0; i < nPts; i++) {
+    output[2 * i]     = xOffset + width*i/nPts
+    output[2 * i + 1] = yOffset + amplitude * Math.sin(i/nPts*2*Math.PI);
   }
 
-  let intermediatePts = [input.slice(0)];
-  for (let i = 0; i < nIterations; i++) {
-    intermediatePts = iterate(intermediatePts);
-  } 
+  return output;
+}
+
+module.exports.getSinePoints1d = function(amplitude, nPts, output) {
+  output = output || new Array(nPts * 2);
+
+  for (let i = 0; i < nPts; i++) {
+    output[2 * i]     = xOffset + width*i/nPts
+    output[2 * i + 1] = yOffset + amplitude * Math.sin(i/nPts*2*Math.PI);
+  }
 
   return output;
-};
-
-
-module.exports.clamp = function (x, a, b) {
-  return Math.min(Math.max(x, a), b);
 }
+
+// module.exports.getCosinePoints = function(width, amplitude, nPts, output) {
+//   output = output || new Array(nPts * 2);
+
+//   for (let i = 0; i < nPts; i += 2) {
+//     output[i] = (width / )
+//     output[i + 1] = amplitude * Math.cos(i/nPts*2*Math.PI);
+//   }
+
+//   return output;
+// }

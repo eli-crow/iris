@@ -1,1 +1,0 @@
-const Brush = require('./Brush.js');

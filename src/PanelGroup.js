@@ -3,6 +3,8 @@ const PanelElement = require('./PanelElement.js');
 class PanelGroup
 {
 	constructor (groupElement) {
+		if (!groupElement) throw new Error('Argument isnt an element.');
+
 		this._element = groupElement;
 		this._panelElements = [];
 	}

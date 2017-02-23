@@ -11,6 +11,7 @@ input[type=range] {
 			0px 1px 1px transparentize($ambient, 0.7);
 	}
 	@include range-track {
+		background: $ambient-groove;
 		border: $rule-stack-groove;
 		border-radius: 5px;
 		border-color: $neutral-dark-1 !important;

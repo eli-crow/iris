@@ -4,11 +4,13 @@
 
 	.panel-main > .brush-preview-wrapper {
 		position: relative;
-		padding: spacing(3);
+		// padding: spacing(2);
 
 		> .brush-preview {
 			width: 100%;
-			height: $brush-preview-height;
+			height: spacing(10);
+
+			// border: $rule-stack-groove;
 		}
 	}
 }

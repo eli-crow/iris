@@ -5,6 +5,7 @@ const ButtonGroup = require('./ButtonGroup.js');
 const PanelGroup = require('./PanelGroup.js');
 const Spacer = require('./Spacer.js');
 const Brush = require('./Brush.js');
+const BrushPreview = require('./BrushPreview.js');
 const Surface = require('./Surface.js');
 const fnutils = require('./fnutils.js');
 
@@ -64,6 +65,19 @@ brush.pressureSensitivity = 4;
 brush.speedSensitivity = 2;
 brush.angleSensitivity = 0;
 brush.setImage(document.getElementById('brush-shape-bristles'))
+
+
+const brushPreview = new BrushPreview(document.getElementById('brush-preview'));
+brushPreview.setBrush(brush);
+brushPreview.draw();
+brush.on('changeend', x => brushPreview.draw.call(brushPreview));
+
+
+const minSizeSlider = new Slider(3, 0, 5, 0.01)
+	.transform(x => Math.exp(x))
+	.bind(val => brush.set.call(brush, 'minSize', val));
+const brushInputs = new PanelGroup(document.getElementById('brush-inputs'))
+	.add(minSizeSlider);
 
 
 

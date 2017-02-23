@@ -97,3 +97,34 @@ describe("getCubicPoints", () => {
 	// 	expect(output).toEqual(outBuffer);
 	// })
 // })
+
+
+describe('getSinePoints', () => {
+	let nPts;
+	let amplitude;
+
+	beforeEach(() => {
+		nPts = Math.floor(Math.random() * 100);
+		amplitude = Math.random() * 100;
+	})
+
+	it('returns an array of points within the range [-amplitude to amplitude] inclusive', () => {
+		const output = mathutils.getSinePoints(amplitude, nPts);
+		let result = 'all within range';
+
+		output.some(x => {
+			if (Math.abs(x) > amplitude) {
+				result = `value ${x} out of range.`;
+				return true;
+			}
+		});
+		
+		expect(result).toEqual('all within range');
+	})
+
+	it('modifies output buffer in place if supplied', () => {
+		const outputBuffer = new Array(nPts);
+		const output = mathutils.getSinePoints(amplitude, nPts, outputBuffer);
+		expect(output === outputBuffer).toBe(true);
+	})
+})
