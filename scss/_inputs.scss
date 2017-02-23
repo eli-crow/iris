@@ -7,7 +7,7 @@ input {
 
 .iris-button-group {
 	@include clearfix;
-	margin-bottom: $padding-1;
+	margin-bottom: spacing(1);
 }
 .iris-button {
 	float: left;
@@ -23,7 +23,7 @@ input {
 }
 
 .iris-input-group {
-	padding: $padding-1;
+	padding: spacing(1);
 	 
 	border-top: $rule-stack-groove;
 	 

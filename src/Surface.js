@@ -20,7 +20,7 @@ module.exports = class Surface
 		});
 
 		this.resize();
-		this._resizeListener = window.addEventListener('resize', function() {
+		this._resizeListener = window.addEventListener('resize', () => {
 		  this.resize();
 		});
 	}

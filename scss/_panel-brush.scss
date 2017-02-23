@@ -2,7 +2,13 @@
 {
 	width: 21.5rem;
 
-	> .brush-controls {
+	.panel-main > .brush-preview-wrapper {
+		position: relative;
+		padding: spacing(3);
 
+		> .brush-preview {
+			width: 100%;
+			height: $brush-preview-height;
+		}
 	}
 }

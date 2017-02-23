@@ -22,7 +22,7 @@
 
 				height: $picker-wheel-diameter;
 				width: $picker-wheel-diameter;
-				margin: $padding-1 ($picker-indicator-width + $padding-1) $padding-1 $padding-1;
+				margin: spacing(1) ($picker-indicator-width + spacing(1)) spacing(1) spacing(1);
 
 				border: $rule-stack-groove;
 				border-radius: 50%;
