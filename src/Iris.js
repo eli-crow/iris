@@ -31,11 +31,11 @@ class Iris
 		this.off = reactor.removeEventListener.bind(reactor);
 		
 		const pupil = this._pupil = document.createElement('div');
-		pupil.classList.add('picker-pupil');
+		pupil.classList.add('iris-pupil');
 		canvas.insertAdjacentElement('afterend', pupil);
 
 		const highlight = this._highlight = document.createElement('div');
-		highlight.classList.add('picker-hilight');
+		highlight.classList.add('iris-hilight');
 		highlight.style.width  = HILIGHT_RADIUS * 2 + 'px';
 		highlight.style.height = HILIGHT_RADIUS * 2 + 'px';
 		canvas.insertAdjacentElement('afterend', this._highlight);

@@ -1,42 +1,8 @@
-.picker 
-{
-	display: flex;
-	float: left;
+// .panel-iris is a .panel
+.panel-iris {
 	
-	position: relative;
-	margin-top: 4rem;
-	margin-left: 4rem;
-	
-	background-color: $picker-color;
-	box-shadow: 
-		0px 10px 50px transparentize($ambient, 0.95),
-		0px 2px 2px transparentize($ambient, 0.7);
-	border-radius: $radius-2;
-
-	user-select: none;
-	touch-action: manipulation;
-	
-	> .picker-left {
-		flex: 0 1 auto;
-		width: $picker-indicator-width;
-		padding: $padding-1;
-
-		border-right: $rule-stack-groove;
-
-		> .picker-label {
-			text-align: right;
-			letter-spacing: 0.5px;
-		
-			cursor: pointer;
-			color: $picker-color;
-			text-shadow: 
-				0px 0px 2px transparentize($ambient, 0.5),
-				-1px 0px 10px transparentize($ambient, 0.6);
-
-			transform: rotate(-90deg) translateX(-1rem);
-		}
-
-		> .picker-modes {
+	> .panel-tab {
+		> .iris-modes {
 			position: absolute;
 
 			top: 50%;
@@ -47,13 +13,13 @@
 		}
 	}
 
-	> .picker-main {
+	> .iris-main {
 		flex: 1 1 auto;
 
-		> .picker-wheel-wrapper {      
+		> .iris-wheel-wrapper {      
 			position: relative;
 			
-			> .picker-wheel {
+			> .iris-wheel {
 				-webkit-tap-highlight-color: rgba(0,0,0,0);
 
 				height: $picker-wheel-diameter;
@@ -66,7 +32,7 @@
 			}
 
 			// managed in Iris.js
-			> .picker-pupil {
+			> .iris-pupil {
 				position: absolute;
 				top: 0;
 				left: 0;
@@ -78,7 +44,7 @@
 			}
 
 			// managed in Iris.js
-			> .picker-hilight {
+			> .iris-hilight {
 				position: absolute;
 				top: 0;
 				left: 0;
@@ -90,7 +56,7 @@
 				pointer-events: none;
 			}
 			 
-			> .picker-indicator {
+			> .iris-indicator {
 				position: absolute;
 				height: $picker-indicator-height;
 				width: $picker-indicator-width;
@@ -103,16 +69,6 @@
 				border-bottom-left-radius: $radius-2;
 				 
 				transform: translateY(-50%);
-			}
-		}
-		 
-		> .picker-inputs {
-			padding: $padding-1;
-			 
-			border-top: $rule-stack-groove;
-			 
-			input {
-				width: 100%;
 			}
 		}
 	}

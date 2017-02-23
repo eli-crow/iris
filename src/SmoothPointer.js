@@ -71,7 +71,7 @@ class SmoothPointer
 
         _reactor.dispatchEvent('move', {
           nComponents: nComponents,
-          pts: mathutils.getCubicPoints(_buffer, steps, nComponents, this._interpolatedPts),
+          pts: mathutils.getCubicPoints(_buffer, this.steps, nComponents, this._interpolatedPts),
           squaredSpeed: _squaredSpeed,
           pressure: e.pressure || 1,
           direction: Math.atan2(diffY, diffX) + Math.PI

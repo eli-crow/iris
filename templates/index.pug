@@ -4,15 +4,6 @@ block main
 		img.brush-data#brush-shape-bristles(src = "./img/brush.png")
 		canvas#guides
 		canvas#art
-		.brush-controls
-			.iris-button#clear-canvas Clear
 
-	.picker
-		.picker-left
-			p.picker-label Iris
-			.picker-modes#picker-modes
-		.picker-main
-			.picker-wheel-wrapper
-				canvas.picker-wheel#main-iris
-				.picker-indicator#picker-indicator
-			.picker-inputs#picker-inputs
+	include ./panel-iris.pug
+	include ./panel-brush.pug
