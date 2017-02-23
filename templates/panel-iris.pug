@@ -1,9 +1,11 @@
-.panel-iris.panel
-	.panel-tab
-		p.panel-label Iris
-		.iris-modes#picker-modes
-	.iris-main
-		.iris-wheel-wrapper
-			canvas.iris-wheel#main-iris
-			.iris-indicator#picker-indicator
-		.iris-input-group#picker-inputs
+extends ./panel.pug
+
+block vars
+	- var name = 'Iris'
+block tab
+	.iris-modes#picker-modes
+block main
+	.iris-wheel-wrapper
+		canvas.iris-wheel#main-iris
+		.iris-indicator#picker-indicator
+	.iris-input-group#picker-inputs

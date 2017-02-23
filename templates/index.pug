@@ -2,8 +2,8 @@ extends base.pug
 block main
 	.brush-canvases
 		img.brush-data#brush-shape-bristles(src = "./img/brush.png")
-		canvas#guides
 		canvas#art
 
-	include ./panel-iris.pug
-	include ./panel-brush.pug
+	.panel-group
+		include ./panel-iris.pug
+		include ./panel-brush.pug

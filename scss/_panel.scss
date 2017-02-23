@@ -1,10 +1,20 @@
+//not related (yet) to PanelGroup.js
+.panel-group {
+	padding-top: 2rem;
+	padding-left: 2rem;
+
+	> .panel:not(:last-of-type) {
+		margin-bottom: 2rem;
+	}
+}
+
 .panel {
 	display: flex;
 	float: left;
+	clear: both;
 	position: relative;
 
-	margin-top: 4rem;
-	margin-left: 4rem;
+	min-height: 8rem;
 
 	background-color: $panel-color;
 	box-shadow: 
@@ -18,11 +28,13 @@
 	> .panel-tab {
 		flex: 0 1 auto;
 		width: $picker-indicator-width;
-		padding: $padding-1;
 
 		border-right: $rule-stack-groove;
 
 		> .panel-label {
+			margin-top: 1rem;
+
+			direction: rtl;
 			text-align: right;
 			letter-spacing: 0.5px;
 		
@@ -32,8 +44,12 @@
 				0px 0px 2px transparentize($ambient, 0.5),
 				-1px 0px 10px transparentize($ambient, 0.6);
 
-			transform: rotate(-90deg) translateX(-1rem);
+			transform: rotate(-90deg);
 		}
+	}
+
+	> .panel-main {
+		flex: 1 1 auto;
 	}
 }
 

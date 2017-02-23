@@ -1,6 +1,9 @@
-.panel-brush.panel
-	.panel-tab
-		p.panel-label brush
+extends ./panel.pug
+
+block vars
+	- var name = 'Brush'
+block tab
+block main
 	.brush-preview
 	.brush-controls
 		.iris-button#clear-canvas Clear
