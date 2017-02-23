@@ -1,11 +1,11 @@
 $common_globals
-$cie_conversions
+$hsluv
 
 uniform float lightness;
 
 void main() {
 	$common_variables
 
-	float chroma = 2.0 * (dist - indicator_radius) * (1.0 - blend_focus);
-	gl_FragColor = vec4(LCH2RGB(vec3(lightness, clamp(chroma, 0.0, 2.0), theta)), 1.0);
+	float chroma = (dist - indicator_radius) * (1.0 - blend_focus) / 66.666666;
+	gl_FragColor = hsluvToRgb((theta - PI)/PI*180., max(0.0, chroma), lightness, 1.0);
 }

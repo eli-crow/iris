@@ -1854,6 +1854,10 @@ hosted-git-info@^2.1.4:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.2.0.tgz#7a0d097863d886c0fabbdcd37bf1758d8becf8a5"
 
+hsluv@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/hsluv/-/hsluv-0.0.1.tgz#1dbcfe4642ec207443b976de6c2af703b30cca5c"
+
 http-errors@~1.5.0:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-1.5.1.tgz#788c0d2c1de2c81b9e6e8c01843b6b97eb920750"
