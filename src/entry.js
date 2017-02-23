@@ -19,7 +19,7 @@ const irisIndicator = document.getElementById('picker-indicator');
 const iris = new Iris(irisElement, irisInputs);
 window.iris = iris;
 
-const lightnessSlider = new Slider(0.5, 0, 100, 1/255)
+const lightnessSlider = new Slider(50, 0, 100, 1/255)
 	.classes('lightness')
 	.bind(iris.palettes['sameLightness'].uniforms, "lightness");
 const hueSlider = new Slider(0, 0, 360, 1)

@@ -43,7 +43,7 @@ class Iris
 		this.palettes = {};
 		this.palettes['sameLightness'] =
 			new IrisPalette('Colors', this._gl, sameLightness, passthrough, {
-				lightness: {type: '1f', value: 0.5},
+				lightness: {type: '1f', value: 50},
 				indicator_radius: {type: '1f', value: PUPIL_RADIUS}
 			});
 		this.palettes['sameHue'] = 
