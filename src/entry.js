@@ -1,17 +1,16 @@
 const Iris = require('./Iris.js');
-
 const Slider = require('./Slider.js');
 const Button = require('./Button.js');
 const ButtonGroup = require('./ButtonGroup.js');
 const PanelGroup = require('./PanelGroup.js');
 const Spacer = require('./Spacer.js');
-
 const Brush = require('./Brush.js');
-
+const Surface = require('./Surface.js');
 const fnutils = require('./fnutils.js');
 
-const UNDERLINE_COLOR = '#D3CDC9';
 
+
+//========================================================= Iris
 const irisElement = document.getElementById('main-iris');
 const irisInputs = document.getElementById('picker-inputs');
 const irisModes = document.getElementById('picker-modes');
@@ -31,13 +30,6 @@ const inputs = new PanelGroup(irisInputs)
 	.add(lightnessSlider)
 	.add(hueSlider);
 
-// for (let paletteID in iris.palettes) {
-// 	const btn = new Button(iris.palettes[paletteID].name)
-// 		.bind(() => iris.setMode(paletteID));
-// 	modeButtonGroup.add(btn);
-// }
-
-//for now
 const sameLightnessButton = new Button('Colors')
 	.bind(() => {
 		selectedModeElement = sameLightnessButton._element;
@@ -62,6 +54,30 @@ const modeButtonGroup = new ButtonGroup()
 
 const modes = new PanelGroup(irisModes)
 	.add(modeButtonGroup);
+	
+
+
+//========================================================= Brush
+const brush = new Brush();
+brush.minSize = 2;
+brush.pressureSensitivity = 4;
+brush.speedSensitivity = 2;
+brush.angleSensitivity = 0;
+brush.setImage(document.getElementById('brush-shape-bristles'))
+
+
+
+//========================================================= Surface
+const surface = new Surface(document.getElementById('art'));
+surface.setTool(brush);
+document.getElementById('clear-canvas').addEventListener('click', function () {
+	surface.clear();
+});
+
+
+
+//========================================================= Wiring
+iris.on('pickend', brush.setColor.bind(brush));
 
 let selectedModeElement = sameLightnessButton._element;
 let currentColor;
@@ -71,36 +87,3 @@ iris.on(['pick', 'pickend'], function (data) {
 	selectedModeElement.style.borderColor = rgba;
 	currentColor = rgba;
 })
-
-
-const brushCanvas = document.getElementById('art');
-const brushCtx = brushCanvas.getContext('2d');
-brushCanvas.width = window.innerWidth;
-brushCanvas.height = window.innerHeight;
-
-const brush = new Brush(brushCanvas);
-brush.minSize = 2;
-brush.pressureSensitivity = 4;
-brush.speedSensitivity = 2;
-brush.angleSensitivity = 0;
-brush.pointer.smoothing = 0.35;
-
-iris.on('pickend', brush.setBrushColor.bind(brush));
-
-var controls = {
-  clear: function () {
-    brushCtx.clearRect(0, 0, brushCanvas.width, brushCanvas.height);
-  },
-  resizeCanvas: function () {
-    brushCanvas.width  = window.innerWidth;
-    brushCanvas.height = window.innerHeight;
-  }
-};
-
-controls.resizeCanvas();
-window.addEventListener('resize', function() {
-  controls.resizeCanvas();
-});
-document.getElementById('clear-canvas').addEventListener('click', function () {
-	controls.clear();
-});

@@ -67,7 +67,8 @@ class SmoothPointer
           _buffer[i] += diff * (1 - this.smoothing);
         }
 
-        const steps = Math.floor(mathutils.clamp(_squaredSpeed / 80, 4, this.steps));    
+        // produces some weird, unpredictable results
+        // const steps = Math.floor(mathutils.clamp(_squaredSpeed / 80, 4, this.steps));  
 
         _reactor.dispatchEvent('move', {
           nComponents: nComponents,
