@@ -20,6 +20,11 @@ module.exports = class Tool {
 		this._reactor.dispatchEvent(eventname, args);
 	}
 
+	set (prop, val) {
+	  this[prop] = val;
+	  this._reactor.dispatchEvent('changeend');
+	}
+
 	addEffector (effectors, shouldInterpolate) {
 		for (var i = 0, ii = effectors.length; i < ii; i++) {
 			const effector = effectors[i];

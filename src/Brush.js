@@ -23,11 +23,6 @@ module.exports = class Brush extends Tool
     this._color = [127,127,127,255];
   }
 
-  set (prop, val) {
-    this[prop] = val;
-    this._reactor.dispatchEvent('changeend');
-  }
-
   setImage (brushImg) {
     this._brushImg = brushImg;
     this._texture.width = brushImg.width;
@@ -60,19 +55,12 @@ module.exports = class Brush extends Tool
   }
 
   draw (ctx, e, pts) {
-    let size = this.minSize;
-    for (var i = 0, ii = this._effectors.length; i < ii; i++) {
-      size += this._effectors[i].transform(this, e);
-    };
+    let size = this.minSize + this.getEffectorSum(this._effectors, e);
 
     for (let i = 0, ii = pts.definedLength; i<ii; i+=e.nComponents) {
-      let smoothSize = size;
-      for (let j = 0, jj = this._smoothedEffectors.length; j < jj; j++) {
-        smoothSize += this._smoothedEffectors[j].transform(this, e);
-      };
-      smoothSize = Math.max(smoothSize, 0)
-
-      canvasutils.drawTexture(ctx, this._texture,
+      let smoothSize = Math.max(0, size + this.getEffectorSum(this._smoothedEffectors, e) );
+      canvasutils.drawTexture(
+        ctx, this._texture,
         pts[i], pts[i + 1],
         smoothSize, smoothSize,
         2 * Math.PI * Math.random()
@@ -80,15 +68,17 @@ module.exports = class Brush extends Tool
     }
   }
 
-  onDown (ctx, e) {
-    this.draw(ctx, e, [e.offsetX, e.offsetY]);
+  getEffectorSum(effectors, event) {
+    let sum = 0;
+    for (let j = 0, jj = effectors.length; j < jj; j++) {
+      sum += effectors[j].transform(this, event);
+    };
+    return sum;
   }
-  onMove (ctx, e) {
-    this.draw(ctx, e, e.pts);
-  }
-  onUp (ctx, e) {
-  
-  }
+
+  onDown (ctx, e) { this.draw(ctx, e, [e.offsetX, e.offsetY]); }
+  onMove (ctx, e) { this.draw(ctx, e, e.pts); }
+  onUp (ctx, e) {}
 }
 
 module.exports.EffectorTypes = {
