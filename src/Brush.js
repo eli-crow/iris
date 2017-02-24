@@ -33,7 +33,7 @@ module.exports = class Brush extends TexturedTool
 
   onDown (ctx, e) { this.draw(ctx, e, [e.offsetX, e.offsetY]); }
   onMove (ctx, e) { this.draw(ctx, e, e.pts); }
-  onUp (ctx, e) {}
+  onUp (ctx, e)   {}
 }
 
 module.exports.EffectorTypes = {

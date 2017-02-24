@@ -19,21 +19,21 @@ module.exports = class Tool {
 	dispatch (eventname, args) {
 		this._reactor.dispatchEvent(eventname, args);
 	}
-
 	set (prop, val) {
 	  this[prop] = val;
 	  this._reactor.dispatchEvent('changeend');
 	}
-
 	addEffector (effectors, shouldInterpolate) {
 		for (var i = 0, ii = effectors.length; i < ii; i++) {
 			const effector = effectors[i];
+			//TODO: remove dependency here.
 			effector.tool = this;
+			if (effector.type in this.constructor.EffectorTypes) 
+				effector.targetProp = this.constructor.EffectorTypes[effector.type];
 			if (shouldInterpolate) this._smoothedEffectors.push(effector);
 			else this._effectors.push(effector);
 		}
 	}
-
 	getEffectorSum(effectors, event) {
 	  let sum = 0;
 	  for (let j = 0, jj = effectors.length; j < jj; j++) {

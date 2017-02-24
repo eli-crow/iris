@@ -1,11 +1,9 @@
-const Brush = require('./Brush.js');
-
-module.exports = class BrushEffector
+module.exports = class ToolEffector
 {
 	constructor (effectorType, transform) {
-		this.targetProp = (effectorType in Brush.EffectorTypes) ?
-			Brush.EffectorTypes[effectorType] : null;
 		this.scale = 1;
+		this.type = effectorType;
+		this.targetProp = null;
 		this._transform = transform || null;
 	}
 

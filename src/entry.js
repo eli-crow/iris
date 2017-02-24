@@ -4,7 +4,7 @@ const Button = require('./Button.js');
 const ButtonGroup = require('./ButtonGroup.js');
 const PanelGroup = require('./PanelGroup.js');
 const Spacer = require('./Spacer.js');
-const BrushEffector = require('./BrushEffector.js');
+const ToolEffector = require('./ToolEffector.js');
 const Brush = require('./Brush.js');
 const BrushPreview = require('./BrushPreview.js');
 const Surface = require('./Surface.js');
@@ -64,15 +64,15 @@ const brush = new Brush();
 brush.minSize = 2;
 brush.setImage(document.getElementById('brush-shape-bristles'))
 
-const angleEffector = new BrushEffector('size', (brush, event) => {
+const angleEffector = new ToolEffector('size', (brush, event) => {
 	const symm = brush.hasSymmetricalEmphasis ? 2 : 1;
 	return Math.cos((Math.PI - event.direction + brush.calligAngle) * symm) *.5 +.5;
 });
-const speedEffector = new BrushEffector('size', (brush, event) => {
+const speedEffector = new ToolEffector('size', (brush, event) => {
 	const s = Math.sqrt(event.squaredSpeed);
 	return s/(s+brush.speedScale)
 });
-const pressureEffector = new BrushEffector('size', (brush, event) => {
+const pressureEffector = new ToolEffector('size', (brush, event) => {
 	return event.pressure;
 });
 
