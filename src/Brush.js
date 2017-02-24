@@ -1,5 +1,4 @@
 const Tool = require('./Tool.js');
-const Reactor = require('./Reactor.js');
 const canvasutils = require('./canvasutils.js');
 
 module.exports = class Brush extends Tool
@@ -22,11 +21,9 @@ module.exports = class Brush extends Tool
     this._tempCanvas = document.createElement('canvas');
     this._tempCtx = this._tempCanvas.getContext('2d');
     this._color = [127,127,127,255];
-    this._reactor = new Reactor(['change', 'changeend']);
   }
 
   set (prop, val) {
-    //Todo: maintain a style object.
     this[prop] = val;
     this._reactor.dispatchEvent('changeend');
   }
@@ -38,7 +35,7 @@ module.exports = class Brush extends Tool
     this._tempCanvas.width = brushImg.width;
     this._tempCanvas.height = brushImg.height;
     this.setColor(this._color);
-    this._reactor.dispatchEvent('changeend');
+    this.dispatch('changeend');
   }
 
   //color array is rgba, all in the range of 0-255;
@@ -59,28 +56,25 @@ module.exports = class Brush extends Tool
     ctx.putImageData(out,0,0);
     this._texture.src = this._tempCanvas.toDataURL('image/png');
     this._color = colorArray;
-    this._reactor.dispatchEvent('changeend');
+    this.dispatch('changeend');
   }
 
   draw (ctx, e, pts) {
-    const s = Math.sqrt(e.squaredSpeed);
-    const symm = this.hasSymmetricalEmphasis ? 2 : 1;
-    
-    const sensitivity = 
-        this.speedSensitivity * s/(s+this.speedScale)
-      + this.angleSensitivity * (
-          Math.cos((Math.PI - e.direction + this.calligAngle)*symm) *.5 +.5
-        );
+    let size = this.minSize;
+    for (var i = 0, ii = this._effectors.length; i < ii; i++) {
+      size += this._effectors[i].transform(this, e);
+    };
 
     for (let i = 0, ii = pts.definedLength; i<ii; i+=e.nComponents) {
-      const size = this.minSize 
-        + Math.max(0, sensitivity + this.pressureSensitivity 
-          * (e.nComponents === 3 ? pts[i+2] : e.pressure));
+      let smoothSize = size;
+      for (let j = 0, jj = this._smoothedEffectors.length; j < jj; j++) {
+        smoothSize += this._smoothedEffectors[j].transform(this, e);
+      };
+      smoothSize = Math.max(smoothSize, 0)
 
-      canvasutils.drawTexture(
-        ctx    , this._texture,
-        pts[i] , pts[i + 1],
-        size   , size,
+      canvasutils.drawTexture(ctx, this._texture,
+        pts[i], pts[i + 1],
+        smoothSize, smoothSize,
         2 * Math.PI * Math.random()
       );
     }
@@ -95,11 +89,8 @@ module.exports = class Brush extends Tool
   onUp (ctx, e) {
   
   }
+}
 
-  on (eventname, callback) { 
-    this._reactor.addEventListener.call(this._reactor, eventname, callback); 
-  }
-  off (eventname, callback) { 
-    this._reactor.addEventListener.call(this._reactor, eventname, callback); 
-  }
+module.exports.EffectorTypes = {
+  size: 'size'
 }

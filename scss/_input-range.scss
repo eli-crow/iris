@@ -17,6 +17,22 @@ input[type=range] {
 		border-color: $neutral-dark-1 !important;
 	}
 }
+
+//TODO: figure out any z index workarounds.
+input[type=range].signed {
+	position: relative;
+
+	&:before {
+		content: '';
+		position: absolute;
+		left: 50%;
+		top: 0;
+		width: 100%; 
+		height: 100%;
+
+		border-left: solid 1px $ambient-groove;
+	}
+}
 input[type=range].hue {
 	@include range-track {
 		background: $gradient-hsl-hue;
