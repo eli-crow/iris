@@ -89,9 +89,15 @@ const minSizeSlider = new Slider(3, 0, 5, 0.01)
 	.bind(val => brush.set.call(brush, 'minSize', val));
 const pressureSlider = new Slider(0, -50, 50, 1)
 	.bind(val => pressureEffector.set.call(pressureEffector, 'scale', val));
+const angleSlider = new Slider(0, -50, 50, 1)
+	.bind(val => angleEffector.set.call(angleEffector, 'scale', val));
 const brushInputs = new PanelGroup(document.getElementById('brush-inputs'))
 	.add(minSizeSlider)
-	.add(pressureSlider);
+	.add(new Spacer())
+	.add(pressureSlider)
+	.add(new Spacer())
+	.add(angleSlider)
+	.add(new Spacer());
 
 
 

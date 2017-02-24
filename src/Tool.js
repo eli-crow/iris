@@ -33,4 +33,12 @@ module.exports = class Tool {
 			else this._effectors.push(effector);
 		}
 	}
+
+	getEffectorSum(effectors, event) {
+	  let sum = 0;
+	  for (let j = 0, jj = effectors.length; j < jj; j++) {
+	    sum += effectors[j].transform(this, event);
+	  };
+	  return sum;
+	}
 };
