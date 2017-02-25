@@ -1,4 +1,3 @@
-const Reactor = require('./Reactor.js');
 const arrayutils = require('./arrayutils.js');
 const mathutils = require('./mathutils.js');
 const fnutils = require('./fnutils.js');
@@ -25,14 +24,10 @@ class SmoothPointer
     this.smoothing = 0.3;
 
     this._interpolatedPts = new Array(nComponents * this.steps);
-
-    const _reactor = new Reactor(['down', 'move', 'up']);
-    this.on  = _reactor.addEventListener.bind(_reactor);
-    this.off = _reactor.removeEventListener.bind(_reactor);
   
-    if (fnutils.isFunction(options['down'])) this.on('down', options['down']);
-    if (fnutils.isFunction(options['move'])) this.on('move', options['move']);
-    if (fnutils.isFunction(options['up']))   this.on('up',   options['up']);
+    if (fnutils.isFunction(options['down'])) this._onDown = options['down'];
+    if (fnutils.isFunction(options['move'])) this._onMove = options['move'];
+    if (fnutils.isFunction(options['up']))   this._onUp   = options['up'];
 
     let _squaredSpeed = 0;
     listenerutils.simplePointer(context, {
@@ -48,7 +43,7 @@ class SmoothPointer
           _buffer[i + ii * 2] = prop;
           _buffer[i + ii * 3] = prop;
         }
-        _reactor.dispatchEvent('down', e);
+        this._onDown(e);
       },
 
       move: e => {
@@ -67,10 +62,7 @@ class SmoothPointer
           _buffer[i] += diff * (1 - this.smoothing);
         }
 
-        // produces some weird, unpredictable results
-        // const steps = Math.floor(mathutils.clamp(_squaredSpeed / 80, 4, this.steps));  
-
-        _reactor.dispatchEvent('move', {
+        this._onMove({
           nComponents: nComponents,
           pts: mathutils.getCubicPoints(_buffer, this.steps, nComponents, this._interpolatedPts),
           squaredSpeed: _squaredSpeed,
@@ -79,7 +71,7 @@ class SmoothPointer
         });
       },
 
-      up: e => _reactor.dispatchEvent('up', e)
+      up: e => this._onUp(e)
     })
   }
 }
