@@ -80,14 +80,18 @@ const angleEffector = new ToolEffector('size', (brush, event) => {
 });
 const speedEffector = new ToolEffector('size', (brush, event) => {
 	const s = Math.sqrt(event.squaredSpeed);
-	return s/(s+brush.speedScale)
+	return s/(s+brush.speedScale);
 });
 const pressureEffector = new ToolEffector('size', (brush, event) => {
+	event.pressure
+	return event.pressure;
+});
+const pressureFlowEffector = new ToolEffector('flow', (brush, event) => {
 	return event.pressure;
 });
 
-brush.addEffector(angleEffector, speedEffector);
-brush.addSmoothEffector(pressureEffector);
+brush.addEffector([angleEffector, speedEffector, pressureFlowEffector], false);
+brush.addEffector([pressureEffector], true);
 
 const brushPreview = new BrushPreview(document.getElementById('brush-preview'));
 brushPreview.setBrush(brush);
@@ -99,12 +103,15 @@ const minSizeSlider = new Slider(3, 0, 5, 0.01)
 	.bind(val => brush.set.call(brush, 'minSize', val));
 const pressureSlider = new Slider(0, -50, 50, 1)
 	.bind(val => pressureEffector.set.call(pressureEffector, 'scale', val));
+const pressureFlowSlider = new Slider(0, 0, 1, .01)
+	.bind(val => pressureFlowEffector.set.call(pressureFlowEffector, 'scale', val));
 const angleSlider = new Slider(0, -50, 50, 1)
 	.bind(val => angleEffector.set.call(angleEffector, 'scale', val));
 const brushInputs = new PanelGroup(document.getElementById('brush-inputs'))
 	.add(minSizeSlider)
 	.add(new Spacer())
 	.add(pressureSlider)
+	.add(pressureFlowSlider)
 	.add(new Spacer())
 	.add(angleSlider)
 	.add(new Spacer());

@@ -66,7 +66,7 @@ class SmoothPointer
           nComponents: nComponents,
           pts: mathutils.getCubicPoints(_buffer, this.steps, nComponents, this._interpolatedPts),
           squaredSpeed: _squaredSpeed,
-          pressure: e.pressure || 1,
+          pressure: (e.pressure * 1.2 - .2) || 1,
           direction: Math.atan2(diffY, diffX) + Math.PI
         });
       },

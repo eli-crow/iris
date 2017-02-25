@@ -11,7 +11,7 @@ module.exports = class Tool {
 
 		this.pointer = new SmoothPointer(surface.canvas, {
 		  minDistance: 2,
-		  steps: 30,
+		  steps: 3,
 		  smoothedProps: options['smoothInputs'],
 		  smoothing: 0.35,
 
@@ -48,32 +48,31 @@ module.exports = class Tool {
 		this._currentCtx = surface.ctx;
 	}
 
-	_addEffector (effectorGroup, effectors) {
-		for (var i = 0, ii = effectors.length; i < ii; i++) {
+	addEffector (effectors, isSmoothedEffector) {
+		for (let i = 0, ii = effectors.length; i < ii; i++) {
 			const effector = effectors[i];
 			effector.tool = this;
 
-			if (effector.type in this.constructor.EffectorTypes) 
-				effector.targetProp = this.constructor.EffectorTypes[effector.type];
+			if (effector.type in this.EffectorTypes) 
+				effector.targetProp = this.EffectorTypes[effector.type];
 
-			effectorGroup.push(effector);
+			if (isSmoothedEffector) 
+				this._smoothedEffectors.push(effector);
+			else
+				this._effectors.push(effector);
 		}
 	}
 
-	addEffector (effectors) {
-		this._addEffector(this._effectors, arguments);
-	}
+	applyEffectors(effectorGroup, event, props) {
+		const result = JSON.parse(JSON.stringify(props));
 
-	addSmoothEffector (effectors) {
-		this._addEffector(this._smoothedEffectors, arguments);
-	}
-
-
-	getEffectorSum(effectorGroup, event) {
-	  let sum = 0;
 	  for (let i = 0, ii = effectorGroup.length; i < ii; i++) {
-	    sum += effectorGroup[i].transform(this, event);
+	  	const effector = effectorGroup[i];
+	    result[effector.targetProp] = Math.max(0,
+	    	result[effector.targetProp] + effector.transform(this, event)
+	    );
 	  };
-	  return sum;
+
+	  return result;
 	}
 };
