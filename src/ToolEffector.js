@@ -1,10 +1,10 @@
 module.exports = class ToolEffector
 {
 	constructor (effectorType, transform) {
+		this._transform = transform || null;
 		this.scale = 1;
 		this.type = effectorType;
 		this.targetProp = null;
-		this._transform = transform || null;
 	}
 
 	transform(brushProps, event) {

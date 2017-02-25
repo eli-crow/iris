@@ -35,7 +35,7 @@ module.exports = class BrushPreview
 	draw() {
 		this.clear();
 		const brush = this._brush;
-		brush.draw.call(brush, this._ctx, {
+		brush.draw(this._ctx, {
 			pts: this._pts,
 			nComponents: 2,
 			pressure: 0.5,            //interpolated end to end

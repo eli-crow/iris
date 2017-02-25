@@ -26,11 +26,12 @@ input[type=range].signed {
 		content: '';
 		position: absolute;
 		left: 50%;
+		left: calc(50% - 6=5px);
 		top: 0;
-		width: 100%; 
+		width: 0%; 
 		height: 100%;
 
-		border-left: solid 1px $ambient-groove;
+		border-left: solid 4px $ambient-groove;
 	}
 }
 input[type=range].hue {

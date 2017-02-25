@@ -2,8 +2,8 @@ const Tool = require('./Tool.js');
 
 module.exports = class TexturedTool extends Tool
 {
-	constructor() {
-		super();
+	constructor(surface, options) {
+		super(surface, options);
 
 		this._brushImg = null;
 		this._texture = new Image();

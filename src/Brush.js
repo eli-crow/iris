@@ -3,8 +3,8 @@ const canvasutils = require('./canvasutils.js');
 
 module.exports = class Brush extends TexturedTool
 {
-  constructor() {
-    super();
+  constructor(surface, options) {
+    super(surface, options);
 
     this.minSize = 2;
     this.erase = false;

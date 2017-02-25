@@ -59,8 +59,18 @@ const modes = new PanelGroup(irisModes)
 	
 
 
+//========================================================= Surface
+const surface = new Surface(document.getElementById('art'));
+document.getElementById('clear-canvas').addEventListener('click', function () {
+	surface.clear();
+});
+
+
+
 //========================================================= Brush
-const brush = new Brush();
+const brush = new Brush(surface, {
+	smoothInputs: ['pressure']
+});
 brush.minSize = 2;
 brush.setImage(document.getElementById('brush-shape-bristles'))
 
@@ -76,8 +86,8 @@ const pressureEffector = new ToolEffector('size', (brush, event) => {
 	return event.pressure;
 });
 
-brush.addEffector([angleEffector, speedEffector], false);
-brush.addEffector([pressureEffector], true);
+brush.addEffector(angleEffector, speedEffector);
+brush.addSmoothEffector(pressureEffector);
 
 const brushPreview = new BrushPreview(document.getElementById('brush-preview'));
 brushPreview.setBrush(brush);
@@ -98,16 +108,6 @@ const brushInputs = new PanelGroup(document.getElementById('brush-inputs'))
 	.add(new Spacer())
 	.add(angleSlider)
 	.add(new Spacer());
-
-
-
-//========================================================= Surface
-const surface = new Surface(document.getElementById('art'));
-surface.setTool(brush);
-document.getElementById('clear-canvas').addEventListener('click', function () {
-	surface.clear();
-});
-
 
 
 //========================================================= Wiring
