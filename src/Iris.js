@@ -1,11 +1,12 @@
 const IrisPalette = require('./IrisPalette.js');
 const Highlight = require('./Highlight.js');
+const Pupil = require('./Pupil.js');
 const Emitter = require('./Emitter.js');
 const fnutils = require('./fnutils.js');
 const listenerutils = require('./listenerutils.js')
 
-const WEBGL_CONTEXT = "webgl";
 const PUPIL_RADIUS = 0.25;
+const WEBGL_CONTEXT = "webgl";
 const passthrough = require('../shaders/vert/passthrough.vert');
 const sameLightness = require('../shaders/frag/same_lightness.frag');
 const sameHue = require('../shaders/frag/same_hue.frag');
@@ -16,6 +17,7 @@ class Iris extends Emitter
 	constructor (canvas) {
 		super(['pick', 'pickend']);
 
+		this._canvas = canvas;
 		this._gl = canvas.getContext(WEBGL_CONTEXT, {
 			preserveDrawingBuffer: true,
 			depth: false,
@@ -23,9 +25,11 @@ class Iris extends Emitter
 			premultipliedAlpha: true,
 			alpha: true
 		});
-		this._canvas = canvas;
-		this._currentPalette = null;
+		
 		this._highlight = new Highlight(canvas);
+		this._pupil = new Pupil(canvas);
+		
+		this._currentPalette = null;
 		this.palettes = {};
 		this.palettes['sameLightness'] = new IrisPalette(this, 'Colors', sameLightness, passthrough, {
 			lightness: {type: '1f', value: 50},
@@ -35,13 +39,7 @@ class Iris extends Emitter
 			hue: {type: '1f', value: 0},
 			indicator_radius: {type: '1f', value: PUPIL_RADIUS}
 		});
-
-		const pupil = this._pupil = document.createElement('div');
-		pupil.classList.add('iris-pupil');
-		canvas.insertAdjacentElement('afterend', pupil);
-
 		this.onResize();
-		this._highlight.move(canvas.width/2, canvas.height/2);
 		this.setMode('sameLightness');
 
 		listenerutils.normalPointer(canvas, {
@@ -53,7 +51,7 @@ class Iris extends Emitter
 	}
 
 	emitColors (eventName, e, updateHilight) {
-		if (updateHilight) this._highlight.move(e.relX, e.relY);
+		if (updateHilight) this._highlight.move(e.centerX, e.centerY);
 		const c = this._highlight.sample();
 		if (c[3] >= 255) this.emit(eventName, c); //if alpha == 1
 	}
@@ -72,13 +70,7 @@ class Iris extends Emitter
 		canvas.height = height;
 		this._gl.viewport(0,0, width, height);
 
-		const ps  = this._pupil.style;
-		const pw  = PUPIL_RADIUS * width;
-		const ph  = PUPIL_RADIUS * height;
-		ps.left   = (width/2 + canvas.offsetLeft - pw/2) + 'px';
-		ps.top    = (height/2 + canvas.offsetTop - ph/2) + 'px';
-		ps.width  = pw + 'px';
-		ps.height = ph + 'px';
+		this._pupil.resize();
 	}
 
 	setMode (modeName) {

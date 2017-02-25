@@ -18,12 +18,14 @@ module.exports = class Highlight {
 	}
 
 	move (x, y) {
-		this._x = x; this._y = y;
-		domutils.setVendorCss(this._element, 'transform', `translate3d(${x}px,${y}px, 0px)`);
+		this._x = this._canvas.width / 2 + x;
+		this._y = this._canvas.height / 2 + y;
+		domutils.setVendorCss(this._element, 'transform', 
+			`translate3d(${this._x}px,${this._y}px, 0px)`);
 	}
 
 	movePolar (theta, r) {
-
+		
 	}
 
 	sample () {
