@@ -19,7 +19,7 @@ module.exports = class TexturedTool extends Tool
 	  this._tempCanvas.width = brushImg.width;
 	  this._tempCanvas.height = brushImg.height;
 	  this.setColor(this._color);
-	  this.dispatch('changeend');
+	  this.emit('changeend');
 	}
 
 	//color array is rgba, all in the range of 0-255;
@@ -40,6 +40,6 @@ module.exports = class TexturedTool extends Tool
 	  ctx.putImageData(out,0,0);
 	  this._texture.src = this._tempCanvas.toDataURL('image/png');
 	  this._color = colorArray;
-	  this.dispatch('changeend');
+	  this.emit('changeend');
 	}
 }

@@ -1,17 +1,18 @@
-const Reactor = require('./Reactor.js');
+const Emitter = require('./Emitter.js');
 const SmoothPointer = require('./SmoothPointer.js');
 
-module.exports = class Tool {
+module.exports = class Tool extends Emitter {
 	constructor (surface, options) {
+		super(['change', 'changeend']);
+
 		this._effectors = [];
 		this._smoothedEffectors = [];
-		this._reactor = new Reactor(['change', 'changeend']);
 		this._surface = surface;
 		this._currentCtx = surface.ctx;
 
 		this.pointer = new SmoothPointer(surface.canvas, {
 		  minDistance: 2,
-		  steps: 3,
+		  steps: 2,
 		  smoothedProps: options['smoothInputs'],
 		  smoothing: 0.35,
 
@@ -26,21 +27,9 @@ module.exports = class Tool {
 	onMove () {}
 	onUp () {}
 
-	on (eventname, callback) { 
-	  this._reactor.addEventListener.call(this._reactor, eventname, callback); 
-	}
-
-	off (eventname, callback) { 
-	  this._reactor.addEventListener.call(this._reactor, eventname, callback); 
-	}
-
-	dispatch (eventname, args) {
-		this._reactor.dispatchEvent(eventname, args);
-	}
-
 	set (prop, val) {
 	  this[prop] = val;
-	  this._reactor.dispatchEvent('changeend');
+	  this.emit('changeend');
 	}
 
 	setSurface (surface) {

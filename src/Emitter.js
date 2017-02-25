@@ -1,5 +1,5 @@
 //class for dispatching events to attached handlers.
-class ReactorEvent 
+class EmitterEvent 
 {
 	constructor(name) {
 		this.name = name;
@@ -13,16 +13,16 @@ class ReactorEvent
 	}
 }
 
-class Reactor
+module.exports = class Emitter
 {
 	constructor(eventNames) {
 		this.events = {};
 		for (var i = 0, ii = eventNames.length; i < ii; i++) {
 			var eventName = eventNames[i];
-			this.events[eventName] = new ReactorEvent(eventName);
+			this.events[eventName] = new EmitterEvent(eventName);
 		}
 	}
-	dispatchEvent(eventName, eventArgs){
+	emit(eventName, eventArgs){
 		var callbacks = this.events[eventName].callbacks;
 		for (var i = 0, ii = callbacks.length; i < ii; i++) {
 			var callback = callbacks[i];
@@ -30,7 +30,7 @@ class Reactor
 			else callbacks.splice(1, 1);
 		}
 	}
-	addEventListener(eventName, callback){
+	on(eventName, callback){
 		if (eventName.constructor === Array) {
 			for (var i = 0, ii = eventName.length; i < ii; i++) {
 				this.events[eventName[i]].attachCallback(callback);
@@ -38,10 +38,7 @@ class Reactor
 		}
 		else this.events[eventName].attachCallback(callback);
 	}
-	removeEventListener(eventName, callback){
+	off(eventName, callback){
 		this.events[eventName].detachCallback(callback);
 	}
 }
-
-
-module.exports = Reactor;

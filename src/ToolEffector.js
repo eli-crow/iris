@@ -13,6 +13,6 @@ module.exports = class ToolEffector
 
 	set (prop, val) {
 	  this[prop] = val;
-	  this.tool.dispatch('changeend');
+	  this.tool.emit('changeend');
 	}
 }

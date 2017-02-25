@@ -4,8 +4,9 @@ const primatives = require('./primatives');
 // maintains own programs, uniforms, geometry, and attributes.
 class IrisPalette
 {
-	constructor (name, gl, fragmentSrc, vertexSrc, uniforms) {
-		this.gl = gl;
+	constructor (iris, name, fragmentSrc, vertexSrc, uniforms) {
+		this.iris = iris;
+		const gl = this.gl = iris._gl;
 		this.name = name;
 
 		const vertShader = glutils.createShader(gl, vertexSrc, gl.VERTEX_SHADER);
@@ -45,26 +46,24 @@ class IrisPalette
 	
 
 	addUniform(name, descriptor) {
-		const self = this;
-
-		descriptor.location = self.gl.getUniformLocation(self._program, name);
-		const _uniform = self._uniforms[name] = descriptor;
+		descriptor.location = this.gl.getUniformLocation(this._program, name);
+		const _uniform = this._uniforms[name] = descriptor;
 
 		//at get/set interface to uniforms object.
-		Object.defineProperty(self.uniforms, name, {
-			get: function () {
-				return self._uniforms[name].value;
+		Object.defineProperty(this.uniforms, name, {
+			get: () => {
+				return this._uniforms[name].value;
 			},
-			set: function (value) {
-				const _uniform = self._uniforms[name];
-				glutils.uniformByType(self.gl, _uniform.type, _uniform.location, value);
+			set: (value) => {
+				const _uniform = this._uniforms[name];
+				glutils.uniformByType(this.gl, _uniform.type, _uniform.location, value);
 				_uniform.value = value;
-				self.draw();
+				this.draw();
+				this.iris.emitColors('pick', null, false);
 			}
 		});
 
-
-		glutils.uniformByType(self.gl, _uniform.type, _uniform.location, _uniform.value);
+		glutils.uniformByType(this.gl, _uniform.type, _uniform.location, _uniform.value);
 	}
 }
 

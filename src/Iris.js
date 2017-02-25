@@ -1,21 +1,21 @@
 const IrisPalette = require('./IrisPalette.js');
-const Reactor = require('./Reactor.js');
+const Highlight = require('./Highlight.js');
+const Emitter = require('./Emitter.js');
 const fnutils = require('./fnutils.js');
-const glutils = require('./glutils.js');
-const domutils = require('./domutils.js');
 const listenerutils = require('./listenerutils.js')
 
 const WEBGL_CONTEXT = "webgl";
 const PUPIL_RADIUS = 0.25;
-const HILIGHT_RADIUS = 7.5;
 const passthrough = require('../shaders/vert/passthrough.vert');
 const sameLightness = require('../shaders/frag/same_lightness.frag');
 const sameHue = require('../shaders/frag/same_hue.frag');
 
 //manages the canvas and its own IrisPalettes.
-class Iris
+class Iris extends Emitter
 {
 	constructor (canvas) {
+		super(['pick', 'pickend']);
+
 		this._gl = canvas.getContext(WEBGL_CONTEXT, {
 			preserveDrawingBuffer: true,
 			depth: false,
@@ -25,53 +25,37 @@ class Iris
 		});
 		this._canvas = canvas;
 		this._currentPalette = null;
+		this._highlight = new Highlight(canvas);
+		this.palettes = {};
+		this.palettes['sameLightness'] = new IrisPalette(this, 'Colors', sameLightness, passthrough, {
+			lightness: {type: '1f', value: 50},
+			indicator_radius: {type: '1f', value: PUPIL_RADIUS}
+		});
+		this.palettes['sameHue'] =  new IrisPalette(this, 'Tones', sameHue, passthrough, {
+			hue: {type: '1f', value: 0},
+			indicator_radius: {type: '1f', value: PUPIL_RADIUS}
+		});
 
-		const reactor = this._reactor = new Reactor(['pick', 'pickend']);
-		this.on  = reactor.addEventListener.bind(reactor);
-		this.off = reactor.removeEventListener.bind(reactor);
-		
 		const pupil = this._pupil = document.createElement('div');
 		pupil.classList.add('iris-pupil');
 		canvas.insertAdjacentElement('afterend', pupil);
 
-		const highlight = this._highlight = document.createElement('div');
-		highlight.classList.add('iris-hilight');
-		highlight.style.width  = HILIGHT_RADIUS * 2 + 'px';
-		highlight.style.height = HILIGHT_RADIUS * 2 + 'px';
-		canvas.insertAdjacentElement('afterend', this._highlight);
-
-		this.palettes = {};
-		this.palettes['sameLightness'] =
-			new IrisPalette('Colors', this._gl, sameLightness, passthrough, {
-				lightness: {type: '1f', value: 50},
-				indicator_radius: {type: '1f', value: PUPIL_RADIUS}
-			});
-		this.palettes['sameHue'] = 
-			new IrisPalette('Tones', this._gl, sameHue, passthrough, {
-				hue: {type: '1f', value: 0},
-				indicator_radius: {type: '1f', value: PUPIL_RADIUS}
-			});
-
 		this.onResize();
+		this._highlight.move(canvas.width/2, canvas.height/2);
 		this.setMode('sameLightness');
 
 		listenerutils.normalPointer(canvas, {
 			contained: false,
-			down: e => this.dispatchColors('pick', e, true), 
-			move: e => this.dispatchColors('pick', e, true),
-			up:   e => this.dispatchColors('pickend', e, false)
+			down: e => this.emitColors('pick', e, true), 
+			move: e => this.emitColors('pick', e, true),
+			up:   e => this.emitColors('pickend', e, true),
 		});
 	}
 
-	dispatchColors (eventName, e, updateHilight) {
-		const angle = Math.atan2(e.normY, e.normX);
-		const dist = Math.sqrt(Math.pow(e.centerX,  2) + Math.pow(e.centerY, 2));
-		
-		const c = glutils.getPixel(this._canvas, e.relX, e.relY);
-		if (c[3] >= 255) 
-			this._reactor.dispatchEvent(eventName, c); //if alpha == 1
-		if (updateHilight) 
-			domutils.setVendorCss(this._highlight, 'transform', `translate3d(${e.relX}px,${e.relY}px, 0px)`);
+	emitColors (eventName, e, updateHilight) {
+		if (updateHilight) this._highlight.move(e.relX, e.relY);
+		const c = this._highlight.sample();
+		if (c[3] >= 255) this.emit(eventName, c); //if alpha == 1
 	}
 
 	onResize() {

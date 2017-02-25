@@ -22,7 +22,10 @@ window.iris = iris;
 
 const lightnessSlider = new Slider(50, 0, 100, 1/255)
 	.classes('lightness')
-	.bind(iris.palettes['sameLightness'].uniforms, "lightness");
+	.bind(iris.palettes['sameLightness'].uniforms, "lightness")
+	.on('change', () => {
+		iris.emitColors.call(iris, 'pickend', null, false);
+	})
 const hueSlider = new Slider(0, 0, 360, 1)
 	.classes('hue')
 	.bind(iris.palettes['sameHue'].uniforms, "hue")
@@ -64,6 +67,7 @@ const surface = new Surface(document.getElementById('art'));
 document.getElementById('clear-canvas').addEventListener('click', function () {
 	surface.clear();
 });
+surface.on('sample', c => lightnessSlider.value = c[0]);
 
 
 
