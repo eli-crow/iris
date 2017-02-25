@@ -20,12 +20,24 @@ module.exports = class Highlight {
 	move (x, y) {
 		this._x = this._canvas.width / 2 + x;
 		this._y = this._canvas.height / 2 + y;
-		domutils.setVendorCss(this._element, 'transform', 
-			`translate3d(${this._x}px,${this._y}px, 0px)`);
+		this.updateStylePosition();
+	}
+	movePolar (theta, r) {
+		this._x = this._canvas.width/2  + Math.cos(theta) * r;
+		this._Y = this._canvas.height/2 + Math.sin(theta) * r;
+		this.updateStylePosition();
 	}
 
-	movePolar (theta, r) {
-		
+	getPolarPosition () {
+		return {
+			angle: Math.atan2(this._y - this._canvas.height/2, this._x - this._canvas.width/2),
+			distance: Math.sqrt(Math.pow(this._x, 2) + Math.pow(this._y, 2))
+		}
+	}
+
+	updateStylePosition () {
+		domutils.setVendorCss(this._element, 'transform', 
+			`translate3d(${this._x}px,${this._y}px, 0px)`);
 	}
 
 	sample () {

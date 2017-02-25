@@ -39,6 +39,11 @@ module.exports = class Emitter
 		else this.events[eventName].attachCallback(callback);
 	}
 	off(eventName, callback){
-		this.events[eventName].detachCallback(callback);
+		if (eventName.constructor === Array) {
+			for (var i = 0, ii = eventName.length; i < ii; i++) {
+				this.events[eventName[i]].detachCallback(callback);
+			}
+		}
+		else this.events[eventName].detachCallback(callback);
 	}
 }

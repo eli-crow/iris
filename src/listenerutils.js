@@ -85,11 +85,13 @@ module.exports.simplePointer = (context, events, transform) => {
 
 module.exports.normalPointer = (context, events) => {
 	module.exports.simplePointer(context, events, (e, rect) => {
-		e.relX  	= Math.floor(e.clientX - rect.left);
-		e.relY  	= Math.floor(e.clientY - rect.top);
-		e.centerX = e.relX - rect.width / 2;
-		e.centerY = e.relY - rect.height / 2;
-		e.normX 	= e.relX / rect.width * 2 - 1;
-		e.normY 	= e.relY / rect.height * 2 - 1;
+		e.relX  	      = Math.floor(e.clientX - rect.left);
+		e.relY  	      = Math.floor(e.clientY - rect.top);
+		e.centerX       = e.relX - rect.width / 2;
+		e.centerY       = e.relY - rect.height / 2;
+		e.normX 	      = e.relX / rect.width * 2 - 1;
+		e.normY 	      = e.relY / rect.height * 2 - 1;
+		e.getAngle      = () => Math.atan2(e.centerX, e.centerY);
+		e.getDistance   = () => Math.sqrt(Math.pow(e.centerY, 2) + Math.pow(e.centerX, 2));
 	});
 }

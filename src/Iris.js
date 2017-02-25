@@ -28,6 +28,13 @@ class Iris extends Emitter
 		
 		this._highlight = new Highlight(canvas);
 		this._pupil = new Pupil(canvas);
+		// this._pupil.on('drag', e =>	{
+		// 	this.emitColors('pick', e, true)
+		// });
+		// this._pupil.on('release', e => {
+
+		// 	this.emitColors('pickend', e, true)
+		// });
 		
 		this._currentPalette = null;
 		this.palettes = {};
@@ -35,23 +42,24 @@ class Iris extends Emitter
 			lightness: {type: '1f', value: 50},
 			indicator_radius: {type: '1f', value: PUPIL_RADIUS}
 		});
-		this.palettes['sameHue'] =  new IrisPalette(this, 'Tones', sameHue, passthrough, {
+		this.palettes['sameHue'] = new IrisPalette(this, 'Tones', sameHue, passthrough, {
 			hue: {type: '1f', value: 0},
 			indicator_radius: {type: '1f', value: PUPIL_RADIUS}
 		});
+
 		this.onResize();
 		this.setMode('sameLightness');
 
 		listenerutils.normalPointer(canvas, {
 			contained: false,
-			down: e => this.emitColors('pick', e, true), 
-			move: e => this.emitColors('pick', e, true),
-			up:   e => this.emitColors('pickend', e, true),
+			down: e => this.emitColors('pick', e.centerX, e.centerY, true), 
+			move: e => this.emitColors('pick', e.centerX, e.centerY, true),
+			up:   e => this.emitColors('pickend', e.centerX, e.centerY, true),
 		});
 	}
 
-	emitColors (eventName, e, updateHilight) {
-		if (updateHilight) this._highlight.move(e.centerX, e.centerY);
+	emitColors (eventName, x, y, updateHilight) {
+		if (updateHilight) this._highlight.move(x, y);
 		const c = this._highlight.sample();
 		if (c[3] >= 255) this.emit(eventName, c); //if alpha == 1
 	}
