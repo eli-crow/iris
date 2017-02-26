@@ -15,15 +15,13 @@ const __defaults = {
 class SmoothPointer
 { 
   constructor(context, options) {
-    const smoothedProps = ['clientX', 'clientY'].concat(options['smoothedProps'] || __defaults['smoothedProps']);
+    const smoothedProps = (options['smoothedProps'] || __defaults['smoothedProps']);
     const nComponents = smoothedProps.length;
-    const _buffer = new Array(4 * nComponents);
+    const _posBuffer = new Array(8);
 
     this.steps = options['steps'] || __defaults['steps'];
     this.minSquaredDistance = Math.pow(options['minDistance'] || __defaults['steps'], 2);
     this.smoothing = 0.3;
-
-    this._interpolatedPts = new Array(nComponents * this.steps);
   
     if (fnutils.isFunction(options['down'])) this._onDown = options['down'];
     if (fnutils.isFunction(options['move'])) this._onMove = options['move'];
@@ -36,35 +34,26 @@ class SmoothPointer
       stopPropagation: true,
 
       down: e => {
-        for (let i = 0, ii = nComponents; i < ii; ++i) {
-          const prop = e[smoothedProps[i]];
-          _buffer[i + ii * 0] = prop;
-          _buffer[i + ii * 1] = prop;
-          _buffer[i + ii * 2] = prop;
-          _buffer[i + ii * 3] = prop;
+        for (var i = 0; i < 4; i++) {
+          _posBuffer[2*i]    = e.clientX;
+          _posBuffer[2*i +1] = e.clientY;
         }
         this._onDown(e);
       },
 
       move: e => {
-        let diffX = e.clientX - _buffer[0];
-        let diffY = e.clientY - _buffer[1];
-        _squaredSpeed = Math.abs(
-            Math.pow(diffX, 2) 
-          + Math.pow(diffY, 2) 
-        );
+        const diffX = e.clientX - _posBuffer[0];
+        const diffY = e.clientY - _posBuffer[1];
+
+        _squaredSpeed = Math.pow(diffX, 2) + Math.pow(diffY, 2);
         if (_squaredSpeed < this.minSquaredDistance) return;
 
-        arrayutils.rotateArray(_buffer, nComponents);
-        for (let i = 0, ii = nComponents; i < ii; ++i) {
-          const prop = e[smoothedProps[i]];
-          var diff = prop - _buffer[i];
-          _buffer[i] += diff * (1 - this.smoothing);
-        }
-
+        arrayutils.rotateArray(_posBuffer, 2);
+        _posBuffer[0] += (e.clientX - _posBuffer[0]) * (1 - this.smoothing);
+        _posBuffer[1] += (e.clientY - _posBuffer[1]) * (1 - this.smoothing);
+        
         this._onMove({
-          nComponents: nComponents,
-          pts: mathutils.getCubicPoints(_buffer, this.steps, nComponents, this._interpolatedPts),
+          pts: mathutils.getLinearInterpolatedCubicPoints(_posBuffer, 3, 2),
           squaredSpeed: _squaredSpeed,
           pressure: (e.pressure * 1.2 - .2) || 1,
           direction: Math.atan2(diffY, diffX) + Math.PI

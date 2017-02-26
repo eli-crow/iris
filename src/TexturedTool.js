@@ -20,7 +20,6 @@ module.exports = class TexturedTool extends Tool
 	  this._tempCanvas.height = brushImg.height;
 	  this.setColor(this._color);
 	  this.emit('changeend');
-	  console.log('anything');
 	}
 
 	//color array is rgba, all in the range of 0-255;

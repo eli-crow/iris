@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"get",
+				"getPixel\t(Surface.js)"
+			],
+			[
+				"min",
+				"min-height"
+			],
+			[
+				"flo",
+				"float"
+			],
+			[
 				"jasmin",
 				"jasmine-fixture/"
 			],
@@ -210,10 +222,6 @@
 			[
 				"of",
 				"offsetX"
-			],
-			[
-				"get",
-				"getOffset"
 			],
 			[
 				"pupi",
@@ -506,19 +514,46 @@
 			[
 				"bind",
 				"bindDrawerInteraction〔function〕"
-			],
-			[
-				"inset-w",
-				"inset-shadow"
-			],
-			[
-				"ingre",
-				"ingredients.opportunity"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "src/TexturedTool.js",
+			"settings":
+			{
+				"buffer_size": 1346,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "module.exports.clamp = function (x, a, b) {\n\treturn Math.min(Math.max(x, a), b);\n}\n\nmodule.exports.distance = function (ptArray1, ptArray2) {\n\tlet squareSum = 0;\n\tfor (var i = 0, ii = ptArray1.length; i < ii; ++i) \n\t\tsquareSum += Math.pow(ptArray2[i] - ptArray1[i], 2);\n\treturn Math.sqrt(squareSum);\n}\n\nfunction cubicComponent (t, y0, y1, y2, y3) {\n\tconst a0 = y3 - y2 - y0 + y1;\n\tconst a1 = y0 - y1 - a0;\n\tconst a2 = y2 - y0;\n\treturn(a0*t*t*t + a1*t*t + a2*t + y1);\n}\n\n/**\n * takes a 1d buffer of 4 consecutive points of nComponents dimensions, returns a buffer of \n * points between 2nd and 3rd points in buffer, of length nSteps*nComponents.\n * @param  {array} input       flat buffer of 4 consecutive points of nComponents dimensions\n * @param  {number} nSteps      the number of steps to interpolate between y2 and y3\n * @param  {number} nComponents the number of components in each point\n * @param  {array} output      optional buffer to use, default behavior returns a new array.\n * @return {array}             a buffer of points interpolated between y2 and y3\n */\nmodule.exports.getCubicPoints = function getCubicPoints(input, nSteps, nComponents, output) {\n\tconst definedLength = nComponents * nSteps;\n\toutput = output || new Array(definedLength);\n\n\tfor (let c = 0; c < nComponents; ++c) {\n\t\tconst y0 = input[0*nComponents + c];\n\t\tconst y1 = input[1*nComponents + c];\n\t\tconst y2 = input[2*nComponents + c];\n\t\tconst y3 = input[3*nComponents + c];\n\t\tfor (let s = 0; s < nSteps; ++s) {\n\t\t\toutput[s*nComponents + c] = cubicComponent(s/nSteps, y0, y1, y2, y3);\n\t\t}\n\t}\n\n\toutput.definedLength = definedLength;\n\treturn output;\n};\n\nfunction (u) {\n\tvar targetLength = u * this.arcLengths[this.len];\n\n\tlet index = 0;\n\tlet low = 0, high = this.len;\n\twhile (low < high) {\n\t\tindex = low + (((high - low) / 2) | 0);\n\t\tif (this.arcLengths[index] < targetLength) low = index + 1;\n\t\telse high = index;\n\t}\n\n\tif (this.arcLengths[index] > targetLength) index--;\n\n\tvar lengthBefore = this.arcLengths[index];\n\tif (lengthBefore === targetLength) return index / this.len;\n\telse return (index + (targetLength - lengthBefore) / (this.arcLengths[index + 1] - lengthBefore)) / this.len;\n\t}\n}\n\nmodule.exports.getCubicPointsEquidistant = function getCubicPoints(input, nSteps, nComponents, output) {\n\tconst definedLength = nComponents * nSteps;\n\toutput = output || new Array(definedLength);\n\n\tfor (let c = 0; c < nComponents; ++c) {\n\t\tconst y0 = input[0*nComponents + c];\n\t\tconst y1 = input[1*nComponents + c];\n\t\tconst y2 = input[2*nComponents + c];\n\t\tconst y3 = input[3*nComponents + c];\n\t\tfor (let s = 0; s < nSteps; ++s) {\n\t\t\toutput[s*nComponents + c] = cubicComponent(s/nSteps, y0, y1, y2, y3);\n\t\t}\n\t}\n\n\toutput.definedLength = definedLength;\n\treturn output;\n};\n\n\n\n\nmodule.exports.getSinePoints2d = function(width, amplitude, nPts, xOffset, yOffset, output) {\n\toutput = output || new Array(nPts * 2);\n\n\tfor (let i = 0; i < nPts; i++) {\n\t\toutput[2 * i]     = xOffset + width*i/nPts\n\t\toutput[2 * i + 1] = yOffset + amplitude * Math.sin(i/nPts*2*Math.PI);\n\t}\n\n\treturn output;\n}\n\nmodule.exports.getSinePoints1d = function(amplitude, nPts, output) {\n\toutput = output || new Array(nPts * 2);\n\n\tfor (let i = 0; i < nPts; i++) {\n\t\toutput[2 * i]     = xOffset + width*i/nPts\n\t\toutput[2 * i + 1] = yOffset + amplitude * Math.sin(i/nPts*2*Math.PI);\n\t}\n\n\treturn output;\n}",
+			"file": "src/mathutils.js",
+			"file_size": 2987,
+			"file_write_time": 131323657200000000,
+			"settings":
+			{
+				"buffer_size": 3340,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "using UnityEngine;\nusing System.Collections;\nusing System.Collections.Generic;\n\npublic class Catmul : MonoBehaviour {\n\n    //Use GameObject in 3d space as your points or define array with desired points\n\tpublic GameObject[] points;\n\t\n\t//Store points on the Catmull curve so we can visualize them\n\tList<Vector2> newPoints = new List<Vector2>();\n\t\n\t//How many points you want on the curve\n\tfloat amountOfPoints = 10.0f;\n\t\n\t//set from 0-1\n\tpublic float alpha = 0.5f;\n\t\n\t/////////////////////////////\n\t\n\tvoid Update()\n\t{\n\t    CatmulRom();\n\t}\n\t\n\tvoid CatmulRom()\n\t{\n\t\tnewPoints.Clear();\n\n\t\tVector2 p0 = new Vector2(points[0].transform.position.x, points[0].transform.position.y);\n\t\tVector2 p1 = new Vector2(points[1].transform.position.x, points[1].transform.position.y);\n\t\tVector2 p2 = new Vector2(points[2].transform.position.x, points[2].transform.position.y);\n\t\tVector2 p3 = new Vector2(points[3].transform.position.x, points[3].transform.position.y);\n\n\t\tfloat t0 = 0.0f;\n\t\tfloat t1 = GetT(t0, p0, p1);\n\t\tfloat t2 = GetT(t1, p1, p2);\n\t\tfloat t3 = GetT(t2, p2, p3);\n\n\t\tfor(float t=t1; t<t2; t+=((t2-t1)/amountOfPoints))\n\t\t{\n\t\t    Vector2 A1 = (t1-t)/(t1-t0)*p0 + (t-t0)/(t1-t0)*p1;\n\t\t    Vector2 A2 = (t2-t)/(t2-t1)*p1 + (t-t1)/(t2-t1)*p2;\n\t\t    Vector2 A3 = (t3-t)/(t3-t2)*p2 + (t-t2)/(t3-t2)*p3;\n\t\t    \n\t\t    Vector2 B1 = (t2-t)/(t2-t0)*A1 + (t-t0)/(t2-t0)*A2;\n\t\t    Vector2 B2 = (t3-t)/(t3-t1)*A2 + (t-t1)/(t3-t1)*A3;\n\t\t    \n\t\t    Vector2 C = (t2-t)/(t2-t1)*B1 + (t-t1)/(t2-t1)*B2;\n\t\t    \n\t\t    newPoints.Add(C);\n\t\t}\n\t}\n\n\tfloat GetT(float t, Vector2 p0, Vector2 p1)\n\t{\n\t    float a = Mathf.Pow((p1.x-p0.x), 2.0f) + Mathf.Pow((p1.y-p0.y), 2.0f);\n\t    float b = Mathf.Pow(a, 0.5f);\n\t    float c = Mathf.Pow(b, alpha);\n\t\n\t    return (c + t);\n\t}\n\t\n\t//Visualize the points\n\tvoid OnDrawGizmos()\n\t{\n\t    Gizmos.color = Color.red;\n\t    foreach(Vector2 temp in newPoints)\n\t    {\n\t        Vector3 pos = new Vector3(temp.x, temp.y, 0);\n\t        Gizmos.DrawSphere(pos, 0.3f);\n\t    }\n\t}using UnityEngine;\nusing System.Collections;\nusing System.Collections.Generic;\n\npublic class Catmul : MonoBehaviour {\n\n    //Use GameObject in 3d space as your points or define array with desired points\n\tpublic GameObject[] points;\n\t\n\t//Store points on the Catmull curve so we can visualize them\n\tList<Vector2> newPoints = new List<Vector2>();\n\t\n\t//How many points you want on the curve\n\tfloat amountOfPoints = 10.0f;\n\t\n\t//set from 0-1\n\tpublic float alpha = 0.5f;\n\t\n\t/////////////////////////////\n\t\n\tvoid Update()\n\t{\n\t    CatmulRom();\n\t}\n\t\n\tvoid CatmulRom()\n\t{\n\t\tnewPoints.Clear();\n\n\t\tVector2 p0 = new Vector2(points[0].transform.position.x, points[0].transform.position.y);\n\t\tVector2 p1 = new Vector2(points[1].transform.position.x, points[1].transform.position.y);\n\t\tVector2 p2 = new Vector2(points[2].transform.position.x, points[2].transform.position.y);\n\t\tVector2 p3 = new Vector2(points[3].transform.position.x, points[3].transform.position.y);\n\n\t\tfloat t0 = 0.0f;\n\t\tfloat t1 = GetT(t0, p0, p1);\n\t\tfloat t2 = GetT(t1, p1, p2);\n\t\tfloat t3 = GetT(t2, p2, p3);\n\n\t\tfor(float t=t1; t<t2; t+=((t2-t1)/amountOfPoints))\n\t\t{\n\t\t    Vector2 A1 = (t1-t)/(t1-t0)*p0 + (t-t0)/(t1-t0)*p1;\n\t\t    Vector2 A2 = (t2-t)/(t2-t1)*p1 + (t-t1)/(t2-t1)*p2;\n\t\t    Vector2 A3 = (t3-t)/(t3-t2)*p2 + (t-t2)/(t3-t2)*p3;\n\t\t    \n\t\t    Vector2 B1 = (t2-t)/(t2-t0)*A1 + (t-t0)/(t2-t0)*A2;\n\t\t    Vector2 B2 = (t3-t)/(t3-t1)*A2 + (t-t1)/(t3-t1)*A3;\n\t\t    \n\t\t    Vector2 C = (t2-t)/(t2-t1)*B1 + (t-t1)/(t2-t1)*B2;\n\t\t    \n\t\t    newPoints.Add(C);\n\t\t}\n\t}\n\n\tfloat GetT(float t, Vector2 p0, Vector2 p1)\n\t{\n\t    float a = Mathf.Pow((p1.x-p0.x), 2.0f) + Mathf.Pow((p1.y-p0.y), 2.0f);\n\t    float b = Mathf.Pow(a, 0.5f);\n\t    float c = Mathf.Pow(b, alpha);\n\t\n\t    return (c + t);\n\t}\n\t\n\t//Visualize the points\n\tvoid OnDrawGizmos()\n\t{\n\t    Gizmos.color = Color.red;\n\t    foreach(Vector2 temp in newPoints)\n\t    {\n\t        Vector3 pos = new Vector3(temp.x, temp.y, 0);\n\t        Gizmos.DrawSphere(pos, 0.3f);\n\t    }\n\t}\n}",
+			"settings":
+			{
+				"buffer_size": 3950,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -544,55 +579,179 @@
 	"command_palette":
 	{
 		"height": 354.0,
-		"last_filter": "dle",
+		"last_filter": "javas",
 		"selected_items":
 		[
 			[
-				"dle",
-				"File: Delete"
+				"javas",
+				"Set Syntax: JavaScript"
 			],
 			[
-				"del",
-				"ANF: Delete File"
+				"wrap",
+				"Word Wrap: Toggle"
 			],
 			[
-				"revea",
-				"File: Reveal"
+				"java",
+				"Set Syntax: JavaScript"
 			],
 			[
-				"dele",
-				"File: Delete"
+				"tabs",
+				"Indentation: Convert to Tabs"
 			],
 			[
-				"edit",
-				"SnippetMaker: Edit Snippet"
+				"c#",
+				"Set Syntax: Unity C#"
+			],
+			[
+				"material",
+				"Material Theme: Configuration"
+			],
+			[
+				"mater",
+				"Material Theme: Advanced configuration"
 			],
 			[
 				"new file",
 				"File: New File Relative to Current View"
 			],
 			[
+				"rena",
+				"File: Rename"
+			],
+			[
+				"wra",
+				"Word Wrap: Toggle"
+			],
+			[
 				"new",
 				"File: New File Relative to Current View"
 			],
 			[
-				"rename",
-				"File: Rename"
+				"de",
+				"File: Delete"
 			],
 			[
-				"new fil",
-				"File: New File Relative to Current View"
+				"edi",
+				"SnippetMaker: Edit Snippet"
+			],
+			[
+				"edit s",
+				"SnippetMaker: Edit Snippet"
 			],
 			[
 				"make",
 				"SnippetMaker: Make Snippet"
 			],
 			[
+				"newsni",
+				"PackageDev: New Raw Snippet"
+			],
+			[
+				"dis",
+				"Package Control: Disable Package"
+			],
+			[
+				"rename",
+				"File: Rename"
+			],
+			[
+				"ena",
+				"Package Control: Enable Package"
+			],
+			[
+				"en",
+				"Package Control: Enable Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"disa",
+				"Package Control: Disable Package"
+			],
+			[
+				"dele",
+				"File: Delete"
+			],
+			[
+				"disable",
+				"Package Control: Disable Package"
+			],
+			[
+				"disab",
+				"Package Control: Disable Package"
+			],
+			[
+				"re",
+				"File: Rename"
+			],
+			[
+				"mo",
+				"File: Move"
+			],
+			[
+				"dle",
+				"File: Delete"
+			],
+			[
+				"ren",
+				"File: Rename"
+			],
+			[
+				"del",
+				"File: Delete"
+			],
+			[
+				"renam",
+				"File: Rename"
+			],
+			[
+				"renae",
+				"File: Rename"
+			],
+			[
+				"new ",
+				"File: New File Relative to Current View"
+			],
+			[
+				"new fi",
+				"File: New File Relative to Current View"
+			],
+			[
+				"reve",
+				"Permute Lines: Reverse"
+			],
+			[
+				"enable",
+				"Package Control: Enable Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
 				"move",
 				"File: Move"
 			],
 			[
-				"new fi",
+				"conf",
+				"Material Theme: Configuration"
+			],
+			[
+				"revea",
+				"File: Reveal"
+			],
+			[
+				"edit",
+				"SnippetMaker: Edit Snippet"
+			],
+			[
+				"new fil",
 				"File: New File Relative to Current View"
 			],
 			[
@@ -600,40 +759,16 @@
 				"Set Syntax: JavaScript"
 			],
 			[
-				"renam",
-				"File: Rename"
-			],
-			[
 				"iris",
 				"A File Icon: Revert to a Freshly Installed State"
-			],
-			[
-				"new ",
-				"File: New File Relative to Current View"
 			],
 			[
 				"glsl",
 				"Set Syntax: GLSL"
 			],
 			[
-				"ren",
-				"File: Rename"
-			],
-			[
-				"tabs",
-				"Indentation: Convert to Tabs"
-			],
-			[
 				"tab",
 				"Indentation: Convert to Tabs"
-			],
-			[
-				"de",
-				"File: Delete"
-			],
-			[
-				"javas",
-				"Set Syntax: JavaScript"
 			],
 			[
 				"new f",
@@ -646,14 +781,6 @@
 			[
 				"du",
 				"File: Duplicate"
-			],
-			[
-				"rena",
-				"File: Rename"
-			],
-			[
-				"re",
-				"File: Rename"
 			],
 			[
 				"newf",
@@ -670,10 +797,6 @@
 			[
 				"remov",
 				"Package Control: Remove Package"
-			],
-			[
-				"inst",
-				"Package Control: Install Package"
 			],
 			[
 				"pug",
@@ -708,16 +831,8 @@
 				"Package Control: Enable Package"
 			],
 			[
-				"material",
-				"Material Theme: Configuration"
-			],
-			[
 				"materia",
 				"Material Theme: Configuration"
-			],
-			[
-				"mater",
-				"Material Theme: Advanced configuration"
 			],
 			[
 				"show info",
@@ -748,20 +863,12 @@
 				"OmniSharpSublime: Clean"
 			],
 			[
-				"dis",
-				"Package Control: Disable Package"
-			],
-			[
 				"snip",
 				"SnippetMaker: Make Snippet"
 			],
 			[
 				"kil",
 				"Gulp: Kill running tasks"
-			],
-			[
-				"wrap",
-				"Word Wrap: Toggle"
 			],
 			[
 				"inc",
@@ -784,16 +891,8 @@
 				"SnippetMaker: Make Snippet"
 			],
 			[
-				"insta",
-				"Package Control: Install Package"
-			],
-			[
 				"incre",
 				"Emmet: Increment Number by 1"
-			],
-			[
-				"edi",
-				"SnippetMaker: Edit Snippet"
 			],
 			[
 				"hid",
@@ -816,10 +915,6 @@
 				"Indentation: Convert to Tabs"
 			],
 			[
-				"disa",
-				"Package Control: Disable Package"
-			],
-			[
 				"r",
 				"File: Rename"
 			],
@@ -834,10 +929,6 @@
 			[
 				"dupli",
 				"File: Duplicate"
-			],
-			[
-				"disab",
-				"Package Control: Disable Package"
 			],
 			[
 				"dia",
@@ -866,10 +957,6 @@
 			[
 				"npm",
 				"Nodejs::NPM::Command"
-			],
-			[
-				"enable",
-				"Package Control: Enable Package"
 			],
 			[
 				"convert",
@@ -976,10 +1063,6 @@
 				"Word Wrap: Toggle"
 			],
 			[
-				"install",
-				"Package Control: Install Package"
-			],
-			[
 				"prev",
 				"Markdown Preview: Preview in Browser"
 			],
@@ -1010,57 +1093,9 @@
 			[
 				"satisfy",
 				"Package Control: Satisfy Dependencies"
-			],
-			[
-				"preview",
-				"Markdown Preview: Preview in Browser"
-			],
-			[
-				"prevview",
-				"Markdown Preview: Preview in Browser"
-			],
-			[
-				"markdow",
-				"Markdown Preview: Preview in Browser"
-			],
-			[
-				"doc",
-				"DocBlockr: Decorate line comment"
-			],
-			[
-				"command",
-				"PackageDev: New Commands File"
-			],
-			[
-				"indent",
-				"Indent XML"
-			],
-			[
-				"intall",
-				"Package Control: Install Package"
-			],
-			[
-				"intel",
-				"SublimeCodeIntel: Reset"
-			],
-			[
-				"disable",
-				"Package Control: Disable Package"
-			],
-			[
-				"tmtheme",
-				"Material Theme: Activate theme"
-			],
-			[
-				"refresh",
-				"Side Bar: Refresh"
-			],
-			[
-				"browse",
-				"Preferences: Browse Packages"
 			]
 		],
-		"width": 962.0
+		"width": 742.0
 	},
 	"console":
 	{
@@ -1075,66 +1110,91 @@
 		"show_minimap": false,
 		"show_open_files": false,
 		"show_tabs": false,
-		"side_bar_visible": true,
+		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
 	"expanded_folders":
 	[
 		"/Users/EliCrow/Desktop/Web/Iris/Iris",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/helpers",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/support"
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src"
 	],
 	"file_history":
 	[
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/helpers/jasmine-fixture.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Iris.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/helpers",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/frag/same_lightness.frag",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Brush.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/SmoothPointer.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/entry.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/mathutils.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/mathutilsSpec.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/listenerutils.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/utils.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/PanelGroup.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/BrushPreview.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/ToolEffector.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Iris.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Pupil.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/glutils.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Button.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/fnutils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Emitter.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/TexturedTool.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Surface.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_panel.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Highlight.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/listenerutils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/entry.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/frag/same_lightness.frag",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/frag/same_hue.frag",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Tool.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/IrisPalette.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/InputBase.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/canvasutils.js",
-		"/Users/EliCrow/Library/Application Support/Sublime Text 3/Packages/User/req.sublime-snippet",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_picker.scss",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/index.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Reactor.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_layout.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_input-range.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Slider.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/SmoothPointer.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/mathutils.js",
+		"/Users/EliCrow/Library/Application Support/Sublime Text 3/Packages/User/sin01.sublime-snippet",
+		"/Users/EliCrow/Library/Application Support/Sublime Text 3/Packages/User/cos01.sublime-snippet",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/mathutilsSpec.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/panel-brush.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/BrushEffector.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_variables.scss",
+		"/Users/EliCrow/Library/Application Support/Sublime Text 3/Packages/User/con.sublime-snippet",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_inputs.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/slider.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_panel-brush.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/PanelGroup.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_panel-group.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/panel-iris.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/mixins/_math.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/compiled.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_panel-picker.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/fnutils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/ToolSpec.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/index.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/BrushPanel.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Button.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/panel.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/dist/index.html",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/mixins/panel.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/panel-ris.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_picker.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/BrushEffectorSpec.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/hsluv.glsl",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/common_variables.glsl",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/common_globals.glsl",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/cie_conversions.glsl",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/helpers/jasmine-fixture.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/helpers",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/utils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/glutils.js",
+		"/Users/EliCrow/Library/Application Support/Sublime Text 3/Packages/User/req.sublime-snippet",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/arrayutils.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Guides.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_variables.scss",
 		"/Users/EliCrow/Desktop/Web/Experiments/Eyeriss/index.html",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/frag/same_hue.frag",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/IrisPalette.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/common_globals.glsl",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/IrisPaletteSpec.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/InputBase.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Slider.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/slider.pug",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/gulp/scripts.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Reactor.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/domutils.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/mixins/_input-range.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/mixins/_input-reset.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/PanelElement.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/cie_conversions.glsl",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/hsl_2_rgb.glsl",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/sigmoidBlend.glsl",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Spacer.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/ButtonGroup.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/ButtonRadioGroup.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/common_variables.glsl",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/mixins/_inputs.scss",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/compiled.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_typography.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/mixins/_material-shadow.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/frag/sameHue.frag",
@@ -1155,7 +1215,6 @@
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/mixins/_clearfix.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/gulp/styles.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/gulp/serve.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/dist/index.html",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/gulp/views.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/picker-base.pug",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/gulpfile.js",
@@ -1188,37 +1247,11 @@
 		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIPathStyle.h",
 		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIPaintStyle.h",
 		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AINotifier.h",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/common/source/SDKPlugPlug.cpp",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIDocumentView.h",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIMenuCommandNotifiers.h",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/common/source/HtmlUIController.cpp",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIColorConversion.h",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIUnicodeString.h",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/common/source/Suites.cpp",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AICustomColor.h",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIColorSpace.h",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIOverrideColorConversion.h",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/IrisPlugin/Source/IrisPanelController.h",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIUser.h",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/common/source/IllustratorSDK.cpp",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIRealMath.h",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AICSXSExtension.h",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/common/source/AppContext.cpp",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AICSXS.h",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/IrisPlugin/Source/IrisID.h",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/IrisPlugin/IrisPlugin.sublime-project",
-		"/Users/EliCrow/Desktop/Development/OpenGLTest/CSGLTest.sublime-project",
-		"/Users/EliCrow/Desktop/Development/OpenGLTest/Source/Main.cs",
-		"/Users/EliCrow/Desktop/Development/OpenGLTest/csgltest.sln",
-		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/CSXS/manifest.xml",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/DrawArt/Source/DrawArtPlugin.cpp",
-		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/Glass.js",
-		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/css/range-inputs.css",
-		"/Users/EliCrow/Desktop/Web/colorjack/colorjack.sublime-project"
+		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/common/source/SDKPlugPlug.cpp"
 	],
 	"find":
 	{
-		"height": 70.0
+		"height": 48.0
 	},
 	"find_in_files":
 	{
@@ -1230,137 +1263,137 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
-			"0",
-			"currentComponent",
-			";",
-			" = ",
-			"offset",
-			"X",
-			"_nBufferComponents",
-			"smoothedProperties",
-			"= ",
-			"params",
-			".map(x => Math.random() * 100)",
-			"powerSum",
-			"dist",
-			"sum",
-			"[c",
-			"C",
-			"c",
-			"const ",
-			"let",
-			"iterate",
-			"maxIterations",
-			"nIterations",
-			"let",
-			"this._squaredSpeed",
-			"preventDefault",
-			"_n_bufferComponents",
-			"this._reactor",
-			"buffer",
-			"Buffer",
-			"buffer",
-			"this._buffer",
-			"events.move",
-			"_reactor",
-			"_squaredSpeed",
-			"_buffer",
-			"self",
-			"function",
-			"nBufferComponents",
-			"nBufferC",
-			"_buffer",
-			"2",
-			"output[i+c]",
+			"binarySearchByT",
+			"subject",
+			"index",
 			"var",
-			"success",
-			"buffer",
-			"i",
-			"j",
-			"i",
-			"size",
-			"self",
-			"shouldMoveHilight",
-			"img",
-			"image",
-			"this.tempCanvas",
-			"this.tempCtx",
-			"max",
-			"event",
-			"dispatchCol",
-			"INDICATOR_RADIUS",
-			"this",
-			"img",
-			"this.tempCtx",
-			"this.tempCanvas",
-			"brushImg",
-			"this.brushImg",
-			"brushImg",
-			"tempCtx",
-			"tempCanvas",
-			"drawBrush",
-			"maxSi",
-			"move",
-			"down",
-			"']);\n",
-			"drawt",
-			"drawte",
-			"canvasutils",
-			"data",
-			"tex",
-			"img",
+			"currentElement",
+			"hight",
+			"maxIndex",
+			"minIndex",
+			"currentIndex",
+			"f",
+			"points",
+			"tmp",
+			"int",
+			"Point",
+			".X",
+			"text",
 			"canvas",
-			"this",
-			"e =>",
-			"PI",
-			";\n",
-			"self",
-			"function",
-			"_buffer",
-			"self._interpolatedPts",
-			"rotate",
-			"normY",
-			"uniforms",
-			"object",
-			"self",
-			"function",
-			"this",
-			"object",
-			"self._pupil",
-			"Width",
-			"none",
-			"backgroundColor",
-			"array",
-			"false",
-			".",
-			"+ HILIGHT_RADIUS",
-			"pupil",
-			"position",
-			"function",
-			"self.palettes",
-			"self._canvas",
-			"_hilight",
-			"padd",
-			"2",
-			"\t\t\twidth: 100%;\n\t\t\tcursor: pointer;",
-			"X",
-			"none",
-			");",
-			"hsl",
-			"#FF6395",
-			"#",
-			"modes",
-			"hue",
-			"Hue",
-			"hue",
-			"hsl.x",
+			"attachCallback",
+			"Math.pow(this._y, 2) + ",
 			"= ",
-			"H",
-			"var_2",
-			"var_1"
+			"addons",
+			"xformIsFn",
+			";",
+			"e.c",
+			"e.",
+			"= ",
+			" = ",
+			"true",
+			"height",
+			"pupil",
+			"Highlight",
+			"canvas",
+			"norm",
+			"canvas.width/2",
+			"addEventListener",
+			"dispatchEvent",
+			"reactor",
+			"Reactor",
+			"_reactor",
+			"dispatch",
+			"dispatchColors",
+			"Reactor",
+			"dispa",
+			"react",
+			"onMove",
+			"self",
+			"function",
+			", this._gl",
+			".y",
+			"y",
+			".x",
+			"_element",
+			"glut",
+			"domut",
+			"Hilight",
+			"IrisPalette",
+			"highlight",
+			"pressureEffector",
+			"flow",
+			"\nconst pressureEffector = new ToolEffector('size', (brush, event) => {\n\treturn event.pressure;\n});",
+			"props",
+			"smoothSize",
+			"effectorGroup",
+			"constructor",
+			"this.on(",
+			"(options)",
+			"this.ctx",
+			"_tool",
+			"effectors",
+			"j",
+			"effectors",
+			".635rem",
+			"BrushEffector",
+			"Brush",
+			"BrushEffector",
+			"Tool",
+			"pressureEffector",
+			"effector",
+			"this._smoothedEffectors",
+			"arguments",
+			"[i",
+			"[i]",
+			"i",
+			"brush",
+			"pressureEffector",
+			"brush",
+			"nComponents",
+			"arguments[i]",
+			"this._reactor.dispatchEvent",
+			"apply",
+			"smoothSize",
+			"_effectors",
+			"arr",
+			"function",
+			"input",
+			"pressureEffector",
+			"Tool",
+			"ToolEffector",
+			"Brush",
+			"canvas",
+			"lightnessSlider",
+			"eventame",
+			"Brush",
+			"array",
+			"buffer",
+			"nSteps",
+			"half",
+			"padding",
+			"outData",
+			"outBrushImg",
+			"_tex",
+			"brushImg",
+			"this.canvas",
+			"canvas",
+			"var",
+			"pts",
+			", e.pts",
+			"SmoothPointer",
+			"this._ctx",
+			"_drawBrush",
+			"canvas",
+			"_canvas",
+			"brushCanvas",
+			"canvasElement",
+			"UNDERLINE",
+			"picker",
+			".picker",
+			"picker"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1432,8 +1465,152 @@
 	"groups":
 	[
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "src/TexturedTool.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1346,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								639,
+								639
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"glslvalidator_configured": true,
+							"glslvalidator_enabled": 1,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"syntax_mgr_loaded": true,
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/mathutils.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3340,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1669,
+								1669
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"glslvalidator_configured": true,
+							"glslvalidator_enabled": 1,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"syntax_mgr_loaded": true,
+							"tab_size": 2,
+							"translate_tabs_to_spaces": false,
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 597.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3950,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3399,
+								3399
+							]
+						],
+						"settings":
+						{
+							"default_dir": "/Users/EliCrow/Desktop/Web/Iris/Iris",
+							"glslvalidator_configured": true,
+							"glslvalidator_enabled": 1,
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"syntax_mgr_loaded": true,
+							"tab_size": 4,
+							"translate_tabs_to_spaces": false,
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2016.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"default_dir": "/Users/EliCrow/Desktop/Web/Iris/Iris",
+							"glslvalidator_configured": true,
+							"glslvalidator_enabled": 1,
+							"history_list_is_closing": true,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"syntax_mgr_loaded": true,
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -1454,11 +1631,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -1518,108 +1702,476 @@
 		"selected_items":
 		[
 			[
-				"iris",
-				"src/Iris.js"
+				"math",
+				"src/mathutils.js"
 			],
 			[
-				"sameli",
-				"shaders/frag/same_lightness.frag"
+				"texture",
+				"src/TexturedTool.js"
+			],
+			[
+				"brsuh",
+				"src/Brush.js"
+			],
+			[
+				"toole",
+				"src/ToolEffector.js"
 			],
 			[
 				"brush",
 				"src/Brush.js"
 			],
 			[
-				"en",
-				"src/entry.js"
+				"preview",
+				"src/BrushPreview.js"
 			],
 			[
-				"matsp",
-				"spec/mathutilsSpec.js"
+				"pane",
+				"scss/_panel.scss"
 			],
 			[
-				"math",
-				"spec/mathutilsSpec.js"
+				"surf",
+				"src/Surface.js"
 			],
 			[
-				"list",
-				"src/listenerutils.js"
+				"tex",
+				"src/TexturedTool.js"
 			],
 			[
-				"ent",
-				"src/entry.js"
+				"pupi",
+				"src/Pupil.js"
 			],
 			[
-				"mathu",
-				"spec/mathutilsSpec.js"
+				"iris",
+				"src/Iris.js"
 			],
 			[
-				"mat",
-				"src/mathutils.js"
+				"emitt",
+				"src/Emitter.js"
+			],
+			[
+				"hi",
+				"src/Highlight.js"
+			],
+			[
+				"pup",
+				"src/Pupil.js"
 			],
 			[
 				"liste",
 				"src/listenerutils.js"
 			],
 			[
-				"point",
-				"src/SmoothPointer.js"
+				"sameh",
+				"shaders/frag/same_hue.frag"
+			],
+			[
+				"sameli",
+				"shaders/frag/same_lightness.frag"
+			],
+			[
+				"ent",
+				"src/entry.js"
+			],
+			[
+				"irispa",
+				"src/IrisPalette.js"
+			],
+			[
+				"sur",
+				"src/Surface.js"
+			],
+			[
+				"input",
+				"src/InputBase.js"
+			],
+			[
+				"tool",
+				"src/Tool.js"
+			],
+			[
+				"rea",
+				"src/Reactor.js"
+			],
+			[
+				"too",
+				"src/Tool.js"
+			],
+			[
+				"text",
+				"src/TexturedTool.js"
 			],
 			[
 				"brus",
 				"src/Brush.js"
 			],
 			[
-				"matu",
-				"spec/mathutilsSpec.js"
+				"bru",
+				"src/Brush.js"
 			],
 			[
-				"smooth",
-				"src/SmoothPointer.js"
+				"reac",
+				"src/Reactor.js"
 			],
 			[
-				"panel",
-				"src/PanelGroup.js"
-			],
-			[
-				"glut",
-				"src/glutils.js"
-			],
-			[
-				"entr",
-				"src/entry.js"
-			],
-			[
-				"fnu",
-				"src/fnutils.js"
-			],
-			[
-				"canv",
+				"canvas",
 				"src/canvasutils.js"
 			],
 			[
-				"pick",
-				"scss/_picker.scss"
+				"en",
+				"src/entry.js"
 			],
 			[
-				"ind",
-				"templates/index.pug"
+				"canva",
+				"src/canvasutils.js"
 			],
 			[
-				"in",
-				"templates/index.pug"
+				"list",
+				"src/listenerutils.js"
 			],
 			[
 				"layout",
 				"scss/_layout.scss"
 			],
 			[
+				"inputran",
+				"scss/_input-range.scss"
+			],
+			[
+				"layou",
+				"scss/_layout.scss"
+			],
+			[
+				"irispal",
+				"src/IrisPalette.js"
+			],
+			[
+				"hil",
+				"src/Highlight.js"
+			],
+			[
+				"slider",
+				"src/Slider.js"
+			],
+			[
+				"effe",
+				"src/ToolEffector.js"
+			],
+			[
+				"smoo",
+				"src/SmoothPointer.js"
+			],
+			[
+				"smo",
+				"src/SmoothPointer.js"
+			],
+			[
+				"su",
+				"src/Surface.js"
+			],
+			[
+				"brushpr",
+				"src/BrushPreview.js"
+			],
+			[
+				"mathu",
+				"src/mathutils.js"
+			],
+			[
+				"brushp",
+				"src/BrushPreview.js"
+			],
+			[
+				"range",
+				"scss/_input-range.scss"
+			],
+			[
+				"brushe",
+				"src/BrushEffector.js"
+			],
+			[
+				"e",
+				"src/entry.js"
+			],
+			[
+				"smoop",
+				"src/SmoothPointer.js"
+			],
+			[
+				"entry",
+				"src/entry.js"
+			],
+			[
+				"to",
+				"src/Tool.js"
+			],
+			[
+				"b",
+				"src/Brush.js"
+			],
+			[
+				"vari",
+				"scss/_variables.scss"
+			],
+			[
+				"inputb",
+				"src/InputBase.js"
+			],
+			[
+				"slid",
+				"src/Slider.js"
+			],
+			[
+				"inputs",
+				"scss/_inputs.scss"
+			],
+			[
+				"et",
+				"src/entry.js"
+			],
+			[
+				"var",
+				"scss/_variables.scss"
+			],
+			[
+				"slide",
+				"templates/slider.pug"
+			],
+			[
+				"panelbr",
+				"scss/_panel-brush.scss"
+			],
+			[
+				"brup",
+				"src/BrushPreview.js"
+			],
+			[
 				"panelg",
 				"src/PanelGroup.js"
 			],
 			[
-				"input",
-				"scss/_inputs.scss"
+				"pani",
+				"templates/panel-iris.pug"
+			],
+			[
+				"panb",
+				"templates/panel-brush.pug"
+			],
+			[
+				"br",
+				"src/Brush.js"
+			],
+			[
+				"matu",
+				"src/mathutils.js"
+			],
+			[
+				"",
+				"src/SmoothPointer.js"
+			],
+			[
+				"mat",
+				"src/mathutils.js"
+			],
+			[
+				"varia",
+				"scss/_variables.scss"
+			],
+			[
+				"panbr",
+				"templates/panel-brush.pug"
+			],
+			[
+				"panelpi",
+				"scss/_panel-picker.scss"
+			],
+			[
+				"com",
+				"scss/compiled.scss"
+			],
+			[
+				"panelb",
+				"templates/panel-brush.pug"
+			],
+			[
+				"fnu",
+				"src/fnutils.js"
+			],
+			[
+				"surfa",
+				"src/Surface.js"
+			],
+			[
+				"ind",
+				"templates/index.pug"
+			],
+			[
+				"smoothp",
+				"src/SmoothPointer.js"
+			],
+			[
+				"entr",
+				"src/entry.js"
+			],
+			[
+				"buttj",
+				"src/Button.js"
+			],
+			[
+				"iris.",
+				"src/Iris.js"
+			],
+			[
+				"paneirp",
+				"templates/panel-iris.pug"
+			],
+			[
+				"irisp",
+				"src/IrisPalette.js"
+			],
+			[
+				"panelscs",
+				"scss/_panel.scss"
+			],
+			[
+				"panelpug",
+				"templates/panel.pug"
+			],
+			[
+				"paneli",
+				"templates/panel-iris.pug"
+			],
+			[
+				"panel",
+				"templates/panel-iris.pug"
+			],
+			[
+				"prip",
+				"templates/panel-iris.pug"
+			],
+			[
+				"pbp",
+				"templates/panel-brush.pug"
+			],
+			[
+				"panelir",
+				"templates/panel-ris.pug"
+			],
+			[
+				"brpu",
+				"templates/panel-brush.pug"
+			],
+			[
+				"pipug",
+				"templates/panel-iris.pug"
+			],
+			[
+				"panir",
+				"templates/panel-iris.pug"
+			],
+			[
+				"picker",
+				"scss/_panel-picker.scss"
+			],
+			[
+				"brush.pug",
+				"templates/panel-brush.pug"
+			],
+			[
+				"inde",
+				"templates/index.pug"
+			],
+			[
+				"iris.js",
+				"src/Iris.js"
+			],
+			[
+				"pick",
+				"scss/_picker.scss"
+			],
+			[
+				"panelp",
+				"templates/panel-brush.pug"
+			],
+			[
+				"in",
+				"templates/index.pug"
+			],
+			[
+				"compi",
+				"scss/compiled.scss"
+			],
+			[
+				"pointer",
+				"src/SmoothPointer.js"
+			],
+			[
+				"bespe",
+				"spec/BrushEffectorSpec.js"
+			],
+			[
+				"bruse",
+				"src/BrushEffector.js"
+			],
+			[
+				"hslu",
+				"shaders/includes/hsluv.glsl"
+			],
+			[
+				"same",
+				"shaders/frag/same_hue.frag"
+			],
+			[
+				"commonva",
+				"shaders/includes/common_variables.glsl"
+			],
+			[
+				"variab",
+				"scss/_variables.scss"
+			],
+			[
+				"common",
+				"shaders/includes/common_globals.glsl"
+			],
+			[
+				"samel",
+				"shaders/frag/same_lightness.frag"
+			],
+			[
+				"lig",
+				"shaders/frag/same_lightness.frag"
+			],
+			[
+				"glob",
+				"shaders/includes/common_globals.glsl"
+			],
+			[
+				"cie",
+				"shaders/includes/cie_conversions.glsl"
+			],
+			[
+				"lit",
+				"shaders/frag/same_lightness.frag"
+			],
+			[
+				"matsp",
+				"spec/mathutilsSpec.js"
+			],
+			[
+				"point",
+				"src/SmoothPointer.js"
+			],
+			[
+				"smooth",
+				"src/SmoothPointer.js"
+			],
+			[
+				"glut",
+				"src/glutils.js"
+			],
+			[
+				"canv",
+				"src/canvasutils.js"
 			],
 			[
 				"array",
@@ -1630,80 +2182,24 @@
 				"scss/_picker.scss"
 			],
 			[
-				"br",
-				"src/Brush.js"
-			],
-			[
 				"smoot",
 				"src/SmoothPointer.js"
-			],
-			[
-				"layou",
-				"scss/_layout.scss"
-			],
-			[
-				"inde",
-				"templates/index.pug"
 			],
 			[
 				"util",
 				"src/listenerutils.js"
 			],
 			[
-				"samel",
-				"shaders/frag/same_lightness.frag"
-			],
-			[
-				"vari",
-				"scss/_variables.scss"
-			],
-			[
-				"iris.js",
-				"src/Iris.js"
-			],
-			[
-				"sameh",
-				"shaders/frag/same_hue.frag"
-			],
-			[
-				"common",
-				"shaders/includes/common_globals.glsl"
-			],
-			[
-				"irisp",
-				"src/IrisPalette.js"
-			],
-			[
 				"diff",
 				"shaders/frag/same_lightness.frag"
-			],
-			[
-				"irispal",
-				"spec/IrisPaletteSpec.js"
-			],
-			[
-				"inputb",
-				"src/InputBase.js"
 			],
 			[
 				"slidej",
 				"src/Slider.js"
 			],
 			[
-				"slider",
-				"templates/slider.pug"
-			],
-			[
-				"same",
-				"shaders/frag/same_hue.frag"
-			],
-			[
 				"pal",
 				"src/IrisPalette.js"
-			],
-			[
-				"",
-				"spec/IrisPaletteSpec.js"
 			],
 			[
 				"palette",
@@ -1714,320 +2210,8 @@
 				"shaders/frag/same_hue.frag"
 			],
 			[
-				"var",
-				"scss/_variables.scss"
-			],
-			[
-				"picker",
-				"scss/_picker.scss"
-			],
-			[
-				"varia",
-				"scss/_variables.scss"
-			],
-			[
 				"scr",
 				"gulp/scripts.js"
-			],
-			[
-				"reacto",
-				"src/Reactor.js"
-			],
-			[
-				"domu",
-				"src/domutils.js"
-			],
-			[
-				"inputs",
-				"scss/_inputs.scss"
-			],
-			[
-				"inputr",
-				"scss/mixins/_input-range.scss"
-			],
-			[
-				"inputres",
-				"scss/mixins/_input-reset.scss"
-			],
-			[
-				"cie",
-				"shaders/includes/cie_conversions.glsl"
-			],
-			[
-				"glob",
-				"shaders/includes/common_globals.glsl"
-			],
-			[
-				"sigm",
-				"shaders/includes/sigmoidBlend.glsl"
-			],
-			[
-				"listeneru",
-				"src/listenerutils.js"
-			],
-			[
-				"glu",
-				"src/glutils.js"
-			],
-			[
-				"variables",
-				"scss/_variables.scss"
-			],
-			[
-				"inputscs",
-				"scss/_inputs.scss"
-			],
-			[
-				"entry",
-				"src/entry.js"
-			],
-			[
-				"samli",
-				"shaders/frag/same_lightness.frag"
-			],
-			[
-				"dom",
-				"src/domutils.js"
-			],
-			[
-				"spa",
-				"src/Spacer.js"
-			],
-			[
-				"slide",
-				"src/Slider.js"
-			],
-			[
-				"variab",
-				"scss/_variables.scss"
-			],
-			[
-				"button",
-				"src/Button.js"
-			],
-			[
-				"buttong",
-				"src/ButtonGroup.js"
-			],
-			[
-				"inputbas",
-				"src/InputBase.js"
-			],
-			[
-				"panelele",
-				"src/PanelElement.js"
-			],
-			[
-				"scri",
-				"gulp/scripts.js"
-			],
-			[
-				"gul",
-				"gulp/scripts.js"
-			],
-			[
-				"panelel",
-				"src/PanelElement.js"
-			],
-			[
-				"range",
-				"scss/mixins/_input-range.scss"
-			],
-			[
-				"inp",
-				"scss/_inputs.scss"
-			],
-			[
-				"irip",
-				"src/IrisPalette.js"
-			],
-			[
-				"vair",
-				"shaders/includes/common_variables.glsl"
-			],
-			[
-				"inputsscs",
-				"scss/_inputs.scss"
-			],
-			[
-				"inputrese",
-				"scss/mixins/_input-reset.scss"
-			],
-			[
-				"inputs.",
-				"scss/_inputs.scss"
-			],
-			[
-				"typ",
-				"scss/_typography.scss"
-			],
-			[
-				"iri",
-				"src/Iris.js"
-			],
-			[
-				"saml",
-				"shaders/frag/same_lightness.frag"
-			],
-			[
-				"iris.j",
-				"src/Iris.js"
-			],
-			[
-				"prim",
-				"src/primatives.js"
-			],
-			[
-				"passt",
-				"shaders/vert/passthrough.vert"
-			],
-			[
-				"commonv",
-				"shaders/includes/common_variables.glsl"
-			],
-			[
-				"sigmoid",
-				"shaders/includes/sigmoidBlend.glsl"
-			],
-			[
-				"irispa",
-				"src/IrisPalette.js"
-			],
-			[
-				"ind.",
-				"templates/index.pug"
-			],
-			[
-				"panelgro",
-				"src/PanelGroup.js"
-			],
-			[
-				"inpub",
-				"src/InputBase.js"
-			],
-			[
-				"slid",
-				"src/Slider.js"
-			],
-			[
-				"in.",
-				"templates/index.pug"
-			],
-			[
-				"element",
-				"PanelElement.js"
-			],
-			[
-				"prims",
-				"spec/primativesSpec.js"
-			],
-			[
-				"prima",
-				"src/primatives.js"
-			],
-			[
-				"samh",
-				"shaders/frag/sameHue.frag"
-			],
-			[
-				"gluti",
-				"src/glutils.js"
-			],
-			[
-				"main",
-				"templates/index.pug"
-			],
-			[
-				"glutils",
-				"src/glutils.js"
-			],
-			[
-				"irispals",
-				"spec/IrisPaletteSpec.js"
-			],
-			[
-				"passth",
-				"shaders/vert/passthrough.vert"
-			],
-			[
-				"base",
-				"templates/base.pug"
-			],
-			[
-				"serve",
-				"gulp/serve.js"
-			],
-			[
-				"sty",
-				"gulp/styles.js"
-			],
-			[
-				"styl",
-				"gulp/styles.js"
-			],
-			[
-				"vie",
-				"gulp/views.js"
-			],
-			[
-				"plugingro",
-				"illustratorapi/illustrator/AIPluginGroup.h"
-			],
-			[
-				"aidocument",
-				"illustratorapi/illustrator/AIDocument.h"
-			],
-			[
-				"irispanel",
-				"Source/IrisPanelController.cpp"
-			],
-			[
-				"irissuit",
-				"Source/IrisSuites.cpp"
-			],
-			[
-				"irissui",
-				"Source/IrisSuites.h"
-			],
-			[
-				"toolname",
-				"illustratorapi/illustrator/AIToolNames.h"
-			],
-			[
-				"irisplugin",
-				"Source/IrisPlugin.h"
-			],
-			[
-				"plugin",
-				"source/Plugin.cpp"
-			],
-			[
-				"aitoolbox",
-				"illustratorapi/illustrator/AIToolbox.h"
-			],
-			[
-				"aitool",
-				"illustratorapi/illustrator/AITool.h"
-			],
-			[
-				"art",
-				"illustratorapi/illustrator/AIDrawArt.h"
-			],
-			[
-				"aidraw",
-				"illustratorapi/illustrator/AIDrawArt.h"
-			],
-			[
-				"toolnam",
-				"illustratorapi/illustrator/AIToolNames.h"
-			],
-			[
-				"tool",
-				"illustratorapi/illustrator/AITool.h"
-			],
-			[
-				"iriscontro",
-				"Source/IrisPanelController.cpp"
 			]
 		],
 		"width": 0.0
@@ -2073,7 +2257,7 @@
 	"show_minimap": true,
 	"show_open_files": true,
 	"show_tabs": true,
-	"side_bar_visible": true,
+	"side_bar_visible": false,
 	"side_bar_width": 274.0,
 	"status_bar_visible": true,
 	"template_settings":

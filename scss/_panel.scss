@@ -41,8 +41,8 @@
 			cursor: pointer;
 			color: $panel-color;
 			text-shadow: 
-				0px 0px 2px transparentize($ambient, 0.5),
-				-1px 0px 10px transparentize($ambient, 0.6);
+				0px 0px 2px transparentize($ambient, 0.3),
+				-1px 0px 12px transparentize($ambient, 0.7);
 
 			transform: rotate(-90deg);
 		}

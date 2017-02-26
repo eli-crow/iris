@@ -1,16 +1,16 @@
-const Reactor = require('../src/Reactor.js');
+const Emitter = require('../src/Emitter.js');
 
-describe('A Reactor', function () {
+describe('An Emitter', function () {
 	let reactor;
 
 	beforeEach(function () {
-		reactor = new Reactor(['eventone', 'eventtwo', 'eventthree']);
+		reactor = new Emitter(['eventone', 'eventtwo', 'eventthree']);
 	})
 
 	it('sends an event object to callbacks', function () {
-		reactor.addEventListener('eventone', function(event) {
+		reactor.on('eventone', function(event) {
 			expect(event.data).toEqual(Math.PI);
 		});
-		reactor.dispatchEvent('eventone', {data: Math.PI})
+		reactor.emit('eventone', {data: Math.PI})
 	})
 })

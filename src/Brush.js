@@ -18,9 +18,9 @@ module.exports = class Brush extends TexturedTool
   }
 
   draw (ctx, e, pts) {
-    const props = this.applyEffectors(this._effectors, e, { size: this.minSize, flow: this.minFlow} );
+    const props = this.applyEffectors(this._effectors, e, { size: this.minSize, flow: this.minFlow });
 
-    for (let i = 0, ii = pts.definedLength; i<ii; i+=e.nComponents) {
+    for (let i = 0, ii = pts.length; i<ii; i+= 2) {
       const smoothProps = this.applyEffectors(this._smoothedEffectors, e, props);
 
       canvasutils.drawTexture(
