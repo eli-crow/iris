@@ -6,7 +6,7 @@ const PUPIL_RADIUS = 0.25
 module.exports = class Pupil extends Emitter
 {
 	constructor(canvas) {
-		super(['drag']);
+		super(['drag', 'release']);
 
 		const element = document.createElement('div');
 		element.classList.add('iris-pupil');
@@ -17,7 +17,8 @@ module.exports = class Pupil extends Emitter
 
 		listenerutils.normalPointer(element, {
 			contained: false,
-			move: e => this.emit('drag', event)
+			move: e => this.emit('drag',    event),
+			up:   e => this.emit('release', event)
 		});
 	}
 

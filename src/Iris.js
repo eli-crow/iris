@@ -26,15 +26,16 @@ class Iris extends Emitter
 			alpha: true
 		});
 		
-		this._highlight = new Highlight(canvas);
+		const highlight = this._highlight = new Highlight(canvas);
 		this._pupil = new Pupil(canvas);
-		// this._pupil.on('drag', e =>	{
-		// 	this.emitColors('pick', e, true)
-		// });
-		// this._pupil.on('release', e => {
-
-		// 	this.emitColors('pickend', e, true)
-		// });
+		this._pupil.on('drag', e =>	{
+			highlight.movePolar(-e.getAngle() + Math.PI/2, highlight.getDistance());
+			this.emitColors('pick', null, false);
+		});
+		this._pupil.on('release', e => {
+			highlight.movePolar(-e.getAngle() + Math.PI/2, highlight.getDistance());
+			this.emitColors('pickend', null, false);
+		});
 		
 		this._currentPalette = null;
 		this.palettes = {};

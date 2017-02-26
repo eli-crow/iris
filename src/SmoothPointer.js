@@ -53,7 +53,7 @@ class SmoothPointer
         _posBuffer[1] += (e.clientY - _posBuffer[1]) * (1 - this.smoothing);
         
         this._onMove({
-          pts: mathutils.getLinearInterpolatedCubicPoints(_posBuffer, 3, 2),
+          pts: mathutils.getLinearInterpolatedCubicPoints(_posBuffer, 3, 3),
           squaredSpeed: _squaredSpeed,
           pressure: (e.pressure * 1.2 - .2) || 1,
           direction: Math.atan2(diffY, diffX) + Math.PI
