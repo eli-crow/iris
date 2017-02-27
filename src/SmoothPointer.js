@@ -5,7 +5,7 @@ const listenerutils = require('./listenerutils.js');
 
 //todo: pull in  modernizr to test for existence.
 const POINTER_EVENTNAME = 'pointer';
-const BASE_SMOOTHING = 0.2;
+const BASE_SMOOTHING = 0.13;
 
 const __defaults = {
   smmothedProps: [],
@@ -17,10 +17,11 @@ class SmoothPointer
 { 
   constructor(context, options) {
     const _posBuffer = new Array(8);
+    let _lastPressure;
 
     this.steps = options['steps'] || __defaults['steps'];
     this.minSquaredDistance = Math.pow(options['minDistance'] || __defaults['steps'], 2);
-    this.smoothing = 0.3;
+    this.smoothing = 0.5;
   
     if (fnutils.isFunction(options['down'])) this._onDown = options['down'];
     if (fnutils.isFunction(options['move'])) this._onMove = options['move'];
@@ -37,6 +38,7 @@ class SmoothPointer
           _posBuffer[2*i]    = e.clientX;
           _posBuffer[2*i +1] = e.clientY;
         }
+        _lastPressure = 0;
         this._onDown(e);
       },
 
@@ -47,17 +49,18 @@ class SmoothPointer
         _squaredSpeed = Math.pow(diffX, 2) + Math.pow(diffY, 2);
         if (_squaredSpeed < this.minSquaredDistance) return;
 
-        const smoothingDist = 1 - (BASE_SMOOTHING + e.pressure * this.smoothing * (1 - BASE_SMOOTHING));
-
         arrayutils.rotateArray(_posBuffer, 2);
+        const smoothingDist = 1 - (BASE_SMOOTHING + e.pressure * this.smoothing * (1 - BASE_SMOOTHING));
         _posBuffer[0] += (e.clientX - _posBuffer[0]) * smoothingDist;
         _posBuffer[1] += (e.clientY - _posBuffer[1]) * smoothingDist;
 
-        e.pts = mathutils.getLinearInterpolatedCubicPoints(_posBuffer, 3, 2);
+        e.pts = mathutils.getLerpedCubicPoints(_posBuffer, 3, 2);
         e.squaredSpeed = _squaredSpeed;
-        e.penPressure = (e.pressure * 1.2 - .2) || 1;
+        e.lastPressure = Math.max(_lastPressure * 1.2 - .2, 0)
+        e.penPressure = Math.max(e.pressure * 1.2 - .2, 0);
         e.direction = Math.atan2(diffY, diffX) + Math.PI;
         
+        _lastPressure = e.pressure;
         this._onMove(e);
       },
 

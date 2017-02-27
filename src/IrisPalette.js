@@ -38,12 +38,11 @@ class IrisPalette
 		gl.bufferData(gl.ARRAY_BUFFER, this._pts, gl.STATIC_DRAW);
 		gl.vertexAttribPointer(this._positionLocation, 2, gl.FLOAT, false, 0, 0);
 	}
+	
 	draw () {
 		const gl = this.gl;
 		gl.drawArrays(gl.TRIANGLE_FAN, 0, this._pts.length/2);
 	}
-
-	
 
 	addUniform(name, descriptor) {
 		descriptor.location = this.gl.getUniformLocation(this._program, name);

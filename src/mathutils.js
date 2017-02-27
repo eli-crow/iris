@@ -55,7 +55,7 @@ module.exports.getCubicPoints = function getCubicPoints(input, nSteps, nComponen
 };
 
 const linearComponent = (t, p0, p1) => (1 - t) * p0 + t * p1;
-module.exports.getLinearInterpolatedCubicPoints = function getCubicPoints(input, nSteps, minDistance) {
+module.exports.getLerpedCubicPoints = function getCubicPoints(input, nSteps, minDistance) {
 	const output = [];
 
 	const p0x = input[0], p0y = input[1];
@@ -191,3 +191,4 @@ module.exports.getSinePoints1d = function(amplitude, nPts, output) {
 
 
 module.exports.squareDistance2d = squareDistance2d;
+module.exports.lerp = linearComponent;

@@ -20,16 +20,22 @@ module.exports = class Brush extends TexturedTool
 	draw (ctx, e, pts) {
 		if (e.altKey) return;
 
-		const props = this.applyEffectors(this._effectors, e, { size: this.minSize, flow: this.minFlow });
+		const props = this.applyEffectors(this._effectors, e, { 
+			size: this.minSize, 
+			flow: this.minFlow,
+			angle: 0,
+			progress: 0
+		});
 
 		for (let i = 0, ii = pts.length; i<ii; i+= 2) {
+			e.progress = i/ii;
 			const smoothProps = this.applyEffectors(this._smoothedEffectors, e, props);
 
 			canvasutils.drawTexture(
 				ctx, this._texture,
 				pts[i], pts[i + 1],
 				smoothProps.size, smoothProps.size,
-				2 * Math.PI * Math.random(),
+				smoothProps.angle,
 				smoothProps.flow
 			);
 		}
@@ -42,5 +48,6 @@ module.exports = class Brush extends TexturedTool
 
 module.exports.prototype.EffectorTypes = {
 	size: 'size',
-	flow: 'flow'
+	flow: 'flow',
+	angle: 'angle'
 }

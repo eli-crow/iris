@@ -45,7 +45,7 @@ const sameLightnessButton = new Button('Colors')
 		selectedModeElement = sameLightnessButton._element;
 		hueSlider.hide();
 		lightnessSlider.unhide();
-		sameLightnessButton._element.style.borderTopColor = currentColor;
+		sameLightnessButton._element.style.borderTopColor = '';
 		sameHueButton._element.style.borderTopColor = 'transparent';
 		iris.setMode('sameLightness');
 	});
@@ -54,7 +54,7 @@ const sameHueButton = new Button('Shades')
 		selectedModeElement = sameHueButton._element;
 		lightnessSlider.hide();
 		hueSlider.unhide();
-		sameHueButton._element.style.borderTopColor = currentColor;
+		sameHueButton._element.style.borderTopColor = '';
 		sameLightnessButton._element.style.borderTopColor = 'transparent';
 		iris.setMode('sameHue');
 	});
@@ -81,23 +81,19 @@ const brush = new Brush(surface, {
 	smoothInputs: ['pressure']
 });
 brush.minSize = 2;
-brush.setImage(document.getElementById('brush-shape-bristles'))
+brush.setImage(document.getElementById('brush-shape-inky'))
 
-const angleEffector = new ToolEffector('size', (brush, event) => {
-	const symm = brush.hasSymmetricalEmphasis ? 2 : 1;
-	return Math.cos((Math.PI - event.direction + brush.calligAngle) * symm) *.5 +.5;
-});
-const speedEffector = new ToolEffector('size', (brush, event) => {
-	const s = Math.sqrt(event.squaredSpeed);
+// const angleEffector = new ToolEffector('angle', (brush, event) => {
+// 	const symm = brush.hasSymmetricalEmphasis ? 2 : 1;
+// 	return Math.cos((Math.PI - event.direction + brush.calligAngle) * symm) *.5 +.5;
+// });
+const angleEffector = new ToolEffector('angle', (brush, e) => e.direction);
+const speedEffector = new ToolEffector('size', (brush, e) => {
+	const s = Math.sqrt(e.squaredSpeed);
 	return s/(s+brush.speedScale);
 });
-const pressureEffector = new ToolEffector('size', (brush, event) => {
-	event.penPressure
-	return event.penPressure;
-});
-const pressureFlowEffector = new ToolEffector('flow', (brush, event) => {
-	return event.penPressure;
-});
+const pressureEffector = new ToolEffector('size', (brush, e) => mathutils.lerp(e.progress, e.penPressure, e.lastPressure));
+const pressureFlowEffector = new ToolEffector('flow', (brush, e) => e.penPressure);
 
 brush.addEffector([angleEffector, speedEffector, pressureFlowEffector], false);
 brush.addEffector([pressureEffector], true);
@@ -114,17 +110,11 @@ const pressureSlider = new Slider(0, -50, 50, 1)
 	.bind(val => pressureEffector.set.call(pressureEffector, 'scale', val));
 const pressureFlowSlider = new Slider(0, 0, 1, .01)
 	.bind(val => pressureFlowEffector.set.call(pressureFlowEffector, 'scale', val));
-const angleSlider = new Slider(0, -50, 50, 1)
-	.bind(val => angleEffector.set.call(angleEffector, 'scale', val));
 const brushInputs = new PanelGroup(document.getElementById('brush-inputs'))
 	.add(minSizeSlider)
 	.add(new Spacer())
 	.add(pressureSlider)
 	.add(pressureFlowSlider)
-	.add(new Spacer())
-	.add(angleSlider)
-	.add(new Spacer());
-
 
 
 const eyedropper = new Eyedropper(surface.canvas);
