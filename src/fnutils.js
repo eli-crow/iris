@@ -11,9 +11,23 @@ module.exports.isFunction = function (functionToCheck) {
 	 var getType = {};
 	 return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
 };
-
-let MyMixin = (superclass) => class extends superclass {  
-  foo() {
-    console.log('foo from MyMixin');
-  }
-};
+// from https://remysharp.com/2010/07/21/throttling-function-calls
+module.exports.throttle = function(fn, threshhold, scope) {
+  threshhold || (threshhold = 250);
+  let last, deferTimer;
+  return function () {
+    const context = scope || this;
+    const now = +new Date,
+          args = arguments;
+    if (last && now < last + threshhold) {
+      clearTimeout(deferTimer);
+      deferTimer = setTimeout(() => {
+        last = now;
+        fn.apply(context, args);
+      }, threshhold);
+    } else {
+      last = now;
+      fn.apply(context, args);
+    }
+  };
+}

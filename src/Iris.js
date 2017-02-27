@@ -14,7 +14,7 @@ const sameHue = require('../shaders/frag/same_hue.frag');
 //manages the canvas and its own IrisPalettes.
 class Iris extends Emitter
 {
-	constructor (canvas) {
+	constructor (canvas, indicator) {
 		super(['pick', 'pickend']);
 
 		this._canvas = canvas;

@@ -2,6 +2,7 @@ const domutils = require('./domutils.js');
 const glutils = require('./glutils.js');
 
 const HILIGHT_RADIUS = 7.5;
+const PUPIL_RADIUS = 0.25;
 
 module.exports = class Highlight {
 	constructor (canvas) {
@@ -31,6 +32,15 @@ module.exports = class Highlight {
 		this._y = Math.sin(theta) * r;
 		this._angle = theta;
 		this._distance = r;
+		this.updateStylePosition();
+	}
+	movePolarNormal (theta, r) {
+		const cr = this._canvas.width/2;
+		const R = r * cr * (1 - PUPIL_RADIUS) + (PUPIL_RADIUS * cr) - 10;
+		this._x = Math.cos(theta) * R;
+		this._y = Math.sin(theta) * R;
+		this._angle = theta
+		this._distance = R;
 		this.updateStylePosition();
 	}
 

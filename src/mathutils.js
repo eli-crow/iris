@@ -1,6 +1,12 @@
-module.exports.clamp = function (x, a, b) {
-	return Math.min(Math.max(x, a), b);
-}
+module.exports.clamp = (x, a, b) => Math.min(Math.max(x, a), b);
+module.exports.radians = degrees => degrees/180*Math.PI;
+module.exports.degrees = radians => radians/Math.PI*180;
+
+const doVector = (v, w, fn) => v.slice(0).map((v,i) => fn(v,w.length ? w[i] : w));
+module.exports.vMul = (v, w) => doVector((v,w) => v * s, v, w);
+module.exports.vSub = (v, w) => doVector((v,w) => v - w, v, w);
+module.exports.vAdd = (v, w) => doVector((v,w) => v + w, v, w);
+module.exports.vDiv = (v, w) => doVector((v,w) => v / w, v, w);
 
 module.exports.distance = function (ptArray1, ptArray2) {
 	let squareSum = 0;

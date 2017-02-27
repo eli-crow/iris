@@ -1,7 +1,7 @@
 const Emitter = require('./Emitter.js');
 const listenerutils = require('./listenerutils.js');
-const colorutils = require('./colorutils.js');
 const canvasutils = require('./canvasutils.js');
+const hsluv = require('hsluv');
 
 module.exports = class Eyedropper extends Emitter
 {
@@ -25,7 +25,7 @@ module.exports = class Eyedropper extends Emitter
 	sample (event, e) {
 		if (e.altKey) {
 			const rgba = canvasutils.getPixel(this._ctx, e.offsetX, e.offsetY);
-			this.emit(event, {rgba: rgba, luv: colorutils.rgbToLuv(rgba)});
+			if (rgba[3] > 0) this.emit(event, {rgba: rgba, hsl: hsluv.rgbToHsluv(rgba.map(x => x/255))});
 		}
 	}
 

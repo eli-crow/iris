@@ -11,6 +11,8 @@ const BrushPreview = require('./BrushPreview.js');
 const Surface = require('./Surface.js');
 const fnutils = require('./fnutils.js');
 
+const mathutils = require('./mathutils.js');
+
 
 
 //========================================================= Iris
@@ -47,7 +49,7 @@ const sameLightnessButton = new Button('Colors')
 		sameHueButton._element.style.borderTopColor = 'transparent';
 		iris.setMode('sameLightness');
 	});
-const sameHueButton = new Button('Tones')
+const sameHueButton = new Button('Shades')
 	.bind(() => {
 		selectedModeElement = sameHueButton._element;
 		lightnessSlider.hide();
@@ -140,8 +142,9 @@ iris.on(['pick', 'pickend'], data => {
 eyedropper.on('pick', data => {
 	currentColor = data.rgba;
 	irisIndicator.style.backgroundColor = `rgba(${data.rgba.slice(0,3).join(',')}, 1)`;
-	iris.palettes['sameLightness'].uniforms.lightness = data.luv[0];
 });
-eyedropper.on('pickend', data => {
+eyedropper.on('pickend', fnutils.throttle(data => {
+	iris._highlight.movePolarNormal.call(iris._highlight, - mathutils.radians(data.hsl[0]), data.hsl[1]/100);
+	iris.palettes['sameLightness'].uniforms.lightness = data.hsl[2];
 	brush.setColor(data.rgba);
-});
+}), 150);
