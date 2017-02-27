@@ -1,14 +1,14 @@
 const PanelElement = require('./PanelElement.js');
-const Emitter = require('./Emitter.js');
 const fnutils = require('./fnutils.js');
 
 const ONINPUT_EVENTNAME = "oninput" in document.body ? 'input' : 'change';
 
-class InputBase extends PanelElement
+module.exports = class InputBase extends PanelElement
 {
-	constructor(type, attributes) {
-		super();
-		this._emitter = new Emitter(['input', 'change']);
+	constructor(type, attributes, events) {
+		const emitterEvents = ['input', 'change'];
+		if (events) emitterEvents.concat(events);
+		super(emitterEvents);
 		
 		let html = `<input type="${type}"`;
 		for (let name in attributes) html += ` ${name}="${attributes[name]}"`;
@@ -24,48 +24,21 @@ class InputBase extends PanelElement
 	onInput () {
 		let val = +this._element.value; 
 		if (typeof this.transform === 'function') val = this.transform(val);
-		this._emitter.emit('input', val);
+		this.emit('input', val);
 	}
 	onChange () {
 		let val = +this._element.value; 
 		if (typeof this.transform === 'function') val = this.transform(val);
-		this._emitter.emit('change', val);
-	}
-
-	on (eventname, callback) {
-		this._emitter.on(eventname, callback);
-		return this;
-	}
-	off (eventname, callback) {
-		this._emitter.removeEventListener(eventname, callback);
-		return this;
+		this.emit('change', val);
 	}
 
 	bind (subject, prop) {
-		if (fnutils.isFunction(subject)) {
-			this._emitter.on('input', val => {
-				subject(val);
-			});
-		}
-		else if (prop in subject) {
-			this._emitter.on('input', val => {
-				subject[prop] = val;
-			});
-		}
-		//TODO: change name of label
-		return this;
-	}
+		if (fnutils.isFunction(subject)) 
+			this.on('input', val => subject(val));
+		else if (subject.hasOwnProperty(prop)) 
+			this.on('input', val => subject[prop] = val);
 
-	classes (names) {
-		const el = this._element;
-		for (var i = 0, ii = arguments.length; i < ii; i++) {
-			el.classList.add(arguments[i]);
-		}
-		return this;
-	}
-
-	transform (transform) {
-		this.transform = transform;
+		this.name(prop);
 		return this;
 	}
 
@@ -73,11 +46,4 @@ class InputBase extends PanelElement
 		this._name = name;
 		return this;
 	}
-
-	appendTo (element) {
-		element.appendChild(this._element);
-		return this;
-	}
 }
-
-module.exports = InputBase;

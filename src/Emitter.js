@@ -16,10 +16,12 @@ class EmitterEvent
 module.exports = class Emitter
 {
 	constructor(eventNames) {
-		this.events = {};
-		for (var i = 0, ii = eventNames.length; i < ii; i++) {
-			var eventName = eventNames[i];
-			this.events[eventName] = new EmitterEvent(eventName);
+		if (eventNames) {
+			this.events = {};
+			for (var i = 0, ii = eventNames.length; i < ii; i++) {
+				var eventName = eventNames[i];
+				this.events[eventName] = new EmitterEvent(eventName);
+			}
 		}
 	}
 	emit(eventName, eventArgs){

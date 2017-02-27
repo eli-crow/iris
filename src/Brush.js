@@ -5,7 +5,7 @@ module.exports = class Brush extends TexturedTool
 {
   constructor(surface, options) {
     super(surface, options);
-
+    
     this.minSize = 2;
     this.erase = false;
     this.minFlow = 0;

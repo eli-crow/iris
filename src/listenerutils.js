@@ -81,6 +81,8 @@ module.exports.simplePointer = (context, events, transform) => {
 		if (moveHandler) moveCtx.addEventListener(POINTER_EVENTNAME + 'move', moveHandler, false);
 		window.addEventListener(POINTER_EVENTNAME + 'up', upHandler, false);
 	}, false);
+
+	if (events.click) context.addEventListener('click', events.click, false);
 }
 
 module.exports.normalPointer = (context, events) => {

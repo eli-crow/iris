@@ -6,8 +6,14 @@ module.exports.curry = function (fn, thisarg = window) {
 	return function() {
 		fn.apply(thisarg, args);
 	}
-}
+};
 module.exports.isFunction = function (functionToCheck) {
 	 var getType = {};
 	 return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-}
+};
+
+let MyMixin = (superclass) => class extends superclass {  
+  foo() {
+    console.log('foo from MyMixin');
+  }
+};

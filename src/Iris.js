@@ -36,6 +36,10 @@ class Iris extends Emitter
 			highlight.movePolar(-e.getAngle() + Math.PI/2, highlight.getDistance());
 			this.emitColors('pickend', null, false);
 		});
+		this._pupil.on('click', e => {
+			highlight.move(0,0);
+			this.emitColors('pickend', null, false);
+		})
 		
 		this._currentPalette = null;
 		this.palettes = {};
