@@ -134,13 +134,10 @@ const eyedropper = new Eyedropper(surface.canvas);
 //========================================================= Wiring
 iris.on('pickend', e => brush.setColor.call(brush, e));
 
-let currentColor;
 iris.on(['pick', 'pickend'], data => {
 	irisIndicator.style.backgroundColor = `rgba(${data.slice(0,3).join(',')}, 1)`;
-	currentColor = data;
 })
 eyedropper.on('pick', data => {
-	currentColor = data.rgba;
 	irisIndicator.style.backgroundColor = `rgba(${data.rgba.slice(0,3).join(',')}, 1)`;
 });
 eyedropper.on('pickend', fnutils.throttle(data => {

@@ -36,7 +36,7 @@ module.exports = class Highlight {
 	}
 	movePolarNormal (theta, r) {
 		const cr = this._canvas.width/2;
-		const R = r * cr * (1 - PUPIL_RADIUS) + (PUPIL_RADIUS * cr) - 10;
+		const R = (r * cr * (1 - PUPIL_RADIUS) + (PUPIL_RADIUS * cr)) * .92 + .08;
 		this._x = Math.cos(theta) * R;
 		this._y = Math.sin(theta) * R;
 		this._angle = theta
