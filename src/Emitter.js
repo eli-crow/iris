@@ -31,6 +31,7 @@ module.exports = class Emitter
 			if (callback) callback(eventArgs);
 			else callbacks.splice(1, 1);
 		}
+		return this;
 	}
 	on(eventName, callback){
 		if (eventName.constructor === Array) {
@@ -39,6 +40,7 @@ module.exports = class Emitter
 			}
 		}
 		else this.events[eventName].attachCallback(callback);
+		return this;
 	}
 	off(eventName, callback){
 		if (eventName.constructor === Array) {
@@ -47,5 +49,6 @@ module.exports = class Emitter
 			}
 		}
 		else this.events[eventName].detachCallback(callback);
+		return this;
 	}
 }

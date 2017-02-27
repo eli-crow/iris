@@ -5,6 +5,8 @@ GLSL port by William Malo ( https://github.com/williammalo )
 Put this code in your fragment shader.
 */
 
+
+
 vec3 hsluv_intersectLineLine(vec3 line1x, vec3 line1y, vec3 line2x, vec3 line2y) {
     return (line1y - line2y) / (line2x - line1x);
 }
@@ -272,7 +274,7 @@ vec4 lchToHpluv(float x, float y, float z, float a) {return lchToHpluv( vec4(x,y
 vec4   lchToRgb(float x, float y, float z, float a) {return   lchToRgb( vec4(x,y,z,a) );}
 vec4   rgbToLch(float x, float y, float z, float a) {return   rgbToLch( vec4(x,y,z,a) );}
 vec4 hsluvToRgb(float x, float y, float z, float a) {return hsluvToRgb( vec4(x,y,z,a) );}
-vec4 rgbToHslul(float x, float y, float z, float a) {return rgbToHsluv( vec4(x,y,z,a) );}
+vec4 rgbToHsluv(float x, float y, float z, float a) {return rgbToHsluv( vec4(x,y,z,a) );}
 vec4 hpluvToRgb(float x, float y, float z, float a) {return hpluvToRgb( vec4(x,y,z,a) );}
 vec4 rgbToHpluv(float x, float y, float z, float a) {return rgbToHpluv( vec4(x,y,z,a) );}
 vec4   luvToRgb(float x, float y, float z, float a) {return   luvToRgb( vec4(x,y,z,a) );}

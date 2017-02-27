@@ -6,6 +6,7 @@ const PanelGroup = require('./PanelGroup.js');
 const Spacer = require('./Spacer.js');
 const ToolEffector = require('./ToolEffector.js');
 const Brush = require('./Brush.js');
+const Eyedropper = require('./Eyedropper.js');
 const BrushPreview = require('./BrushPreview.js');
 const Surface = require('./Surface.js');
 const fnutils = require('./fnutils.js');
@@ -18,14 +19,13 @@ const irisInputs = document.getElementById('picker-inputs');
 const irisModes = document.getElementById('picker-modes');
 const irisIndicator = document.getElementById('picker-indicator');
 const iris = new Iris(irisElement, irisInputs);
-window.iris = iris;
 
 const lightnessSlider = new Slider(50, 0, 100, 1/255)
 	.classes('lightness')
 	.bind(iris.palettes['sameLightness'].uniforms, "lightness")
 	.on('change', () => {
 		iris.emitColors.call(iris, 'pickend', null, false);
-	})
+	});
 const hueSlider = new Slider(0, 0, 360, 1)
 	.classes('hue')
 	.bind(iris.palettes['sameHue'].uniforms, "hue")
@@ -35,6 +35,9 @@ const inputs = new PanelGroup(irisInputs)
 	.add(lightnessSlider)
 	.add(hueSlider);
 
+
+const modes = new PanelGroup(irisModes);
+let selectedModeElement;
 const sameLightnessButton = new Button('Colors')
 	.bind(() => {
 		selectedModeElement = sameLightnessButton._element;
@@ -57,8 +60,8 @@ const modeButtonGroup = new ButtonGroup()
 	.add(sameLightnessButton)
 	.add(sameHueButton);
 
-const modes = new PanelGroup(irisModes)
-	.add(modeButtonGroup);
+
+modes.add(modeButtonGroup);
 	
 
 
@@ -87,11 +90,11 @@ const speedEffector = new ToolEffector('size', (brush, event) => {
 	return s/(s+brush.speedScale);
 });
 const pressureEffector = new ToolEffector('size', (brush, event) => {
-	event.pressure
-	return event.pressure;
+	event.penPressure
+	return event.penPressure;
 });
 const pressureFlowEffector = new ToolEffector('flow', (brush, event) => {
-	return event.pressure;
+	return event.penPressure;
 });
 
 brush.addEffector([angleEffector, speedEffector, pressureFlowEffector], false);
@@ -121,14 +124,24 @@ const brushInputs = new PanelGroup(document.getElementById('brush-inputs'))
 	.add(new Spacer());
 
 
-//========================================================= Wiring
-iris.on('pickend', brush.setColor.bind(brush));
 
-let selectedModeElement = sameLightnessButton._element;
+const eyedropper = new Eyedropper(surface.canvas);
+
+
+
+//========================================================= Wiring
+iris.on('pickend', e => brush.setColor.call(brush, e));
+
 let currentColor;
-iris.on(['pick', 'pickend'], function (data) {
-	const rgba =`rgba(${data.slice(0,3).join(',')}, 1)`;
-	irisIndicator.style.backgroundColor   = rgba;
-	selectedModeElement.style.borderColor = rgba;
-	currentColor = rgba;
+iris.on(['pick', 'pickend'], data => {
+	irisIndicator.style.backgroundColor = `rgba(${data.slice(0,3).join(',')}, 1)`;
+	currentColor = data;
 })
+eyedropper.on('pick', data => {
+	currentColor = data.rgba;
+	irisIndicator.style.backgroundColor = `rgba(${data.rgba.slice(0,3).join(',')}, 1)`;
+	iris.palettes['sameLightness'].uniforms.lightness = data.luv[0];
+});
+eyedropper.on('pickend', data => {
+	brush.setColor(data.rgba);
+});

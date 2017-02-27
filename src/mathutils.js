@@ -9,14 +9,20 @@ module.exports.distance = function (ptArray1, ptArray2) {
 	return Math.sqrt(squareSum);
 }
 
+module.exports.dotProduct = (v1, v2) => {
+	let result = 0;
+	for (var i = 0, ii = v1.length; i < ii; i++) {
+		result += v1[i] * v2[i];
+	}
+	return result;
+} 
+
 function cubicComponent (t, y0, y1, y2, y3) {
 	const a0 = y3 - y2 - y0 + y1;
 	const a1 = y0 - y1 - a0;
 	const a2 = y2 - y0;
 	return(a0*t*t*t + a1*t*t + a2*t + y1);
 }
-
-
 /**
  * takes a 1d buffer of 4 consecutive points of nComponents dimensions, returns a buffer of 
  * points between 2nd and 3rd points in buffer, of length nSteps*nComponents.

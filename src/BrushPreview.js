@@ -38,7 +38,7 @@ module.exports = class BrushPreview
 		brush.draw(this._ctx, {
 			pts: this._pts,
 			nComponents: 2,
-			pressure: 0.5,            //interpolated end to end
+			penPressure: 0.5,            //interpolated end to end
 			squaredSpeed: 1000,       //interpolated end to end
 			direction: 1,             //derivative of sine (cosine)
 		}, this._pts);

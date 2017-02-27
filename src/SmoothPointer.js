@@ -5,6 +5,7 @@ const listenerutils = require('./listenerutils.js');
 
 //todo: pull in  modernizr to test for existence.
 const POINTER_EVENTNAME = 'pointer';
+const BASE_SMOOTHING = 0.2;
 
 const __defaults = {
   smmothedProps: [],
@@ -15,8 +16,6 @@ const __defaults = {
 class SmoothPointer
 { 
   constructor(context, options) {
-    const smoothedProps = (options['smoothedProps'] || __defaults['smoothedProps']);
-    const nComponents = smoothedProps.length;
     const _posBuffer = new Array(8);
 
     this.steps = options['steps'] || __defaults['steps'];
@@ -48,16 +47,18 @@ class SmoothPointer
         _squaredSpeed = Math.pow(diffX, 2) + Math.pow(diffY, 2);
         if (_squaredSpeed < this.minSquaredDistance) return;
 
+        const smoothingDist = 1 - (BASE_SMOOTHING + e.pressure * this.smoothing * (1 - BASE_SMOOTHING));
+
         arrayutils.rotateArray(_posBuffer, 2);
-        _posBuffer[0] += (e.clientX - _posBuffer[0]) * (1 - this.smoothing);
-        _posBuffer[1] += (e.clientY - _posBuffer[1]) * (1 - this.smoothing);
+        _posBuffer[0] += (e.clientX - _posBuffer[0]) * smoothingDist;
+        _posBuffer[1] += (e.clientY - _posBuffer[1]) * smoothingDist;
+
+        e.pts = mathutils.getLinearInterpolatedCubicPoints(_posBuffer, 3, 2);
+        e.squaredSpeed = _squaredSpeed;
+        e.penPressure = (e.pressure * 1.2 - .2) || 1;
+        e.direction = Math.atan2(diffY, diffX) + Math.PI;
         
-        this._onMove({
-          pts: mathutils.getLinearInterpolatedCubicPoints(_posBuffer, 3, 2),
-          squaredSpeed: _squaredSpeed,
-          pressure: (e.pressure * 1.2 - .2) || 1,
-          direction: Math.atan2(diffY, diffX) + Math.PI
-        });
+        this._onMove(e);
       },
 
       up: e => this._onUp(e)
