@@ -10,24 +10,29 @@ module.exports = class InputBase extends PanelElement
 		if (events) emitterEvents.concat(events);
 		super(emitterEvents);
 		
-		let html = `<input type="${type}"`;
+		let html = attributes['name'] ? `<label for="${attributes.name}">
+			${attributes.name.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+		</label>` : '';
+		html += `<input type="${type}"`;
 		for (let name in attributes) html += ` ${name}="${attributes[name]}"`;
 		html += '>';
 
 		const tempEl = document.createElement('div');
 		tempEl.innerHTML = html;
-		this._element = tempEl.children[0];
-		this._element.addEventListener(ONINPUT_EVENTNAME, this.onInput.bind(this), false);
-		this._element.addEventListener('change', this.onChange.bind(this), false);
+		this._element = tempEl;
+
+		this._input = tempEl.children[tempEl.children.length - 1];
+		this._input.addEventListener(ONINPUT_EVENTNAME, this.onInput.bind(this), false);
+		this._input.addEventListener('change', this.onChange.bind(this), false);
 	}
 
 	onInput () {
-		let val = +this._element.value; 
+		let val = +this._input.value; 
 		if (typeof this.transform === 'function') val = this.transform(val);
 		this.emit('input', val);
 	}
 	onChange () {
-		let val = +this._element.value; 
+		let val = +this._input.value; 
 		if (typeof this.transform === 'function') val = this.transform(val);
 		this.emit('change', val);
 	}

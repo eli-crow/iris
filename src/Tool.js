@@ -54,11 +54,12 @@ module.exports = class Tool extends Emitter {
 
 	applyEffectors(effectorGroup, event, props) {
 		const result = JSON.parse(JSON.stringify(props));
+		const evt = JSON.parse(JSON.stringify(event));
 
 	  for (let i = 0, ii = effectorGroup.length; i < ii; i++) {
 	  	const effector = effectorGroup[i];
 	    result[effector.targetProp] = Math.max(0,
-	    	result[effector.targetProp] + effector.transform(this, event)
+	    	result[effector.targetProp] + effector.transform(this, evt)
 	    );
 	  };
 

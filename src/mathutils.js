@@ -1,6 +1,6 @@
-module.exports.clamp = (x, a, b) => Math.min(Math.max(x, a), b);
-module.exports.radians = degrees => degrees/180*Math.PI;
-module.exports.degrees = radians => radians/Math.PI*180;
+const clamp = (x, a, b) => Math.min(Math.max(x, a), b);
+const radians = degrees => degrees/180*Math.PI;
+const degrees = radians => radians/Math.PI*180;
 
 const doVector = (v, w, fn) => v.slice(0).map((v,i) => fn(v,w.length ? w[i] : w));
 module.exports.vMul = (v, w) => doVector((v,w) => v * s, v, w);
@@ -8,12 +8,14 @@ module.exports.vSub = (v, w) => doVector((v,w) => v - w, v, w);
 module.exports.vAdd = (v, w) => doVector((v,w) => v + w, v, w);
 module.exports.vDiv = (v, w) => doVector((v,w) => v / w, v, w);
 
-module.exports.distance = function (ptArray1, ptArray2) {
+const distance = (ptArray1, ptArray2) => {
 	let squareSum = 0;
 	for (var i = 0, ii = ptArray1.length; i < ii; ++i) 
 		squareSum += Math.pow(ptArray2[i] - ptArray1[i], 2);
 	return Math.sqrt(squareSum);
 }
+const squareDistance2d = (p0x, p0y, p1x, p1y) => Math.pow(p1x - p0x, 2) + Math.pow(p1y - p0y, 2);
+const distance2d = (p0x, p0y, p1x, p1y) => Math.sqrt(squareDistance2d(p0x, p0y, p1x, p1y));
 
 module.exports.dotProduct = (v1, v2) => {
 	let result = 0;
@@ -82,7 +84,19 @@ module.exports.getLerpedCubicPoints = function getCubicPoints(input, nSteps, min
 	return output;
 };
 
-const squareDistance2d = (p0x, p0y, p1x, p1y) => Math.pow(p1x - p0x, 2) + Math.pow(p1y - p0y, 2);
+module.exports.lerpMinDistance = function (pts, minDistance) {
+	const output = [];
+
+	for (var i = 0, ii = pts.length; i <= ii; i += 2) {
+		const p0x = pts[i]  , p0y = pts[i+1];
+		const p1x = pts[i+2], p1y = pts[i+3];
+		for (let l = 0, ll = distance2d(p0x, p0y, p1x, p1y); l < ll; l+=minDistance) {
+			output.push( linearComponent(l/ll, p0x, p1x), linearComponent(l/ll, p0y, p1y) );
+		}
+	}
+
+	return output;
+}
 
 // module.exports.getCubicPointsEquidistant2d = (input, minDistance) => {
 // 	const pts = [input[2], input[3]];
@@ -190,5 +204,9 @@ module.exports.getSinePoints1d = function(amplitude, nPts, output) {
 }
 
 
+module.exports.clamp = clamp;
+module.exports.radians = radians;
+module.exports.degrees = degrees;
 module.exports.squareDistance2d = squareDistance2d;
+module.exports.distance = distance;
 module.exports.lerp = linearComponent;

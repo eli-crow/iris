@@ -16,23 +16,9 @@ module.exports = class Surface extends Emitter
 		this._resizeListener = window.addEventListener('resize', () => {
 		  this.resize();
 		});
-
-		listenerutils.simplePointer(canvas, {
-			contained: true,
-			down: e => this.onDrag(e),
-			move: e => this.onDrag(e)
-		})
 	}
 
-	onDrag (e) {
-		if (e.metaKey) {
-			this.emit('sample', this.getPixel(e.offsetX, e.offsetY));
-		}
-	}
-
-	//wrappers
-	getPixel (x, y) { return canvasutils.getPixel(this.ctx, x, y); }
-	clear ()        { this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); }
+	clear () { this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); }
 
 	resize() {
 		this.canvas.width = window.innerWidth;

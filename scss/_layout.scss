@@ -20,7 +20,7 @@ hr {
   margin: spacing(1) 0;
 }
 
-.brush-canvases  {
+.brush-canvases {
   > canvas {
     z-index: 0;
     position: absolute;
@@ -37,7 +37,8 @@ hr {
     left: 0;
   }
   .brush-data {
-    display: none;
+    position: absolute;
+    visibility: hidden;
   }
 }
 

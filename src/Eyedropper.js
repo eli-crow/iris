@@ -25,7 +25,10 @@ module.exports = class Eyedropper extends Emitter
 	sample (event, e) {
 		if (e.altKey) {
 			const rgba = canvasutils.getPixel(this._ctx, e.offsetX, e.offsetY);
-			if (rgba[3] > 0) this.emit(event, {rgba: rgba, hsl: hsluv.rgbToHsluv(rgba.map(x => x/255))});
+			if (rgba[3] > 0) {
+				rgba[3] = 255;
+				this.emit(event, {rgba: rgba, hsl: hsluv.rgbToHsluv(rgba.map(x => x/255))});
+			}
 		}
 	}
 

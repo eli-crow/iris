@@ -18,6 +18,8 @@ module.exports = class Highlight {
 		this._y = 0;
 		this._angle = null;
 		this._distance = null;
+
+		this.movePolar(0,0);
 	}
 
 	move (x, y) {
@@ -63,6 +65,7 @@ module.exports = class Highlight {
 	}
 
 	sample () {
-		return glutils.getPixel(this._canvas, this._x + this._canvas.width/2, this._y + this._canvas.height/2);
+		const c = glutils.getPixel(this._canvas, this._x + this._canvas.width/2, this._y + this._canvas.height/2);
+		return c;
 	}
 }

@@ -5,41 +5,46 @@ module.exports = class TexturedTool extends Tool
 	constructor(surface, options) {
 		super(surface, options);
 
-		this._brushImg = null;
-		this._texture = new Image();
-		this._tempCanvas = document.createElement('canvas');
-		this._tempCtx = this._tempCanvas.getContext('2d');
+		this._texture = document.createElement('canvas');
+		this._textureCtx = this._texture.getContext('2d');
 		this._color = [127,127,127,255];
+		this._brushImg = new Image();
+		this._brushImg.onload = () => this._resizeTempCanvas();
 	}
 
-	setImage (brushImg) {
-	  this._brushImg = brushImg;
+	setImage (url) {
+		this._brushImg.src = url;
+	}
+
+	_resizeTempCanvas() {
+		const brushImg = this._brushImg;
 	  this._texture.width = brushImg.width;
 	  this._texture.height = brushImg.height;
-	  this._tempCanvas.width = brushImg.width;
-	  this._tempCanvas.height = brushImg.height;
-	  this.setColor(this._color);
-	  this.emit('changeend');
+		this.setColor(this._color);
 	}
 
 	//color array is rgba, all in the range of 0-255;
 	setColor (colorArray) {
 	  const inBrushImg = this._brushImg;
-	  const ctx = this._tempCtx;
-	  
-	  ctx.clearRect(0, 0, this._tempCanvas.width, this._tempCanvas.height);
-	  ctx.drawImage(inBrushImg, 0,0);
-	  const out = ctx.getImageData(0,0,inBrushImg.width,inBrushImg.height);
+	  const canvas = this._texture;
+	  const ctx = this._textureCtx;
 
-	  for (let i = 0, ii = out.data.length; i < ii; i+=4) {
-	    out.data[i + 0] = colorArray[0];
-	    out.data[i + 1] = colorArray[1];
-	    out.data[i + 2] = colorArray[2];
-	    out.data[i + 3] *= colorArray[3] / 255;
+	  const w = canvas.width | 0;
+	  const h = canvas.height | 0;
+	  
+	  ctx.clearRect(0, 0, w, h);
+	  ctx.drawImage(inBrushImg, 0,0);
+	  const out = ctx.getImageData(0,0,w,h);
+	  const data = out.data;
+
+	  for (let i = 0, ii = data.length; i < ii; i+=4) {
+	    data[i + 0] = colorArray[0];
+	    data[i + 1] = colorArray[1];
+	    data[i + 2] = colorArray[2];
+	    //alpha should be left alone
 	  }
 
 	  ctx.putImageData(out,0,0);
-	  this._texture.src = this._tempCanvas.toDataURL('image/png');
 	  this._color = colorArray;
 	  this.emit('changeend');
 	}

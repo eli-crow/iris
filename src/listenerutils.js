@@ -1,51 +1,7 @@
 const domutils = require('./domutils.js');
 const fnutils = require('./fnutils.js');
 
-// machine for simplifying mouse input.
-const getMouseListenerObject = function (descriptor, event) {
-	let button;
-	switch(event.button) 
-	{
-		case 0: if (descriptor.left) button = descriptor.left; break; //left
-		case 1: if (descriptor.right) button = descriptor.right; break; //right
-		default: if (descriptor.any) button = descriptor.any; break; //other
-	}
-
-	if (event.altKey) return button.alt;
-	else if (event.ctrlKey) return button.ctrl;
-	else if (event.shiftKey) return button.shift;
-	else if (button.default) return button.default;
-	else return;
-}
-const createMouseListenerMachine = function (descriptor) {
-	return function (e) {
-		const on = getMouseListenerObject(descriptor, e);
-		const down = on.down;
-		const move = on.move;
-		const up = on.up;
-		const upContext = up ? up.context : window;
-		
-		const upFunction = function (ev) {
-			if (up && up.handler) up.handler(ev);
-			if (move && move.handler) 
-				move.context.removeEventListener('mousemove', move.handler, false);
-			upContext.removeEventListener('mouseup', upFunction, false);
-		};
-
-		if (down) down.handler(e);
-		if (move) move.context.addEventListener('mousemove', move.handler, false);
-		upContext.addEventListener('mouseup', upFunction, false);
-	};
-};
-module.exports.mouse = function (downContext, descriptor) {
-	var downFunction = createMouseListenerMachine(descriptor);
-	downContext.addEventListener('mousedown', downFunction, false);
-	return downFunction;
-};
-
-
-const POINTER_EVENTNAME = 'pointer';
-
+const POINTER_EVENTNAME = Modernizr.testProp('pointerEvents') ? 'pointer' : 'mouse';
 
 module.exports.simplePointer = (context, events, transform) => {
 	let rect;

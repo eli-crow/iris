@@ -45,22 +45,23 @@ class SmoothPointer
       move: e => {
         const diffX = e.clientX - _posBuffer[0];
         const diffY = e.clientY - _posBuffer[1];
+        const pressure = e.pressure || 0.5;
 
         _squaredSpeed = Math.pow(diffX, 2) + Math.pow(diffY, 2);
         if (_squaredSpeed < this.minSquaredDistance) return;
 
         arrayutils.rotateArray(_posBuffer, 2);
-        const smoothingDist = 1 - (BASE_SMOOTHING + e.pressure * this.smoothing * (1 - BASE_SMOOTHING));
+        const smoothingDist = 1 - (BASE_SMOOTHING + pressure * this.smoothing * (1 - BASE_SMOOTHING));
         _posBuffer[0] += (e.clientX - _posBuffer[0]) * smoothingDist;
         _posBuffer[1] += (e.clientY - _posBuffer[1]) * smoothingDist;
 
         e.pts = mathutils.getLerpedCubicPoints(_posBuffer, 3, 2);
         e.squaredSpeed = _squaredSpeed;
-        e.lastPressure = Math.max(_lastPressure * 1.2 - .2, 0)
-        e.penPressure = Math.max(e.pressure * 1.2 - .2, 0);
+        e.lastPressure = Math.max(_lastPressure * 1.2 - .2, 0);
+        e.penPressure = Math.max(pressure * 1.2 - .2, 0);
         e.direction = Math.atan2(diffY, diffX) + Math.PI;
         
-        _lastPressure = e.pressure;
+        _lastPressure = pressure;
         this._onMove(e);
       },
 

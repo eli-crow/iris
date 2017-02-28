@@ -9,6 +9,7 @@ const PUPIL_RADIUS = 0.25;
 const WEBGL_CONTEXT = "webgl";
 const passthrough = require('../shaders/vert/passthrough.vert');
 const sameLightness = require('../shaders/frag/same_lightness.frag');
+const sameLightnessHSL = require('../shaders/frag/same_lightness_hsl.frag');
 const sameHue = require('../shaders/frag/same_hue.frag');
 
 //manages the canvas and its own IrisPalettes.
@@ -43,8 +44,12 @@ class Iris extends Emitter
 		
 		this._currentPalette = null;
 		this.palettes = {};
-		this.palettes['sameLightness'] = new IrisPalette(this, 'Colors', sameLightness, passthrough, {
+		this.palettes['sameLightness'] = new IrisPalette(this, 'Colors 1', sameLightness, passthrough, {
 			lightness: {type: '1f', value: 50},
+			indicator_radius: {type: '1f', value: PUPIL_RADIUS}
+		});
+		this.palettes['sameLightnessHSL'] = new IrisPalette(this, 'Colors 2', sameLightnessHSL, passthrough, {
+			lightness: {type: '1f', value: .5},
 			indicator_radius: {type: '1f', value: PUPIL_RADIUS}
 		});
 		this.palettes['sameHue'] = new IrisPalette(this, 'Tones', sameHue, passthrough, {
@@ -56,7 +61,7 @@ class Iris extends Emitter
 		this.setMode('sameLightness');
 
 		listenerutils.normalPointer(canvas, {
-			contained: false,
+			contained: true,
 			down: e => this.emitColors('pick', e.centerX, e.centerY, true), 
 			move: e => this.emitColors('pick', e.centerX, e.centerY, true),
 			up:   e => this.emitColors('pickend', e.centerX, e.centerY, true),

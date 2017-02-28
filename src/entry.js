@@ -28,6 +28,13 @@ const lightnessSlider = new Slider(50, 0, 100, 1/255)
 	.on('change', () => {
 		iris.emitColors.call(iris, 'pickend', null, false);
 	});
+const lightnessHSLSlider = new Slider(.5, 0, 1, 1/255)
+	.classes('lightness')
+	.bind(iris.palettes['sameLightnessHSL'].uniforms, "lightness")
+	.on('change', () => {
+		iris.emitColors.call(iris, 'pickend', null, false);
+	})
+	.hide();
 const hueSlider = new Slider(0, 0, 360, 1)
 	.classes('hue')
 	.bind(iris.palettes['sameHue'].uniforms, "hue")
@@ -35,36 +42,35 @@ const hueSlider = new Slider(0, 0, 360, 1)
 	.hide();
 const inputs = new PanelGroup(irisInputs)
 	.add(lightnessSlider)
+	.add(lightnessHSLSlider)
 	.add(hueSlider);
 
 
-const modes = new PanelGroup(irisModes);
-let selectedModeElement;
-const sameLightnessButton = new Button('Colors')
-	.bind(() => {
-		selectedModeElement = sameLightnessButton._element;
-		hueSlider.hide();
-		lightnessSlider.unhide();
-		sameLightnessButton._element.style.borderTopColor = '';
-		sameHueButton._element.style.borderTopColor = 'transparent';
-		iris.setMode('sameLightness');
-	});
+
+const modeButtonGroup = new ButtonGroup();
+
+function setMode (name, slider, button) {
+	iris.setMode(name);
+	slider.unhide();
+	button._element.style.borderTopColor = '';
+	inputs.each(slider, input => input.hide() );
+	modeButtonGroup.each(button, btn => btn._element.style.borderTopColor = 'transparent');
+}
+const sameLightnessButton = new Button('Colors A')
+	.bind(() => setMode("sameLightness", lightnessSlider, sameLightnessButton));
+const sameLightnessHSLButton = new Button('Colors B')
+	.bind(() => setMode("sameLightnessHSL", lightnessHSLSlider, sameLightnessHSLButton));
 const sameHueButton = new Button('Shades')
-	.bind(() => {
-		selectedModeElement = sameHueButton._element;
-		lightnessSlider.hide();
-		hueSlider.unhide();
-		sameHueButton._element.style.borderTopColor = '';
-		sameLightnessButton._element.style.borderTopColor = 'transparent';
-		iris.setMode('sameHue');
-	});
-const modeButtonGroup = new ButtonGroup()
-	.add(sameLightnessButton)
+	.bind(() => setMode("sameHue", hueSlider, sameHueButton));
+
+modeButtonGroup.add(sameLightnessButton)
+	.add(sameLightnessHSLButton)
 	.add(sameHueButton);
 
+setMode("sameLightness", lightnessSlider, sameLightnessButton)
 
-modes.add(modeButtonGroup);
-	
+const modes = new PanelGroup(irisModes)
+	.add(modeButtonGroup);
 
 
 //========================================================= Surface
@@ -81,7 +87,10 @@ const brush = new Brush(surface, {
 	smoothInputs: ['pressure']
 });
 brush.minSize = 2;
-brush.setImage(document.getElementById('brush-shape-inky'))
+brush.setImage("/img/brush.png")
+
+// img.brush-data#brush-shape-bristles(src = "./img/brush.png")
+// img.brush-data#brush-shape-inky(src = "./img/brush_inky.png")
 
 // const angleEffector = new ToolEffector('angle', (brush, event) => {
 // 	const symm = brush.hasSymmetricalEmphasis ? 2 : 1;
@@ -92,7 +101,9 @@ const speedEffector = new ToolEffector('size', (brush, e) => {
 	const s = Math.sqrt(e.squaredSpeed);
 	return s/(s+brush.speedScale);
 });
-const pressureEffector = new ToolEffector('size', (brush, e) => mathutils.lerp(e.progress, e.penPressure, e.lastPressure));
+const pressureEffector = new ToolEffector('size', (brush, e) => {
+	return e.penPressure;
+});
 const pressureFlowEffector = new ToolEffector('flow', (brush, e) => e.penPressure);
 
 brush.addEffector([angleEffector, speedEffector, pressureFlowEffector], false);
@@ -103,35 +114,38 @@ brushPreview.setBrush(brush);
 brushPreview.draw();
 brush.on('changeend', x => brushPreview.draw.call(brushPreview));
 
-const minSizeSlider = new Slider(3, 0, 5, 0.01)
+const minSizeSlider = new Slider(3, 0, 5, 0.01, 'brushSize')
 	.transform(x => Math.exp(x))
 	.bind(val => brush.set.call(brush, 'minSize', val));
-const pressureSlider = new Slider(0, -50, 50, 1)
+const pressureSlider = new Slider(0, -50, 50, 1, 'pressureSize')
 	.bind(val => pressureEffector.set.call(pressureEffector, 'scale', val));
-const pressureFlowSlider = new Slider(0, 0, 1, .01)
+const pressureFlowSlider = new Slider(0, 0, 1, .01, 'pressureFlow')
 	.bind(val => pressureFlowEffector.set.call(pressureFlowEffector, 'scale', val));
 const brushInputs = new PanelGroup(document.getElementById('brush-inputs'))
 	.add(minSizeSlider)
 	.add(new Spacer())
 	.add(pressureSlider)
 	.add(pressureFlowSlider)
+	.add(new Spacer())
 
 
 const eyedropper = new Eyedropper(surface.canvas);
 
-
+let __erase = false;
+document.getElementById('eraser').addEventListener('click', function () {
+	__erase = !__erase;
+	brush.set('erase', __erase);
+});
 
 //========================================================= Wiring
-iris.on('pickend', e => brush.setColor.call(brush, e));
+iris.on('pickend', data => brush.setColor.call(brush, data));
 
 iris.on(['pick', 'pickend'], data => {
 	irisIndicator.style.backgroundColor = `rgba(${data.slice(0,3).join(',')}, 1)`;
 })
-eyedropper.on('pick', data => {
-	irisIndicator.style.backgroundColor = `rgba(${data.rgba.slice(0,3).join(',')}, 1)`;
-});
-eyedropper.on('pickend', fnutils.throttle(data => {
+eyedropper.on('pick', fnutils.throttle(data => {
 	iris._highlight.movePolarNormal.call(iris._highlight, - mathutils.radians(data.hsl[0]), data.hsl[1]/100);
 	iris.palettes['sameLightness'].uniforms.lightness = data.hsl[2];
-	brush.setColor(data.rgba);
-}), 150);
+	irisIndicator.style.backgroundColor = `rgba(${data.rgba.slice(0,3).join(',')}, 1)`;
+}), 50);
+eyedropper.on('pickend', data => brush.setColor.call(brush, data.rgba));
