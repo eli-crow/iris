@@ -13,8 +13,8 @@ module.exports = class Eyedropper extends Emitter
 
 		listenerutils.simplePointer(canvas, {
 			contained: false,
-			stopPropagation: true,
-			preventDefault: true,
+			// stopPropagation: true,
+			// preventDefault: true,
 
 			down: e => this.sample('pick', e),
 			move: e => this.sample('pick', e),

@@ -4,26 +4,29 @@ const primatives = require('./primatives');
 // maintains own programs, uniforms, geometry, and attributes.
 class IrisPalette
 {
-	constructor (iris, name, fragmentSrc, vertexSrc, uniforms) {
+	constructor (iris, fragmentSrc, vertexSrc, uniforms) {
 		this.iris = iris;
-		const gl = this.gl = iris._gl;
-		this.name = name;
+		this.gl = iris._gl;
+		this.uniforms = {};
 
-		const vertShader = glutils.createShader(gl, vertexSrc, gl.VERTEX_SHADER);
-		const fragShader = glutils.createShader(gl, fragmentSrc, gl.FRAGMENT_SHADER);
-		this._program = glutils.createAndLinkProgram(gl, vertShader, fragShader);
+		this._uniforms = uniforms;
+		this._pts = primatives.circle(1, 100);
+		this._program = glutils.createAndLinkProgramFromSource(this.gl, vertexSrc, fragmentSrc);
 
 		this.use();
-		this._uniforms = {};
-		this.uniforms = {};
+
+		this._positionLocation = this.gl.getAttribLocation(this._program, 'position');
+		this._buffer = this.gl.createBuffer();
+
+		this.init();
+	}
+
+	init () {
+		for (let name in this._uniforms) 
+			this.addUniform(name, this._uniforms[name]);
 		this.addUniform('resolution', {type: '2f', value: [0,0]});
 		this.addUniform('blend_focus', {type: '1f', value: 0});
-		for (let name in uniforms) this.addUniform(name, uniforms[name]);
-
-		this._positionLocation = gl.getAttribLocation(this._program, 'position');
-
-		this._buffer = gl.createBuffer();
-		this._pts = primatives.circle(1, 100);
+		this.addUniform('indicator_radius', {type: '1f', value: PUPIL_RADIUS});
 	}
 
 	use () {
@@ -48,7 +51,8 @@ class IrisPalette
 		descriptor.location = this.gl.getUniformLocation(this._program, name);
 		const _uniform = this._uniforms[name] = descriptor;
 
-		//at get/set interface to uniforms object.
+		//a get/set interface to uniforms object.
+		//would be simpler as two methods.
 		Object.defineProperty(this.uniforms, name, {
 			get: () => {
 				return this._uniforms[name].value;

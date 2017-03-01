@@ -1,14 +1,11 @@
-// Todo: check for gl context name
-const GL_CONTEXT_NAME = 'webgl';
-
-module.exports.getPixel = function (canvas, x, y) {
-	const gl = canvas.getContext(GL_CONTEXT_NAME);
+function getPixel (canvas, x, y) {
+	const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
 	var pixel = new Uint8Array(4);
 	gl.readPixels(x, canvas.height - y, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
 	return [pixel[0], pixel[1], pixel[2], pixel[3]];
 }
 
-module.exports.uniformByType = function(gl, type, location, values) {
+function uniformByType (gl, type, location, values) {
 	switch(type)
 	{
 		case '1f': gl.uniform1f(location, values); break;
@@ -17,8 +14,7 @@ module.exports.uniformByType = function(gl, type, location, values) {
 	}
 };
 
-module.exports.createShader = function(gl, sourceCode, type) {
-	// Compiles either a shader of type gl.VERTEX_SHADER or gl.FRAGMENT_SHADER
+function createShader(gl, sourceCode, type) {
 	var shader = gl.createShader( type );
 	gl.shaderSource( shader, sourceCode );
 	gl.compileShader( shader );
@@ -30,7 +26,7 @@ module.exports.createShader = function(gl, sourceCode, type) {
 	return shader;
 };
 
-module.exports.createAndLinkProgram = function(gl, vertexShader, fragmentShader) {
+function createAndLinkProgram(gl, vertexShader, fragmentShader) {
 	var program = gl.createProgram();
 	gl.attachShader(program, vertexShader);
 	gl.attachShader(program, fragmentShader);
@@ -42,3 +38,15 @@ module.exports.createAndLinkProgram = function(gl, vertexShader, fragmentShader)
 	}
 	return program;
 };
+
+function createAndLinkProgramFromSource (gl, vertexSrc, fragmentSrc) {
+	const vertShader = createShader(gl, vertexSrc, gl.VERTEX_SHADER);
+	const fragShader = createShader(gl, fragmentSrc, gl.FRAGMENT_SHADER);
+	return createAndLinkProgram(gl, vertShader, fragShader);
+}
+
+module.exports.getPixel = getPixel;
+module.exports.uniformByType = uniformByType;
+module.exports.createShader = createShader;
+module.exports.createAndLinkProgram = createAndLinkProgram;
+module.exports.createAndLinkProgramFromSource = createAndLinkProgramFromSource;

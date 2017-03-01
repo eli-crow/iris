@@ -24,20 +24,20 @@ const iris = new Iris(irisElement, irisInputs);
 
 const lightnessSlider = new Slider(50, 0, 100, 1/255)
 	.classes('lightness')
-	.bind(iris.palettes['sameLightness'].uniforms, "lightness")
+	.bind(iris.palettes['Colors A'].uniforms, "lightness")
 	.on('change', () => {
 		iris.emitColors.call(iris, 'pickend', null, false);
 	});
 const lightnessHSLSlider = new Slider(.5, 0, 1, 1/255)
 	.classes('lightness')
-	.bind(iris.palettes['sameLightnessHSL'].uniforms, "lightness")
+	.bind(iris.palettes['Colors B'].uniforms, "lightness")
 	.on('change', () => {
 		iris.emitColors.call(iris, 'pickend', null, false);
 	})
 	.hide();
 const hueSlider = new Slider(0, 0, 360, 1)
 	.classes('hue')
-	.bind(iris.palettes['sameHue'].uniforms, "hue")
+	.bind(iris.palettes['Tones'].uniforms, "hue")
 	.transform(x => x/180*Math.PI)
 	.hide();
 const inputs = new PanelGroup(irisInputs)
@@ -57,17 +57,17 @@ function setMode (name, slider, button) {
 	modeButtonGroup.each(button, btn => btn._element.style.borderTopColor = 'transparent');
 }
 const sameLightnessButton = new Button('Colors A')
-	.bind(() => setMode("sameLightness", lightnessSlider, sameLightnessButton));
+	.bind(() => setMode("Colors A", lightnessSlider, sameLightnessButton));
 const sameLightnessHSLButton = new Button('Colors B')
-	.bind(() => setMode("sameLightnessHSL", lightnessHSLSlider, sameLightnessHSLButton));
+	.bind(() => setMode("Colors B", lightnessHSLSlider, sameLightnessHSLButton));
 const sameHueButton = new Button('Shades')
-	.bind(() => setMode("sameHue", hueSlider, sameHueButton));
+	.bind(() => setMode("Tones", hueSlider, sameHueButton));
 
 modeButtonGroup.add(sameLightnessButton)
 	.add(sameLightnessHSLButton)
 	.add(sameHueButton);
 
-setMode("sameLightness", lightnessSlider, sameLightnessButton)
+setMode("Colors A", lightnessSlider, sameLightnessButton)
 
 const modes = new PanelGroup(irisModes)
 	.add(modeButtonGroup);
@@ -87,7 +87,7 @@ const brush = new Brush(surface, {
 	smoothInputs: ['pressure']
 });
 brush.minSize = 2;
-brush.setImage("/img/brush.png")
+brush.setImage("./img/brush.png")
 
 // img.brush-data#brush-shape-bristles(src = "./img/brush.png")
 // img.brush-data#brush-shape-inky(src = "./img/brush_inky.png")
@@ -145,7 +145,7 @@ iris.on(['pick', 'pickend'], data => {
 })
 eyedropper.on('pick', fnutils.throttle(data => {
 	iris._highlight.movePolarNormal.call(iris._highlight, - mathutils.radians(data.hsl[0]), data.hsl[1]/100);
-	iris.palettes['sameLightness'].uniforms.lightness = data.hsl[2];
+	iris.palettes['Colors A'].uniforms.lightness = data.hsl[2];
 	irisIndicator.style.backgroundColor = `rgba(${data.rgba.slice(0,3).join(',')}, 1)`;
 }), 50);
 eyedropper.on('pickend', data => brush.setColor.call(brush, data.rgba));

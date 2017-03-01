@@ -4,14 +4,20 @@ const fnutils = require('./fnutils.js');
 const listenerutils = require('./listenerutils.js');
 
 //todo: pull in  modernizr to test for existence.
-const POINTER_EVENTNAME = 'pointer';
-const BASE_SMOOTHING = 0.13;
+const __baseSmoothing = 0.13;
 
 const __defaults = {
   smmothedProps: [],
   minDistance: 2,
   steps: 5,
 }
+
+function __getPressure (evt) {
+  const pressure = (listenerutils.eventName === 'pointer') ? evt.pressure :
+    (listenerutils.eventName === 'touch') ? evt.targetTouches[0].force :
+    0.5;
+  return pressure;
+};
 
 class SmoothPointer
 { 
@@ -30,8 +36,8 @@ class SmoothPointer
     let _squaredSpeed = 0;
     listenerutils.simplePointer(context, {
       contained: false,
-      preventDefault: true,
-      stopPropagation: true,
+      // preventDefault: true,
+      // stopPropagation: true,
 
       down: e => {
         for (var i = 0; i < 4; i++) {
@@ -45,13 +51,13 @@ class SmoothPointer
       move: e => {
         const diffX = e.clientX - _posBuffer[0];
         const diffY = e.clientY - _posBuffer[1];
-        const pressure = e.pressure || 0.5;
+        const pressure = __getPressure(e);
 
         _squaredSpeed = Math.pow(diffX, 2) + Math.pow(diffY, 2);
         if (_squaredSpeed < this.minSquaredDistance) return;
 
         arrayutils.rotateArray(_posBuffer, 2);
-        const smoothingDist = 1 - (BASE_SMOOTHING + pressure * this.smoothing * (1 - BASE_SMOOTHING));
+        const smoothingDist = 1 - (__baseSmoothing + pressure * this.smoothing * (1 - __baseSmoothing));
         _posBuffer[0] += (e.clientX - _posBuffer[0]) * smoothingDist;
         _posBuffer[1] += (e.clientY - _posBuffer[1]) * smoothingDist;
 

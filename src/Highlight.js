@@ -1,15 +1,12 @@
 const domutils = require('./domutils.js');
 const glutils = require('./glutils.js');
 
-const HILIGHT_RADIUS = 7.5;
-const PUPIL_RADIUS = 0.25;
-
 module.exports = class Highlight {
 	constructor (canvas) {
 		const element = document.createElement('div');
 		element.classList.add('iris-hilight');
-		element.style.width  = HILIGHT_RADIUS * 2 + 'px';
-		element.style.height = HILIGHT_RADIUS * 2 + 'px';
+		element.style.width  = HIGHLIGHT_RADIUS * 2 + 'px';
+		element.style.height = HIGHLIGHT_RADIUS * 2 + 'px';
 		canvas.insertAdjacentElement('afterend', element);
 
 		this._element = element;

@@ -1,18 +1,21 @@
 const Emitter = require('./Emitter.js');
 const listenerutils = require('./listenerutils.js');
 
-const PUPIL_RADIUS = 0.25
-
 module.exports = class Pupil extends Emitter
 {
 	constructor(canvas) {
 		super(['drag', 'release', 'click']);
 
+		this._canvas = canvas;
+		this._element = null;
+
+		this.init();
+	}
+
+	init() {
 		const element = document.createElement('div');
 		element.classList.add('iris-pupil');
-		canvas.insertAdjacentElement('afterend', element);
-
-		this._canvas = canvas;
+		this._canvas.insertAdjacentElement('afterend', element);
 		this._element = element;
 
 		listenerutils.normalPointer(element, {

@@ -27,8 +27,6 @@ module.exports = class Brush extends TexturedTool
 			angle: 0
 		});
 
-		console.log(e);
-
 		for (let i = 0, ii = pts.length; i<ii; i+= 2) {
 			e.penPressure = mathutils.lerp(i/ii, e.lastPressure, e.penPressure);
 			const smoothProps = this.applyEffectors(this._smoothedEffectors, e, props);

@@ -1,7 +1,26 @@
 const domutils = require('./domutils.js');
 const fnutils = require('./fnutils.js');
 
-const POINTER_EVENTNAME = Modernizr.testProp('pointerEvents') ? 'pointer' : 'mouse';
+let __eventName;
+const __events = {}
+if (Modernizr.hasEvent('pointermove')) {
+	__eventName = 'pointer'
+	__events.down = 'pointerdown';
+	__events.move = 'pointermove';
+	__events.up = 'pointerup';
+}
+else if (Modernizr.hasEvent('touchmove')) {
+	__eventName = 'touch'
+	__events.down = 'touchstart';
+	__events.move = 'touchmove';
+	__events.up = 'touchend';
+}
+else {
+	__eventName = 'mouse'
+	__events.down = 'mousedown';
+	__events.move = 'mousemove';
+	__events.up = 'mouseup';
+}
 
 module.exports.simplePointer = (context, events, transform) => {
 	let rect;
@@ -10,23 +29,27 @@ module.exports.simplePointer = (context, events, transform) => {
 
 	let moveHandler;
 	if (events.move) moveHandler = function (e) {
+		e = e || window.event;
 		if (events.preventDefault) e.preventDefault();
 		if (events.stopPropagation) e.stopPropagation();
 		if (xformIsFn) transform(e, rect);
 		events.move(e);
 	};
 	const upHandler = function (e) {
+		e = e || window.event;
 		if (events.preventDefault) e.preventDefault();
 		if (events.stopPropagation) e.stopPropagation();
 		if (events.up) {
 			if (xformIsFn) transform(e, rect);
 			events.up(e);
 		}
-		if (moveHandler) moveCtx.removeEventListener(POINTER_EVENTNAME + 'move', moveHandler, false);
-		window.removeEventListener(POINTER_EVENTNAME + 'up', upHandler, false);
+		if (moveHandler) moveCtx.removeEventListener(__events.move, moveHandler, false);
+		window.removeEventListener(__events.up, upHandler, false);
 	};
 
-	context.addEventListener(POINTER_EVENTNAME + 'down', (e) => {
+	context.addEventListener(__events.down, (e) => {
+		e = e || window.event;
+		
 		if (events.preventDefault) e.preventDefault();
 		if (events.stopPropagation) e.stopPropagation();
 		rect = context.getBoundingClientRect();
@@ -34,8 +57,8 @@ module.exports.simplePointer = (context, events, transform) => {
 			if (xformIsFn) transform(e, rect);
 			events.down(e);
 		}
-		if (moveHandler) moveCtx.addEventListener(POINTER_EVENTNAME + 'move', moveHandler, false);
-		window.addEventListener(POINTER_EVENTNAME + 'up', upHandler, false);
+		if (moveHandler) moveCtx.addEventListener(__events.move, moveHandler, false);
+		window.addEventListener(__events.up, upHandler, false);
 	}, false);
 
 	if (events.click) context.addEventListener('click', events.click, false);
@@ -53,3 +76,6 @@ module.exports.normalPointer = (context, events) => {
 		e.getDistance   = () => Math.sqrt(Math.pow(e.centerY, 2) + Math.pow(e.centerX, 2));
 	});
 }
+
+module.exports.events = __events;
+module.exports.eventName = __eventName;

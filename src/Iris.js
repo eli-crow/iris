@@ -5,67 +5,64 @@ const Emitter = require('./Emitter.js');
 const fnutils = require('./fnutils.js');
 const listenerutils = require('./listenerutils.js')
 
-const PUPIL_RADIUS = 0.25;
-const WEBGL_CONTEXT = "webgl";
-const passthrough = require('../shaders/vert/passthrough.vert');
-const sameLightness = require('../shaders/frag/same_lightness.frag');
-const sameLightnessHSL = require('../shaders/frag/same_lightness_hsl.frag');
-const sameHue = require('../shaders/frag/same_hue.frag');
+const __webglConfig = {
+	preserveDrawingBuffer: true,
+	depth: false,
+	antialias: false,
+	premultipliedAlpha: true,
+	alpha: true
+};
 
 //manages the canvas and its own IrisPalettes.
-class Iris extends Emitter
+module.exports = class Iris extends Emitter
 {
 	constructor (canvas, indicator) {
 		super(['pick', 'pickend']);
 
 		this._canvas = canvas;
-		this._gl = canvas.getContext(WEBGL_CONTEXT, {
-			preserveDrawingBuffer: true,
-			depth: false,
-			antialias: false,
-			premultipliedAlpha: true,
-			alpha: true
-		});
-		
-		const highlight = this._highlight = new Highlight(canvas);
-		this._pupil = new Pupil(canvas);
-		this._pupil.on('drag', e =>	{
-			highlight.movePolar(-e.getAngle() + Math.PI/2, highlight.getDistance());
-			this.emitColors('pick', null, false);
-		});
-		this._pupil.on('release', e => {
-			highlight.movePolar(-e.getAngle() + Math.PI/2, highlight.getDistance());
-			this.emitColors('pickend', null, false);
-		});
-		this._pupil.on('click', e => {
-			highlight.move(0,0);
-			this.emitColors('pickend', null, false);
-		})
-		
+		this._gl = canvas.getContext('webgl', __webglConfig) || canvas.getContext('experimental-webgl', __webglConfig);
 		this._currentPalette = null;
+		this._pupil = new Pupil(canvas);
+		this._highlight = new Highlight(canvas);
 		this.palettes = {};
-		this.palettes['sameLightness'] = new IrisPalette(this, 'Colors 1', sameLightness, passthrough, {
-			lightness: {type: '1f', value: 50},
-			indicator_radius: {type: '1f', value: PUPIL_RADIUS}
-		});
-		this.palettes['sameLightnessHSL'] = new IrisPalette(this, 'Colors 2', sameLightnessHSL, passthrough, {
-			lightness: {type: '1f', value: .5},
-			indicator_radius: {type: '1f', value: PUPIL_RADIUS}
-		});
-		this.palettes['sameHue'] = new IrisPalette(this, 'Tones', sameHue, passthrough, {
-			hue: {type: '1f', value: 0},
-			indicator_radius: {type: '1f', value: PUPIL_RADIUS}
-		});
 
-		this.onResize();
-		this.setMode('sameLightness');
+		this.init();
+	}
 
-		listenerutils.normalPointer(canvas, {
+	init () {
+		const pupil = this._pupil;
+		const highlight = this._highlight;
+
+		listenerutils.normalPointer(this._canvas, {
 			contained: true,
 			down: e => this.emitColors('pick', e.centerX, e.centerY, true), 
 			move: e => this.emitColors('pick', e.centerX, e.centerY, true),
 			up:   e => this.emitColors('pickend', e.centerX, e.centerY, true),
 		});
+
+		this.addPalette('Colors A', require('../shaders/frag/same_lightness.frag'),     {lightness: {type: '1f', value: 50}});
+		this.addPalette('Colors B', require('../shaders/frag/same_lightness_hsl.frag'), {lightness: {type: '1f', value: .5}});
+		this.addPalette('Tones',    require('../shaders/frag/same_hue.frag'),           {hue: {type: '1f', value: 0}});
+
+		pupil.on('drag', e =>	{
+			highlight.movePolar(Math.PI/2 - e.getAngle(), highlight.getDistance());
+			this.emitColors('pick', null, false);
+		});
+		pupil.on('release', e => {
+			highlight.movePolar(Math.PI/2 - e.getAngle(), highlight.getDistance());
+			this.emitColors('pickend', null, false);
+		});
+		pupil.on('click', e => {
+			highlight.move(0,0);
+			this.emitColors('pickend', null, false);
+		});
+
+		this.onResize();
+		this.setMode('Colors A');
+	}
+
+	addPalette (name, fragShader, uniforms) {
+		this.palettes[name] = new IrisPalette(this, fragShader, require('../shaders/vert/passthrough.vert'), uniforms);
 	}
 
 	emitColors (eventName, x, y, updateHilight) {
@@ -97,5 +94,3 @@ class Iris extends Emitter
 		this._currentPalette.draw();
 	}
 }
-
-module.exports = Iris;

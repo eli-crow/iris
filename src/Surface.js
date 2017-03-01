@@ -13,9 +13,9 @@ module.exports = class Surface extends Emitter
 		this._tool = null;
 
 		this.resize();
-		this._resizeListener = window.addEventListener('resize', () => {
-		  this.resize();
-		});
+		// this._resizeListener = window.addEventListener('resize', () => {
+		//   this.resize();
+		// });
 	}
 
 	clear () { this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); }
