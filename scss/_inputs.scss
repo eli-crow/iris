@@ -15,12 +15,11 @@
 	$label-width: 20%;
 
 	@include clearfix;
-	display: relative;
+	position: relative;
 	margin: spacing(1) 0;
 
 	@mixin children {
 		line-height: spacing(2);
-		display: absolute;
 		vertical-align: top;
 		display: inline-block;
 	}

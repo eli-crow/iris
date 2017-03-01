@@ -21,17 +21,20 @@
 //TODO: figure out any z index workarounds.
 .iris-range.signed > input {
 	position: relative;
+	z-index: 1;
 
-	&:before {
+	&:after {
 		content: '';
+		width: 10px;
+		height: 100%;
+
 		position: absolute;
 		left: 50%;
 		left: calc(50% - 5px);
 		top: 0;
-		width: 0%; 
-		height: 100%;
+		background-color: $ambient-groove; 
 
-		border-left: solid 4px $ambient-groove;
+		z-index: -1;
 	}
 }
 .iris-range.hue > input {
