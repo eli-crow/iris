@@ -3,7 +3,7 @@ const Highlight = require('./Highlight.js');
 const Pupil = require('./Pupil.js');
 const Emitter = require('./Emitter.js');
 const fnutils = require('./fnutils.js');
-const listenerutils = require('./listenerutils.js')
+const listenerutils = require('./listenerutils.js');
 
 const __webglConfig = {
 	preserveDrawingBuffer: true,

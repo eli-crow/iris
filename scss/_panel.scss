@@ -4,7 +4,7 @@
 	padding-left: 2rem;
 
 	> .panel:not(:last-of-type) {
-		margin-bottom: 2rem;
+		margin-bottom: 1rem;
 	}
 }
 
@@ -15,6 +15,7 @@
 	position: relative;
 
 	min-height: 8rem;
+	min-width: 21.5rem;
 
 	background-color: $panel-color;
 	box-shadow: 

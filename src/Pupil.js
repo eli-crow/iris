@@ -19,11 +19,32 @@ module.exports = class Pupil extends Emitter
 		this._element = element;
 
 		listenerutils.normalPointer(element, {
-			contained: false,
-			move:  e => this.emit('drag',    e),
-			up:    e => this.emit('release', e),
-			click: e => this.emit('click',   e)
+			contained: true,
+			moveEl: this._canvas,
+
+			down:  e => this.onDown(e),
+			move:  e => this.onDrag(e),
+			up:    e => this.onUp(e),
+			click: e => this.onClick(e)
 		});
+	}
+
+	onDown (e) {
+		this._isDragging = false;
+	}
+
+	onDrag (e) {
+		this._isDragging = true;
+		this.emit('drag', e);
+	}
+
+	onUp (e) {
+		this.emit('release', e);
+	}
+
+	onClick (e) {
+		if (!this._isDragging) 
+			this.emit('click', e);
 	}
 
 	resize () {

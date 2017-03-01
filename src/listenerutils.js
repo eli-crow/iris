@@ -26,7 +26,9 @@ console.log(__eventName);
 module.exports.simplePointer = (context, events, transform) => {
 	let rect;
 	const xformIsFn = fnutils.isFunction(transform);
-	const moveCtx = events.contained ? context : window;
+	const moveCtx = 
+		events.moveEl ? events.moveEl : 
+		events.contained ? context : window;
 
 	let moveHandler;
 	if (events.move) moveHandler = function (e) {
@@ -64,6 +66,7 @@ module.exports.simplePointer = (context, events, transform) => {
 
 	if (events.click) context.addEventListener('click', events.click, false);
 }
+
 
 module.exports.normalPointer = (context, events) => {
 	module.exports.simplePointer(context, events, (e, rect) => {
