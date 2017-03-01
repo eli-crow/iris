@@ -23,7 +23,7 @@ module.exports = class Iris extends Emitter
 		this._gl = canvas.getContext('webgl', __webglConfig) || canvas.getContext('experimental-webgl', __webglConfig);
 		this._currentPalette = null;
 		this._pupil = new Pupil(canvas);
-		this._highlight = new Highlight(canvas);
+		this._highlight = new Highlight(canvas, this._gl);
 		this.palettes = {};
 
 		this.init();

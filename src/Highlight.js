@@ -2,7 +2,7 @@ const domutils = require('./domutils.js');
 const glutils = require('./glutils.js');
 
 module.exports = class Highlight {
-	constructor (canvas) {
+	constructor (canvas, gl) {
 		const element = document.createElement('div');
 		element.classList.add('iris-hilight');
 		element.style.width  = HIGHLIGHT_RADIUS * 2 + 'px';
@@ -11,6 +11,7 @@ module.exports = class Highlight {
 
 		this._element = element;
 		this._canvas = canvas;
+		this._gl = gl;
 		this._x = 0;
 		this._y = 0;
 		this._angle = null;
@@ -62,7 +63,7 @@ module.exports = class Highlight {
 	}
 
 	sample () {
-		const c = glutils.getPixel(this._canvas, this._x + this._canvas.width/2, this._y + this._canvas.height/2);
+		const c = glutils.getPixel(this._canvas, this._gl, this._x + this._canvas.width/2, this._y + this._canvas.height/2);
 		return c;
 	}
 }

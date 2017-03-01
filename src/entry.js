@@ -114,12 +114,12 @@ brushPreview.setBrush(brush);
 brushPreview.draw();
 brush.on('changeend', x => brushPreview.draw.call(brushPreview));
 
-const minSizeSlider = new Slider(3, 0, 5, 0.01, 'brushSize')
+const minSizeSlider = new Slider(3, 0, 5, 0.01, 'size')
 	.transform(x => Math.exp(x))
 	.bind(val => brush.set.call(brush, 'minSize', val));
-const pressureSlider = new Slider(0, -50, 50, 1, 'pressureSize')
+const pressureSlider = new Slider(0, -50, 50, 1, 'size')
 	.bind(val => pressureEffector.set.call(pressureEffector, 'scale', val));
-const pressureFlowSlider = new Slider(0, 0, 1, .01, 'pressureFlow')
+const pressureFlowSlider = new Slider(0, 0, 1, .01, 'flow')
 	.bind(val => pressureFlowEffector.set.call(pressureFlowEffector, 'scale', val));
 const brushInputs = new PanelGroup(document.getElementById('brush-inputs'))
 	.add(minSizeSlider)

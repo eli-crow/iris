@@ -1,7 +1,7 @@
 const PanelElement = require('./PanelElement.js');
 const fnutils = require('./fnutils.js');
 
-const ONINPUT_EVENTNAME = "oninput" in document.body ? 'input' : 'change';
+const __onInputEventName = "oninput" in document.body ? 'input' : 'change';
 
 module.exports = class InputBase extends PanelElement
 {
@@ -17,12 +17,13 @@ module.exports = class InputBase extends PanelElement
 		for (let name in attributes) html += ` ${name}="${attributes[name]}"`;
 		html += '>';
 
-		const tempEl = document.createElement('div');
-		tempEl.innerHTML = html;
-		this._element = tempEl;
+		const element = document.createElement('div');
+		element.innerHTML = html;
+		element.classList.add('iris-input');
 
-		this._input = tempEl.children[tempEl.children.length - 1];
-		this._input.addEventListener(ONINPUT_EVENTNAME, this.onInput.bind(this), false);
+		this._element = element;
+		this._input = element.children[element.children.length - 1];
+		this._input.addEventListener(__onInputEventName, this.onInput.bind(this), false);
 		this._input.addEventListener('change', this.onChange.bind(this), false);
 	}
 

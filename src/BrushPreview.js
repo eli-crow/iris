@@ -3,7 +3,7 @@ const mathutils = require('./mathutils.js');
 
 module.exports = class BrushPreview
 {
-	constructor(canvas) {
+	constructor(canvas, ctx) {
 		this._canvas = canvas;
 		this._ctx = canvas.getContext('2d');
 		this._brush = null;
@@ -38,7 +38,7 @@ module.exports = class BrushPreview
 			lastPressure: 0.0,         //interpolated end to end
 			penPressure: 0.5,         //interpolated end to end
 			squaredSpeed: 1000,       //interpolated end to end
-			direction: 1,             //derivative of sine (cosine)
+			direction: 0,             //derivative of sine (cosine)
 		}, this._pts);
 	}
 

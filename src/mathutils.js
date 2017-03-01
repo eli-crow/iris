@@ -153,7 +153,6 @@ module.exports.getCentripetalCRPoints2d = function (input, nSteps, minDistance) 
 	for(let t=t1; t<t2; t+=(t2-t1)/nSteps) {
 		const x = getComponent(t, p0x, p1x, p2x, p3x);
 		const y = getComponent(t, p0y, p1y, p2y, p3y);
-		console.log(Math.sqrt(squareDistance2d(lastX, lastY, x, y)));
 		if (squareDistance2d(lastX, lastY, x, y) >= minDistance) 
 			pts.push(x, y);
 		lastX = x;

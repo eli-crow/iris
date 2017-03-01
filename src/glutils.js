@@ -1,13 +1,11 @@
-function getPixel (canvas, x, y) {
-	const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+function getPixel (canvas, gl, x, y) {
 	var pixel = new Uint8Array(4);
 	gl.readPixels(x, canvas.height - y, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
 	return [pixel[0], pixel[1], pixel[2], pixel[3]];
 }
 
 function uniformByType (gl, type, location, values) {
-	switch(type)
-	{
+	switch(type) {
 		case '1f': gl.uniform1f(location, values); break;
 		case '2f': gl.uniform2f(location, ...values); break;
 		case '3f': gl.uniform3f(location, ...values); break;

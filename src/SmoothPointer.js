@@ -12,13 +12,6 @@ const __defaults = {
   steps: 5,
 }
 
-function __getPressure (evt) {
-  const pressure = (listenerutils.eventName === 'pointer') ? evt.pressure :
-    (listenerutils.eventName === 'touch') ? evt.targetTouches[0].force :
-    0.5;
-  return pressure;
-};
-
 class SmoothPointer
 { 
   constructor(context, options) {
@@ -51,7 +44,10 @@ class SmoothPointer
       move: e => {
         const diffX = e.clientX - _posBuffer[0];
         const diffY = e.clientY - _posBuffer[1];
-        const pressure = __getPressure(e);
+        const pressure = 
+          (listenerutils.eventName === 'pointer') ? e.pressure :
+          (listenerutils.eventName === 'touch') ? e.targetTouches[0].force :
+          0.5;
 
         _squaredSpeed = Math.pow(diffX, 2) + Math.pow(diffY, 2);
         if (_squaredSpeed < this.minSquaredDistance) return;

@@ -1,8 +1,45 @@
 @import "input-range";
 @import "mixins/clearfix";
 
-input {
-	margin: 0.5rem 0;
+.iris-input-group {
+	padding: 0 spacing(1);
+	 
+	border-top: $rule-stack-groove;
+	 
+	.iris-input {
+		margin: 0.75rem 0;
+	}
+}
+
+.iris-input {
+	$label-width: 20%;
+
+	@include clearfix;
+	display: relative;
+	margin: spacing(1) 0;
+
+	@mixin children {
+		line-height: spacing(2);
+		display: absolute;
+		vertical-align: top;
+		display: inline-block;
+	}
+
+	> input {
+		@include children;
+		float: right;
+		width: 100%;
+	}
+
+	> label {
+		@include children;
+		float: left;
+		width: $label-width;
+	}
+
+	> label + input {
+		width: 100% - $label-width;
+	}
 }
 
 .iris-button-group {
@@ -19,15 +56,5 @@ input {
 
 	> p {
 		font-size: 0.9rem;
-	}
-}
-
-.iris-input-group {
-	padding: spacing(1);
-	 
-	border-top: $rule-stack-groove;
-	 
-	input {
-		width: 100%;
 	}
 }

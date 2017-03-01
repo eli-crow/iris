@@ -9,6 +9,7 @@
 		@mixin track{
 			width: 100%;
 			cursor: pointer;
+			box-sizing: border-box;
 		}
 		&::-webkit-slider-runnable-track { @include track; }
 		&::-moz-range-track { @include track; }
@@ -21,6 +22,7 @@
 
 		@mixin thumb {
 			cursor: pointer;
+			box-sizing: border-box;
 		}
 		&::-webkit-slider-thumb { @include thumb; -webkit-appearance: none; }
 		&::-moz-range-thumb { @include thumb; }

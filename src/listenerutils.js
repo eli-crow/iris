@@ -21,6 +21,7 @@ else {
 	__events.move = 'mousemove';
 	__events.up = 'mouseup';
 }
+console.log(__eventName);
 
 module.exports.simplePointer = (context, events, transform) => {
 	let rect;

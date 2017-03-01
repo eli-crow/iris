@@ -12,16 +12,14 @@ class IrisPalette
 		this._uniforms = uniforms;
 		this._pts = primatives.circle(1, 100);
 		this._program = glutils.createAndLinkProgramFromSource(this.gl, vertexSrc, fragmentSrc);
-
-		this.use();
-
-		this._positionLocation = this.gl.getAttribLocation(this._program, 'position');
 		this._buffer = this.gl.createBuffer();
 
 		this.init();
 	}
 
 	init () {
+		this.activate();
+
 		for (let name in this._uniforms) 
 			this.addUniform(name, this._uniforms[name]);
 		this.addUniform('resolution', {type: '2f', value: [0,0]});
@@ -34,12 +32,14 @@ class IrisPalette
 	}
 
 	activate() {
+		this.use();
+
 		const gl = this.gl;
-		gl.useProgram(this._program);
-		gl.enableVertexAttribArray(this._positionLocation);
+		gl.bindAttribLocation(this._program, 0, 'position');
+		gl.enableVertexAttribArray(0);
 		gl.bindBuffer(gl.ARRAY_BUFFER, this._buffer);
 		gl.bufferData(gl.ARRAY_BUFFER, this._pts, gl.STATIC_DRAW);
-		gl.vertexAttribPointer(this._positionLocation, 2, gl.FLOAT, false, 0, 0);
+		gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 	}
 	
 	draw () {

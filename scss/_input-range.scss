@@ -1,6 +1,6 @@
 @import "mixins/inputs";
 
-input[type=range] {
+.iris-range > input {
 	@include range-setup ( $thumb-width: 1.27rem, $thumb-height: 1.27rem, $track-height: 0.5rem);
 	@include range-thumb {
 		background-color: transparent;
@@ -19,7 +19,7 @@ input[type=range] {
 }
 
 //TODO: figure out any z index workarounds.
-input[type=range].signed {
+.iris-range.signed > input {
 	position: relative;
 
 	&:before {
@@ -34,17 +34,17 @@ input[type=range].signed {
 		border-left: solid 4px $ambient-groove;
 	}
 }
-input[type=range].hue {
+.iris-range.hue > input {
 	@include range-track {
 		background: $gradient-hsl-hue;
 	}
 }
-input[type=range].colorfulness {
+.iris-range.lightness > input {
 	@include range-track {
 		background: linear-gradient(to right, black, lightgray, white);
 	}
 }
-input[type=range].lightness {
+.iris-range.colorfulness > input {
 	@include range-track {
 		background: linear-gradient(to right, black, lightgray, white);
 	}
