@@ -62,7 +62,9 @@ module.exports = class Iris extends Emitter
 	}
 
 	addPalette (name, fragShader, uniforms) {
-		this.palettes[name] = new IrisPalette(this, fragShader, require('../shaders/vert/passthrough.vert'), uniforms);
+		const ip = new IrisPalette(this, fragShader, require('../shaders/vert/passthrough.vert'), uniforms);
+		ip.on('uniformupdated', () => this.emitColors('pick', null, false));
+		this.palettes[name] = ip;
 	}
 
 	emitColors (eventName, x, y, updateHilight) {

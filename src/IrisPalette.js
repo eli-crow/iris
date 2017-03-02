@@ -1,18 +1,20 @@
 const glutils = require('./glutils.js');
 const primatives = require('./primatives');
+const Emitter = require('./Emitter.js');
 
 // maintains own programs, uniforms, geometry, and attributes.
-class IrisPalette
+module.exports = class IrisPalette extends Emitter
 {
 	constructor (iris, fragmentSrc, vertexSrc, uniforms) {
-		this.iris = iris;
-		this.gl = iris._gl;
+		super(['uniformupdated']);
+
 		this.uniforms = {};
 
+		this._gl = iris._gl;
 		this._uniforms = uniforms;
 		this._pts = primatives.circle(1, 100);
-		this._program = glutils.createAndLinkProgramFromSource(this.gl, vertexSrc, fragmentSrc);
-		this._buffer = this.gl.createBuffer();
+		this._program = glutils.createAndLinkProgramFromSource(this._gl, vertexSrc, fragmentSrc);
+		this._buffer = this._gl.createBuffer();
 
 		this.init();
 	}
@@ -28,13 +30,13 @@ class IrisPalette
 	}
 
 	use () {
-		this.gl.useProgram(this._program)
+		this._gl.useProgram(this._program)
 	}
 
 	activate() {
 		this.use();
 
-		const gl = this.gl;
+		const gl = this._gl;
 		gl.bindAttribLocation(this._program, 0, 'position');
 		gl.enableVertexAttribArray(0);
 		gl.bindBuffer(gl.ARRAY_BUFFER, this._buffer);
@@ -43,13 +45,13 @@ class IrisPalette
 	}
 	
 	draw () {
-		const gl = this.gl;
+		const gl = this._gl;
 		gl.drawArrays(gl.TRIANGLE_FAN, 0, this._pts.length/2);
 	}
 
-	addUniform(name, descriptor) {
-		descriptor.location = this.gl.getUniformLocation(this._program, name);
-		const _uniform = this._uniforms[name] = descriptor;
+	addUniform(name, uniform) {
+		uniform.location = this._gl.getUniformLocation(this._program, name);
+		this._uniforms[name] = uniform;
 
 		//a get/set interface to uniforms object.
 		//would be simpler as two methods.
@@ -58,16 +60,14 @@ class IrisPalette
 				return this._uniforms[name].value;
 			},
 			set: (value) => {
-				const _uniform = this._uniforms[name];
-				glutils.uniformByType(this.gl, _uniform.type, _uniform.location, value);
-				_uniform.value = value;
+				const uniform = this._uniforms[name];
+				glutils.uniformByType(this._gl, uniform.type, uniform.location, value);
+				uniform.value = value;
 				this.draw();
-				this.iris.emitColors('pick', null, false);
+				this.emit('uniformupdated', uniform.value);
 			}
 		});
 
-		glutils.uniformByType(this.gl, _uniform.type, _uniform.location, _uniform.value);
+		glutils.uniformByType(this._gl, uniform.type, uniform.location, uniform.value);
 	}
 }
-
-module.exports = IrisPalette;
