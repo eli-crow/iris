@@ -2,7 +2,6 @@ const IrisPalette = require('./IrisPalette.js');
 const Highlight = require('./Highlight.js');
 const Pupil = require('./Pupil.js');
 const Emitter = require('./Emitter.js');
-const fnutils = require('./fnutils.js');
 const listenerutils = require('./listenerutils.js');
 
 const __scrollAdjustSpeed = 0.2;
@@ -41,13 +40,18 @@ module.exports = class Iris extends Emitter
 			up:   e => this.emitColors('pickend', e.centerX, e.centerY, true),
 		});
 
-		const onMouseWheel = fnutils.debounce(() => this.emitColors('pickend', null, null, false), 150, false);
-		listenerutils.mouseWheel(this._canvas, e => {
-			e.preventDefault();
-			this._highlight.adjustPolar(0, -e.delta * __scrollAdjustSpeed);
-			this.emitColors('pick', null, null, false);
-			onMouseWheel();
-		})
+		listenerutils.mouseWheel(this._canvas, {
+			preventDefault: true,
+			debounce: {
+				wait: 100,
+				immediate: false,
+				handler: () => this.emitColors('pickend', null, null, false),
+			},
+			handler: e => {
+				this._highlight.adjustPolar(0, -e.delta * __scrollAdjustSpeed);
+				this.emitColors('pick', null, null, false);
+			}
+		});
 
 		this.addPalette('Colors A', require('../shaders/frag/same_lightness.frag'),     {lightness: {type: '1f', value: 50}});
 		this.addPalette('Colors B', require('../shaders/frag/same_lightness_hsl.frag'), {lightness: {type: '1f', value: .5}});

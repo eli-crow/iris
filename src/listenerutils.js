@@ -69,21 +69,6 @@ module.exports.simplePointer = (context, events, transform) => {
 	if (events.click) context.addEventListener('click', events.click, false);
 }
 
-module.exports.mouseWheel = function (element, handler) { 
-	const h = e => {
-		e = e || window.event;
-		e.delta = e.wheelDelta || -e.detail;
-		handler(e);
-	}
-
-	if (element.addEventListener) {
-		element.addEventListener("mousewheel", h, false);
-		element.addEventListener("DOMMouseScroll", h, false);
-	}
-	else element.attachEvent("onmousewheel", h);
-}
-
-
 module.exports.normalPointer = (context, events) => {
 	module.exports.simplePointer(context, events, (e, rect) => {
 		e.relX  	      = Math.floor(e.clientX - rect.left);
@@ -96,6 +81,30 @@ module.exports.normalPointer = (context, events) => {
 		e.getDistance   = () => Math.sqrt(Math.pow(e.centerY, 2) + Math.pow(e.centerX, 2));
 	});
 }
+
+
+module.exports.mouseWheel = function (element, descriptor) { 
+	const d = descriptor.debounce;
+	let debounceHandler;
+	if (d && fnutils.isFunction(d.handler)) {
+		debounceHandler = fnutils.debounce(d.handler, d.wait, d.immediate);
+	}
+
+	const h = e => {
+		e = e || window.event;
+		e.delta = e.wheelDelta || -e.detail;
+		descriptor.handler(e);
+		if (debounceHandler) debounceHandler(e);
+		if (descriptor.preventDefault) e.preventDefault();
+	}
+
+	if (element.addEventListener) {
+		element.addEventListener("mousewheel", h, false);
+		element.addEventListener("DOMMouseScroll", h, false);
+	}
+	else element.attachEvent("onmousewheel", h);
+}
+
 
 module.exports.events = __events;
 module.exports.eventName = __eventName;

@@ -31,8 +31,9 @@ module.exports.throttle = function(fn, threshhold, scope) {
 		}
 	};
 }
-
+//david walsh
 module.exports.debounce = function debounce (func, wait, immediate) {
+	wait = wait || 150;
 	let timeout;
 	return function() {
 		const context = this, 

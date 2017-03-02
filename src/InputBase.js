@@ -23,16 +23,16 @@ module.exports = class InputBase extends PanelElement
 
 		this._element = element;
 		this._input = element.children[element.children.length - 1];
-		this._input.addEventListener(__onInputEventName, this.onInput.bind(this), false);
-		this._input.addEventListener('change', this.onChange.bind(this), false);
+		this._input.addEventListener(__onInputEventName, this._onInput.bind(this), false);
+		this._input.addEventListener('change', this._onChange.bind(this), false);
 	}
 
-	onInput () {
+	_onInput () {
 		let val = +this._input.value; 
 		if (typeof this.transform === 'function') val = this.transform(val);
 		this.emit('input', val);
 	}
-	onChange () {
+	_onChange () {
 		let val = +this._input.value; 
 		if (typeof this.transform === 'function') val = this.transform(val);
 		this.emit('change', val);

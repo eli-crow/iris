@@ -1,11 +1,8 @@
-// const InputBase = require('./InputBase.js');
+const Button = require('./Button.js');
 
-// module.exports = class Toggle extends InputBase
-// {
-// 	constructor() {
-// 		super('Emitter.js');
-
-// 		this._element = document.createElement('div');
-// 		this.classes('iris-toggle');
-// 	}
-// }
+module.exports = class Toggle extends Button
+{
+	constructor() {
+		
+	}
+}

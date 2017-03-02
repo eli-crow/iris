@@ -26,6 +26,7 @@ canvas {
 }
 
 .brush-canvases {
+  cursor: default;
   > canvas {
     z-index: 0;
     position: absolute;
@@ -33,13 +34,6 @@ canvas {
     left: 0;
     width: 100%; 
     height: 100%;
-  }
-  .iris-button {
-    display: block;
-    z-index: 1;
-    position: absolute;
-    top: 0;
-    left: 0;
   }
   .brush-data {
     position: absolute;
