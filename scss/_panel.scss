@@ -7,13 +7,19 @@
 	padding-left: 2rem;
 	
 	> .panel {
-		border-bottom: solid 3px $ambient-groove;
+		border-bottom: solid 10px $ambient-groove;
 	}
 	> .panel:first-of-type {
+		> .panel-tab {
+			border-top-left-radius: $radius-2;
+		}
 		border-top-left-radius: $radius-2;
 		border-top-right-radius: $radius-2;
 	}
 	> .panel:last-of-type {
+		> .panel-tab {
+			border-bottom-left-radius: $radius-2;
+		}
 		border-bottom-left-radius: $radius-2;
 		border-bottom-right-radius: $radius-2;
 		border: none;
@@ -41,20 +47,20 @@
 		flex: 0 1 auto;
 		width: $picker-indicator-width;
 
-		border-right: $rule-stack-groove;
+		// background-color: $ambient-groove;
+ 
+		border-right: $rule-stack-groove; 		
 
 		> .panel-label {
 			margin-top: 1rem;
 
 			direction: rtl;
 			text-align: right;
-			letter-spacing: 0.5px;
+			// letter-spacing: 0.5px;
+			// font-weight: 600;
 		
-			cursor: pointer;
-			color: $panel-color;
-			text-shadow: 
-				0px 0px 2px transparentize($ambient, 0.3),
-				-1px 0px 12px transparentize($ambient, 0.7);
+			cursor: default;
+			color: black;
 
 			transform: rotate(-90deg);
 		}
