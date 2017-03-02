@@ -5,6 +5,7 @@ const Emitter = require('./Emitter.js');
 const fnutils = require('./fnutils.js');
 const listenerutils = require('./listenerutils.js');
 
+const __scrollAdjustSpeed = 0.2;
 const __webglConfig = {
 	preserveDrawingBuffer: true,
 	depth: false,
@@ -17,7 +18,7 @@ const __webglConfig = {
 module.exports = class Iris extends Emitter
 {
 	constructor (canvas, indicator) {
-		super(['pick', 'pickend']);
+		super(['pick', 'pickend', 'zoom']);
 
 		this._canvas = canvas;
 		this._gl = canvas.getContext('webgl', __webglConfig) || canvas.getContext('experimental-webgl', __webglConfig);
@@ -40,21 +41,26 @@ module.exports = class Iris extends Emitter
 			up:   e => this.emitColors('pickend', e.centerX, e.centerY, true),
 		});
 
+		const onMouseWheel = fnutils.debounce(() => this.emitColors('pickend', null, null, false), 150, false);
+		listenerutils.mouseWheel(this._canvas, e => {
+			e.preventDefault();
+			this._highlight.adjustPolar(0, -e.delta * __scrollAdjustSpeed);
+			this.emitColors('pick', null, null, false);
+			onMouseWheel();
+		})
+
 		this.addPalette('Colors A', require('../shaders/frag/same_lightness.frag'),     {lightness: {type: '1f', value: 50}});
 		this.addPalette('Colors B', require('../shaders/frag/same_lightness_hsl.frag'), {lightness: {type: '1f', value: .5}});
 		this.addPalette('Tones',    require('../shaders/frag/same_hue.frag'),           {hue: {type: '1f', value: 0}});
 
 		pupil.on('drag', e =>	{
 			highlight.movePolar(Math.PI/2 - e.getAngle(), highlight.getDistance());
-			this.emitColors('pick', null, false);
+			this.emitColors('pick', null, null, false);
 		});
-		pupil.on('release', e => {
-			highlight.movePolar(Math.PI/2 - e.getAngle(), highlight.getDistance());
-			this.emitColors('pickend', null, false);
-		});
+		pupil.on('release', e => this.emitColors('pickend', null, null, false));
 		pupil.on('click', e => {
 			highlight.move(0,0);
-			this.emitColors('pickend', null, false);
+			this.emitColors('pickend', null, null, false);
 		});
 
 		this.onResize();
@@ -78,9 +84,9 @@ module.exports = class Iris extends Emitter
 		const cs = window.getComputedStyle(canvas);
 		const width = parseInt(cs.width);
 		const height = parseInt(cs.height);
+
 		for(let name in this.palettes) {
 			const palette = this.palettes[name];
-			palette.use();
 			palette.uniforms['resolution'] = [width, height];
 		}
 		canvas.width = width;

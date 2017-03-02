@@ -33,13 +33,14 @@ module.exports = class BrushPreview
 	//TODO: fake the pressure, speed, along the curve
 	draw() {
 		this.clear();
-		this._brush.draw(this._ctx, {
-			pts: this._pts,
-			lastPressure: 0.0,         //interpolated end to end
-			penPressure: 0.5,         //interpolated end to end
-			squaredSpeed: 1000,       //interpolated end to end
-			direction: 0,             //derivative of sine (cosine)
-		}, this._pts);
+		for (var i = 0, ii = this._pts.length; i < ii; i+=2) {
+			this._brush.draw(this._ctx, {
+				lastPressure: 1-(Math.cos(i/ii * Math.PI * 2) * 0.5 + 0.5), 
+				penPressure: 1-(Math.cos((i+1)/ii * Math.PI * 2) * 0.5 + 0.5),  
+				squaredSpeed: 1000,
+				direction: Math.cos(i/ii * Math.PI * 2) * 0.5 + 0.5,
+			}, [this._pts[i], this._pts[i+1]]);
+		}
 	}
 
 	clear () {

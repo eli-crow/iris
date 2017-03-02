@@ -21,6 +21,10 @@ hr {
   margin: spacing(1) 0;
 }
 
+canvas {
+  vertical-align: bottom;
+}
+
 .brush-canvases {
   > canvas {
     z-index: 0;

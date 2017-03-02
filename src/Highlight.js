@@ -1,5 +1,6 @@
 const domutils = require('./domutils.js');
 const glutils = require('./glutils.js');
+const mathutils = require('./mathutils.js');
 
 module.exports = class Highlight {
 	constructor (canvas, gl) {
@@ -30,8 +31,8 @@ module.exports = class Highlight {
 	movePolar (theta, r) {
 		this._x = Math.cos(theta) * r;
 		this._y = Math.sin(theta) * r;
-		this._angle = theta;
-		this._distance = r;
+		this._angle = mathutils.wrap(theta, Math.PI * 2);
+		this._distance = Math.max(0, r);
 		this.updateStylePosition();
 	}
 	movePolarNormal (theta, r) {
@@ -41,6 +42,13 @@ module.exports = class Highlight {
 		this._y = Math.sin(theta) * R;
 		this._angle = theta
 		this._distance = R;
+		this.updateStylePosition();
+	}
+	adjustPolar (theta, r) {
+		this.movePolar(
+			this.getAngle() + theta,
+			this.getDistance() + r
+		);
 		this.updateStylePosition();
 	}
 

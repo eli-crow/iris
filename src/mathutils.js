@@ -1,4 +1,5 @@
 const clamp = (x, a, b) => Math.min(Math.max(x, a), b);
+const wrap = (x, n) => ((x%n)+n)%n;
 const radians = degrees => degrees/180*Math.PI;
 const degrees = radians => radians/Math.PI*180;
 
@@ -203,6 +204,7 @@ module.exports.getSinePoints1d = function(amplitude, nPts, output) {
 }
 
 
+module.exports.wrap = wrap;
 module.exports.clamp = clamp;
 module.exports.radians = radians;
 module.exports.degrees = degrees;

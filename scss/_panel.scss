@@ -1,10 +1,22 @@
+@import "mixins/clearfix";
+
 //not related (yet) to PanelGroup.js
 .panel-group {
+	@include clearfix;
 	padding-top: 2rem;
 	padding-left: 2rem;
-
-	> .panel:not(:last-of-type) {
-		margin-bottom: 1rem;
+	
+	> .panel {
+		border-bottom: solid 3px $ambient-groove;
+	}
+	> .panel:first-of-type {
+		border-top-left-radius: $radius-2;
+		border-top-right-radius: $radius-2;
+	}
+	> .panel:last-of-type {
+		border-bottom-left-radius: $radius-2;
+		border-bottom-right-radius: $radius-2;
+		border: none;
 	}
 }
 
@@ -21,7 +33,6 @@
 	box-shadow: 
 		0px 10px 50px transparentize($ambient, 0.95),
 		0px 2px 2px transparentize($ambient, 0.7);
-	border-radius: $radius-2;
 
 	user-select: none;
 	touch-action: manipulation;

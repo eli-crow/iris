@@ -56,11 +56,10 @@ module.exports = class IrisPalette extends Emitter
 		//a get/set interface to uniforms object.
 		//would be simpler as two methods.
 		Object.defineProperty(this.uniforms, name, {
-			get: () => {
-				return this._uniforms[name].value;
-			},
-			set: (value) => {
+			get: () => this._uniforms[name].value,
+			set: value => {
 				const uniform = this._uniforms[name];
+				this.use();
 				glutils.uniformByType(this._gl, uniform.type, uniform.location, value);
 				uniform.value = value;
 				this.draw();

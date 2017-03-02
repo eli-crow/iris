@@ -2,40 +2,34 @@
 @import "mixins/clearfix";
 
 .iris-input-group {
-	padding: 0 spacing(1);
-	 
 	border-top: $rule-stack-groove;
 	 
 	.iris-input {
-		margin: 0.75rem 0;
+		margin: spacing(3);
 	}
 }
 
 .iris-input {
-	$label-width: 20%;
-
 	@include clearfix;
 	position: relative;
-	margin: spacing(1) 0;
 
 	@mixin children {
 		line-height: spacing(2);
 		vertical-align: top;
 		display: inline-block;
 	}
-
 	> input {
 		@include children;
 		float: right;
 		width: 100%;
 	}
 
+	$label-width: 20%;
 	> label {
 		@include children;
 		float: left;
 		width: $label-width;
 	}
-
 	> label + input {
 		width: 100% - $label-width;
 	}
@@ -52,8 +46,4 @@
 	
 	cursor: pointer;
 	border-top: $rule-stack-underline;
-
-	> p {
-		font-size: 0.9rem;
-	}
 }

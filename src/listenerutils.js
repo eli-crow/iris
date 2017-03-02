@@ -1,6 +1,8 @@
 const domutils = require('./domutils.js');
 const fnutils = require('./fnutils.js');
 
+//currently nothing here is responsible for destroying own listeners. In future versions, this will be necessary.
+
 let __eventName;
 const __events = {}
 if (Modernizr.hasEvent('pointermove')) {
@@ -65,6 +67,20 @@ module.exports.simplePointer = (context, events, transform) => {
 	}, false);
 
 	if (events.click) context.addEventListener('click', events.click, false);
+}
+
+module.exports.mouseWheel = function (element, handler) { 
+	const h = e => {
+		e = e || window.event;
+		e.delta = e.wheelDelta || -e.detail;
+		handler(e);
+	}
+
+	if (element.addEventListener) {
+		element.addEventListener("mousewheel", h, false);
+		element.addEventListener("DOMMouseScroll", h, false);
+	}
+	else element.attachEvent("onmousewheel", h);
 }
 
 

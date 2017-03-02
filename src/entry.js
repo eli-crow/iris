@@ -22,6 +22,9 @@ const irisModes = document.getElementById('picker-modes');
 const irisIndicator = document.getElementById('picker-indicator');
 const iris = new Iris(irisElement, irisInputs);
 
+iris.on('pickend', data => brush.setColor.call(brush, data));
+iris.on(['pick', 'pickend'], data => irisIndicator.style.backgroundColor = `rgba(${data.slice(0,3).join(',')}, 1)`);
+
 const lightnessSlider = new Slider(50, 0, 100, 1/255)
 	.classes('lightness')
 	.bind(iris.palettes['Colors A'].uniforms, "lightness")
@@ -126,7 +129,6 @@ const brushInputs = new PanelGroup(document.getElementById('brush-inputs'))
 	.add(new Spacer())
 	.add(pressureSlider)
 	.add(pressureFlowSlider)
-	.add(new Spacer())
 
 
 const eyedropper = new Eyedropper(surface.canvas);
@@ -136,16 +138,14 @@ document.getElementById('eraser').addEventListener('click', function () {
 	__erase = !__erase;
 	brush.set('erase', __erase);
 });
-
-//========================================================= Wiring
-iris.on('pickend', data => brush.setColor.call(brush, data));
-
-iris.on(['pick', 'pickend'], data => {
-	irisIndicator.style.backgroundColor = `rgba(${data.slice(0,3).join(',')}, 1)`;
-})
 eyedropper.on('pick', fnutils.throttle(data => {
 	iris._highlight.movePolarNormal.call(iris._highlight, - mathutils.radians(data.hsl[0]), data.hsl[1]/100);
 	iris.palettes['Colors A'].uniforms.lightness = data.hsl[2];
 	irisIndicator.style.backgroundColor = `rgba(${data.rgba.slice(0,3).join(',')}, 1)`;
 }), 50);
 eyedropper.on('pickend', data => brush.setColor.call(brush, data.rgba));
+
+
+//========================================================= Wiring
+
+
