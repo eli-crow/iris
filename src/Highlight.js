@@ -2,7 +2,8 @@ const domutils = require('./domutils.js');
 const glutils = require('./glutils.js');
 const mathutils = require('./mathutils.js');
 
-module.exports = class Highlight {
+module.exports = class Highlight
+{
 	constructor (canvas, gl) {
 		const element = document.createElement('div');
 		element.classList.add('iris-hilight');

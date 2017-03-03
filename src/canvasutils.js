@@ -9,6 +9,5 @@ module.exports.drawTexture = function (context, img, x, y, width, height, rotati
 };
 
 module.exports.getPixel = (context, x, y) => { 
-	const c = context.getImageData(x,y,1,1).data;
-	return [+c[0], +c[1], +c[2], +c[3]];
+	return context.getImageData(x,y,1,1).data;
 };

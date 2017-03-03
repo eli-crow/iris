@@ -11,15 +11,23 @@ module.exports = class PanelElement extends Emitter
 		element.appendChild(this._element);
 		return this;
 	}
-
 	remove() {
 		this._element.parentNode.removeChild(this._element);
 		return this;
 	}
 
 	classes (names) {
-		for (var i = 0, ii = arguments.length; i < ii; i++) {
+		for (let i = 0, ii = arguments.length; i < ii; i++) {
 			this._element.classList.add(arguments[i]);
+		}
+		return this;
+	}
+	class (names) {
+		return this.classes(names);
+	}
+	unclass() {
+		for (let i = 0, ii = arguments.length; i < ii; i++) {
+			this._element.classList.remove(arguments[i]);
 		}
 		return this;
 	}
@@ -33,7 +41,6 @@ module.exports = class PanelElement extends Emitter
 		this._element.style.display = 'none';
 		return this;
 	}
-
 	unhide() {
 		this._element.style.display = '';
 		return this;

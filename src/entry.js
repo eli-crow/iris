@@ -1,16 +1,12 @@
 const Iris = require('./Iris.js');
-const Slider = require('./Slider.js');
-const Button = require('./Button.js');
-const ButtonGroup = require('./ButtonGroup.js');
-const PanelGroup = require('./PanelGroup.js');
-const Spacer = require('./Spacer.js');
+
+const Panel = require('./Panel.js');
 const ToolEffector = require('./ToolEffector.js');
 const Brush = require('./Brush.js');
 const Eyedropper = require('./Eyedropper.js');
 const BrushPreview = require('./BrushPreview.js');
 const Surface = require('./Surface.js');
 const fnutils = require('./fnutils.js');
-
 const mathutils = require('./mathutils.js');
 
 
@@ -25,32 +21,29 @@ const iris = new Iris(irisElement, irisInputs);
 iris.on('pickend', data => brush.setColor.call(brush, data));
 iris.on(['pick', 'pickend'], data => irisIndicator.style.backgroundColor = `rgba(${data.slice(0,3).join(',')}, 1)`);
 
-const lightnessSlider = new Slider(50, 0, 100, 1/255)
+const lightnessSlider = new Panel.Slider(50, 0, 100, 1/255)
 	.classes('lightness')
 	.bind(iris.palettes['Colors A'].uniforms, "lightness")
-	.on('change', () => {
-		iris.emitColors.call(iris, 'pickend', null, false);
-	});
-const lightnessHSLSlider = new Slider(.5, 0, 1, 1/255)
+	.on('change', () => iris.emitColors('pickend', null, false));
+const lightnessHSLSlider = new Panel.Slider(.5, 0, 1, 1/255)
 	.classes('lightness')
 	.bind(iris.palettes['Colors B'].uniforms, "lightness")
-	.on('change', () => {
-		iris.emitColors.call(iris, 'pickend', null, false);
-	})
+	.on('change', () => iris.emitColors('pickend', null, false))
 	.hide();
-const hueSlider = new Slider(0, 0, 360, 1)
+const hueSlider = new Panel.Slider(0, 0, 360, 1)
 	.classes('hue')
 	.bind(iris.palettes['Tones'].uniforms, "hue")
+	.on('change', () => iris.emitColors('pickend', null, false))
 	.transform(x => x/180*Math.PI)
 	.hide();
-const inputs = new PanelGroup(irisInputs)
+const inputs = new Panel.Group(irisInputs)
 	.add(lightnessSlider)
 	.add(lightnessHSLSlider)
 	.add(hueSlider);
 
 
 
-const modeButtonGroup = new ButtonGroup();
+const modeButtonGroup = new Panel.ButtonGroup();
 
 function setMode (name, slider, button) {
 	iris.setMode(name);
@@ -59,76 +52,75 @@ function setMode (name, slider, button) {
 	inputs.each(slider, input => input.hide() );
 	modeButtonGroup.each(button, btn => btn._element.style.borderTopColor = 'transparent');
 }
-const sameLightnessButton = new Button('Colors A')
+const sameLightnessButton = new Panel.Button('Colors A')
 	.bind(() => setMode("Colors A", lightnessSlider, sameLightnessButton));
-const sameLightnessHSLButton = new Button('Colors B')
+const sameLightnessHSLButton = new Panel.Button('Colors B')
 	.bind(() => setMode("Colors B", lightnessHSLSlider, sameLightnessHSLButton));
-const sameHueButton = new Button('Shades')
+const sameHueButton = new Panel.Button('Shades')
 	.bind(() => setMode("Tones", hueSlider, sameHueButton));
 
 modeButtonGroup.add(sameLightnessButton)
 	.add(sameLightnessHSLButton)
 	.add(sameHueButton);
 
-setMode("Colors A", lightnessSlider, sameLightnessButton)
+setMode("Colors A", lightnessSlider, sameLightnessButton);
 
-const modes = new PanelGroup(irisModes)
+const modes = new Panel.Group(irisModes)
 	.add(modeButtonGroup);
 
 
 //========================================================= Surface
 const surface = new Surface(document.getElementById('art'));
-document.getElementById('clear-canvas').addEventListener('click', function () {
-	surface.clear();
-});
+document.getElementById('clear-canvas').addEventListener('click', () => surface.clear());
 surface.on('sample', c => lightnessSlider.value = c[0]);
 
 
 
 //========================================================= Brush
-const brush = new Brush(surface, {
-	smoothInputs: ['pressure']
-});
-brush.minSize = 2;
-brush.setImage("./img/brush.png")
+const brush = new Brush(surface, {shape: "./img/brush.png"});
 
-// img.brush-data#brush-shape-bristles(src = "./img/brush.png")
-// img.brush-data#brush-shape-inky(src = "./img/brush_inky.png")
-
-// const angleEffector = new ToolEffector('angle', (brush, event) => {
-// 	const symm = brush.hasSymmetricalEmphasis ? 2 : 1;
-// 	return Math.cos((Math.PI - event.direction + brush.calligAngle) * symm) *.5 +.5;
-// });
-const angleEffector = new ToolEffector('angle', (brush, e) => e.direction);
-const speedEffector = new ToolEffector('size', (brush, e) => {
+const angleEffector = new ToolEffector('angle', e => e.direction);
+const pressureEffector = new ToolEffector('size', e => e.penPressure );
+const pressureFlowEffector = new ToolEffector('flow', e => e.penPressure);
+const speedSizeEffector = new ToolEffector('size', e => {
 	const s = Math.sqrt(e.squaredSpeed);
-	return s/(s+brush.speedScale);
+	return s/(s+200);
 });
-const pressureEffector = new ToolEffector('size', (brush, e) => {
-	return e.penPressure;
+const speedFlowEffector = new ToolEffector('flow', e => {
+	const s = Math.sqrt(e.squaredSpeed);
+	return s/(s+200);
 });
-const pressureFlowEffector = new ToolEffector('flow', (brush, e) => e.penPressure);
 
-brush.addEffector([angleEffector, speedEffector, pressureFlowEffector], false);
-brush.addEffector([pressureEffector], true);
+brush.addEffector([angleEffector, speedSizeEffector, speedFlowEffector], false);
+brush.addEffector([pressureEffector, pressureFlowEffector], true);
+
+//========================================================= Size
+const baseSizeSlider = new Panel.Slider(3, 0, 5, 0.01, 'base')
+	.transform(x => Math.exp(x))
+	.bind(val => brush.set('minSize', val));
+const pressureSizeSlider = new Panel.Slider(0, -50, 50, 1, 'pressure')
+	.bind(val => pressureEffector.set('scale', val));
+const speedSizeSlider = new Panel.Slider(0, -50, 50, 1, 'speed')
+	.bind(val => speedSizeEffector.set('scale', val));
+
+//========================================================= Flow
+const baseFlowSlider = new Panel.Slider(1, 0, 1, 0.01, 'base')
+	.transform(x => Math.exp(x))
+	.bind(val => brush.set('minFlow', val));
+const pressureFlowSlider = new Panel.Slider(0, -1, 1, .01, 'pressure')
+	.bind(val => pressureFlowEffector.set('scale', val));
+const speedFlowSlider = new Panel.Slider(0, -1, 1, .01, 'speed')
+	.bind(val => speedFlowEffector.set('scale', val));
+
+const brushInputs = new Panel.TabbedView(document.getElementById('brush-inputs'))
+	.add("Size", [baseSizeSlider, pressureSizeSlider, speedSizeSlider])
+	.add("Flow", [baseFlowSlider, pressureFlowSlider, speedFlowSlider])
+	.init();
 
 const brushPreview = new BrushPreview(document.getElementById('brush-preview'));
 brushPreview.setBrush(brush);
 brushPreview.draw();
 brush.on('changeend', x => brushPreview.draw.call(brushPreview));
-
-const minSizeSlider = new Slider(3, 0, 5, 0.01, 'size')
-	.transform(x => Math.exp(x))
-	.bind(val => brush.set.call(brush, 'minSize', val));
-const pressureSlider = new Slider(0, -50, 50, 1, 'size')
-	.bind(val => pressureEffector.set.call(pressureEffector, 'scale', val));
-const pressureFlowSlider = new Slider(0, 0, 1, .01, 'flow')
-	.bind(val => pressureFlowEffector.set.call(pressureFlowEffector, 'scale', val));
-const brushInputs = new PanelGroup(document.getElementById('brush-inputs'))
-	.add(minSizeSlider)
-	.add(new Spacer())
-	.add(pressureSlider)
-	.add(pressureFlowSlider)
 
 
 const eyedropper = new Eyedropper(surface.canvas);
@@ -139,11 +131,11 @@ document.getElementById('eraser').addEventListener('click', function () {
 	brush.set('erase', __erase);
 });
 eyedropper.on('pick', fnutils.throttle(data => {
-	iris._highlight.movePolarNormal.call(iris._highlight, - mathutils.radians(data.hsl[0]), data.hsl[1]/100);
+	iris._highlight.movePolarNormal(-1 * mathutils.radians(data.hsl[0]), data.hsl[1]/100);
 	iris.palettes['Colors A'].uniforms.lightness = data.hsl[2];
 	irisIndicator.style.backgroundColor = `rgba(${data.rgba.slice(0,3).join(',')}, 1)`;
 }), 50);
-eyedropper.on('pickend', data => brush.setColor.call(brush, data.rgba));
+eyedropper.on('pickend', data => brush.setColor(data.rgba));
 
 
 //========================================================= Wiring

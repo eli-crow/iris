@@ -1,0 +1,5 @@
+@import "mixins/clearfix";
+.iris-panel-element-group {
+	@include clearfix;
+	width: 100%;
+}

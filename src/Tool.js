@@ -44,6 +44,10 @@ module.exports = class Tool extends Emitter {
 
 			if (effector.type in this.EffectorTypes) 
 				effector.targetProp = this.EffectorTypes[effector.type];
+			else {
+				console.warn(effector.type + 'is not supported by tool')
+				return;
+			}
 
 			if (isSmoothedEffector) 
 				this._smoothedEffectors.push(effector);
@@ -52,14 +56,14 @@ module.exports = class Tool extends Emitter {
 		}
 	}
 
-	applyEffectors(effectorGroup, event, props) {
+	static applyEffectors(effectorGroup, event, props) {
 		const result = JSON.parse(JSON.stringify(props));
 		const evt = JSON.parse(JSON.stringify(event));
 
 	  for (let i = 0, ii = effectorGroup.length; i < ii; i++) {
 	  	const effector = effectorGroup[i];
 	    result[effector.targetProp] = Math.max(0,
-	    	result[effector.targetProp] + effector.transform(this, evt)
+	    	result[effector.targetProp] + effector.transform(evt)
 	    );
 	  };
 

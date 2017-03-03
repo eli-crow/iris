@@ -4,7 +4,7 @@ const listenerutils = require('./listenerutils.js');
 module.exports = class Pupil extends Emitter
 {
 	constructor(canvas) {
-		super(['drag', 'release', 'click']);
+		super(['huerotate', 'huerotateend', 'center']);
 
 		this._canvas = canvas;
 		this._element = null;
@@ -19,32 +19,10 @@ module.exports = class Pupil extends Emitter
 		this._element = element;
 
 		listenerutils.normalPointer(element, {
-			contained: true,
-			moveEl: this._canvas,
-
-			down:  e => this.onDown(e),
-			move:  e => this.onDrag(e),
-			up:    e => this.onUp(e),
-			click: e => this.onClick(e)
+			move:        e => this.emit('huerotate', e),
+			up:          e => this.emit('huerotateend', e),
+			dblClick:    e => this.emit('center', e)
 		});
-	}
-
-	onDown (e) {
-		this._isDragging = false;
-	}
-
-	onDrag (e) {
-		this._isDragging = true;
-		this.emit('drag', e);
-	}
-
-	onUp (e) {
-		this.emit('release', e);
-	}
-
-	onClick (e) {
-		if (!this._isDragging) 
-			this.emit('click', e);
 	}
 
 	resize () {

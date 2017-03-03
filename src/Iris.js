@@ -37,14 +37,12 @@ module.exports = class Iris extends Emitter
 			contained: true,
 			down: e => this.emitColors('pick', e.centerX, e.centerY, true), 
 			move: e => this.emitColors('pick', e.centerX, e.centerY, true),
-			up:   e => this.emitColors('pickend', e.centerX, e.centerY, true),
+			up:   e => this.emitColors('pickend', e.centerX, e.centerY, false),
 		});
 
 		listenerutils.mouseWheel(this._canvas, {
 			preventDefault: true,
-			debounce: {
-				wait: 100,
-				immediate: false,
+			debounce: { wait: 100, immediate: false,
 				handler: () => this.emitColors('pickend', null, null, false),
 			},
 			handler: e => {
@@ -57,12 +55,12 @@ module.exports = class Iris extends Emitter
 		this.addPalette('Colors B', require('../shaders/frag/same_lightness_hsl.frag'), {lightness: {type: '1f', value: .5}});
 		this.addPalette('Tones',    require('../shaders/frag/same_hue.frag'),           {hue: {type: '1f', value: 0}});
 
-		pupil.on('drag', e =>	{
+		pupil.on('huerotate', e =>	{
 			highlight.movePolar(Math.PI/2 - e.getAngle(), highlight.getDistance());
 			this.emitColors('pick', null, null, false);
 		});
-		pupil.on('release', e => this.emitColors('pickend', null, null, false));
-		pupil.on('click', e => {
+		pupil.on('huerotateend', e => this.emitColors('pickend', null, null, false));
+		pupil.on('center', e => {
 			highlight.move(0,0);
 			this.emitColors('pickend', null, null, false);
 		});
@@ -98,6 +96,10 @@ module.exports = class Iris extends Emitter
 		this._gl.viewport(0,0, width, height);
 
 		this._pupil.resize();
+	}
+
+	setColor(lchArr) {
+		this._currentPalette.getPositionFromLch(lchArr);
 	}
 
 	setMode (modeName) {

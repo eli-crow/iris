@@ -3,6 +3,7 @@ const primatives = require('./primatives');
 const Emitter = require('./Emitter.js');
 
 // maintains own programs, uniforms, geometry, and attributes.
+// intended to be extended.
 module.exports = class IrisPalette extends Emitter
 {
 	constructor (iris, fragmentSrc, vertexSrc, uniforms) {
@@ -68,5 +69,9 @@ module.exports = class IrisPalette extends Emitter
 		});
 
 		glutils.uniformByType(this._gl, uniform.type, uniform.location, uniform.value);
+	}
+
+	getPositionFromLch (lchArr) {
+		console.log('get position from lch');
 	}
 }

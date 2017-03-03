@@ -13,9 +13,6 @@ module.exports = class Eyedropper extends Emitter
 
 		listenerutils.simplePointer(canvas, {
 			contained: false,
-			// stopPropagation: true,
-			// preventDefault: true,
-
 			down: e => this.sample('pick', e),
 			move: e => this.sample('pick', e),
 			up:   e => this.sample('pickend', e)
@@ -23,12 +20,13 @@ module.exports = class Eyedropper extends Emitter
 	}
 
 	sample (event, e) {
-		if (e.altKey) {
-			const rgba = canvasutils.getPixel(this._ctx, e.offsetX, e.offsetY);
-			if (rgba[3] > 0) {
-				rgba[3] = 255;
+		if (e.downButton === 2 || e.altKey) {
+			const p = canvasutils.getPixel(this._ctx, e.offsetX, e.offsetY);
+			if (p[3] > 0) {
+				const rgba = [p[0], p[1], p[2], 255];
 				this.emit(event, {rgba: rgba, hsl: hsluv.rgbToHsluv(rgba.map(x => x/255))});
 			}
+			e.preventDefault();
 		}
 	}
 

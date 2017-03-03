@@ -1,7 +1,7 @@
-const PanelGroup = require('./PanelGroup.js');
+const Group = require('./Group.js');
 const Button = require('./Button.js');
 
-module.exports = class ButtonGroup extends PanelGroup
+module.exports = class ButtonGroup extends Group
 {
 	constructor() {
 		const element = document.createElement('div');

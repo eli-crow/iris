@@ -7,44 +7,56 @@ module.exports = class Brush extends TexturedTool
 	constructor(surface, options) {
 		super(surface, options);
 		
-		this.minSize = 2;
 		this.erase = false;
+		this.minSize = 1;
 		this.minFlow = 0;
-		this.pressureSensitivity = 0;
-		this.angleSensitivity = 15;
-		this.speedSensitivity = 0;
-		this.speedScale = 200;
+		this.baseRatio = .8;
 		this.calligAngle = 135;
 		this.hasSymmetricalEmphasis = false;
 	}
 
-	draw (ctx, e, pts) {
-		if (e.altKey) return;
-
-		const props = this.applyEffectors(this._effectors, e, { 
-			size: this.minSize, 
-			flow: this.minFlow,
-			angle: 0
-		});
+	drawPoints (ctx, e, pts) {
+		if (e.downButton === 2 || e.altKey) return;
+		const props = Brush.applyEffectors(this._effectors, e, this._getBaseProps());
 
 		for (let i = 0, ii = pts.length; i<ii; i+= 2) {
-			e.penPressure = mathutils.lerp(i/ii, e.lastPressure, e.penPressure);
-			const smoothProps = this.applyEffectors(this._smoothedEffectors, e, props);
-
-			canvasutils.drawTexture(
-				ctx, this._texture,
-				pts[i], pts[i + 1],
-				smoothProps.size, smoothProps.size,
-				smoothProps.angle,
-				smoothProps.flow,
-				this.erase
-			);
+			e.penPressure = mathutils.lerp(i/ii, e.penPressure, e.lastPressure);
+			this.draw(ctx, pts[i], pts[i+1], Brush.applyEffectors(this._smoothedEffectors, e, props));
 		}
 	}
 
-	onDown (ctx, e) { this.draw(ctx, e, [e.offsetX, e.offsetY]); }
-	onMove (ctx, e) { this.draw(ctx, e, e.pts); }
+	draw (ctx, x, y, props) {
+		canvasutils.drawTexture(
+			ctx, this._texture,
+			x, y,
+			props.size * props.sizeRatio, props.size,
+			props.angle,
+			props.flow,
+			this.erase
+		);
+	}
+
+	onDown (ctx, e) { 
+		this.draw(ctx, e.offsetX, e.offsetY, 
+			Brush.applyEffectors(this._effectors, e, this._getBaseProps())
+		); 
+	}
+
+	onMove (ctx, e) { 
+		this.drawPoints(ctx, e, e.pts); 
+	}
+
 	onUp (ctx, e) {}
+
+
+	_getBaseProps () {
+		return { 
+			size: this.minSize, 
+			flow: this.minFlow,
+			sizeRatio: this.baseRatio,
+			angle: 0
+		}
+	}
 }
 
 module.exports.prototype.EffectorTypes = {

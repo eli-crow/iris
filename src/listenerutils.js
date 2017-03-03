@@ -3,6 +3,7 @@ const fnutils = require('./fnutils.js');
 
 //currently nothing here is responsible for destroying own listeners. In future versions, this will be necessary.
 
+//select the best available pointer event.
 let __eventName;
 const __events = {}
 if (Modernizr.hasEvent('pointermove')) {
@@ -23,10 +24,13 @@ else {
 	__events.move = 'mousemove';
 	__events.up = 'mouseup';
 }
-console.log(__eventName);
+console.log('pointer type: ' + __eventName);
+
+const __doubleClickTime = 300;
 
 module.exports.simplePointer = (context, events, transform) => {
-	let rect;
+	let rect, button = 0;
+
 	const xformIsFn = fnutils.isFunction(transform);
 	const moveCtx = 
 		events.moveEl ? events.moveEl : 
@@ -35,6 +39,7 @@ module.exports.simplePointer = (context, events, transform) => {
 	let moveHandler;
 	if (events.move) moveHandler = function (e) {
 		e = e || window.event;
+		e.downButton = button;
 		if (events.preventDefault) e.preventDefault();
 		if (events.stopPropagation) e.stopPropagation();
 		if (xformIsFn) transform(e, rect);
@@ -42,6 +47,7 @@ module.exports.simplePointer = (context, events, transform) => {
 	};
 	const upHandler = function (e) {
 		e = e || window.event;
+		e.downButton = button;
 		if (events.preventDefault) e.preventDefault();
 		if (events.stopPropagation) e.stopPropagation();
 		if (events.up) {
@@ -54,6 +60,7 @@ module.exports.simplePointer = (context, events, transform) => {
 
 	context.addEventListener(__events.down, (e) => {
 		e = e || window.event;
+		button = e.button;
 		
 		if (events.preventDefault) e.preventDefault();
 		if (events.stopPropagation) e.stopPropagation();
@@ -65,6 +72,19 @@ module.exports.simplePointer = (context, events, transform) => {
 		if (moveHandler) moveCtx.addEventListener(__events.move, moveHandler, false);
 		window.addEventListener(__events.up, upHandler, false);
 	}, false);
+
+	if (events.dblClick) {
+		let lastClickTime;
+
+		const doubleClickHandler = function (e) {
+			if (Date.now() - lastClickTime < __doubleClickTime) {
+				events.dblClick(e);
+			}
+			lastClickTime = Date.now();
+		}
+
+		context.addEventListener('click', doubleClickHandler, false);
+	}
 
 	if (events.click) context.addEventListener('click', events.click, false);
 }

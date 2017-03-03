@@ -12,13 +12,14 @@ module.exports = class Surface extends Emitter
 		this.ctx = canvas.getContext('2d');
 		this._tool = null;
 
+		//init
+		canvas.oncontextmenu = () => false;
 		this.resize();
-		// this._resizeListener = window.addEventListener('resize', () => {
-		//   this.resize();
-		// });
 	}
 
-	clear () { this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); }
+	clear () { 
+		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); 
+	}
 
 	resize() {
 		this.canvas.width = window.innerWidth;

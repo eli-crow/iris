@@ -1,12 +1,9 @@
 block vars
 	- var name = 'untitled';
 
-- var panelClass = "panel-" + name.toLowerCase().replace(' ', '-');
-.panel(class=panelClass)
-
+.panel(class=`panel-${name.toLowerCase().replace(' ', '-')}`)
 	.panel-tab
 		p.panel-label= name
 		block tab
-			
 	.panel-main
 		block main
