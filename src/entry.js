@@ -10,7 +10,6 @@ const fnutils = require('./fnutils.js');
 const mathutils = require('./mathutils.js');
 
 
-
 //========================================================= Iris
 const irisElement = document.getElementById('main-iris');
 const irisInputs = document.getElementById('picker-inputs');
@@ -80,8 +79,12 @@ surface.on('sample', c => lightnessSlider.value = c[0]);
 const brush = new Brush(surface, {shape: "./img/brush.png"});
 
 const angleEffector = new ToolEffector('angle', e => e.direction);
-const pressureEffector = new ToolEffector('size', e => e.penPressure );
-const pressureFlowEffector = new ToolEffector('flow', e => e.penPressure);
+const pressureSizeEffector = new ToolEffector('size', e => {
+	return mathutils.lerp(e.progress, e.penPressure, e.lastPressure);
+});
+const pressureFlowEffector = new ToolEffector('flow', e => {
+	return mathutils.lerp(e.progress, e.penPressure, e.lastPressure);
+});
 const speedSizeEffector = new ToolEffector('size', e => {
 	const s = Math.sqrt(e.squaredSpeed);
 	return s/(s+200);
@@ -92,24 +95,23 @@ const speedFlowEffector = new ToolEffector('flow', e => {
 });
 
 brush.addEffector([angleEffector, speedSizeEffector, speedFlowEffector], false);
-brush.addEffector([pressureEffector, pressureFlowEffector], true);
+brush.addEffector([pressureSizeEffector, pressureFlowEffector], true);
 
 //========================================================= Size
 const baseSizeSlider = new Panel.Slider(3, 0, 5, 0.01, 'base')
 	.transform(x => Math.exp(x))
-	.bind(val => brush.set('minSize', val));
-const pressureSizeSlider = new Panel.Slider(0, -50, 50, 1, 'pressure')
-	.bind(val => pressureEffector.set('scale', val));
-const speedSizeSlider = new Panel.Slider(0, -50, 50, 1, 'speed')
+	.bind(val => brush.set('baseSize', val));
+const pressureSizeSlider = new Panel.Slider(45, -50, 50, 1, 'pressure')
+	.bind(val => pressureSizeEffector.set('scale', val));
+const speedSizeSlider = new Panel.Slider(-20, -50, 50, 1, 'speed')
 	.bind(val => speedSizeEffector.set('scale', val));
 
 //========================================================= Flow
-const baseFlowSlider = new Panel.Slider(1, 0, 1, 0.01, 'base')
-	.transform(x => Math.exp(x))
-	.bind(val => brush.set('minFlow', val));
-const pressureFlowSlider = new Panel.Slider(0, -1, 1, .01, 'pressure')
+const baseFlowSlider = new Panel.Slider(.4, 0, 1, 0.01, 'base')
+	.bind(val => brush.set('baseFlow', val));
+const pressureFlowSlider = new Panel.Slider(-1, -1, 1, .01, 'pressure')
 	.bind(val => pressureFlowEffector.set('scale', val));
-const speedFlowSlider = new Panel.Slider(0, -1, 1, .01, 'speed')
+const speedFlowSlider = new Panel.Slider(-1, -1, 1, .01, 'speed')
 	.bind(val => speedFlowEffector.set('scale', val));
 
 const brushInputs = new Panel.TabbedView(document.getElementById('brush-inputs'))
@@ -125,6 +127,11 @@ brush.on('changeend', x => brushPreview.draw.call(brushPreview));
 
 const eyedropper = new Eyedropper(surface.canvas);
 
+document.getElementById('download').addEventListener('click', function () {
+	this.href = surface.getDataURL();
+	this.download = "IrisDoodle.png";
+});
+
 let __erase = false;
 document.getElementById('eraser').addEventListener('click', function () {
 	__erase = !__erase;
@@ -134,6 +141,7 @@ eyedropper.on('pick', fnutils.throttle(data => {
 	iris._highlight.movePolarNormal(-1 * mathutils.radians(data.hsl[0]), data.hsl[1]/100);
 	iris.palettes['Colors A'].uniforms.lightness = data.hsl[2];
 	irisIndicator.style.backgroundColor = `rgba(${data.rgba.slice(0,3).join(',')}, 1)`;
+	lightnessSlider._input.value = data.hsl[2];
 }), 50);
 eyedropper.on('pickend', data => brush.setColor(data.rgba));
 

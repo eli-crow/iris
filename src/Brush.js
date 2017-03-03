@@ -8,8 +8,8 @@ module.exports = class Brush extends TexturedTool
 		super(surface, options);
 		
 		this.erase = false;
-		this.minSize = 1;
-		this.minFlow = 0;
+		this.baseSize = 1;
+		this.baseFlow = 0;
 		this.baseRatio = .8;
 		this.calligAngle = 135;
 		this.hasSymmetricalEmphasis = false;
@@ -20,18 +20,19 @@ module.exports = class Brush extends TexturedTool
 		const props = Brush.applyEffectors(this._effectors, e, this._getBaseProps());
 
 		for (let i = 0, ii = pts.length; i<ii; i+= 2) {
-			e.penPressure = mathutils.lerp(i/ii, e.penPressure, e.lastPressure);
+			e.progress = i/ii;
 			this.draw(ctx, pts[i], pts[i+1], Brush.applyEffectors(this._smoothedEffectors, e, props));
 		}
 	}
 
 	draw (ctx, x, y, props) {
+		const size = Math.max(0, props.size);
 		canvasutils.drawTexture(
 			ctx, this._texture,
 			x, y,
-			props.size * props.sizeRatio, props.size,
+			size * props.sizeRatio, size,
 			props.angle,
-			props.flow,
+			Math.max(0, props.flow),
 			this.erase
 		);
 	}
@@ -51,8 +52,8 @@ module.exports = class Brush extends TexturedTool
 
 	_getBaseProps () {
 		return { 
-			size: this.minSize, 
-			flow: this.minFlow,
+			size: this.baseSize, 
+			flow: this.baseFlow,
 			sizeRatio: this.baseRatio,
 			angle: 0
 		}

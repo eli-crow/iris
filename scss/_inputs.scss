@@ -41,9 +41,14 @@
 }
 .iris-button {
 	float: left;
-	margin-right: 2rem;
+	margin-right: 1rem;
 	padding: 0.3rem;
 	
 	cursor: pointer;
 	border-top: $rule-stack-underline;
+	border-color: transparent;
+}
+
+.active {
+	border-color: $ambient-groove;
 }

@@ -20,7 +20,7 @@ module.exports = class Eyedropper extends Emitter
 	}
 
 	sample (event, e) {
-		if (e.downButton === 2 || e.altKey) {
+		if (e.altKey) {
 			const p = canvasutils.getPixel(this._ctx, e.offsetX, e.offsetY);
 			if (p[3] > 0) {
 				const rgba = [p[0], p[1], p[2], 255];

@@ -62,9 +62,8 @@ module.exports = class Tool extends Emitter {
 
 	  for (let i = 0, ii = effectorGroup.length; i < ii; i++) {
 	  	const effector = effectorGroup[i];
-	    result[effector.targetProp] = Math.max(0,
-	    	result[effector.targetProp] + effector.transform(evt)
-	    );
+	    result[effector.targetProp] =
+	    	result[effector.targetProp] + effector.transform(evt);
 	  };
 
 	  return result;

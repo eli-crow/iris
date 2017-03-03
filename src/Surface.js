@@ -29,4 +29,8 @@ module.exports = class Surface extends Emitter
 	appendTo (element) {
 		element.appendChild(this.canvas);
 	}
+
+	getDataURL (filename) {
+		return this.canvas.toDataURL();
+	}
 }
