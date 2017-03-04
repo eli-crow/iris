@@ -1,0 +1,12 @@
+.iris-tabbed-view {
+}
+
+.iris-tab-bar {
+	background-color: $ambient-groove;
+}
+
+.iris-tab {
+	&.active {
+		background-color: white;
+	}
+}

@@ -6,10 +6,12 @@ $sqrt-phi: 1.2720196495;
 $spacing-base: 0.5rem;
 @function spacing($level) {
 	@if ($level == 0) { @return 0; }
-	@return $spacing-base * pow($sqrt-phi, $level - 1)
+	@return $spacing-base * pow($sqrt-phi, $level - 1);
 }
 
-
+@mixin outline ($width, $color) {
+	box-shadow: 0 0 0px $width $color;
+}
 
 $ambient: #321B09;
 $ambient-groove: transparentize($ambient, 0.9);

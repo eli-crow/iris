@@ -1,6 +1,7 @@
 const Group = require('./Group.js');
 const Button = require('./Button.js');
 const PanelElement = require('./PanelElement.js');
+const arrayutils = require('./arrayutils.js');
 
 module.exports = class TabbedView extends PanelElement
 {
@@ -9,7 +10,7 @@ module.exports = class TabbedView extends PanelElement
 
 		this._element = hostElement || document.createElement('div');
 		this._views = new Group();
-		this._tabs = new Group();
+		this._tabs = new Group().classes('iris-tab-bar');
 	}
 
 	init () {
@@ -20,6 +21,7 @@ module.exports = class TabbedView extends PanelElement
 	}
 
 	add(tabName, panelElements) {
+		panelElements = arrayutils.flatten(panelElements);
 		const view = new Group();
 		for (let i = 0, ii = panelElements.length; i < ii; i++) {
 			view.add(panelElements[i]);

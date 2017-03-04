@@ -18,6 +18,9 @@ module.exports = class Group extends PanelElement
 	}
 
 	add (panelElement) {
+
+		//mutliple, then
+		//panelElements = arrayutils.flatten(panelElements);
 		if (panelElement instanceof this._accepts) {
 			this._element.appendChild(panelElement._element);
 			this._panelElements.push(panelElement);

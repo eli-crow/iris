@@ -2,13 +2,8 @@ const Emitter = require('./Emitter.js');
 
 module.exports = class Panel extends Emitter
 {
-	constructor () {
-		super();
-		this._html = null;
-	}
-
-	appendTo (element) {
-		element.insertAdjacentHTML('beforeend', this._html);
+	constructor (events) {
+		super(events);
 	}
 }
 

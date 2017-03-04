@@ -20,7 +20,8 @@ module.exports = class Brush extends TexturedTool
 		const props = Brush.applyEffectors(this._effectors, e, this._getBaseProps());
 
 		for (let i = 0, ii = pts.length; i<ii; i+= 2) {
-			e.progress = i/ii;
+			e.penPressure = mathutils.lerp(i/ii, e.penPressure, e.lastPressure);
+			e.squaredSpeed = mathutils.lerp(i/ii, e.squaredSpeed, e.lastSquaredSpeed);
 			this.draw(ctx, pts[i], pts[i+1], Brush.applyEffectors(this._smoothedEffectors, e, props));
 		}
 	}

@@ -29,8 +29,8 @@ class SmoothPointer
     let _squaredSpeed = 0;
     listenerutils.simplePointer(context, {
       contained: false,
-      // preventDefault: true,
-      // stopPropagation: true,
+      preventDefault: options['preventDefault'],
+      stopPropagation: options['stopPropagation'],
 
       down: e => {
         for (var i = 0; i < 4; i++) {
@@ -49,6 +49,7 @@ class SmoothPointer
           (listenerutils.eventName === 'touch') ? e.targetTouches[0].force :
           0.5;
 
+        e.lastSquaredSpeed = _squaredSpeed;
         _squaredSpeed = Math.pow(diffX, 2) + Math.pow(diffY, 2);
         if (_squaredSpeed < this.minSquaredDistance) return;
 

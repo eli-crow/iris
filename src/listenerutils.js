@@ -24,12 +24,20 @@ else {
 	__events.move = 'mousemove';
 	__events.up = 'mouseup';
 }
-console.log('pointer type: ' + __eventName);
+console.log('pointer type:		' + __eventName);
 
 const __doubleClickTime = 300;
 
 module.exports.simplePointer = (context, events, transform) => {
-	let rect, button = 0;
+	let rect, button = 0, downX, downY;
+
+	function getEvent(e) {
+		e = e || window.event;
+		e.downButton = button;
+		e.diffX = e.clientX - downX;
+		e.diffY = e.clientY - downY;
+		return e;
+	}
 
 	const xformIsFn = fnutils.isFunction(transform);
 	const moveCtx = 
@@ -38,16 +46,14 @@ module.exports.simplePointer = (context, events, transform) => {
 
 	let moveHandler;
 	if (events.move) moveHandler = function (e) {
-		e = e || window.event;
-		e.downButton = button;
+		e = getEvent(e);
 		if (events.preventDefault) e.preventDefault();
 		if (events.stopPropagation) e.stopPropagation();
 		if (xformIsFn) transform(e, rect);
 		events.move(e);
 	};
 	const upHandler = function (e) {
-		e = e || window.event;
-		e.downButton = button;
+		e = getEvent(e)
 		if (events.preventDefault) e.preventDefault();
 		if (events.stopPropagation) e.stopPropagation();
 		if (events.up) {
@@ -61,6 +67,8 @@ module.exports.simplePointer = (context, events, transform) => {
 	context.addEventListener(__events.down, (e) => {
 		e = e || window.event;
 		button = e.button;
+		downX = e.clientX;
+		downY = e.clientY;
 		
 		if (events.preventDefault) e.preventDefault();
 		if (events.stopPropagation) e.stopPropagation();

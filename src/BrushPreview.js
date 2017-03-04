@@ -22,9 +22,9 @@ module.exports = class BrushPreview
 		canvas.width = parseInt(cs.width);
 		canvas.height = parseInt(cs.height);
 		this._pts = mathutils.getSinePoints2d(
-			canvas.width - 14, canvas.height/3 - 14,
+			canvas.width - 66, canvas.height/3 - 14,
 			this._nPts,
-			7 , canvas.height / 2
+			22 , canvas.height / 2
 		);
 		this._pts = mathutils.lerpMinDistance(this._pts, 2);
 	}
@@ -45,7 +45,7 @@ module.exports = class BrushPreview
 			this._brush.drawPoints(this._ctx, {
 				lastPressure: 1-(Math.cos(i/ii * Math.PI * 2) * 0.5 + 0.5), 
 				penPressure: 1-(Math.cos((i+1)/ii * Math.PI * 2) * 0.5 + 0.5),  
-				squaredSpeed: 1000,
+				squaredSpeed: (1-(Math.cos(i/ii * Math.PI * 2) * 0.5 + 0.5)) * 10000 + 1,
 				direction: Math.cos(i/ii * Math.PI * 2) * 0.5 + 0.5,
 			}, [this._pts[i], this._pts[i+1]]);
 		}

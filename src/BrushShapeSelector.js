@@ -1,5 +1,8 @@
 const Group = require('./Group.js');
 const PanelElement = require('./PanelElement.js');
+const listenerutils = require('./listenerutils.js');
+
+const __hoverScrollMargin = 15;
 
 module.exports = class BrushShapeSelector extends Group
 {
@@ -17,5 +20,10 @@ module.exports = class BrushShapeSelector extends Group
 			pe._element.onclick = () => this.emit('changeend', {img, brushSrc: img.src});
 			img.src = this._urls[i];
 		}
+
+		listenerutils.mouseWheel(this._element, {
+			preventDefault: true,
+			handler: e => this._element.scrollLeft += e.delta / 2
+		});
 	}
 }

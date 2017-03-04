@@ -107,4 +107,14 @@ module.exports = class Iris extends Emitter
 		this._currentPalette.activate();
 		this._currentPalette.draw();
 	}
+
+	getInputs () {
+		const inputs = [];
+
+		for (var i = 0, ii = this.palettes.length; i < ii; i++) {
+			inputs.push(this.palettes[i].getInputs());
+		}
+
+		return inputs;
+	}
 }

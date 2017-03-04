@@ -1,5 +1,5 @@
-.panel-brush 
-{
+.panel-brush {
+
 	.panel-main > .brush-preview-wrapper {
 		position: relative;
 
@@ -27,7 +27,7 @@
 		border-radius: radius(1);
 
 		&:hover {
-			box-shadow: 0 0 1px 1px $ambient-groove;
+			@include outline(1px, $ambient-groove);
 		}
 	}	
 }

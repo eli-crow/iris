@@ -10,3 +10,13 @@ module.exports.rotateArray = function (arr, step) {
 		}
 	};
 }
+
+const flatten = arr => {
+	if (arr.length <= 1) return arr;
+	return arr.reduce((flat, toFlatten) => {
+		flat = Array.isArray(flat) ? flat : [flat];
+		return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
+	});
+}
+
+module.exports.flatten = flatten;

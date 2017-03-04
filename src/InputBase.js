@@ -1,5 +1,6 @@
 const PanelElement = require('./PanelElement.js');
 const fnutils = require('./fnutils.js');
+const strutils = require('./strutils.js');
 
 const __onInputEventName = "oninput" in document.body ? 'input' : 'change';
 
@@ -11,7 +12,7 @@ module.exports = class InputBase extends PanelElement
 		super(emitterEvents);
 		
 		let html = attributes['name'] ? `<label for="${attributes.name}">
-			${attributes.name.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+			${strutils.titleCase(attributes.name)}
 		</label>` : '';
 		html += `<input type="${type}"`;
 		for (let name in attributes) html += ` ${name}="${attributes[name]}"`;

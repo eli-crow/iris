@@ -1,4 +1,5 @@
 @import "input-range";
+@import "input-button";
 @import "mixins/clearfix";
 
 .iris-input-group {
@@ -33,22 +34,4 @@
 	> label + input {
 		width: 100% - $label-width;
 	}
-}
-
-.iris-button-group {
-	@include clearfix;
-	margin-bottom: spacing(1);
-}
-.iris-button {
-	float: left;
-	margin-right: 1rem;
-	padding: 0.3rem;
-	
-	cursor: pointer;
-	border-top: $rule-stack-underline;
-	border-color: transparent;
-}
-
-.active {
-	border-color: $ambient-groove;
 }

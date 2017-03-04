@@ -74,4 +74,7 @@ module.exports = class IrisPalette extends Emitter
 	getPositionFromLch (lchArr) {
 		console.log('get position from lch');
 	}
+
+	getInputs () {
+	}
 }

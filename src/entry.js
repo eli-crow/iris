@@ -78,18 +78,14 @@ surface.on('sample', c => lightnessSlider.value = c[0]);
 //========================================================= Brush
 const brush = new Brush(surface, {shape: "./img/brush.png"});
 
-const angleEffector = new ToolEffector('angle', e => e.direction);
-const pressureSizeEffector = new ToolEffector('size', e => {
-	return mathutils.lerp(e.progress, e.penPressure, e.lastPressure);
-});
-const pressureFlowEffector = new ToolEffector('flow', e => {
-	return mathutils.lerp(e.progress, e.penPressure, e.lastPressure);
-});
-const speedSizeEffector = new ToolEffector('size', e => {
+const angleEffector = new ToolEffector('Angle', 'angle', e => e.direction);
+const pressureSizeEffector = new ToolEffector('Pressure', 'size', e => e.penPressure);
+const pressureFlowEffector = new ToolEffector('Pressure', 'flow', e => e.penPressure);
+const speedSizeEffector = new ToolEffector('Speed', 'size', e => {
 	const s = Math.sqrt(e.squaredSpeed);
 	return s/(s+200);
 });
-const speedFlowEffector = new ToolEffector('flow', e => {
+const speedFlowEffector = new ToolEffector('Speed', 'flow', e => {
 	const s = Math.sqrt(e.squaredSpeed);
 	return s/(s+200);
 });
@@ -101,23 +97,15 @@ brush.addEffector([pressureSizeEffector, pressureFlowEffector], true);
 const baseSizeSlider = new Panel.Slider(3, 0, 5, 0.01, 'base')
 	.transform(x => Math.exp(x))
 	.bind(val => brush.set('baseSize', val));
-const pressureSizeSlider = new Panel.Slider(45, -50, 50, 1, 'pressure')
-	.bind(val => pressureSizeEffector.set('scale', val));
-const speedSizeSlider = new Panel.Slider(-20, -50, 50, 1, 'speed')
-	.bind(val => speedSizeEffector.set('scale', val));
 
 //========================================================= Flow
 const baseFlowSlider = new Panel.Slider(.4, 0, 1, 0.01, 'base')
 	.bind(val => brush.set('baseFlow', val));
-const pressureFlowSlider = new Panel.Slider(-1, -1, 1, .01, 'pressure')
-	.bind(val => pressureFlowEffector.set('scale', val));
-const speedFlowSlider = new Panel.Slider(-1, -1, 1, .01, 'speed')
-	.bind(val => speedFlowEffector.set('scale', val));
 
 //========================================================= Shape
 const brushShapeSelector = new Panel.BrushShapeSelector([
 	'./img/brush.png',
-	'./img/brush.png',
+	'./img/brush_smooth.png',
 	'./img/brush_inky.png',
 	'./img/brush_inky.png',
 	'./img/brush_inky.png',
@@ -127,8 +115,8 @@ const brushShapeSelector = new Panel.BrushShapeSelector([
 brushShapeSelector.on('changeend', data => brush.setShape(data.brushSrc));
 
 const brushInputs = new Panel.TabbedView(document.getElementById('brush-inputs'))
-	.add("Size", [baseSizeSlider, pressureSizeSlider, speedSizeSlider])
-	.add("Flow", [baseFlowSlider, pressureFlowSlider, speedFlowSlider])
+	.add("Size", [baseSizeSlider, pressureSizeEffector.getInputs(), speedSizeEffector.getInputs()])
+	.add("Flow", [baseFlowSlider, pressureFlowEffector.getInputs(), speedFlowEffector.getInputs()])
 	.add("Shape", [brushShapeSelector])
 	.init();
 
@@ -162,3 +150,7 @@ eyedropper.on('pickend', data => brush.setColor(data.rgba));
 //========================================================= Wiring
 
 
+
+
+//info dump
+console.log('user agent:			' + navigator.userAgent);
