@@ -18,3 +18,4 @@ module.exports.Button = require('./Button.js');
 module.exports.Spacer = require('./Spacer.js');
 module.exports.Slider = require('./Slider.js');
 module.exports.TabbedView = require('./TabbedView.js');
+module.exports.BrushShapeSelector = require('./BrushShapeSelector.js');

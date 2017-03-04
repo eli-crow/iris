@@ -41,11 +41,11 @@ module.exports = class InputBase extends PanelElement
 	bind (subject, prop) {
 		if (fnutils.isFunction(subject)) {
 			this.on('input', val => subject(val));
-			// this.emit('input', subject(this._input.value));
+			this.emit('change', subject(this._input.value));
 		}
 		else if (subject.hasOwnProperty(prop)) {
 			this.on('input', val => subject[prop] = val);
-			// this.emit('input', this._input.value);
+			this.emit('change', this._input.value);
 		}
 
 		this.name(prop);

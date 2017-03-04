@@ -29,6 +29,12 @@ $rule-stack-underline: solid 3px #D3CDC9;
 $radius-1: 3px;
 $radius-2: 5px;
 
+$radii: (3px, 5px, 7px, 9px, 11px, 13px, 15px, 16px);
+@function radius($level) {
+	@return nth($radii, $level);
+}
+
+
 //------------------------------------------------------ Panel
 $panel-color: white;
 

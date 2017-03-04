@@ -34,7 +34,6 @@
 	position: relative;
 
 	min-height: 8rem;
-	min-width: 21.5rem;
 
 	background-color: $panel-color;
 	box-shadow: 
@@ -45,7 +44,6 @@
 	touch-action: manipulation;
 
 	> .panel-tab {
-		flex: 0 1 auto;
 		width: $picker-indicator-width;
 
 		// background-color: $ambient-groove;
@@ -68,7 +66,8 @@
 	}
 
 	> .panel-main {
-		flex: 1 1 auto;
+		position: relative;
+		width: 19.5rem;
 	}
 }
 

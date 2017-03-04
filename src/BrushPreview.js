@@ -10,10 +10,7 @@ module.exports = class BrushPreview
 		this._pts = null;
 		this._nPts = 100;
 
-		this.init();
-	}
-
-	init () {
+		//init
 		this._ctx.imageSmoothingEnabled = true;
 		this._ctx.fillStyle = COLORS.AMBIENT_GROOVE;
 		this.resize();

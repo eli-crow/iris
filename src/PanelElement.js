@@ -2,9 +2,9 @@ const Emitter = require('./Emitter.js');
 
 module.exports = class PanelElement extends Emitter
 {
-	constructor (events) {
+	constructor (events, element) {
 		super(events);
-		this._element = null;
+		this._element = element || null;
 	}
 
 	appendTo (element) {

@@ -114,9 +114,22 @@ const pressureFlowSlider = new Panel.Slider(-1, -1, 1, .01, 'pressure')
 const speedFlowSlider = new Panel.Slider(-1, -1, 1, .01, 'speed')
 	.bind(val => speedFlowEffector.set('scale', val));
 
+//========================================================= Shape
+const brushShapeSelector = new Panel.BrushShapeSelector([
+	'./img/brush.png',
+	'./img/brush.png',
+	'./img/brush_inky.png',
+	'./img/brush_inky.png',
+	'./img/brush_inky.png',
+	'./img/brush_inky.png'
+]);
+
+brushShapeSelector.on('changeend', data => brush.setShape(data.brushSrc));
+
 const brushInputs = new Panel.TabbedView(document.getElementById('brush-inputs'))
 	.add("Size", [baseSizeSlider, pressureSizeSlider, speedSizeSlider])
 	.add("Flow", [baseFlowSlider, pressureFlowSlider, speedFlowSlider])
+	.add("Shape", [brushShapeSelector])
 	.init();
 
 const brushPreview = new BrushPreview(document.getElementById('brush-preview'));
