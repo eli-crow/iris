@@ -15,7 +15,6 @@ module.exports = class Tool extends Emitter {
 		  steps: 2,
 		  smoothedProps: options['smoothInputs'],
 		  smoothing: 0.45,
-		  preventDefault: true,
 
 		  down: e => this.onDown(this._currentCtx, e),
 		  move: e => this.onMove(this._currentCtx, e),

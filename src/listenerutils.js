@@ -95,7 +95,7 @@ module.exports.simplePointer = (context, events, transform) => {
 	}
 
 	if (events.click) context.addEventListener('click', events.click, false);
-}
+};
 
 module.exports.normalPointer = (context, events) => {
 	module.exports.simplePointer(context, events, (e, rect) => {
@@ -108,7 +108,7 @@ module.exports.normalPointer = (context, events) => {
 		e.getAngle      = () => Math.atan2(e.centerX, e.centerY);
 		e.getDistance   = () => Math.sqrt(Math.pow(e.centerY, 2) + Math.pow(e.centerX, 2));
 	});
-}
+};
 
 
 module.exports.mouseWheel = function (element, descriptor) { 
@@ -131,7 +131,15 @@ module.exports.mouseWheel = function (element, descriptor) {
 		element.addEventListener("DOMMouseScroll", h, false);
 	}
 	else element.attachEvent("onmousewheel", h);
-}
+};
+
+module.exports.listenOnce = function (element, eventname, fn, useCapture) {
+	const handler = (e) => {
+		fn(e);
+		element.removeEventListener(eventname, handler, useCapture);
+	}
+	element.addEventListener(eventname, handler, useCapture);
+};
 
 
 module.exports.events = __events;

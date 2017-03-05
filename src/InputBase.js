@@ -2,8 +2,6 @@ const PanelElement = require('./PanelElement.js');
 const fnutils = require('./fnutils.js');
 const strutils = require('./strutils.js');
 
-const __onInputEventName = "oninput" in document.body ? 'input' : 'change';
-
 module.exports = class InputBase extends PanelElement
 {
 	constructor(type, attributes, events) {
@@ -24,19 +22,14 @@ module.exports = class InputBase extends PanelElement
 
 		this._element = element;
 		this._input = element.children[element.children.length - 1];
-		this._input.addEventListener(__onInputEventName, this._onInput.bind(this), false);
-		this._input.addEventListener('change', this._onChange.bind(this), false);
+		this._input.addEventListener('input', this._onInput.bind(this), false);
+		this._input.addEventListener('change', this._onInput.bind(this), false);
 	}
 
 	_onInput () {
 		let val = +this._input.value; 
 		if (typeof this.transform === 'function') val = this.transform(val);
 		this.emit('input', val);
-	}
-	_onChange () {
-		let val = +this._input.value; 
-		if (typeof this.transform === 'function') val = this.transform(val);
-		this.emit('change', val);
 	}
 
 	bind (subject, prop) {

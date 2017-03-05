@@ -1,9 +1,11 @@
-const Tool = require('./Tool.js');
+const Emitter = require('./Emitter.js');
 const BrushShapeSelector = require('./BrushShapeSelector.js');
 
 module.exports = class BrushEditor extends Emitter
 {
 	constructor () {
+		super();
+
 		this._brushes = [];
 		this._currentBrush = null;
 		this._selector = new BrushShapeSelector([
@@ -16,10 +18,12 @@ module.exports = class BrushEditor extends Emitter
 
 	addBrush(brush) {
 		this._brushes.push(brush);
-		this._setBrush(brush);
+		this.setBrush(brush);
+		return this;
 	}
 
 	setBrush(brush) {
 		this._currentBrush = brush;
+		return this;
 	}
 }

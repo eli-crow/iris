@@ -39,6 +39,7 @@ module.exports = class Brush extends TexturedTool
 	}
 
 	onDown (ctx, e) { 
+		console.log(e.offsetX);
 		this.draw(ctx, e.offsetX, e.offsetY, 
 			Brush.applyEffectors(this._effectors, e, this._getBaseProps())
 		); 

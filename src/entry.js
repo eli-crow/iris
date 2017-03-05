@@ -1,6 +1,7 @@
 const Iris = require('./Iris.js');
 
 const Panel = require('./Panel.js');
+const BrushEditor = require('./BrushEditor.js');
 const ToolEffector = require('./ToolEffector.js');
 const Brush = require('./Brush.js');
 const Eyedropper = require('./Eyedropper.js');
@@ -103,21 +104,13 @@ const baseFlowSlider = new Panel.Slider(.4, 0, 1, 0.01, 'base')
 	.bind(val => brush.set('baseFlow', val));
 
 //========================================================= Shape
-const brushShapeSelector = new Panel.BrushShapeSelector([
-	'./img/brush.png',
-	'./img/brush_smooth.png',
-	'./img/brush_inky.png',
-	'./img/brush_inky.png',
-	'./img/brush_inky.png',
-	'./img/brush_inky.png'
-]);
-
-brushShapeSelector.on('changeend', data => brush.setShape(data.brushSrc));
+const brushManager = new BrushEditor()
+	.addBrush(brush);
 
 const brushInputs = new Panel.TabbedView(document.getElementById('brush-inputs'))
 	.add("Size", [baseSizeSlider, pressureSizeEffector.getInputs(), speedSizeEffector.getInputs()])
 	.add("Flow", [baseFlowSlider, pressureFlowEffector.getInputs(), speedFlowEffector.getInputs()])
-	.add("Shape", [brushShapeSelector])
+	.add("Shape", [brushManager._selector])
 	.init();
 
 const brushPreview = new BrushPreview(document.getElementById('brush-preview'));

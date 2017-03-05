@@ -17,7 +17,7 @@ module.exports = class Surface extends Emitter
 
 		//init
 		canvas.oncontextmenu = () => false;
-		window.addEventListener('resize', fnutils.debounce(() => this.resize(), false), 300, true);
+		window.addEventListener('resize', fnutils.debounce(() => this.resize(), false), 300, false);
 		this.resize();
 	}
 
@@ -26,7 +26,7 @@ module.exports = class Surface extends Emitter
 	}
 
 	resize() {
-		//when layer systems come into play, refactor into a SurfaceCompositor, Surface will be a headless canvas.
+		//when layer systems come into play, refactor into a SurfaceManager, Surface will be a headless canvas.
 		this._tempCanvas.width = this.canvas.width;
 		this._tempCanvas.height = this.canvas.height;
 		this._tempCtx.drawImage(this.canvas, 0, 0);
