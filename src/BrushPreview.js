@@ -30,6 +30,7 @@ module.exports = class BrushPreview
 
 	setBrush(brush) {
 		this._brush = brush;
+		this.draw();
 	}
 
 	//TODO: fake the pressure, speed, along the curve
@@ -40,6 +41,7 @@ module.exports = class BrushPreview
 		} else {
 			this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
 		}
+		
 		for (var i = 0, ii = this._pts.length; i < ii; i+=2) {
 			this._brush.drawPoints(this._ctx, {
 				lastPressure: 1-(Math.cos(i/ii * Math.PI * 2) * 0.5 + 0.5), 

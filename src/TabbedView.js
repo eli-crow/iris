@@ -20,6 +20,14 @@ module.exports = class TabbedView extends PanelElement
 		this.switchView(this._tabs.item(0), this._views.item(0));
 	}
 
+	addGroup (descriptor) {
+		for (let name in descriptor) {
+			this.add(name, descriptor[name]);
+		}
+
+		return this;
+	}
+
 	add(tabName, panelElements) {
 		panelElements = arrayutils.flatten(panelElements);
 		const view = new Group();

@@ -3,13 +3,20 @@ const strutils = require('./strutils.js');
 
 module.exports = class ToolEffector
 {
-	constructor (name, effectorType, transform) {
-		this.name = name;
+	constructor (tool, name, effectorType, min, max, transform) {
 		this.scale = 1;
 		this.type = effectorType;
 		this.targetProp = null;
 
 		this._transform = transform || null;
+
+		if (min != null && max != null) {
+			this._input = new Slider(0, min, max, 0.01, strutils.titleCase(name))
+				.bind(val => {
+					this.scale = val;
+					tool.emit('changeend');
+				});
+		}
 	}
 
 	transform(brushProps, event) {
@@ -17,9 +24,6 @@ module.exports = class ToolEffector
 	}
 
 	getInputs () {
-		return new Slider(0, -50, 50, 0.1, strutils.titleCase(this.name)).bind(val => {
-			this.scale = val;
-			this.tool.emit('changeend');
-		});
+		return this._input;
 	}
 }

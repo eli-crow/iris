@@ -1,13 +1,9 @@
 const Iris = require('./Iris.js');
 
 const Panel = require('./Panel.js');
-const BrushEditor = require('./BrushEditor.js');
-const ToolEffector = require('./ToolEffector.js');
-const Brush = require('./Brush.js');
-const Eyedropper = require('./Eyedropper.js');
-const BrushPreview = require('./BrushPreview.js');
+const ToolManager = require('./ToolManager.js');
 const Surface = require('./Surface.js');
-const fnutils = require('./fnutils.js');
+
 const mathutils = require('./mathutils.js');
 
 
@@ -18,7 +14,7 @@ const irisModes = document.getElementById('picker-modes');
 const irisIndicator = document.getElementById('picker-indicator');
 const iris = new Iris(irisElement, irisInputs);
 
-iris.on('pickend', data => brush.setColor.call(brush, data));
+iris.on('pickend', data => toolManager.setColor(data));
 iris.on(['pick', 'pickend'], data => irisIndicator.style.backgroundColor = `rgba(${data.slice(0,3).join(',')}, 1)`);
 
 const lightnessSlider = new Panel.Slider(50, 0, 100, 1/255)
@@ -59,7 +55,8 @@ const sameLightnessHSLButton = new Panel.Button('Colors B')
 const sameHueButton = new Panel.Button('Shades')
 	.bind(() => setMode("Tones", hueSlider, sameHueButton));
 
-modeButtonGroup.add(sameLightnessButton)
+modeButtonGroup
+	.add(sameLightnessButton)
 	.add(sameLightnessHSLButton)
 	.add(sameHueButton);
 
@@ -74,74 +71,13 @@ const surface = new Surface(document.getElementById('art'));
 document.getElementById('clear-canvas').addEventListener('click', () => surface.clear());
 surface.on('sample', c => lightnessSlider.value = c[0]);
 
+const toolManager = new ToolManager(surface);
 
-
-//========================================================= Brush
-const brush = new Brush(surface, {shape: "./img/brush.png"});
-
-const angleEffector = new ToolEffector('Angle', 'angle', e => e.direction);
-const pressureSizeEffector = new ToolEffector('Pressure', 'size', e => e.penPressure);
-const pressureFlowEffector = new ToolEffector('Pressure', 'flow', e => e.penPressure);
-const speedSizeEffector = new ToolEffector('Speed', 'size', e => {
-	const s = Math.sqrt(e.squaredSpeed);
-	return s/(s+200);
-});
-const speedFlowEffector = new ToolEffector('Speed', 'flow', e => {
-	const s = Math.sqrt(e.squaredSpeed);
-	return s/(s+200);
-});
-
-brush.addEffector([angleEffector, speedSizeEffector, speedFlowEffector], false);
-brush.addEffector([pressureSizeEffector, pressureFlowEffector], true);
-
-//========================================================= Size
-const baseSizeSlider = new Panel.Slider(3, 0, 5, 0.01, 'base')
-	.transform(x => Math.exp(x))
-	.bind(val => brush.set('baseSize', val));
-
-//========================================================= Flow
-const baseFlowSlider = new Panel.Slider(.4, 0, 1, 0.01, 'base')
-	.bind(val => brush.set('baseFlow', val));
-
-//========================================================= Shape
-const brushManager = new BrushEditor()
-	.addBrush(brush);
-
-const brushInputs = new Panel.TabbedView(document.getElementById('brush-inputs'))
-	.add("Size", [baseSizeSlider, pressureSizeEffector.getInputs(), speedSizeEffector.getInputs()])
-	.add("Flow", [baseFlowSlider, pressureFlowEffector.getInputs(), speedFlowEffector.getInputs()])
-	.add("Shape", [brushManager._selector])
-	.init();
-
-const brushPreview = new BrushPreview(document.getElementById('brush-preview'));
-brushPreview.setBrush(brush);
-brushPreview.draw();
-brush.on('changeend', x => brushPreview.draw.call(brushPreview));
-
-
-const eyedropper = new Eyedropper(surface.canvas);
 
 document.getElementById('download').addEventListener('click', function () {
 	this.href = surface.getDataURL();
 	this.download = "IrisDoodle.png";
 });
-
-let __erase = false;
-document.getElementById('eraser').addEventListener('click', function () {
-	__erase = !__erase;
-	brush.set('erase', __erase);
-});
-eyedropper.on('pick', fnutils.throttle(data => {
-	iris._highlight.movePolarNormal(-1 * mathutils.radians(data.hsl[0]), data.hsl[1]/100);
-	iris.palettes['Colors A'].uniforms.lightness = data.hsl[2];
-	irisIndicator.style.backgroundColor = `rgba(${data.rgba.slice(0,3).join(',')}, 1)`;
-	lightnessSlider._input.value = data.hsl[2];
-}), 50);
-eyedropper.on('pickend', data => brush.setColor(data.rgba));
-
-
-//========================================================= Wiring
-
 
 
 

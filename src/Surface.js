@@ -3,6 +3,7 @@ const listenerutils = require('./listenerutils.js');
 const fnutils = require('./fnutils.js');
 const canvasutils = require('./canvasutils.js');
 const Tool = require('./Tool.js');
+const SmoothPointer = require('./SmoothPointer.js');
 
 module.exports = class Surface extends Emitter
 {
@@ -16,22 +17,38 @@ module.exports = class Surface extends Emitter
 		this._tool = null;
 
 		//init
+		this.pointer = new SmoothPointer(this.canvas, {
+		  minDistance: 2,
+		  steps: 2,
+		  smoothing: 0.45,
+		  preventDefault: true,
+
+		  down: e => this._tool.onDown(this.ctx, e),
+		  move: e => this._tool.onMove(this.ctx, e),
+		  up:   e => this._tool.onUp(this.ctx, e)
+		});
+		
 		canvas.oncontextmenu = () => false;
 		window.addEventListener('resize', fnutils.debounce(() => this.resize(), false), 300, false);
 		this.resize();
 	}
 
 	clear () { 
+		console.log('clear');
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); 
 	}
 
+	setTool (tool) {
+		this._tool = tool;
+	}
+
 	resize() {
-		//when layer systems come into play, refactor into a SurfaceManager, Surface will be a headless canvas.
+		// when layer systems come into play, refactor into a SurfaceManager, Surface will be a headless canvas.
 		this._tempCanvas.width = this.canvas.width;
 		this._tempCanvas.height = this.canvas.height;
 		this._tempCtx.drawImage(this.canvas, 0, 0);
-		this.canvas.width = window.innerWidth;
-		this.canvas.height = window.innerHeight;
+		this.canvas.width = document.body.clientWidth;
+		this.canvas.height = document.body.clientHeight;
 		this.ctx.drawImage(this._tempCanvas, 0, 0);
 	}
 

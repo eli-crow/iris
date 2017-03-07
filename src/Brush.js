@@ -4,19 +4,19 @@ const mathutils = require('./mathutils.js');
 
 module.exports = class Brush extends TexturedTool
 {
-	constructor(surface, options) {
-		super(surface, options);
+	constructor(options) {
+		super(options);
+
+		this._properties.size = {min: 0, max: 5, value: 3, map: x => Math.exp(x)};
+		this._properties.flow = {min: 0, max: 1, value: 1};
+		this._properties.angle = {min: 0, max: 360, value: 135, map: x => mathutils.radians(x)};
+		this._dirty = true;
 		
 		this.erase = false;
-		this.baseSize = 1;
-		this.baseFlow = 0;
-		this.baseRatio = .8;
-		this.calligAngle = 135;
-		this.hasSymmetricalEmphasis = false;
 	}
 
 	drawPoints (ctx, e, pts) {
-		if (e.downButton === 2 || e.altKey) return;
+		if (e.downButton === 2 || e.altKey) return; //todo: move to ToolManager
 		const props = Brush.applyEffectors(this._effectors, e, this._getBaseProps());
 
 		for (let i = 0, ii = pts.length; i<ii; i+= 2) {
@@ -31,7 +31,7 @@ module.exports = class Brush extends TexturedTool
 		canvasutils.drawTexture(
 			ctx, this._texture,
 			x, y,
-			size * props.sizeRatio, size,
+			size * this._sizeRatio, size,
 			props.angle,
 			Math.max(0, props.flow),
 			this.erase
@@ -39,27 +39,14 @@ module.exports = class Brush extends TexturedTool
 	}
 
 	onDown (ctx, e) { 
-		console.log(e.offsetX);
 		this.draw(ctx, e.offsetX, e.offsetY, 
 			Brush.applyEffectors(this._effectors, e, this._getBaseProps())
 		); 
 	}
-
 	onMove (ctx, e) { 
 		this.drawPoints(ctx, e, e.pts); 
 	}
-
 	onUp (ctx, e) {}
-
-
-	_getBaseProps () {
-		return { 
-			size: this.baseSize, 
-			flow: this.baseFlow,
-			sizeRatio: this.baseRatio,
-			angle: 0
-		}
-	}
 }
 
 module.exports.prototype.EffectorTypes = {

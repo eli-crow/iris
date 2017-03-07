@@ -1,21 +1,33 @@
 const Tool = require('./Tool.js');
+const ToolShapeSelector = require('./ToolShapeSelector.js');
+
+const _shapeUrls = [
+	'./img/brush_smooth.png',
+	'./img/brush.png',
+	'./img/brush_inky.png'
+];
 
 module.exports = class TexturedTool extends Tool
 {
-	constructor(surface, options) {
-		super(surface, options);
+	constructor(options) {
+		super(options);
+
+		this._sizeRatio = 1;
 
 		this._texture = document.createElement('canvas');
 		this._textureCtx = this._texture.getContext('2d');
 		this._color = [127,127,127,255];
 		this._brushImg = new Image();
-		this._brushImg.onload = () => this._resizeTempCanvas();
+		this._shapeSelector = new ToolShapeSelector(_shapeUrls);
 
-		if (options['shape']) this.setShape(options['shape']);
+		this._brushImg.onload = () => this._resizeTempCanvas();
+		this._shapeSelector.on('changeend', data => this.setShape(data));
+		this.setShape({brushSrc: _shapeUrls[0], ratio: this._sizeRatio});
 	}
 
-	setShape (url) {
-		this._brushImg.src = url;
+	setShape (shape) {
+		this._brushImg.src = shape.brushSrc;
+		this._sizeRatio = shape.ratio;
 	}
 
 	//color array is rgba, all in the range of 0-255;
@@ -32,6 +44,12 @@ module.exports = class TexturedTool extends Tool
 	  this._textureCtx.putImageData(out,0,0);
 	  this._color = colorArray;
 	  this.emit('changeend');
+	}
+
+	getInputs () {
+		const inputs = super.getInputs();
+		inputs.shape = [ this._shapeSelector, this._shapeSelector.getInputs() ];
+		return inputs;
 	}
 
 	_resetTempCanvas () {

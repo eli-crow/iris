@@ -1,23 +1,36 @@
 const Group = require('./Group.js');
+const Slider = require('./Slider.js');
 const PanelElement = require('./PanelElement.js');
 const listenerutils = require('./listenerutils.js');
 
-const __hoverScrollMargin = 15;
-
-module.exports = class BrushShapeSelector extends Group
+module.exports = class ToolShapeSelector extends Group
 {
 	constructor(urls) {
 		super(null, null, ['change', 'changeend']);
 		this.classes('brush-shape-selector');
+
 		this._urls = urls;
+		this._ratio = 
+		this._shape = {
+			img: null,
+			brushSrc: null,
+			ratio: 1
+		}
 
 		//init
 		for (var i = 0, ii = this._urls.length; i < ii; i++) {
 			const img = new Image();
 			const pe = new PanelElement([], img)
 				.classes('brush-shape-preview');
+
 			img.onload = () => this.add(pe);
-			pe._element.onclick = () => this.emit('changeend', {img, brushSrc: img.src});
+			pe._element.onclick = () => {
+				this._shape.img = img;
+				this._shape.brushSrc = img.src;
+				this.emit('changeend', this._shape);
+			}
+			this._shape.img = img;
+			this._shape.brushSrc = img.src;
 			img.src = this._urls[i];
 		}
 
@@ -25,5 +38,13 @@ module.exports = class BrushShapeSelector extends Group
 			preventDefault: true,
 			handler: e => this._element.scrollLeft += e.delta / 2
 		});
+	}
+
+	getInputs () {
+		return new Slider(1, 0.05, 20, .01, 'Ratio')
+			.bind(val => {
+				this._shape.ratio = val;
+				this.emit('changeend', this._shape);
+			});
 	}
 }
