@@ -24,7 +24,6 @@ else {
 	__events.move = 'mousemove';
 	__events.up = 'mouseup';
 }
-console.log('pointer type:		' + __eventName);
 
 const __doubleClickTime = 300;
 

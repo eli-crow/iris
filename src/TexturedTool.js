@@ -1,7 +1,7 @@
 const Tool = require('./Tool.js');
 const ToolShapeSelector = require('./ToolShapeSelector.js');
 
-const _shapeUrls = [
+const __shapeUrls = [
 	'./img/brush_smooth.png',
 	'./img/brush.png',
 	'./img/brush_inky.png'
@@ -18,11 +18,10 @@ module.exports = class TexturedTool extends Tool
 		this._textureCtx = this._texture.getContext('2d');
 		this._color = [127,127,127,255];
 		this._brushImg = new Image();
-		this._shapeSelector = new ToolShapeSelector(_shapeUrls);
+		this._shapeSelector = new ToolShapeSelector(__shapeUrls);
 
-		this._brushImg.onload = () => this._resizeTempCanvas();
-		this._shapeSelector.on('changeend', data => this.setShape(data));
-		this.setShape({brushSrc: _shapeUrls[0], ratio: this._sizeRatio});
+		this._brushImg.onload = () => this._redrawTexture();
+		this._shapeSelector.on(['changeend', 'load'], data => this.setShape(data));
 	}
 
 	setShape (shape) {
@@ -57,7 +56,7 @@ module.exports = class TexturedTool extends Tool
 		this._textureCtx.drawImage(this._brushImg, 0, 0);
 	}
 
-	_resizeTempCanvas() {
+	_redrawTexture() {
 		const brushImg = this._brushImg;
 	  this._texture.width = brushImg.width;
 	  this._texture.height = brushImg.height;

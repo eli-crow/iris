@@ -16,7 +16,7 @@ const __webglConfig = {
 //manages the canvas and its own IrisPalettes.
 module.exports = class Iris extends Emitter
 {
-	constructor (canvas, indicator) {
+	constructor (canvas) {
 		super(['pick', 'pickend', 'zoom']);
 
 		this._canvas = canvas;
@@ -26,13 +26,7 @@ module.exports = class Iris extends Emitter
 		this._highlight = new Highlight(canvas, this._gl);
 		this.palettes = {};
 
-		this.init();
-	}
-
-	init () {
-		const pupil = this._pupil;
-		const highlight = this._highlight;
-
+		//init
 		listenerutils.normalPointer(this._canvas, {
 			contained: true,
 			down: e => this.emitColors('pick', e.centerX, e.centerY, true), 
@@ -51,23 +45,22 @@ module.exports = class Iris extends Emitter
 			}
 		});
 
-		this.addPalette('Colors A', require('../shaders/frag/same_lightness.frag'),     {lightness: {type: '1f', value: 50}});
-		this.addPalette('Colors B', require('../shaders/frag/same_lightness_hsl.frag'), {lightness: {type: '1f', value: .5}});
+		this.addPalette('Colors', require('../shaders/frag/same_lightness.frag'),     {lightness: {type: '1f', value: 50}});
+		// this.addPalette('Colors B', require('../shaders/frag/same_lightness_hsl.frag'), {lightness: {type: '1f', value: .5}});
 		this.addPalette('Tones',    require('../shaders/frag/same_hue.frag'),           {hue: {type: '1f', value: 0}});
 
-		pupil.on('huerotate', e =>	{
-			highlight.movePolar(Math.PI/2 - e.getAngle(), highlight.getDistance());
+		this._pupil.on('huerotate', e =>	{
+			this._highlight.movePolar(Math.PI/2 - e.getAngle(), this._highlight.getDistance());
 			this.emitColors('pick', null, null, false);
 		});
-		pupil.on('huerotateend', e => this.emitColors('pickend', null, null, false));
-		pupil.on('center', e => {
-			highlight.move(0,0);
+		this._pupil.on('huerotateend', e => this.emitColors('pickend', null, null, false));
+		this._pupil.on('center', e => {
+			this._highlight.move(0,0);
 			this.emitColors('pickend', null, null, false);
 		});
-
-		this.onResize();
-		this.setMode('Colors A');
 	}
+
+
 
 	addPalette (name, fragShader, uniforms) {
 		const ip = new IrisPalette(this, fragShader, require('../shaders/vert/passthrough.vert'), uniforms);
@@ -78,7 +71,11 @@ module.exports = class Iris extends Emitter
 	emitColors (eventName, x, y, updateHilight) {
 		if (updateHilight) this._highlight.move(x, y);
 		const c = this._highlight.sample();
-		if (c[3] >= 255) this.emit(eventName, c); //if alpha == 1
+
+		//if alpha == 1
+		if (c[3] >= 255) {
+			this.emit(eventName, c); 
+		}
 	}
 
 	onResize() {
@@ -96,6 +93,7 @@ module.exports = class Iris extends Emitter
 		this._gl.viewport(0,0, width, height);
 
 		this._pupil.resize();
+		this._currentPalette.draw();
 	}
 
 	setColor(lchArr) {

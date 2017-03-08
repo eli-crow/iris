@@ -53,7 +53,9 @@ module.exports = class Tool extends Emitter {
 	}
 
 	getInputs () {
-		const inputs = {};
+		const inputs = {
+			base: [],
+		};
 
 		// base property sliders
 		for (let name in this._properties) {
@@ -67,16 +69,18 @@ module.exports = class Tool extends Emitter {
 				this.emit('changeend');
 			});
 
-			inputs[name] = [slider];
+			inputs.base.push(slider);
 		}
 
 		// then effector sliders
 		const effs = this._effectors.concat(this._smoothedEffectors);
 		for (let i = 0, ii = effs.length; i < ii; i++) {
 			const eff = effs[i];
+			if (!Array.isArray(inputs[eff.type]))
+				inputs[eff.type] = [];
 			inputs[eff.type].push(eff.getInputs());
 		}
-
+		
 		return inputs;
 	}
 

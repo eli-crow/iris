@@ -6,7 +6,7 @@ const listenerutils = require('./listenerutils.js');
 module.exports = class ToolShapeSelector extends Group
 {
 	constructor(urls) {
-		super(null, null, ['change', 'changeend']);
+		super(null, null, ['change', 'changeend', 'load']);
 		this.classes('brush-shape-selector');
 
 		this._urls = urls;
@@ -18,17 +18,26 @@ module.exports = class ToolShapeSelector extends Group
 		}
 
 		//init
+		let imagesLoaded = 0;
 		for (var i = 0, ii = this._urls.length; i < ii; i++) {
 			const img = new Image();
 			const pe = new PanelElement([], img)
 				.classes('brush-shape-preview');
 
-			img.onload = () => this.add(pe);
+			img.onload = () => {
+				this.add(pe);
+				if (++imagesLoaded >= urls.length) {
+					this._shape.img = img;
+					this._shape.brushSrc = this._urls[0];
+					this.emit('load', this._shape);
+				}
+			}
 			pe._element.onclick = () => {
 				this._shape.img = img;
 				this._shape.brushSrc = img.src;
 				this.emit('changeend', this._shape);
 			}
+
 			this._shape.img = img;
 			this._shape.brushSrc = img.src;
 			img.src = this._urls[i];

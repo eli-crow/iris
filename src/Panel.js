@@ -1,14 +1,18 @@
-const Emitter = require('./Emitter.js');
+const PanelElement = require('./PanelElement.js');
 
-module.exports = class Panel extends Emitter
+// abstract
+module.exports = class Panel extends PanelElement
 {
 	constructor (events) {
 		super(events);
 	}
+
+	onResize(){}
 }
 
-module.exports.ButtonGroup = require('./ButtonGroup.js');
 module.exports.Group = require('./Group.js');
+module.exports.PanelGroup = require('./PanelGroup.js');
+module.exports.ButtonGroup = require('./ButtonGroup.js');
 module.exports.Button = require('./Button.js');
 module.exports.Spacer = require('./Spacer.js');
 module.exports.Slider = require('./Slider.js');

@@ -8,4 +8,11 @@ module.exports = class PanelGroup extends Group
 
 		this.class('iris-panel-group');
 	}
+
+	add(panel) {
+		super.add(panel);
+		panel.onResize();
+
+		return this;
+	}
 }

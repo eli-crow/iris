@@ -18,6 +18,8 @@ module.exports = class TabbedView extends PanelElement
 		this._tabs.appendTo(this._element);
 		this._views.appendTo(this._element);
 		this.switchView(this._tabs.item(0), this._views.item(0));
+
+		return this;
 	}
 
 	addGroup (descriptor) {

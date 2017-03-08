@@ -43,9 +43,11 @@ module.exports = class Brush extends TexturedTool
 			Brush.applyEffectors(this._effectors, e, this._getBaseProps())
 		); 
 	}
+
 	onMove (ctx, e) { 
 		this.drawPoints(ctx, e, e.pts); 
 	}
+
 	onUp (ctx, e) {}
 }
 

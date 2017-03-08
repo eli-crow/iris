@@ -24,6 +24,7 @@ module.exports = class Emitter
 			}
 		}
 	}
+	
 	emit(eventName, eventArgs){
 		var callbacks = this.events[eventName].callbacks;
 		for (var i = 0, ii = callbacks.length; i < ii; i++) {
@@ -33,6 +34,7 @@ module.exports = class Emitter
 		}
 		return this;
 	}
+	
 	on(eventName, callback){
 		if (eventName.constructor === Array) {
 			for (var i = 0, ii = eventName.length; i < ii; i++) {
@@ -42,6 +44,7 @@ module.exports = class Emitter
 		else this.events[eventName].attachCallback(callback);
 		return this;
 	}
+	
 	off(eventName, callback){
 		if (eventName.constructor === Array) {
 			for (var i = 0, ii = eventName.length; i < ii; i++) {

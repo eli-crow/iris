@@ -3,7 +3,7 @@ const mathutils = require('./mathutils.js');
 
 module.exports = class BrushPreview
 {
-	constructor(canvas, ctx) {
+	constructor(canvas) {
 		this._canvas = canvas;
 		this._ctx = canvas.getContext('2d');
 		this._brush = null;
@@ -12,25 +12,27 @@ module.exports = class BrushPreview
 
 		//init
 		this._ctx.fillStyle = COLORS.AMBIENT_GROOVE;
-		this.resize();
 	}
 
-	resize() {
+	onResize() {
 		const canvas = this._canvas;
 		const cs = window.getComputedStyle(canvas);
+
 		canvas.width = parseInt(cs.width);
 		canvas.height = parseInt(cs.height);
+		
 		this._pts = mathutils.getSinePoints2d(
 			canvas.width - 66, canvas.height/3 - 14,
 			this._nPts,
 			22 , canvas.height / 2
 		);
 		this._pts = mathutils.lerpMinDistance(this._pts, 2);
+
+		this.draw();
 	}
 
 	setBrush(brush) {
 		this._brush = brush;
-		this.draw();
 	}
 
 	//TODO: fake the pressure, speed, along the curve
