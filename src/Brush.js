@@ -1,6 +1,7 @@
 const TexturedTool = require('./TexturedTool.js');
 const canvasutils = require('./canvasutils.js');
 const mathutils = require('./mathutils.js');
+const Panel = require('./Panel.js');
 
 module.exports = class Brush extends TexturedTool
 {
@@ -49,6 +50,19 @@ module.exports = class Brush extends TexturedTool
 	}
 
 	onUp (ctx, e) {}
+
+	getInputs() {
+		const inputs = super.getInputs();
+
+		inputs.base.push(new Panel.Button('Erase')
+			.bind(() => {
+				this.erase = !this.erase;
+				this.emit('changeend');
+			})
+		);
+
+		return inputs;
+	}
 }
 
 module.exports.prototype.EffectorTypes = {

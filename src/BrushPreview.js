@@ -11,7 +11,7 @@ module.exports = class BrushPreview
 		this._nPts = 100;
 
 		//init
-		this._ctx.fillStyle = COLORS.AMBIENT_GROOVE;
+		// this._ctx.fillStyle = COLORS.AMBIENT_GROOVE;
 	}
 
 	onResize() {
@@ -38,7 +38,7 @@ module.exports = class BrushPreview
 	//TODO: fake the pressure, speed, along the curve
 	draw() {
 		if (this._brush.erase) {
-			this._ctx.fillStyle = COLORS.AMBIENT_GROOVE;
+			this._ctx.fillStyle = `rgba(${this._brush._color.slice(0,3).join(',')},1)`;
 			this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
 		} else {
 			this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
