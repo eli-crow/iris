@@ -2,29 +2,32 @@ const arrayutils = require('./arrayutils.js');
 const mathutils = require('./mathutils.js');
 const fnutils = require('./fnutils.js');
 const listenerutils = require('./listenerutils.js');
+const Emitter = require('./Emitter.js');
 
-//todo: pull in  modernizr to test for existence.
-const __baseSmoothing = 0.13;
+const __baseSmoothing = .12;
 
 const __defaults = {
-  smmothedProps: [],
+  smoothing: 0.45,
   minDistance: 2,
-  steps: 5,
+  steps: 2
 }
 
-class SmoothPointer
+class SmoothPointer extends Emitter
 { 
   constructor(context, options) {
+    super(['down', 'move', 'up'])
+
     const _posBuffer = new Array(8);
     let _lastPressure;
 
     this.steps = options['steps'] || __defaults['steps'];
-    this.minSquaredDistance = Math.pow(options['minDistance'] || __defaults['steps'], 2);
-    this.smoothing = 0.5;
+    this.minDistance = options['minDistance'] || __defaults['minDistance'];
+    this.minSquaredDistance = Math.pow(this.minDistance, 2);
+    this.smoothing = options['smoothing'] || __defaults['smoothing'];
   
-    if (fnutils.isFunction(options['down'])) this._onDown = options['down'];
-    if (fnutils.isFunction(options['move'])) this._onMove = options['move'];
-    if (fnutils.isFunction(options['up']))   this._onUp   = options['up'];
+    if (fnutils.isFunction(options['down'])) this.on('down', options['down']);
+    if (fnutils.isFunction(options['move'])) this.on('move', options['move']);
+    if (fnutils.isFunction(options['up']))   this.on('up',   options['up']);
 
     let _squaredSpeed = 0;
     listenerutils.simplePointer(context, {
@@ -38,7 +41,7 @@ class SmoothPointer
           _posBuffer[2*i +1] = e.clientY;
         }
         _lastPressure = 0;
-        this._onDown(e);
+        this.emit('down', e);
       },
 
       move: e => {
@@ -49,26 +52,26 @@ class SmoothPointer
           (listenerutils.eventName === 'touch') ? e.targetTouches[0].force :
           0.5;
 
-        e.lastSquaredSpeed = _squaredSpeed;
         _squaredSpeed = Math.pow(diffX, 2) + Math.pow(diffY, 2);
         if (_squaredSpeed < this.minSquaredDistance) return;
+        e.lastSquaredSpeed = _squaredSpeed;
 
         arrayutils.rotateArray(_posBuffer, 2);
         const smoothingDist = 1 - (__baseSmoothing + pressure * this.smoothing * (1 - __baseSmoothing));
         _posBuffer[0] += (e.clientX - _posBuffer[0]) * smoothingDist;
         _posBuffer[1] += (e.clientY - _posBuffer[1]) * smoothingDist;
 
-        e.pts = mathutils.getLerpedCubicPoints(_posBuffer, 3, 2);
+        e.pts = mathutils.getLerpedCubicPoints2d(_posBuffer, this.steps, 2);
         e.squaredSpeed = _squaredSpeed;
         e.lastPressure = Math.max(_lastPressure * 1.2 - .2, 0);
         e.penPressure = Math.max(pressure * 1.2 - .2, 0);
         e.direction = Math.atan2(diffY, diffX) + Math.PI;
         
         _lastPressure = pressure;
-        this._onMove(e);
+        this.emit('move', e);
       },
 
-      up: e => this._onUp(e)
+      up: e => this.emit('up', e)
     })
   }
 }

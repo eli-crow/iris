@@ -18,9 +18,9 @@ module.exports = class Surface extends Emitter
 
 		//init
 		this.pointer = new SmoothPointer(this.canvas, {
-		  minDistance: 2,
+		  minDistance: 4,
 		  steps: 2,
-		  smoothing: 0.45,
+		  smoothing: 0.5,
 		  preventDefault: true,
 
 		  down: e => this._tool.onDown(this.ctx, e),

@@ -29,10 +29,17 @@ module.exports = class Brush extends TexturedTool
 
 	draw (ctx, x, y, props) {
 		const size = Math.max(0, props.size);
+		let width = size, height = size;
+
+		if (this._sizeRatio < 1) {
+			width = this._sizeRatio * size;
+		} else {
+			height = 1/this._sizeRatio * size;
+		}
+
 		canvasutils.drawTexture(
 			ctx, this._texture,
-			x, y,
-			size * this._sizeRatio, size,
+			x, y, width, height,
 			props.angle,
 			Math.max(0, props.flow),
 			this.erase
@@ -54,6 +61,7 @@ module.exports = class Brush extends TexturedTool
 	getInputs() {
 		const inputs = super.getInputs();
 
+		inputs.base.push(new Panel.Spacer());
 		inputs.base.push(new Panel.Button('Erase')
 			.bind(() => {
 				this.erase = !this.erase;
