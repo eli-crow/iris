@@ -6,15 +6,35 @@ const InputManager = require('./InputManager.js');
 const ToolManager = require('./ToolManager.js');
 const InfoLogger = require('./InfoLogger.js');
 
+const PointerStates = InputManager.PointerStates;
 
 //app
 new InfoLogger().log();
+
 const surface = new Surface(document.getElementById('art'));
 document.getElementById('clear-canvas').addEventListener('click', () => surface.clear());
 
 const inputManager = new InputManager();
-inputManager.on('panstart', () => document.body.style.cursor = 'move !important');
-inputManager.on('panend', () => document.body.style.cursor = '');
+inputManager.on('pointerstatechange', e => {
+	e.preventDefault();
+	
+	switch (e.state) {
+		case PointerStates.Pan:
+			console.log('panning state');
+			break;
+
+		case PointerStates.Brush:
+			console.log('brush state');
+			break;
+
+		case PointerStates.Sample:
+			console.log('sample state');
+			break;
+
+		default: 
+			break;
+	}
+});
 
 const toolManager = new ToolManager(surface);
 toolManager.on('sample', data => irisPanel.setColorData(data));

@@ -36,12 +36,17 @@ module.exports = class Emitter
 	}
 	
 	on(eventName, callback){
-		if (eventName.constructor === Array) {
-			for (var i = 0, ii = eventName.length; i < ii; i++) {
+		if (!Array.isArray(eventName)) eventName = [eventName];
+		for (var i = 0, ii = eventName.length; i < ii; i++) {
+			try {
 				this.events[eventName[i]].attachCallback(callback);
 			}
+			catch (e) {
+				console.warn(`Event "${eventName[i]}" not registered.`);
+				break;
+			}
 		}
-		else this.events[eventName].attachCallback(callback);
+
 		return this;
 	}
 	
@@ -52,6 +57,7 @@ module.exports = class Emitter
 			}
 		}
 		else this.events[eventName].detachCallback(callback);
+
 		return this;
 	}
 }

@@ -1,6 +1,7 @@
 const domutils = require('./domutils.js');
 const fnutils = require('./fnutils.js');
 const arrayutils = require('./arrayutils.js');
+const strutils = require('./strutils.js');
 
 //todo: currently nothing here is responsible for destroying own listeners. In future versions, this will be necessary.
 
@@ -145,46 +146,44 @@ function listenOnce (element, eventname, fn, useCapture) {
 
 
 
-const getKeyCodeArrayFromString = function (string) {
-	const array = [];
-
-	for (let i = 0, ii = string.length; i < ii; i++) {
-		array.push(string.charCodeAt(i))
-	}
-
-	return array;
-};
-
 const parseKeyMappings = function (descriptor) {
 	let keyMap = [];
 
 	for (let keyString in descriptor) {
-		switch(keyString) {
+		let KS = strutils.titleCase(keyString);
+		switch(KS) {
+			//reserved for KeyboardEvent.Key types
+			//TODO: fill this out.
+			case 'Backspace': case 'Delete':    case 'Alt':       case 'Tab':
+			case 'Enter':     case 'ArrowDown': case 'ArrowLeft': case 'ArrowRight': 
+			case 'ArrowUp':   case 'End':       case 'Home':      case 'PageDown':
+			case 'Clear':     case 'Copy':      case 'CrSel':     case 'Cut':     
+			case 'ExSel':     case 'Insert':    case 'Paste':     case 'Redo':
+			case 'PageUp':    case 'EraseEof':  case 'Undo': 
+				keyMap.push({keys: [ KS ], on: descriptor[keyString]}); 
+			break;
+
 			//special strings
-			case 'backspace': 
-			case 'delete': keyMap.push([ [8], descriptor[keyString] ]); break;
-			case 'space': keyMap.push([ [32], descriptor[keyString] ]); break;
+			case 'Space': case 'Spacebar':
+				keyMap.push({keys: [' '], on: descriptor[keyString] }); 
+				console.log(KS);
+			break;
+
 			//anything else treated as array of keys
-			default: keyMap.push( [
-				getKeyCodeArrayFromString(keyString),
-				descriptor[keyString]
-			] ) 
+			default: 
+				keyMap.push({keys: keyString.split(''), on: descriptor[keyString]});
 			break;
 		}
 	}
 
+	console.log(keyMap);
 	return keyMap;
 }
 
-const getKeyListenerObject = function (keyMap, keyCode) {
+const getKeyListenerObject = function (keyMap, downEvent) {
 	for (let i = 0, ii = keyMap.length; i < ii; i++) {
-		const keyBinding = keyMap[i];
-		if (arrayutils.isAnyOf(keyCode, keyBinding[0])) {
-			return keyBinding[1];
-		}
+		if (arrayutils.isAnyOf(downEvent.key, keyMap[i].keys)) return keyMap[i].on;
 	}
-
-	return false;
 };
 
 /**
@@ -194,38 +193,30 @@ const getKeyListenerObject = function (keyMap, keyCode) {
  */
 const createKeyboardListenerMachine = function (descriptor) {
 	const keyUpListeners = {};
-	let preventDefault;
-
 	const keyMap = parseKeyMappings(descriptor);
 	if (!keyMap.length) return false;
 
 	return function (downEvent) {
 		const downKeyCode = downEvent.keyCode || downEvent.which;
-		if (preventDefault) downEvent.preventDefault();
+		const on = getKeyListenerObject(keyMap, downEvent);
+		if (!on) return false;
 
-		listenOnce(window, 'keypress', function (pressEvent) {
-			const charKeyCode = pressEvent.charCode;
-			const on = getKeyListenerObject(keyMap, charKeyCode);
-			if (!on) return false;
+		if (!fnutils.isFunction(keyUpListeners[downKeyCode])) {
+			if (on.down) on.down(downEvent);
 
-			if (!fnutils.isFunction(keyUpListeners[downKeyCode])) {
-				if (on.down) on.down(pressEvent);
-				if (on.preventDefault) {
-					preventDefault = true;
-					pressEvent.preventDefault();
+			keyUpListeners[downKeyCode] = function (upEvent) {
+				const upKeyCode = upEvent.keyCode || upEvent.which;
+				if (keyUpListeners[upKeyCode]) {
+					if (on.up) on.up(upEvent);
+					window.removeEventListener('keyup', keyUpListeners[upKeyCode], false);
+					delete keyUpListeners[upKeyCode];
 				}
+			};
+			window.addEventListener('keyup', keyUpListeners[downKeyCode], false);
+		}
 
-				keyUpListeners[downKeyCode] = function (upEvent) {
-					const upKeyCode = upEvent.keyCode || upEvent.which;
-					if (keyUpListeners[upKeyCode]) {
-						if (on.up) on.up(upEvent);
-						window.removeEventListener('keyup', keyUpListeners[upKeyCode], false);
-						delete keyUpListeners[upKeyCode];
-					}
-				};
-				window.addEventListener('keyup', keyUpListeners[downKeyCode], false);
-			}
-		});
+		if (on.preventDefault) downEvent.preventDefault();
+		if (on.stopPropagation) downEvent.stopPropagation();
 	};
 };
 
@@ -236,4 +227,3 @@ module.exports.keyboard = function (descriptor) {
 module.exports.listenOnce = listenOnce;
 module.exports.events = __events;
 module.exports.eventName = __eventName;
-module.exports.getKeyCodeArrayFromString = getKeyCodeArrayFromString;

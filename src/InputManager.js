@@ -1,20 +1,54 @@
 const Emitter = require('./Emitter.js');
 const listenerutils = require('./listenerutils.js');
 
-//manages input state for application.
+const PointerStates = {
+	Brush: 0,
+	Pan: 1,
+	Sample: 2
+};
+
+// interface PointerStateEvent {
+// 	preventDefault : Function;
+// 	state : PointerState;
+// }
+
+//manages input state for application. emits effective action and returns to actual tool selection.
 module.exports = class InputManager extends Emitter
 {
 	constructor() {
-		super([
-			'panstart', 'panend'
-		]);
+		super(['pointerstatechange']);
+
+		this.pointerState = PointerStates.Brush;
 
 		listenerutils.keyboard({
 			'space': {
 				preventDefault: true,
-				down: e => this.emit('panstart'),
-				up: e => this.emit('panend')
+				down: e => this.emitPointerStateEvent(e, PointerStates.Pan),
+				up:   e => this.revertPointerState(e)
+			},
+			'alt': {
+				preventDefault: true,
+				down: e => this.emitPointerStateEvent(e, PointerStates.Sample),
+				up:   e => this.revertPointerState(e)
 			}
 		});
 	}
+
+	emitPointerStateEvent (e, state) {
+		this.emit('pointerstatechange', {
+			preventDefault: () => e.preventDefault.call(e),
+			state: state
+		});
+	}
+
+	setPointerState (e, state) {
+		emitPointerStateEvent(e, state);
+		this.state = state;
+	}
+
+	revertPointerState(e) {
+		this.emitPointerStateEvent(e, this.pointerState);
+	}
 };
+
+module.exports.PointerStates = PointerStates;

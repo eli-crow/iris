@@ -17,6 +17,7 @@ module.exports = class Surface extends Emitter
 		this._tool = null;
 
 		//init
+		//TODO: move smoothpointer to InputManager.
 		this.pointer = new SmoothPointer(this.canvas, {
 		  minDistance: 4,
 		  steps: 2,

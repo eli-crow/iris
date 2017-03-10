@@ -17,7 +17,6 @@ module.exports = class Brush extends TexturedTool
 	}
 
 	drawPoints (ctx, e, pts) {
-		if (e.downButton === 2 || e.altKey) return; //todo: move to ToolManager
 		const props = Brush.applyEffectors(this._effectors, e, this._getBaseProps());
 
 		for (let i = 0, ii = pts.length; i<ii; i+= 2) {

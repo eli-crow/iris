@@ -6,10 +6,10 @@ module.exports = class Button extends PanelElement
 	constructor (text) {
 		super(['click']);
 
-		const element = document.createElement('div');
+		const element = document.createElement('a');
 		element.classList.add('iris-button');
 		element.addEventListener('click', this._onClick.bind(this), false);
-		element.innerHTML = `<p>${text}</p>`;
+		element.innerHTML = text;
 
 		this._group = null;
 		this._element = element;

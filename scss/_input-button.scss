@@ -1,17 +1,20 @@
-
 .iris-button-group {
 	@include clearfix;
 	margin-bottom: spacing(1);
 }
+
+// a.iris-button
 .iris-button {
 	float: left;
 	padding: 0.3rem 1rem;
-	
-	cursor: pointer;
-	border-top: $rule-stack-underline;
-	border-color: transparent;
-}
 
-.iris-button.active {
-	// border-color: $ambient-groove;
+	border-radius: radius(1);
+
+	&:hover {
+		@include outline(1px, $ambient-groove);
+	}
+
+	&:active {
+		background-color: $ambient-groove-light-1;
+	}
 }

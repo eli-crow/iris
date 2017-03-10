@@ -5,8 +5,16 @@
 	background-color: $ambient-groove;
 }
 
+//.iris-button.iris-tab
 .iris-tab {
-	&.active {
+	border: none !important;
+	border-radius: 0 !important;
+
+	&.selected {
 		background-color: white;
+	}
+
+	&:hover {
+		box-shadow: none !important;
 	}
 }

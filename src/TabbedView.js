@@ -51,8 +51,8 @@ module.exports = class TabbedView extends PanelElement
 		this.emit('change', {tab, view});
 
 		view.unhide();
-		tab.class('active');
-		this._tabs.each(tab, el => el.unclass('active'));
+		tab.class('selected');
+		this._tabs.each(tab, el => el.unclass('selected'));
 		this._views.each(view, el => el.hide());
 
 		return this;
