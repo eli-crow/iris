@@ -61,9 +61,10 @@ module.exports = class Brush extends TexturedTool
 		const inputs = super.getInputs();
 
 		inputs.base.push(new Panel.Spacer());
-		inputs.base.push(new Panel.Button('Erase')
-			.bind(() => {
-				this.erase = !this.erase;
+		inputs.base.push(new Panel.Toggle('Erase', false)
+			.bind(isToggled => {
+				console.log(isToggled);
+				this.erase = isToggled;
 				this.emit('changeend');
 			})
 		);

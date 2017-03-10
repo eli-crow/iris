@@ -1,11 +1,5 @@
 @import "mixins/clearfix";
-@import "mixins/math";
 @import "mixins/inputs";
-
-@function spacing($level) {
-	@if ($level == 0) { @return 0; }
-	@return $spacing-base * pow($sqrt-phi, $level - 1);
-}
 
 @mixin outline ($width, $color) {
 	box-shadow: 0 0 0px $width $color;

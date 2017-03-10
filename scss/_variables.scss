@@ -1,11 +1,21 @@
+@import "mixins/math";
+
 $phi: 1.61803398875;
 $sqrt-phi: 1.2720196495;
 
 $spacing-base: 0.5rem;
+@function spacing($level) {
+	@if ($level == 0) { @return 0; }
+	@return $spacing-base * pow($sqrt-phi, $level - 1);
+}
+
+//------------------------------------------------------ Colors
+
+$activated: #00B4F8;
 
 $ambient: #321B09;
 $ambient-groove: transparentize($ambient, 0.9);
-$ambient-groove-light-1: transparentize($ambient-groove, 0.075);
+$ambient-groove-light-1: transparentize($ambient-groove, 0.06);
 
 $neutral: #f2f2f2;
 $neutral-dark-1: darken($neutral, 5%);
@@ -30,6 +40,7 @@ $radii: (3px, 5px, 7px, 9px, 11px, 13px, 15px, 16px);
 //------------------------------------------------------ Panel
 $panel-color: white;
 $panel-width: 19.5rem;
+$panel-padding-horizontal: spacing(1);
 
 //------------------------------------------------------ Iris Panel
 $picker-indicator-width: 2rem;
