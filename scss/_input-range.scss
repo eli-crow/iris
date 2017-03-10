@@ -4,7 +4,7 @@
 	@include range-setup ( $thumb-width: 1.27rem, $thumb-height: 1.27rem, $track-height: 0.5rem);
 	@include range-thumb {
 		background-color: transparent;
-		border: 7px solid white;
+		border: 5px solid white;
 		border-radius: 50%;
 		box-shadow: 
 			0px 2px 8px transparentize($ambient, 0.7),

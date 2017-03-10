@@ -11,3 +11,9 @@ module.exports.drawTexture = function (context, img, x, y, width, height, rotati
 module.exports.getPixel = (context, x, y) => { 
 	return context.getImageData(x,y,1,1).data;
 };
+
+module.exports.resizeCanvasComputed = function (canvas) {
+	const cs = window.getComputedStyle(canvas);
+	canvas.width = parseInt(cs.width);
+	canvas.height = parseInt(cs.height);
+}

@@ -1,5 +1,6 @@
 const Panel = require('./Panel.js');
 const Iris = require('./Iris.js');
+const mathutils = require('./mathutils.js');
 
 // generate template functions from pug.
 const __template = require('../templates/panel-iris.pug');
@@ -22,6 +23,7 @@ module.exports = class IrisPanel extends Panel
 
 		this.iris = new Iris(this._wheel);
 		this.iris.on(['pick', 'pickend'], rgbArr => this.setIndicatorColor(rgbArr));
+		this.iris.setMode('Colors');
 
 		//init
 		const lightnessSlider = new Panel.Slider(50, 0, 100, 1/255)
@@ -57,8 +59,6 @@ module.exports = class IrisPanel extends Panel
 			.add(sameLightnessButton)
 			.add(sameHueButton);
 
-		setMode("Colors", lightnessSlider, sameLightnessButton);
-
 		const modes = new Panel.Group(this._modes)
 			.add(modeButtonGroup);
 	}
@@ -77,5 +77,6 @@ module.exports = class IrisPanel extends Panel
 
 	onResize() {
 		this.iris.onResize();
+		this.iris.setMode('Colors');
 	}
 }

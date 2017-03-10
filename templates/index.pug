@@ -1,9 +1,7 @@
 extends base.pug
 block main
-	.brush-canvases
-		canvas#art
+	.iris-drawing-area
+		canvas.iris-surface#art
 
-	.panel-group#panel-group
-		//- include ./panel-iris.pug
-		//- include ./panel-brush.pug
+	#panel-group
 		include ./panel-tools.pug

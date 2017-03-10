@@ -2,6 +2,7 @@
 .panel-iris {
 	
 	> .panel-tab {
+
 		> .iris-modes {
 			position: absolute;
 
@@ -15,6 +16,7 @@
 	}
 
 	> .panel-main {
+		
 		> .iris-wheel-wrapper {      
 			position: relative;
 			
@@ -37,7 +39,7 @@
 				left: 0;
 
 				cursor: move;
-				border: solid 4px hsla(0, 0%, 0%, 0.25);
+				border: solid 3px hsla(0, 0%, 0%, 0.25);
 				border-radius: 50%;
 			}
 

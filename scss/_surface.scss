@@ -1,0 +1,33 @@
+@import 'mixins/clearfix';
+
+.iris-drawing-area {
+	@include clearfix;
+	position: absolute;
+
+	top: 0;
+	left: 23rem;
+
+	box-shadow: $drop-shadow-1;
+}
+
+//.iris-drawing-area > canvas.iris-surface
+.iris-surface {
+	z-index: 0;
+	width: 600px;
+	height: 800px;
+	
+	cursor: default;
+	background-color: white;
+}
+
+.iris-presentation-layer {
+	position: absolute;
+	left: 35rem;
+	height: 100%;
+	width: auto;
+	
+	cursor: default;
+
+	pointer-events: none;
+	user-select: none;
+}

@@ -4,8 +4,7 @@
 //not related (yet) to PanelGroup.js
 .iris-panel-group {
 	@include clearfix;
-	padding-top: 2rem;
-	padding-left: 2rem;
+	float: left;
 	
 	> .panel {
 		border-bottom: solid 10px $ambient-groove;
@@ -36,26 +35,21 @@
 	min-height: 4rem;
 
 	background-color: $panel-color;
-	box-shadow: 
-		0px 10px 50px transparentize($ambient, 0.95),
-		0px 2px 2px transparentize($ambient, 0.7);
+	box-shadow: $drop-shadow-1;
 
 	user-select: none;
 	touch-action: manipulation;
 
 	> .panel-tab {
 		width: $picker-indicator-width;
-
-		// background-color: $ambient-groove;
  
-		border-right: $rule-stack-groove; 		
+		border-right: $rule-stack-groove;
 
 		> .panel-label {
 			margin-top: 1rem;
 
 			direction: rtl;
 			text-align: right;
-			// letter-spacing: 0.5px;
 			font-weight: 600;
 		
 			cursor: default;
@@ -67,7 +61,7 @@
 
 	> .panel-main {
 		position: relative;
-		width: 19.5rem;
+		width: $panel-width;
 	}
 }
 

@@ -1,16 +1,26 @@
 @import "mixins/clearfix";
 
 *, *:before, *:after {
-	box-sizing: border-box;
-	padding: 0;
-	margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
+
 html, body {
+  @include clearfix;
   display: table;
   width: 100%;
   height: 100%;
-  background: white;
+
   font-family: sans-serif;
+}
+
+html {
+  padding: spacing(1);
+}
+body {
+  position: relative;
+  background-color: transparentize($ambient-groove, 0.08);
 }
 
 hr {
@@ -27,27 +37,3 @@ canvas {
   vertical-align: bottom;
 }
 
-.brush-canvases {
-  cursor: default;
-  > canvas {
-    z-index: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  .brush-data {
-    position: absolute;
-    visibility: hidden;
-  }
-}
-
-
-.presentation-layer {
-  position: absolute;
-  left: 35rem;
-  pointer-events: none;
-  user-select: none;
-  height: 100%;
-  width: auto;
-  cursor: default;
-}

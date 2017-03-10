@@ -92,6 +92,7 @@ module.exports = class Iris extends Emitter
 		canvas.height = height;
 		this._gl.viewport(0,0, width, height);
 
+		this._highlight.move(0,0);
 		this._pupil.resize();
 		this._currentPalette.draw();
 	}

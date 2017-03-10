@@ -46,8 +46,7 @@ module.exports = class Surface extends Emitter
 		this._tempCanvas.width = this.canvas.width;
 		this._tempCanvas.height = this.canvas.height;
 		this._tempCtx.drawImage(this.canvas, 0, 0);
-		this.canvas.width = document.body.clientWidth;
-		this.canvas.height = document.body.clientHeight;
+		canvasutils.resizeCanvasComputed(this.canvas);
 		this.ctx.drawImage(this._tempCanvas, 0, 0);
 	}
 

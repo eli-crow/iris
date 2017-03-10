@@ -1,8 +1,9 @@
 const PanelGroup = require('./PanelGroup.js');
 const IrisPanel = require('./IrisPanel.js');
 const BrushPanel = require('./BrushPanel.js');
-const ToolManager = require('./ToolManager.js');
 const Surface = require('./Surface.js');
+const InputManager = require('./InputManager.js');
+const ToolManager = require('./ToolManager.js');
 const InfoLogger = require('./InfoLogger.js');
 
 
@@ -10,6 +11,10 @@ const InfoLogger = require('./InfoLogger.js');
 new InfoLogger().log();
 const surface = new Surface(document.getElementById('art'));
 document.getElementById('clear-canvas').addEventListener('click', () => surface.clear());
+
+const inputManager = new InputManager();
+inputManager.on('panstart', () => document.body.style.cursor = 'move !important');
+inputManager.on('panend', () => document.body.style.cursor = '');
 
 const toolManager = new ToolManager(surface);
 toolManager.on('sample', data => irisPanel.setColorData(data));
