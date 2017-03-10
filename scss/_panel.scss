@@ -1,13 +1,10 @@
-@import "mixins/clearfix";
-@import "panel-element";
-
 //not related (yet) to PanelGroup.js
 .iris-panel-group {
 	@include clearfix;
 	float: left;
 	
 	> .panel {
-		border-bottom: solid 10px $ambient-groove;
+		border-bottom: solid 6px $ambient-groove;
 	}
 	> .panel:first-of-type {
 		> .panel-tab {
@@ -65,6 +62,7 @@
 	}
 }
 
+@import "panel-element";
 @import "tabbed-view";
 @import "panel-iris";
 @import "panel-brush";

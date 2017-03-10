@@ -1,5 +1,3 @@
-@import "mixins/inputs";
-
 .iris-range > input {
 	@include range-setup ( $thumb-width: 1.27rem, $thumb-height: 1.27rem, $track-height: 0.5rem);
 	@include range-thumb {

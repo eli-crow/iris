@@ -1,18 +1,7 @@
-@import "mixins/math";
-
 $phi: 1.61803398875;
 $sqrt-phi: 1.2720196495;
 
 $spacing-base: 0.5rem;
-@function spacing($level) {
-	@if ($level == 0) { @return 0; }
-	@return $spacing-base * pow($sqrt-phi, $level - 1);
-}
-
-@mixin outline ($width, $color) {
-	box-shadow: 0 0 0px $width $color;
-}
-
 
 $ambient: #321B09;
 $ambient-groove: transparentize($ambient, 0.9);
@@ -35,9 +24,6 @@ $radius-1: 3px;
 $radius-2: 5px;
 
 $radii: (3px, 5px, 7px, 9px, 11px, 13px, 15px, 16px);
-@function radius($level) {
-	@return nth($radii, $level);
-}
 
 
 //------------------------------------------------------ Panel

@@ -1863,6 +1863,15 @@ gulp-concat@^2.6.1:
     through2 "^2.0.0"
     vinyl "^2.0.0"
 
+gulp-json-to-sass@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/gulp-json-to-sass/-/gulp-json-to-sass-0.0.4.tgz#7bc6405410194bce7e1aa18a00d0315f1dfc2f3d"
+  dependencies:
+    gulp-util "^3.0.4"
+    json-to-sass "0.0.1"
+    lodash "^3.10.1"
+    through2 "^0.6.5"
+
 gulp-plumber@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/gulp-plumber/-/gulp-plumber-1.1.0.tgz#f12176c2d0422f60306c242fff6a01a394faba09"
@@ -1904,7 +1913,7 @@ gulp-sourcemaps@^2.4.1:
     through2 "2.X"
     vinyl "1.X"
 
-"gulp-util@>=3.0.0 <3.1.0-0", gulp-util@^3, gulp-util@^3.0, gulp-util@^3.0.0, gulp-util@^3.0.2, gulp-util@^3.0.7:
+"gulp-util@>=3.0.0 <3.1.0-0", gulp-util@^3, gulp-util@^3.0, gulp-util@^3.0.0, gulp-util@^3.0.2, gulp-util@^3.0.4, gulp-util@^3.0.7:
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/gulp-util/-/gulp-util-3.0.8.tgz#0054e1e744502e27c04c187c3ecc505dd54bbb4f"
   dependencies:
@@ -2380,6 +2389,12 @@ json-stable-stringify@^1.0.1:
 json-stringify-safe@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
+
+json-to-sass@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/json-to-sass/-/json-to-sass-0.0.1.tgz#3351b4612a11beed3b7f9227f19ad7e05c913b0c"
+  dependencies:
+    lodash "^3.10.1"
 
 json3@3.3.2:
   version "3.3.2"
@@ -4050,7 +4065,7 @@ through2@2.X, through2@^2, through2@^2.0.0, through2@^2.0.1:
     readable-stream "^2.1.5"
     xtend "~4.0.1"
 
-through2@^0.6.1:
+through2@^0.6.1, through2@^0.6.5:
   version "0.6.5"
   resolved "https://registry.yarnpkg.com/through2/-/through2-0.6.5.tgz#41ab9c67b29d57209071410e1d7a7a968cd3ad48"
   dependencies:
