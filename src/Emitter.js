@@ -25,24 +25,29 @@ module.exports = class Emitter
 		}
 	}
 	
-	emit(eventName, eventArgs){
-		var callbacks = this.events[eventName].callbacks;
-		for (var i = 0, ii = callbacks.length; i < ii; i++) {
-			var callback = callbacks[i];
-			if (callback) callback(eventArgs);
-			else callbacks.splice(1, 1);
+	emit(eventNames, eventArgs){
+		if (!Array.isArray(eventNames)) eventNames = [eventNames];
+		for (var i = 0, ii = eventNames.length; i < ii; i++) {
+			const callbacks = this.events[eventNames[i]].callbacks;
+
+			for (let j = 0, jj = callbacks.length; j < jj; j++) {
+				const callback = callbacks[j];
+
+				if (callback) callback(eventArgs);
+				else callbacks.splice(j, 1);
+			}
 		}
 		return this;
 	}
 	
-	on(eventName, callback){
-		if (!Array.isArray(eventName)) eventName = [eventName];
-		for (var i = 0, ii = eventName.length; i < ii; i++) {
+	on(eventNames, callback){
+		if (!Array.isArray(eventNames)) eventNames = [eventNames];
+		for (var i = 0, ii = eventNames.length; i < ii; i++) {
 			try {
-				this.events[eventName[i]].attachCallback(callback);
+				this.events[eventNames[i]].attachCallback(callback);
 			}
 			catch (e) {
-				console.warn(`Event "${eventName[i]}" not registered.`);
+				console.warn(`Event "${eventNames[i]}" not registered.`);
 				break;
 			}
 		}

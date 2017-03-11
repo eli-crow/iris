@@ -16,11 +16,15 @@ const PointerStates = {
 module.exports = class InputManager extends Emitter
 {
 	constructor() {
-		super(['pointerstatechange']);
+		super([
+			'pointerstatechange', 
+			'undo'
+		]);
 
 		this.pointerState = PointerStates.Brush;
 
 		listenerutils.keyboard({
+			//pointer states
 			'space': {
 				preventDefault: true,
 				down: e => this.emitPointerStateEvent(e, PointerStates.Pan),
@@ -30,6 +34,12 @@ module.exports = class InputManager extends Emitter
 				preventDefault: true,
 				down: e => this.emitPointerStateEvent(e, PointerStates.Sample),
 				up:   e => this.revertPointerState(e)
+			},
+
+			//commands
+			'z': {
+				preventDefault: true,
+				down: e => this.emit('undo')
 			}
 		});
 	}

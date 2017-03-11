@@ -11,7 +11,10 @@ module.exports = class Surface extends Emitter
 		super(['sample']);
 
 		this.canvas = canvas || document.createElement('canvas');
-		this.ctx = canvas.getContext('2d');
+		this.ctx = this.canvas.getContext('2d');
+		this.x = 0;
+		this.y = 0;
+
 		this._tempCanvas = document.createElement('canvas');
 		this._tempCtx = this._tempCanvas.getContext('2d');
 		this._tool = null;
@@ -29,7 +32,7 @@ module.exports = class Surface extends Emitter
 		  up:   e => this._tool.onUp(this.ctx, e)
 		});
 		
-		canvas.oncontextmenu = () => false;
+		this.canvas.oncontextmenu = () => false;
 		window.addEventListener('resize', fnutils.debounce(() => this.resize(), false), 300, false);
 		this.resize();
 	}

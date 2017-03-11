@@ -1,6 +1,6 @@
 const OrderedGroup = require('./OrderedGroup.js');
 
-module.exports = class ThingSelector extends OrderedGroup
+module.exports = class SurfaceSelector extends OrderedGroup
 {
 	constructor (groupElement) {
 		super(groupElement, null, ['select']);

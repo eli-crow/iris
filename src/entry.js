@@ -1,23 +1,35 @@
+//debug
+const InfoLogger = require('./InfoLogger.js');
+new InfoLogger().log();
+
+
+//release
+const InputManager = require('./InputManager.js');
+const SurfaceManager = require('./SurfaceManager.js');
+const ToolManager = require('./ToolManager.js');
+
 const PanelGroup = require('./PanelGroup.js');
 const IrisPanel = require('./IrisPanel.js');
 const BrushPanel = require('./BrushPanel.js');
 const ControlsPanel = require('./ControlsPanel.js');
-const Surface = require('./Surface.js');
-const InputManager = require('./InputManager.js');
-const ToolManager = require('./ToolManager.js');
-const InfoLogger = require('./InfoLogger.js');
+
+
+//app
+const inputManager   = new InputManager();
+const surfaceManager = new SurfaceManager(document.getElementById('main-drawing-area'));
+const toolManager    = new ToolManager(surfaceManager._selectedSurface); //TODO: remove this dependency
+
+const panelGroup     = new PanelGroup(document.getElementById('panel-group'));
+const irisPanel      = new IrisPanel();
+const brushPanel     = new BrushPanel();
+const controlsPanel  = new ControlsPanel();
+
 
 const PointerStates = InputManager.PointerStates;
 
-//app
-new InfoLogger().log();
 
-const surface = new Surface(document.getElementById('art'));
-
-const inputManager = new InputManager();
+//wiring
 inputManager.on('pointerstatechange', e => {
-	e.preventDefault();
-	
 	switch (e.state) {
 		case PointerStates.Pan:
 			console.log('panning state');
@@ -36,21 +48,17 @@ inputManager.on('pointerstatechange', e => {
 	}
 });
 
-const toolManager = new ToolManager(surface);
-toolManager.on('sample', data => irisPanel.setColorData(data));
+surfaceManager.on('select', smEvent => {
+	toolManager.setSurface(smEvent.surface);
+});
 
 //setup panels
-const irisPanel = new IrisPanel();
 irisPanel.iris.on('pickend', data => toolManager.setColor(data));
-
-const brushPanel = new BrushPanel();
 brushPanel.setBrush(toolManager._currentTool);
-toolManager.on('toolchanged', tool => brushPanel.brushPreview.draw());
-
-const controlsPanel = new ControlsPanel();
-controlsPanel.on('clear', () => surface.clear());
-
-const panelGroup = new PanelGroup(document.getElementById('panel-group'))
-	.add(controlsPanel)
+controlsPanel.on('clear', () => surfaceManager.clearCurrentSurface());
+panelGroup.add(controlsPanel)
 	.add(irisPanel)
 	.add(brushPanel);
+
+toolManager.on('toolchanged', tool => brushPanel.brushPreview.draw());
+toolManager.on('sample', data => irisPanel.setColorData(data));

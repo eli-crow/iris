@@ -9,7 +9,7 @@ module.exports = class Eyedropper extends Emitter
 		super(['pick', 'pickend']);
 
 		this._canvas = canvas;
-		this._ctx = canvas.getContext('2d');
+		this._ctx = this._canvas.getContext('2d');
 
 		listenerutils.simplePointer(canvas, {
 			contained: false,
