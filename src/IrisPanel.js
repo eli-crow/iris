@@ -52,8 +52,10 @@ module.exports = class IrisPanel extends Panel
 		}
 
 		const sameLightnessButton = new Panel.Button('Colors')
+			.class('iris-tab')
 			.bind(() => setMode("Colors", lightnessSlider, sameLightnessButton));
 		const sameHueButton = new Panel.Button('Shades')
+			.class('iris-tab')
 			.bind(() => setMode("Tones", hueSlider, sameHueButton));
 		const modeButtonGroup = new Panel.ButtonGroup()
 			.add(sameLightnessButton)
@@ -78,5 +80,6 @@ module.exports = class IrisPanel extends Panel
 	onResize() {
 		this.iris.onResize();
 		this.iris.setMode('Colors');
+		this.iris.emitColors('pick', null, null, false);
 	}
 }

@@ -16,7 +16,7 @@ module.exports = class TexturedTool extends Tool
 
 		this._texture = document.createElement('canvas');
 		this._textureCtx = this._texture.getContext('2d');
-		this._color = [127,127,127,255];
+		this._color = [190,190,190,255];
 		this._brushImg = new Image();
 		this._shapeSelector = new ToolShapeSelector(__shapeUrls);
 

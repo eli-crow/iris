@@ -29,6 +29,7 @@ module.exports = class Highlight
 		this._distance = null;
 		this.updateStylePosition();
 	}
+
 	movePolar (theta, r) {
 		this._x = Math.cos(theta) * r;
 		this._y = Math.sin(theta) * r;
@@ -36,6 +37,7 @@ module.exports = class Highlight
 		this._distance = Math.max(0, r);
 		this.updateStylePosition();
 	}
+
 	movePolarNormal (theta, r) {
 		const cr = this._canvas.width/2;
 		const R = (r * cr * (1 - PUPIL_RADIUS) + (PUPIL_RADIUS * cr));
@@ -45,6 +47,7 @@ module.exports = class Highlight
 		this._distance = R;
 		this.updateStylePosition();
 	}
+
 	adjustPolar (theta, r) {
 		this.movePolar(
 			this.getAngle() + theta,
@@ -59,6 +62,7 @@ module.exports = class Highlight
 
 		return this._distance;
 	}
+	
 	getAngle () {
 		if (this._angle === null) 
 			this._angle = Math.atan2(this._y, this._x);

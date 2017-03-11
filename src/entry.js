@@ -1,6 +1,7 @@
 const PanelGroup = require('./PanelGroup.js');
 const IrisPanel = require('./IrisPanel.js');
 const BrushPanel = require('./BrushPanel.js');
+const ControlsPanel = require('./ControlsPanel.js');
 const Surface = require('./Surface.js');
 const InputManager = require('./InputManager.js');
 const ToolManager = require('./ToolManager.js');
@@ -12,7 +13,6 @@ const PointerStates = InputManager.PointerStates;
 new InfoLogger().log();
 
 const surface = new Surface(document.getElementById('art'));
-document.getElementById('clear-canvas').addEventListener('click', () => surface.clear());
 
 const inputManager = new InputManager();
 inputManager.on('pointerstatechange', e => {
@@ -47,6 +47,10 @@ const brushPanel = new BrushPanel();
 brushPanel.setBrush(toolManager._currentTool);
 toolManager.on('toolchanged', tool => brushPanel.brushPreview.draw());
 
+const controlsPanel = new ControlsPanel();
+controlsPanel.on('clear', () => surface.clear());
+
 const panelGroup = new PanelGroup(document.getElementById('panel-group'))
+	.add(controlsPanel)
 	.add(irisPanel)
 	.add(brushPanel);
