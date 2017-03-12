@@ -13,20 +13,27 @@ const IrisPanel = require('./IrisPanel.js');
 const BrushPanel = require('./BrushPanel.js');
 const ControlsPanel = require('./ControlsPanel.js');
 
+const PointerStates = InputManager.PointerStates;
+const settings = require('./settings.json');
+
+
+const mainDrawingArea = document.getElementById('main-drawing-area');
+
 
 //app
-const inputManager   = new InputManager();
-const surfaceManager = new SurfaceManager(document.getElementById('main-drawing-area'));
-const toolManager    = new ToolManager(surfaceManager._selectedSurface); //TODO: remove this dependency
+const inputManager   = new InputManager(mainDrawingArea);
+const toolManager    = new ToolManager(); //TODO: remove this dependency
+const surfaceManager = new SurfaceManager(mainDrawingArea, settings);
 
 const panelGroup     = new PanelGroup(document.getElementById('panel-group'));
 const irisPanel      = new IrisPanel();
 const brushPanel     = new BrushPanel();
 const controlsPanel  = new ControlsPanel();
 
-
-const PointerStates = InputManager.PointerStates;
-
+// e : IrisPointerEvent
+inputManager.on('pointerdown', e => toolManager.onDown(e));
+inputManager.on('pointermove', e => toolManager.onMove(e));
+inputManager.on('pointerup', e => toolManager.onUp(e));
 
 //wiring
 inputManager.on('pointerstatechange', e => {
@@ -34,21 +41,17 @@ inputManager.on('pointerstatechange', e => {
 		case PointerStates.Pan:
 			console.log('panning state');
 			break;
-
 		case PointerStates.Brush:
 			console.log('brush state');
 			break;
-
 		case PointerStates.Sample:
 			console.log('sample state');
-			break;
-
-		default: 
 			break;
 	}
 });
 
 surfaceManager.on('select', smEvent => {
+	console.log(smEvent);
 	toolManager.setSurface(smEvent.surface);
 });
 
@@ -60,5 +63,6 @@ panelGroup.add(controlsPanel)
 	.add(irisPanel)
 	.add(brushPanel);
 
+toolManager.setSurface(surfaceManager._selectedSurface);
 toolManager.on('toolchanged', tool => brushPanel.brushPreview.draw());
 toolManager.on('sample', data => irisPanel.setColorData(data));

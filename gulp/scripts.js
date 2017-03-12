@@ -36,6 +36,7 @@ config.webpackStream = {
 		loaders: [
 			{ test: /\.(glsl|frag|vert)$/, loader: 'shader'},
 			{ test: /\.pug$/, loader: 'pug-loader'},
+			{ test: /\.json$/, loader: 'json-loader'},
 			{ test: /\.js$/, loader: 'babel-loader',
 				exclude: /(node_modules|bower_components)/,
 				query: { presets: ['es2015']} }

@@ -36,7 +36,7 @@ module.exports = class Brush extends TexturedTool
 			height = 1/this._sizeRatio * size;
 		}
 
-		canvasutils.drawTexture(
+		canvasutils.drawTexture (
 			ctx, this._texture,
 			x, y, width, height,
 			props.angle,
@@ -45,14 +45,14 @@ module.exports = class Brush extends TexturedTool
 		);
 	}
 
-	onDown (ctx, e) { 
-		this.draw(ctx, e.offsetX, e.offsetY, 
+	onDown (surface, e) { 
+		this.draw(surface.ctx, e.offsetX, e.offsetY, 
 			Brush.applyEffectors(this._effectors, e, this._getBaseProps())
 		); 
 	}
 
-	onMove (ctx, e) { 
-		this.drawPoints(ctx, e, e.pts); 
+	onMove (surface, e) { 
+		this.drawPoints(surface.ctx, e, e.pts); 
 	}
 
 	onUp (ctx, e) {}

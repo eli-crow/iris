@@ -9,12 +9,10 @@ const mathutils = require('./mathutils.js');
 
 module.exports = class ToolManager extends Emitter
 {
-	constructor(surface) {
-		super(['toolchanged', 'sample']);
+	constructor() {
+		super(['toolchanged', 'sample', 'draw']);
 
-		this._surface = surface;
-
-		const eyedropper = new Eyedropper(this._surface.canvas);
+		const eyedropper = new Eyedropper();
 		
 		const brush = new Brush()
 			.addEffector('Angle', 'size', -50, 50, e => Math.sin(e.direction), false)
@@ -23,7 +21,7 @@ module.exports = class ToolManager extends Emitter
 			.addEffector('Pressure', 'flow', -1, 1, e => e.penPressure, true)
 			.addEffector('Speed', 'size', -50, 50, e => { const s = Math.sqrt(e.squaredSpeed); return s/(s+200); }, false)	
 			.addEffector('Speed', 'flow', -1, 1, e => { const s = Math.sqrt(e.squaredSpeed); return s/(s+200); }, false)
-			.on('changeend', () => this._surface.setTool(brush));
+			.on('changeend', () => this.emit('toolchanged', brush));
 
 		const eraser = new Brush()
 			.addEffector('Angle', 'size', -50, 50, e => Math.sin(e.direction), false)
@@ -32,12 +30,12 @@ module.exports = class ToolManager extends Emitter
 			.addEffector('Pressure', 'flow', -1, 1, e => e.penPressure, true)
 			.addEffector('Speed', 'size', -50, 50, e => { const s = Math.sqrt(e.squaredSpeed); return s/(s+200); }, false)	
 			.addEffector('Speed', 'flow', -1, 1, e => { const s = Math.sqrt(e.squaredSpeed); return s/(s+200); }, false)
-			.on('changeend', () => this._surface.setTool(brush));
+			.on('changeend', () => this.emit('toolchanged', eraser));
 		eraser.erase = true;
 
 
-		brush.on('changeend', e => this.emit('toolchanged', this._currentTool));
-		eraser.on('changeend', e => this.emit('toolchanged', this._currentTool));
+		brush.on('changeend',  () => this.emit('toolchanged', this._currentTool));
+		eraser.on('changeend', () => this.emit('toolchanged', this._currentTool));
 		this.emit('toolchanged', this._currentTool);
 
 		eyedropper.on('pick', fnutils.throttle(data => this.emit('sample', data)), 50);
@@ -47,9 +45,13 @@ module.exports = class ToolManager extends Emitter
 		this._eyedropper = eyedropper;
 	}
 
+	//e : IrisMouseEvent
+	onDown (e) { this._currentTool.onDown(this._surface, e); }
+	onMove (e) { this._currentTool.onMove(this._surface, e); }
+	onUp (e)   { this._currentTool.onUp(this._surface, e); }
+
 	setSurface(surface) {
 		this._surface = surface;
-		this._eyedropper.setCanvas(surface.canvas);
 	}
 
 	setColor(colorArr) {

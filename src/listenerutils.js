@@ -29,10 +29,17 @@ else {
 
 const __doubleClickTime = 300;
 
+
 module.exports.simplePointer = (context, events, transform) => {
 	let rect, button = 0, downX, downY;
 
-	function fixupEvent(e, rect) {
+	const xformIsFn = fnutils.isFunction(transform);
+	const moveCtx = events['moveEl'] || (events['contained']) ? context : window;
+	const relativeTo = events['relativeTo'] || context;
+
+	console.log(relativeTo);
+
+	function fixupSimplePointerEvent(e, rect) {
 		e = e || window.event;
 		e.downButton = button;
 		e.diffX = e.clientX - downX;
@@ -42,21 +49,16 @@ module.exports.simplePointer = (context, events, transform) => {
 		return e;
 	}
 
-	const xformIsFn = fnutils.isFunction(transform);
-	const moveCtx = 
-		events.moveEl ? events.moveEl : 
-		events.contained ? context : window;
-
 	let moveHandler;
 	if (events.move) moveHandler = function (e) {
-		e = fixupEvent(e, rect);
+		e = fixupSimplePointerEvent(e, rect);
 		if (events.preventDefault) e.preventDefault();
 		if (events.stopPropagation) e.stopPropagation();
 		if (xformIsFn) transform(e, rect);
 		events.move(e);
 	};
 	const upHandler = function (e) {
-		e = fixupEvent(e, rect)
+		e = fixupSimplePointerEvent(e, rect)
 		if (events.preventDefault) e.preventDefault();
 		if (events.stopPropagation) e.stopPropagation();
 		if (events.up) {
@@ -68,9 +70,9 @@ module.exports.simplePointer = (context, events, transform) => {
 	};
 
 	context.addEventListener(__events.down, (e) => {
-		rect = context.getBoundingClientRect();
+		rect = relativeTo.getBoundingClientRect();
 
-		e = fixupEvent(e, rect);
+		e = fixupSimplePointerEvent(e, rect);
 		button = e.button;
 		downX = e.clientX;
 		downY = e.clientY;
@@ -166,7 +168,6 @@ const parseKeyMappings = function (descriptor) {
 			//special strings
 			case 'Space': case 'Spacebar':
 				keyMap.push({keys: [' '], on: descriptor[keyString] }); 
-				console.log(KS);
 			break;
 
 			//anything else treated as array of keys
@@ -176,7 +177,6 @@ const parseKeyMappings = function (descriptor) {
 		}
 	}
 
-	console.log(keyMap);
 	return keyMap;
 }
 

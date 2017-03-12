@@ -5,21 +5,11 @@ const hsluv = require('hsluv');
 
 module.exports = class Eyedropper extends Emitter
 {
-	constructor (canvas) {
+	constructor () {
 		super(['pick', 'pickend']);
-
-		this._canvas = canvas;
-		this._ctx = this._canvas.getContext('2d');
-
-		listenerutils.simplePointer(canvas, {
-			contained: false,
-			down: e => this.sample('pick', e),
-			move: e => this.sample('pick', e),
-			up:   e => this.sample('pickend', e)
-		})
 	}
 
-	sample (event, e) {
+	sample (ctx, event, e) {
 		// if (e.altKey) {
 		// 	const p = canvasutils.getPixel(this._ctx, e.offsetX, e.offsetY);
 		// 	if (p[3] > 0) {
@@ -28,9 +18,5 @@ module.exports = class Eyedropper extends Emitter
 		// 	}
 		// 	e.preventDefault();
 		// }
-	}
-
-	setCanvas (canvas) {
-		this._canvas = canvas;
 	}
 }

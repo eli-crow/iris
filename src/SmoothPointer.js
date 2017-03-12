@@ -34,6 +34,7 @@ class SmoothPointer extends Emitter
       contained: false,
       preventDefault: options['preventDefault'],
       stopPropagation: options['stopPropagation'],
+      relativeTo: options['relativeTo'],
 
       down: e => {
         for (var i = 0; i < 4; i++) {

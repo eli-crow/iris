@@ -1,27 +1,49 @@
 const Emitter = require('./Emitter.js');
+const SmoothPointer = require('./SmoothPointer.js');
 const listenerutils = require('./listenerutils.js');
 
+//enum
 const PointerStates = {
-	Brush: 0,
-	Pan: 1,
+	Brush:  0,
+	Pan:    1,
 	Sample: 2
 };
 
 // interface PointerStateEvent {
-// 	preventDefault : Function;
-// 	state : PointerState;
+// 	preventDefault : Function,
+// 	state : PointerState
+// }
+
+// interface IrisPointerEvent {
+//  preventDefault : Function,
+//  surface : Surface,
+//  relX : number,
+//  relY : number,
+//  etc...
 // }
 
 //manages input state for application. emits effective action and returns to actual tool selection.
 module.exports = class InputManager extends Emitter
 {
-	constructor() {
+	constructor (relativeElmnt) {
 		super([
-			'pointerstatechange', 
-			'undo'
+			'pointerstatechange',
+			'pointerdown',
+			'pointermove',
+			'pointerup'
 		]);
 
 		this.pointerState = PointerStates.Brush;
+		this.pointer = new SmoothPointer(document.documentElement, {
+			minDistance: 4,
+			steps: 2,
+			smoothing: 0.5,
+			relativeTo: relativeElmnt,
+
+			down: e => this.emit('pointerdown', e),
+			move: e => this.emit('pointermove', e),
+			up:   e => this.emit('pointerup', e)
+		});
 
 		listenerutils.keyboard({
 			//pointer states
@@ -42,6 +64,10 @@ module.exports = class InputManager extends Emitter
 				down: e => this.emit('undo')
 			}
 		});
+	}
+
+	emitIrisPointerEvent (e) {
+		
 	}
 
 	emitPointerStateEvent (e, state) {

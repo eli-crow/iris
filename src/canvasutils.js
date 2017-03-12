@@ -17,3 +17,15 @@ module.exports.resizeCanvasComputed = function (canvas) {
 	canvas.width = parseInt(cs.width);
 	canvas.height = parseInt(cs.height);
 }
+
+module.exports.resizeToParent = function (canvas) {
+  if (!canvas.parentElement) {
+    console.log(canvas.parentElement);
+    console.warn('canvas not in DOM tree');
+    return false;
+  }
+
+  const cs = window.getComputedStyle(canvas.parentElement);
+  canvas.width = parseInt(cs.width);
+  canvas.height = parseInt(cs.height);
+}
