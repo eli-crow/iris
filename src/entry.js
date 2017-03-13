@@ -20,7 +20,7 @@ const settings = require('./settings.json');
 
 const mainDrawingArea = document.getElementById('main-drawing-area');
 
-
+//todo: place panels inside managers.
 //app
 const inputManager   = new InputManager(mainDrawingArea);
 const toolManager    = new ToolManager(); //TODO: remove this dependency
@@ -61,6 +61,9 @@ surfaceManager.on('select', smEvent => {
 irisPanel.iris.on('pickend', data => toolManager.setColor(data));
 brushPanel.setBrush(toolManager._currentTool);
 controlsPanel.on('clear', () => surfaceManager.clearCurrentSurface());
+
+surfacesPanel.on('load', dataUrl => surfaceManager.addFromDataUrl(dataUrl));
+
 panelGroup.add(controlsPanel)
 	.add(irisPanel)
 	.add(brushPanel)

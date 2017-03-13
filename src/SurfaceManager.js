@@ -44,4 +44,8 @@ module.exports = class SurfaceManager extends Emitter
 		this._selectedSurface.clear();
 		this._renderer.draw(this._surfaces);
 	}
+
+	addFromDataUrl (dataUrl) {
+		this.add(Surface.fromDataUrl(dataUrl));
+	}
 }
