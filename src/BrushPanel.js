@@ -1,20 +1,13 @@
 const Panel = require('./Panel.js');
 const BrushPreview = require('./BrushPreview.js');
 
-const __template = require('../templates/panel-brush.pug');
-
 module.exports = class BrushPanel extends Panel
 {
 	constructor () {
-		super();
+		super(null, require('../templates/panel-brush.pug'));
 
-		const tempEl = document.createElement('div');
-		tempEl.insertAdjacentHTML('beforeend', __template());
-		const element = tempEl.children[0];
-
-		this._inputsElement = element.querySelector('.iris-input-group');
-		this._preview = element.querySelector('.brush-preview');
-		this._element = element;
+		this._inputsElement = this._element.querySelector('.iris-input-group');
+		this._preview = this._element.querySelector('.brush-preview');
 
 		this.brushPreview = new BrushPreview(this._preview);
 	}

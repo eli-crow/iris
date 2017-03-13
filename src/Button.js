@@ -3,12 +3,12 @@ const fnutils = require('./fnutils.js');
 
 module.exports = class Button extends PanelElement
 {
-	constructor (text, events) {
+	constructor (text, events, element) {
 		super(['click'].concat(events || []));
 
-		const element = document.createElement('a');
+		element = element || document.createElement('a');
 		element.classList.add('iris-input', 'iris-button');
-		element.addEventListener('click', this._onClick.bind(this), false);
+		element.addEventListener('click', () => this._onClick(), false);
 		element.innerHTML = text;
 
 		this._group = null;

@@ -10,7 +10,7 @@ const __defaults = {
 module.exports = class SurfaceRenderer extends Emitter
 {
 	constructor (containerElement, options) {
-		super(['draw'])
+		super(['draw']);
 
 		this._element = containerElement || document.createElement('div');
 		this._compositeCanvas = document.createElement('canvas');

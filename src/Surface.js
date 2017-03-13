@@ -4,7 +4,7 @@ const fnutils = require('./fnutils.js');
 const canvasutils = require('./canvasutils.js');
 const Tool = require('./Tool.js');
 
-
+//an abstraction layer for canvas.
 module.exports = class Surface extends Emitter
 {
 	constructor(canvas) {

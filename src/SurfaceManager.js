@@ -42,5 +42,6 @@ module.exports = class SurfaceManager extends Emitter
 
 	clearCurrentSurface () {
 		this._selectedSurface.clear();
+		this._renderer.draw(this._surfaces);
 	}
 }

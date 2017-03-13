@@ -37,8 +37,6 @@ module.exports.simplePointer = (context, events, transform) => {
 	const moveCtx = events['moveEl'] || (events['contained']) ? context : window;
 	const relativeTo = events['relativeTo'] || context;
 
-	console.log(relativeTo);
-
 	function fixupSimplePointerEvent(e, rect) {
 		e = e || window.event;
 		e.downButton = button;

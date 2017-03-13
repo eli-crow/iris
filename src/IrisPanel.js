@@ -2,24 +2,15 @@ const Panel = require('./Panel.js');
 const Iris = require('./Iris.js');
 const mathutils = require('./mathutils.js');
 
-// generate template functions from pug.
-const __template = require('../templates/panel-iris.pug');
-
 module.exports = class IrisPanel extends Panel
 {
 	constructor () {
-		super();
+		super(null, require('../templates/panel-iris.pug'));
 
-		const tempEl = document.createElement('div');
-		tempEl.insertAdjacentHTML('beforeend', __template());
-		const element = tempEl.children[0];
-
-		this._wheel = element.querySelector('.iris-wheel');
-		this._indicator = element.querySelector('.iris-indicator');
-		this._modes = element.querySelector('.iris-modes');
-		this._inputs = element.querySelector('.iris-input-group');
-
-		this._element = element;
+		this._wheel = this._element.querySelector('.iris-wheel');
+		this._indicator = this._element.querySelector('.iris-indicator');
+		this._modes = this._element.querySelector('.iris-modes');
+		this._inputs = this._element.querySelector('.iris-input-group');
 
 		this.iris = new Iris(this._wheel);
 		this.iris.on(['pick', 'pickend'], rgbArr => this.setIndicatorColor(rgbArr));

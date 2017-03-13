@@ -11,6 +11,7 @@ const ToolManager = require('./ToolManager.js');
 const PanelGroup = require('./PanelGroup.js');
 const IrisPanel = require('./IrisPanel.js');
 const BrushPanel = require('./BrushPanel.js');
+const SurfacesPanel = require('./SurfacesPanel.js');
 const ControlsPanel = require('./ControlsPanel.js');
 
 const PointerStates = InputManager.PointerStates;
@@ -29,6 +30,7 @@ const panelGroup     = new PanelGroup(document.getElementById('panel-group'));
 const irisPanel      = new IrisPanel();
 const brushPanel     = new BrushPanel();
 const controlsPanel  = new ControlsPanel();
+const surfacesPanel  = new SurfacesPanel();
 
 // e : IrisPointerEvent
 inputManager.on('pointerdown', e => toolManager.onDown(e));
@@ -61,7 +63,8 @@ brushPanel.setBrush(toolManager._currentTool);
 controlsPanel.on('clear', () => surfaceManager.clearCurrentSurface());
 panelGroup.add(controlsPanel)
 	.add(irisPanel)
-	.add(brushPanel);
+	.add(brushPanel)
+	.add(surfacesPanel);
 
 toolManager.setSurface(surfaceManager._selectedSurface);
 toolManager.on('toolchanged', tool => brushPanel.brushPreview.draw());
