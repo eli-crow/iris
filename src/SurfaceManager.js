@@ -7,7 +7,6 @@ const SurfaceRenderer = require('./SurfaceRenderer.js');
 //   surface : Surface
 // }
 
-// is the entry point to maniputlating
 module.exports = class SurfaceManager extends Emitter
 {
 	constructor (containerElement, settings) {
@@ -15,6 +14,7 @@ module.exports = class SurfaceManager extends Emitter
 
 		this._selectedSurface = null;
 		this._surfaces = [];
+		this._drawingSurface = new Surface();
 		this._renderer = new SurfaceRenderer(containerElement, settings.document);
 
 		//init
@@ -40,12 +40,23 @@ module.exports = class SurfaceManager extends Emitter
 		return this;
 	}
 
+	select(surface) {
+		this.emit('select', {
+			surfaces: this._surfaces,
+			surface: surface
+		});
+	}
+
 	clearCurrentSurface () {
 		this._selectedSurface.clear();
-		this._renderer.draw(this._surfaces);
+		this.draw();
 	}
 
 	addFromDataUrl (dataUrl) {
-		this.add(Surface.fromDataUrl(dataUrl));
+		const s = Surface.fromDataUrl(dataUrl);
+		s.on('load', () => {
+			this.add(s);
+			this.draw();
+		})
 	}
 }

@@ -8,7 +8,7 @@ const Tool = require('./Tool.js');
 module.exports = class Surface extends Emitter
 {
 	constructor(canvas) {
-		super(['sample']);
+		super(['sample', 'load']);
 
 		this.canvas = canvas || document.createElement('canvas');
 		this.ctx = this.canvas.getContext('2d');
@@ -47,15 +47,17 @@ module.exports = class Surface extends Emitter
 	static fromDataUrl (url) {
 		const canvas = document.createElement('canvas');
 		const ctx = canvas.getContext('2d');
+		const surface = new Surface(canvas, true);
 
 		const img = new Image();
 		img.onload = () => {
 			canvas.width = img.width;
 			canvas.height = img.height;
 			ctx.drawImage(img, 0, 0);
+			surface.emit('load');
 		}
 		img.src = url;
 
-		return new Surface(canvas);
+		return surface;
 	}
 }

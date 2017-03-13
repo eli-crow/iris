@@ -52,10 +52,7 @@ inputManager.on('pointerstatechange', e => {
 	}
 });
 
-surfaceManager.on('select', smEvent => {
-	console.log(smEvent);
-	toolManager.setSurface(smEvent.surface);
-});
+surfaceManager.on('select', smEvent => toolManager.setSurface(smEvent.surface));
 
 //setup panels
 irisPanel.iris.on('pickend', data => toolManager.setColor(data));
