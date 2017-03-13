@@ -9,8 +9,8 @@ const __shapeUrls = [
 
 module.exports = class TexturedTool extends Tool
 {
-	constructor(options) {
-		super(options);
+	constructor(events, options) {
+		super(events, options);
 
 		this._sizeRatio = 1;
 

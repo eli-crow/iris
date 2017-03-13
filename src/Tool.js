@@ -6,8 +6,8 @@ const ToolEffector = require('./ToolEffector.js');
 
 //abstract
 module.exports = class Tool extends Emitter {
-	constructor (options) {
-		super(['change', 'changeend']);
+	constructor (events, options) {
+		super(['change', 'changeend'].concat(events));
 
 		this._effectors = [];
 		this._smoothedEffectors = [];

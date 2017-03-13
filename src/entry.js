@@ -66,3 +66,4 @@ panelGroup.add(controlsPanel)
 toolManager.setSurface(surfaceManager._selectedSurface);
 toolManager.on('toolchanged', tool => brushPanel.brushPreview.draw());
 toolManager.on('sample', data => irisPanel.setColorData(data));
+toolManager.on('draw', () => surfaceManager.draw());

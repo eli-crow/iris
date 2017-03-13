@@ -6,7 +6,7 @@ const Panel = require('./Panel.js');
 module.exports = class Brush extends TexturedTool
 {
 	constructor(options) {
-		super(options);
+		super(['draw'], options);
 
 		this._properties.size = {min: 0, max: 5, value: 3, map: x => Math.exp(x)};
 		this._properties.flow = {min: 0, max: 1, value: 1};
@@ -49,10 +49,12 @@ module.exports = class Brush extends TexturedTool
 		this.draw(surface.ctx, e.offsetX, e.offsetY, 
 			Brush.applyEffectors(this._effectors, e, this._getBaseProps())
 		); 
+		this.emit('draw');
 	}
 
 	onMove (surface, e) { 
 		this.drawPoints(surface.ctx, e, e.pts); 
+		this.emit('draw');
 	}
 
 	onUp (ctx, e) {}

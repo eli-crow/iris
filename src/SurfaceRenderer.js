@@ -27,6 +27,8 @@ module.exports = class SurfaceRenderer extends Emitter
 	}
 
 	draw (surfaces) {
+		this.clear();
+
 		const ctx = this._compositeCtx;
 		for (let i = 0, ii = surfaces.length; i < ii; i++) {
 			const surface = surfaces[i];
@@ -41,5 +43,9 @@ module.exports = class SurfaceRenderer extends Emitter
 		ctx.globalCompositeOperation = compositeOperation;
 		ctx.drawImage(canvas);
 		ctx.restore();
+	}
+
+	clear () { 
+		this._compositeCtx.clearRect(0, 0, this._compositeCanvas.width, this._compositeCanvas.height); 
 	}
 }
