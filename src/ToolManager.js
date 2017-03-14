@@ -2,7 +2,7 @@ const Brush = require('./Brush.js');
 const Emitter = require('./Emitter.js');
 const Panel = require('./Panel.js');
 const Eyedropper = require('./Eyedropper.js');
-const BrushPreview = require('./BrushPreview.js');
+const BrushPanel = require('./BrushPanel.js');
 
 const fnutils = require('./fnutils.js');
 const mathutils = require('./mathutils.js');
@@ -42,15 +42,21 @@ module.exports = class ToolManager extends Emitter
 		eyedropper.on('pick', fnutils.throttle(data => this.emit('sample', data)), 50);
 		eyedropper.on('pickend', data => this.setColor(data.rgba));
 
+		this.panel = new BrushPanel();
+
 		this._currentTool = brush;
 		this._eyedropper = eyedropper;
+
+		//init
+		this.panel.setBrush(brush);
+		this.on('toolchanged', () => this.panel.brushPreview.draw());
 	}
 
 	//e : IrisMouseEvent
 	onDown (e) { 
 		this._currentTool.onDown(this._surface, e); 
 	}
-	onMove (e) { 
+	onMove (e) {
 		this._currentTool.onMove(this._surface, e); 
 	}
 	onUp (e)   { 

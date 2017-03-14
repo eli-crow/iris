@@ -17,22 +17,20 @@ module.exports = class OrderedGroup extends Group
 
 	}
 	reorderChild (panelElement, e) {
-
+		this.emit('orderchanged', this._panelElements);
 	}
 
-
 	add (panelElement) {
-		super.add(panelElement);
-
-		const self = this;
 		listenerutils.simplePointer(panelElement, {
 			preventDefault: true,
 			stopPropagation: true,
 
-			down:  e => self.grabChild(panelElement, e),
-			move:  e => self.moveChild(panelElement, e),
-			up:    e => self.reorderChild(panelElement, e),
-			click: e => self.onClick(panelElement, e)
+			down:  e => this.grabChild(panelElement, e),
+			move:  e => this.moveChild(panelElement, e),
+			up:    e => this.reorderChild(panelElement, e),
+			click: e => this.onClick(panelElement, e)
 		});
+
+		super.add(panelElement);
 	}
 }

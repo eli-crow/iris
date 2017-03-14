@@ -52,7 +52,7 @@ module.exports = class Brush extends TexturedTool
 		this.emit('draw');
 	}
 
-	onMove (surface, e) { 
+	onMove (surface, e) {
 		this.drawPoints(surface.ctx, e, e.pts); 
 		this.emit('draw');
 	}

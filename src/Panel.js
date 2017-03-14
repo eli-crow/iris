@@ -24,3 +24,4 @@ module.exports.Slider = require('./Slider.js');
 module.exports.FileSelect = require('./FileSelect.js');
 module.exports.TabbedView = require('./TabbedView.js');
 module.exports.ToolShapeSelector = require('./ToolShapeSelector.js');
+module.exports.SurfaceSelector = require('./SurfaceSelector.js');

@@ -7,11 +7,9 @@ new InfoLogger().log();
 const InputManager = require('./InputManager.js');
 const SurfaceManager = require('./SurfaceManager.js');
 const ToolManager = require('./ToolManager.js');
+const ColorManager = require('./ColorManager.js');
 
 const PanelGroup = require('./PanelGroup.js');
-const IrisPanel = require('./IrisPanel.js');
-const BrushPanel = require('./BrushPanel.js');
-const SurfacesPanel = require('./SurfacesPanel.js');
 const ControlsPanel = require('./ControlsPanel.js');
 
 const PointerStates = InputManager.PointerStates;
@@ -25,12 +23,10 @@ const mainDrawingArea = document.getElementById('main-drawing-area');
 const inputManager   = new InputManager(mainDrawingArea);
 const toolManager    = new ToolManager(); //TODO: remove this dependency
 const surfaceManager = new SurfaceManager(mainDrawingArea, settings);
+const colorManager   = new ColorManager();
 
 const panelGroup     = new PanelGroup(document.getElementById('panel-group'));
-const irisPanel      = new IrisPanel();
-const brushPanel     = new BrushPanel();
 const controlsPanel  = new ControlsPanel();
-const surfacesPanel  = new SurfacesPanel();
 
 // e : IrisPointerEvent
 inputManager.on('pointerdown', e => toolManager.onDown(e));
@@ -55,18 +51,14 @@ inputManager.on('pointerstatechange', e => {
 surfaceManager.on('select', smEvent => toolManager.setSurface(smEvent.surface));
 
 //setup panels
-irisPanel.iris.on('pickend', data => toolManager.setColor(data));
-brushPanel.setBrush(toolManager._currentTool);
+colorManager.on('pickend', data => toolManager.setColor(data));
 controlsPanel.on('clear', () => surfaceManager.clearCurrentSurface());
 
-surfacesPanel.on('load', dataUrl => surfaceManager.addFromDataUrl(dataUrl));
-
 panelGroup.add(controlsPanel)
-	.add(irisPanel)
-	.add(brushPanel)
-	.add(surfacesPanel);
+	.add(colorManager.panel)
+	.add(toolManager.panel)
+	.add(surfaceManager.panel);
 
 toolManager.setSurface(surfaceManager._selectedSurface);
-toolManager.on('toolchanged', tool => brushPanel.brushPreview.draw());
-toolManager.on('sample', data => irisPanel.setColorData(data));
+toolManager.on('sample', data => colorManager.setColorData(data));
 toolManager.on('draw', () => surfaceManager.draw());

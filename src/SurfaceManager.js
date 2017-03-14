@@ -1,5 +1,6 @@
 const Emitter = require('./Emitter.js');
 const Surface = require('./Surface.js');
+const SurfacesPanel = require('./SurfacesPanel.js');
 const SurfaceRenderer = require('./SurfaceRenderer.js');
 
 // interface SurfaceManagerEvent {
@@ -12,6 +13,8 @@ module.exports = class SurfaceManager extends Emitter
 	constructor (containerElement, settings) {
 		super(['select', 'add', 'remove', 'reorder', 'duplicate']);
 
+		this.panel = new SurfacesPanel();
+
 		this._selectedSurface = null;
 		this._surfaces = [];
 		this._drawingSurface = new Surface();
@@ -19,6 +22,7 @@ module.exports = class SurfaceManager extends Emitter
 
 		//init
 		this.add(new Surface());
+		this.panel.on('load', dataUrl => this.addFromDataUrl(dataUrl));
 	}
 
 	draw () {
