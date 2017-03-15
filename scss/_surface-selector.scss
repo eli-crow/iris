@@ -5,6 +5,7 @@
 .iris-surface-list-view {
 	@include selection;
 	padding: 0.2rem spacing(1);
+	cursor: pointer;
 
 	&:first-of-type {
 		border-top-left-radius: $radius-2;

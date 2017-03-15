@@ -17,8 +17,10 @@ module.exports = class FileSelect extends PanelElement
 
 		//TODO: add feature-detection
 		this._input.addEventListener('change', e => this._onFileSelect(e, this._input.value), false);
-		this._dropZone.addEventListener('dragover', e => this._onDragOver(e), false);
-		this._dropZone.addEventListener('drop', e => this._onDrop(e), false);
+		window.addEventListener('dragover', e => this._onDragOver(e), false);
+		window.addEventListener('dragenter', e => this._onDragEnter(e), false);
+		window.addEventListener('dragexit', e => this._onDragLeave(e), false);
+		window.addEventListener('drop', e => this._onDrop(e), false);
 		this._fileReader.addEventListener('load', file => this.emit('load', this._fileReader.result), false);
 	}
 
@@ -30,11 +32,24 @@ module.exports = class FileSelect extends PanelElement
 		e.stopPropagation();
 		e.preventDefault();
 
+		this.unclass('drop');
+
 		const files = e.dataTransfer.files;
 
 		for (let i = 0, ii = files.length; i < ii; i++) {
 			this._fileReader.readAsDataURL(files[i]);
 		}
+	}
+
+	_onDragEnter (e) {
+		e.stopPropagation();
+		e.preventDefault();
+
+		this.class('drop');
+	}
+
+	_onDragLeave (e) {
+		this.unclass('drop');
 	}
 
 	_onDragOver (e) {

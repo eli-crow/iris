@@ -7,13 +7,13 @@ const Tool = require('./Tool.js');
 //an abstraction layer for canvas.
 module.exports = class Surface extends Emitter
 {
-	constructor(canvas) {
+	constructor(canvas, name) {
 		super(['sample', 'load']);
 
 		this.canvas = canvas || document.createElement('canvas');
 		this.ctx = this.canvas.getContext('2d');
 		this.position = [0,0];
-		this.name = 'surface';
+		this.name = name || 'surface';
 
 		this._tempCanvas = document.createElement('canvas');
 		this._tempCtx = this._tempCanvas.getContext('2d');
@@ -45,16 +45,17 @@ module.exports = class Surface extends Emitter
 		return this.canvas.toDataURL();
 	}
 
-	static fromDataUrl (url) {
+	static fromDataUrl (url, name) {
 		const canvas = document.createElement('canvas');
 		const ctx = canvas.getContext('2d');
-		const surface = new Surface(canvas, true);
+		const surface = new Surface(canvas, name);
 
 		const img = new Image();
 		img.onload = () => {
 			canvas.width = img.width;
 			canvas.height = img.height;
 			ctx.drawImage(img, 0, 0);
+			surface.name = name || 'surface name';
 			surface.emit('load');
 		}
 		img.src = url;
