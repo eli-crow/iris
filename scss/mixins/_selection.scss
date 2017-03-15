@@ -1,0 +1,13 @@
+@mixin selection () {
+	&.toggled, &.selected {
+		@include outline(1px, $activated);
+	}
+
+	&:hover:not(.selected):not(.toggled) {
+		@include outline(1px, $ambient-groove);
+	}
+
+	&:active {
+		background-color: $ambient-groove-light-1;
+	}
+}

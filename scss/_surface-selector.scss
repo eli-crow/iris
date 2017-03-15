@@ -1,0 +1,17 @@
+.iris-surface-selector {
+	padding: spacing(1);
+}
+
+.iris-surface-list-view {
+	@include selection;
+	padding: 0.2rem spacing(1);
+
+	&:first-of-type {
+		border-top-left-radius: $radius-2;
+		border-top-right-radius: $radius-2;
+	}
+	&:last-of-type {
+		border-bottom-left-radius: $radius-2;
+		border-bottom-right-radius: $radius-2;
+	}
+}

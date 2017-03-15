@@ -3,6 +3,8 @@ const Surface = require('./Surface.js');
 const SurfacesPanel = require('./SurfacesPanel.js');
 const SurfaceRenderer = require('./SurfaceRenderer.js');
 
+//todo: cache layers below current while drawing.
+
 // interface SurfaceManagerEvent {
 //   surfaces : Surface[],
 //   surface : Surface
@@ -23,6 +25,7 @@ module.exports = class SurfaceManager extends Emitter
 		//init
 		this.add(new Surface());
 		this.panel.on('load', dataUrl => this.addFromDataUrl(dataUrl));
+		this.panel.on('select', sse => this.select(sse.surface));
 	}
 
 	draw () {
@@ -35,6 +38,7 @@ module.exports = class SurfaceManager extends Emitter
 		this._selectedSurface = surface;
 
 		this.draw();
+		this.panel.drawSurfaceListView(this._surfaces);
 
 		this.emit(['add', 'select'], {
 			surfaces: this._surfaces,

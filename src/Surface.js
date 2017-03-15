@@ -13,6 +13,7 @@ module.exports = class Surface extends Emitter
 		this.canvas = canvas || document.createElement('canvas');
 		this.ctx = this.canvas.getContext('2d');
 		this.position = [0,0];
+		this.name = 'surface';
 
 		this._tempCanvas = document.createElement('canvas');
 		this._tempCtx = this._tempCanvas.getContext('2d');

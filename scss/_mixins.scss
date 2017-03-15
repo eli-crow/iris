@@ -1,5 +1,6 @@
 @import "mixins/clearfix";
 @import "mixins/inputs";
+@import "mixins/selection";
 
 @mixin outline ($width, $color) {
 	box-shadow: 0 0 0px $width $color;

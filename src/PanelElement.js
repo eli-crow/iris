@@ -1,4 +1,5 @@
 const Emitter = require('./Emitter.js');
+const fnutils = require('./fnutils.js');
 
 //abstraction layer for managing and manipulating the dom in panels.
 module.exports = class PanelElement extends Emitter
@@ -67,10 +68,12 @@ function __processElement (element) {
 		const temp = document.createElement('div');
 		temp.insertAdjacentHTML('beforeend', element);
 		return temp;
-	}
+	} 
+
 	else if (element instanceof HTMLElement) {
 		return element;
 	}
+
 	else {
 		return document.createElement('div');
 	}

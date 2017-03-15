@@ -21,7 +21,7 @@ module.exports = class OrderedGroup extends Group
 	}
 
 	add (panelElement) {
-		listenerutils.simplePointer(panelElement, {
+		listenerutils.simplePointer(panelElement._element, {
 			preventDefault: true,
 			stopPropagation: true,
 

@@ -39,4 +39,12 @@ module.exports = class Group extends PanelElement
 			fn(this._panelElements[i]);
 		}
 	}
+
+	
+	empty () {
+		const el = this._element;
+		while (el.lastChild) {
+			el.removeChild(el.lastChild);
+		}
+	}
 }
