@@ -10,7 +10,6 @@ const ToolManager = require('./ToolManager.js');
 const ColorManager = require('./ColorManager.js');
 
 const PanelGroup = require('./PanelGroup.js');
-const ControlsPanel = require('./ControlsPanel.js');
 
 const PointerStates = InputManager.PointerStates;
 const settings = require('./settings.json');
@@ -26,7 +25,6 @@ const surfaceManager = new SurfaceManager(mainDrawingArea, settings);
 const colorManager   = new ColorManager();
 
 const panelGroup     = new PanelGroup(document.getElementById('panel-group'));
-const controlsPanel  = new ControlsPanel();
 
 // e : IrisPointerEvent
 inputManager.on('pointerdown', e => toolManager.onDown(e));
@@ -52,9 +50,8 @@ surfaceManager.on('select', smEvent => toolManager.setSurface(smEvent.surface));
 
 //setup panels
 colorManager.on('pickend', data => toolManager.setColor(data));
-controlsPanel.on('clear', () => surfaceManager.clearCurrentSurface());
 
-panelGroup.add(controlsPanel)
+panelGroup
 	.add(colorManager.panel)
 	.add(toolManager.panel)
 	.add(surfaceManager.panel);

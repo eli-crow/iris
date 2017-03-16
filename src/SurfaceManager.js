@@ -24,7 +24,7 @@ module.exports = class SurfaceManager extends Emitter
 
 		//init
 		this.add(new Surface());
-		this.panel.on('load', dataUrl => this.addFromDataUrl(dataUrl));
+		this.panel.on('load', data => this.addFromDataUrl(data.dataUrl, data.name));
 		this.panel.on('select', sse => this.select(sse.surface));
 	}
 
@@ -60,8 +60,8 @@ module.exports = class SurfaceManager extends Emitter
 		this.draw();
 	}
 
-	addFromDataUrl (dataUrl) {
-		const s = Surface.fromDataUrl(dataUrl);
+	addFromDataUrl (dataUrl, name) {
+		const s = Surface.fromDataUrl(dataUrl, name);
 		s.on('load', () => {
 			this.add(s);
 			this.draw();

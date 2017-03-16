@@ -1,6 +1,8 @@
-input(type="file").iris-button.iris-file-select-input
+.iris-file-select-input.iris-button
+	input(type="file")
+	p= uploadMessage
 .iris-dropzone
-	p Drop files here to create a new layer.
+	p= dropMessage
 .iris-loading
 	p Loading...
 	.iris-loading-image

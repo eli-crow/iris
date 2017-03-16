@@ -1,6 +1,7 @@
 .iris-file-select {
+	padding: 0 spacing(2);
 
-	.iris-dropzone, .iris-loading {
+	> .iris-dropzone, > .iris-loading {
 		position: absolute;
 		width: 100%; 
 		height: 100%;
@@ -24,5 +25,20 @@
 		.iris-loading {
 			opacity: 1;
 		}
+	}
+}
+
+
+.iris-file-select-input {
+	@include selection;
+	
+	> p {
+		font-size: spacing(4);
+	}
+
+	> input {
+		position: absolute;
+		opacity: $transparent;
+		z-index: 1;
 	}
 }
