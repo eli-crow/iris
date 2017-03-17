@@ -30,7 +30,15 @@ function isAnyOf(value, array) {
 	return false;
 }
 
+function eachExcluding (array, excludedItem, callback) {
+	for (var index = 0, limit = array.length; index < limit; index++) {
+		const item = array[index];
+		if (item === excludedItem) continue;
+		callback(item, array, index);
+	}
+}
 
+module.exports.eachExcluding = eachExcluding;
 module.exports.isAnyOf = isAnyOf
 module.exports.rotateArray = rotateArray;
 module.exports.flatten = flatten;

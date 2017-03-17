@@ -4,6 +4,7 @@ const SurfacesPanel = require('./SurfacesPanel.js');
 const SurfaceRenderer = require('./SurfaceRenderer.js');
 
 const mathutils = require('./mathutils.js');
+const arrayutils = require('./arrayutils.js');
 
 //todo: cache layers below current while drawing.
 
@@ -41,7 +42,7 @@ module.exports = class SurfaceManager extends Emitter
 	add (surface) {
 		surface.resize(this._renderer.width, this._renderer.height);
 		this._surfaces.push(surface);
-		this._selectedSurface = surface;
+		this.select(surface);
 
 		this.draw();
 		this.panel.drawSurfaceListView(this._surfaces);
@@ -79,6 +80,9 @@ module.exports = class SurfaceManager extends Emitter
 	}
 
 	select(surface) {
+		surface.selected = true;
+		arrayutils.eachExcluding(this._surfaces, surface, s => s.selected = false);
+
 		this.emit('select', {
 			surfaces: this._surfaces,
 			surface: surface

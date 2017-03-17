@@ -3,6 +3,8 @@ const PanelElement = require('./PanelElement.js');
 
 const __surfaceListViewTemplate = require('../templates/mixins/surface-list-view.pug');
 
+//TODO: add a SurfaceListView class to simplif the draw method.
+
 //interface SurfaceSelectorEvent 
 //{
 //	panelElement : PanelElement,
@@ -21,8 +23,10 @@ module.exports = class SurfaceSelector extends OrderedGroup
 
 	onClickChild (panelElement, e) {
 		panelElement.class('selected');
-		panelElement.selected = true;
-		this.each(panelElement, el => el.unclass('selected'));
+		this.each(panelElement, el => {
+			el.unclass('selected');
+			el.surface.selected = false;
+		});
 		this.emit('select', {
 			surface: panelElement.surface,
 			panelElement: panelElement,
