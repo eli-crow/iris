@@ -3,7 +3,13 @@
 }
 
 .iris-surface-list-view {
-	@include selection;
+	@include selection(
+		$bordered: true,
+		$highlight: true,
+		$edge: border
+	);
+	@include clearfix;
+
 	padding: 0.2rem spacing(1);
 	cursor: pointer;
 
@@ -14,5 +20,18 @@
 	&:last-of-type {
 		border-bottom-left-radius: $radius-2;
 		border-bottom-right-radius: $radius-2;
+	}
+	& + & {
+		border-top-color: transparent;
+	}
+	&.selected {
+		border-top-color: $activated;
+	}
+
+	p {
+		float: left;
+	}
+	.iris-icon-button {
+		float: right;
 	}
 }

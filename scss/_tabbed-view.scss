@@ -5,17 +5,17 @@
 	background-color: $ambient-groove;
 }
 
-//.iris-button.iris-tab
 .iris-tab {
-	border: none !important;
-	border-radius: 0 !important;
+	@include selection(
+		$bordered: false,
+		$highlight: false
+	);
+
+	float: left;
+	padding: spacing(1) spacing(3);
 	margin: 0 !important;
 
 	&.selected {
-		background-color: white;
-	}
-
-	&:hover {
-		box-shadow: none !important;
+		background: white;
 	}
 }

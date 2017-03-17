@@ -39,6 +39,7 @@ module.exports = class TabbedView extends PanelElement
 		view.hide();
 		const tab = new Button(tabName)
 			.classes('iris-tab')
+			.unclass('iris-button')
 			.bind(() => this.switchView(tab, view));
 
 		this._tabs.add(tab);
@@ -57,4 +58,4 @@ module.exports = class TabbedView extends PanelElement
 
 		return this;
 	}
-}
+} 

@@ -7,7 +7,7 @@ module.exports = class OrderedGroup extends Group
 		super(groupElement, accepts, ['orderchanged'].concat(events || []));
 	}
 
-	onClick (panelElement, e) {
+	onClickChild (panelElement, e) {
 
 	}
 	grabChild (panelElement, e) {
@@ -28,7 +28,7 @@ module.exports = class OrderedGroup extends Group
 			down:  e => this.grabChild(panelElement, e),
 			move:  e => this.moveChild(panelElement, e),
 			up:    e => this.reorderChild(panelElement, e),
-			click: e => this.onClick(panelElement, e)
+			click: e => this.onClickChild(panelElement, e)
 		});
 
 		super.add(panelElement);

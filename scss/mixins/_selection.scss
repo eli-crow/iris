@@ -1,13 +1,34 @@
-@mixin selection () {
-	&.toggled, &.selected {
-		@include outline(1px, $activated);
-	}
-
-	&:hover:not(.selected):not(.toggled) {
-		@include outline(1px, $ambient-groove);
-	}
-
+@mixin selection (
+	$bordered: true,
+	$highlight: true,
+	$edge: outline
+) {
 	&:active {
 		background-color: $ambient-groove-light-1;
 	}
+
+
+	@mixin edge ($style, $color) {
+		@if ($style == "outline") {
+			@include outline(1px, $color);
+		}
+		@else {
+			border: solid 1px $color;
+		}
+	}
+
+	@if ($highlight) {
+		&.toggled, &.selected {
+			@include edge($edge, $activated);
+		}
+	}
+	
+	@if ($bordered) {
+		@include edge($edge, $ambient-groove);
+	}
+	@else {
+		&:hover:not(.selected):not(.toggled) {
+			@include edge($edge, $ambient-groove);
+		}
+	} 
 }

@@ -19,8 +19,9 @@ module.exports = class SurfaceSelector extends OrderedGroup
 		this.classes('iris-surface-selector');
 	}
 
-	onClick (panelElement, e) {
+	onClickChild (panelElement, e) {
 		panelElement.class('selected');
+		panelElement.selected = true;
 		this.each(panelElement, el => el.unclass('selected'));
 		this.emit('select', {
 			surface: panelElement.surface,
@@ -47,6 +48,7 @@ module.exports = class SurfaceSelector extends OrderedGroup
 			const html = __surfaceListViewTemplate({ name }= s);
 			const pe = new PanelElement(null, html);
 			pe.class('iris-surface-list-view');
+			if (s.selected) pe.class('selected');
 			pe.surface = s;
 			this.add(pe);
 		}
