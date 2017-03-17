@@ -1,3 +1,5 @@
+
+
 @mixin scrollbars(
 	$size, 
 	$radius: 0, 
@@ -6,26 +8,34 @@
 	$foreground-color-hover: darkgray, 
 	$background-color: mix($foreground-color, white,  50%)
 ) {
-	// For Google Chrome
+	//autoprefixer: off;
+
 	::-webkit-scrollbar {
 		-webkit-appearance: none;
 		width:  $size;
 		height: $size;
 	}
-
 	::-webkit-scrollbar-thumb {
 		background: $foreground-color;
 		border-radius: $radius;
-		height: 5rem;
-		width: 5rem;
 
 		&:hover {
 			background: $foreground-color-hover;
 		}
 	}
-
 	::-webkit-scrollbar-track {
 		background: $background-color;
+		width: $size + $padding;
+		height: $size + $padding;
+	}
+	::-webkit-scrollbar-button {
+		width: 0;
+		height: 0;
+		display: none;
+	}
+	::-webkit-scrollbar-corner {
+		background-color: $background-color;
+		display: none;
 	}
 
 	// For Internet Explorer
@@ -34,3 +44,5 @@
 		scrollbar-track-color: $background-color;
 	}
 }
+
+//autoprefixer: on;
