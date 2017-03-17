@@ -7,6 +7,8 @@ const mathutils = require('./mathutils.js');
 const arrayutils = require('./arrayutils.js');
 
 //todo: cache layers below current while drawing.
+//todo: look into caching methods for surfaces above. 
+// at least consecutive source-over layers can be cached
 
 // interface SurfaceManagerEvent {
 //   surfaces : Surface[],
@@ -51,6 +53,7 @@ module.exports = class SurfaceManager extends Emitter
 		});
 
 		this.draw();
+		
 		return this;
 	}
 

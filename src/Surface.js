@@ -4,6 +4,14 @@ const fnutils = require('./fnutils.js');
 const canvasutils = require('./canvasutils.js');
 const Tool = require('./Tool.js');
 
+const BlendMode = {
+	Normal: 'source-over',
+	Filter: 'multiply',
+	Inside: 'source-atop',
+	Hide: 'destination-out',
+	Mask: 'destination-out'
+}
+
 //an abstraction layer for canvas.
 module.exports = class Surface extends Emitter
 {
@@ -14,6 +22,7 @@ module.exports = class Surface extends Emitter
 		this.ctx = this.canvas.getContext('2d');
 		this.position = [0,0];
 		this.name = name || 'surface';
+		this.blendMode = BlendMode.Normal;
 
 		this._tempCanvas = document.createElement('canvas');
 		this._tempCtx = this._tempCanvas.getContext('2d');
@@ -63,3 +72,5 @@ module.exports = class Surface extends Emitter
 		return surface;
 	}
 }
+
+module.exports.BlendMode = BlendMode;
