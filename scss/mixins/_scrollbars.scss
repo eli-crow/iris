@@ -1,0 +1,36 @@
+@mixin scrollbars(
+	$size, 
+	$radius: 0, 
+	$padding: 0px, 
+	$foreground-color: gray, 
+	$foreground-color-hover: darkgray, 
+	$background-color: mix($foreground-color, white,  50%)
+) {
+	// For Google Chrome
+	::-webkit-scrollbar {
+		-webkit-appearance: none;
+		width:  $size;
+		height: $size;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: $foreground-color;
+		border-radius: $radius;
+		height: 5rem;
+		width: 5rem;
+
+		&:hover {
+			background: $foreground-color-hover;
+		}
+	}
+
+	::-webkit-scrollbar-track {
+		background: $background-color;
+	}
+
+	// For Internet Explorer
+	body {
+		scrollbar-face-color: $foreground-color;
+		scrollbar-track-color: $background-color;
+	}
+}
