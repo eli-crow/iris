@@ -46,6 +46,8 @@ module.exports = class Brush extends TexturedTool
 	}
 
 	onDown (surface, e) { 
+		super.onDown(surface, e);
+
 		this.draw(surface.ctx, e.offsetX, e.offsetY, 
 			Brush.applyEffectors(this._effectors, e, this._getBaseProps())
 		); 
@@ -53,11 +55,15 @@ module.exports = class Brush extends TexturedTool
 	}
 
 	onMove (surface, e) {
+		super.onDown(surface, e);
+
 		this.drawPoints(surface.ctx, e, e.pts); 
 		this.emit('draw');
 	}
 
-	onUp (ctx, e) {}
+	onUp (surface, e) {
+		super.onDown(surface, e);
+	}
 
 	getInputs() {
 		const inputs = super.getInputs();

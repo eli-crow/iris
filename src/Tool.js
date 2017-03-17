@@ -15,9 +15,11 @@ module.exports = class Tool extends Emitter {
 		this._baseProps = null;
 	}
 
-	onDown () {} //abstract
-	onMove () {} //abstract
-	onUp () {}   //abstract
+	onDown (surface, e) {} //abstract
+	onMove (surface, e) {
+		e.preventDefault();
+	}
+	onUp (surface, e) {}   //abstract
 
 	addEffector (name, effectorType, min, max, fn, isSmoothedEffector) {
 		const effector = new ToolEffector(this, name, effectorType, min, max, fn, isSmoothedEffector);

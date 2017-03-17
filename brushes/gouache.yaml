@@ -1,0 +1,25 @@
+name: Gouache
+shape: gouache-shape.jpg
+
+base: 
+  size: 3
+  something: 
+
+effectors: 
+  pressure:                             # each sub-object is a tab.
+    - type: size 
+      input: range 0 to 1
+      function: e => e.size
+    - type: angle
+      name: not default                 # override default name
+      function: e => e.penPressure
+    - type: color
+
+  direction:
+    - type: size 
+      input: range 0 to 1
+      function: e => e.size
+    - type: angle
+      name: not default                 # override default name
+      function: e => e.penPressure
+    - type: color  

@@ -56,9 +56,11 @@ module.exports = class ToolManager extends Emitter
 	onDown (e) { 
 		this._currentTool.onDown(this._surface, e); 
 	}
+
 	onMove (e) {
 		this._currentTool.onMove(this._surface, e); 
 	}
+	
 	onUp (e)   { 
 		this._currentTool.onUp(this._surface, e); 
 	}

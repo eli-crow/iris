@@ -2,6 +2,12 @@
 .iris-panel-group {
 	@include clearfix;
 	float: left;
+	position: fixed;
+	top: spacing(2);
+	left: spacing(2);
+
+	backface-visibility: hidden;
+	will-change: transform;
 	
 	> .panel {
 		border-bottom: solid 6px $ambient-groove;

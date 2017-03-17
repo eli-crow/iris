@@ -1,9 +1,7 @@
 .iris-drawing-area {
 	@include clearfix;
-	position: absolute;
 
-	top: 0;
-	left: 23rem;
+	margin: 90vh 90vw;
 
 	box-shadow: $drop-shadow-1;
 }
