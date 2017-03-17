@@ -7,12 +7,17 @@ const BrushPanel = require('./BrushPanel.js');
 const fnutils = require('./fnutils.js');
 const mathutils = require('./mathutils.js');
 
+let __instance = null;
+
 module.exports = class ToolManager extends Emitter
 {
 	constructor() {
 		super(['toolchanged', 'sample', 'draw']);
+		if (!__instance) __instance = this;
 
-		const eyedropper = new Eyedropper();
+		const eyedropper = new Eyedropper()
+			.on('pick', fnutils.throttle(data => this.emit('sample', data)), 50)
+			.on('pickend', data => this.setColor(data.rgba));
 		
 		const brush = new Brush()
 			.addEffector('Angle', 'size', -50, 50, e => Math.sin(e.direction), false)
@@ -34,22 +39,22 @@ module.exports = class ToolManager extends Emitter
 			.on('changeend', () => this.emit('toolchanged', eraser));
 		eraser.erase = true;
 
-
-		brush.on('changeend',  () => this.emit('toolchanged', this._currentTool));
-		eraser.on('changeend', () => this.emit('toolchanged', this._currentTool));
-		this.emit('toolchanged', this._currentTool);
-
-		eyedropper.on('pick', fnutils.throttle(data => this.emit('sample', data)), 50);
-		eyedropper.on('pickend', data => this.setColor(data.rgba));
+		ToolManager.Tools = {
+			Brush: brush,
+			Eyedropper: eyedropper,
+			Eraser: eraser,
+			Move: brush
+		};
 
 		this.panel = new BrushPanel();
-
 		this._currentTool = brush;
-		this._eyedropper = eyedropper;
 
 		//init
 		this.panel.setBrush(brush);
 		this.on('toolchanged', () => this.panel.brushPreview.draw());
+
+		//singleton
+		return __instance;
 	}
 
 	//e : IrisMouseEvent

@@ -31,6 +31,7 @@ inputManager.on('pointermove', e => toolManager.onMove(e));
 inputManager.on('pointerup', e => toolManager.onUp(e));
 
 const PointerStates = InputManager.PointerStates;
+const Tools = ToolManager.Tools;
 inputManager.on('pointerstatechange', e => {
 	switch (e.state) {
 		case PointerStates.Pan:
@@ -41,6 +42,9 @@ inputManager.on('pointerstatechange', e => {
 			break;
 		case PointerStates.Sample:
 			console.log('sample state');
+			break;
+		case PointerStates.Move:
+			// toolManager.setTool(Tools.)
 			break;
 	}
 });

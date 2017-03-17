@@ -6,7 +6,8 @@ const listenerutils = require('./listenerutils.js');
 const PointerStates = {
 	Brush:  0,
 	Pan:    1,
-	Sample: 2
+	Sample: 2,
+	Move: 3
 };
 
 // interface PointerStateEvent {
@@ -55,6 +56,11 @@ module.exports = class InputManager extends Emitter
 			'alt': {
 				preventDefault: true,
 				down: e => this.emitPointerStateEvent(e, PointerStates.Sample),
+				up:   e => this.revertPointerState(e)
+			},
+			'meta': {
+				preventDefault: true,
+				down: e => this.emitPointerStateEvent(e, PointerStates.Move),
 				up:   e => this.revertPointerState(e)
 			},
 

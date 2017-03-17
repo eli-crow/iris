@@ -3,11 +3,10 @@ const Button = require('./Button.js');
 
 module.exports = class ButtonGroup extends Group
 {
-	constructor() {
-		const element = document.createElement('div');
+	constructor(groupElement) {
+		const element = groupElement || document.createElement('div');
 		element.classList.add('iris-button-group');
 
 		super(element, Button);
-		this._element = element;
 	}
 }

@@ -159,7 +159,7 @@ const parseKeyMappings = function (descriptor) {
 			case 'ArrowUp':   case 'End':       case 'Home':      case 'PageDown':
 			case 'Clear':     case 'Copy':      case 'CrSel':     case 'Cut':     
 			case 'ExSel':     case 'Insert':    case 'Paste':     case 'Redo':
-			case 'PageUp':    case 'EraseEof':  case 'Undo': 
+			case 'PageUp':    case 'EraseEof':  case 'Undo':
 				keyMap.push({keys: [ KS ], on: descriptor[keyString]}); 
 			break;
 

@@ -16,6 +16,7 @@ module.exports = class Panel extends PanelElement
 
 module.exports.Group = require('./Group.js');
 module.exports.PanelGroup = require('./PanelGroup.js');
+module.exports.PanelElement = require('./PanelElement.js');
 module.exports.ButtonGroup = require('./ButtonGroup.js');
 module.exports.Button = require('./Button.js');
 module.exports.Toggle = require('./Toggle.js');

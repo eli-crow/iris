@@ -4,23 +4,25 @@ const __template = require('../templates/file-select.pug');
 
 module.exports = class FileSelect extends PanelElement 
 {
-	constructor (uploadMessage, dropMessage) {
+	constructor (uploadMessage, dropMessage, dragContext) {
+		dragContext = dragContext || window;
+
 		super(['load'], __template({uploadMessage, dropMessage}));
 
+		this._fileReader = new FileReader();
 		this._dropZone = this._element.querySelector('.iris-dropzone');
 		this._loading = this._element.querySelector('.iris-loading');
 		this._input = this._element.querySelector('.iris-file-select-input > input');
-		this._fileReader = new FileReader();
 
 		//init
-		this.classes('iris-file-select');
+		this.classes('iris-file-select', 'iris-button');
 
 		//TODO: add feature-detection
 		this._input.addEventListener('click', e => this._onFileSelect(e, this._input.value), false);
-		window.addEventListener('dragover', e => this._onDragOver(e), false);
-		window.addEventListener('dragenter', e => this._onDragEnter(e), false);
-		window.addEventListener('dragexit', e => this._onDragLeave(e), false);
-		window.addEventListener('drop', e => this._onDrop(e), false);
+		dragContext.addEventListener('dragover', e => this._onDragOver(e), false);
+		dragContext.addEventListener('dragenter', e => this._onDragEnter(e), false);
+		dragContext.addEventListener('dragexit', e => this._onDragLeave(e), false);
+		dragContext.addEventListener('drop', e => this._onDrop(e), false);
 		this._fileReader.addEventListener('load', file => this._emitFile(file), false);
 	}
 

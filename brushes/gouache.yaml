@@ -20,6 +20,6 @@ effectors:
       input: range 0 to 1
       function: e => e.size
     - type: angle
-      name: not default                 # override default name
+      name: not default              
       function: e => e.penPressure
     - type: color  
