@@ -1,9 +1,6 @@
 const OrderedGroup = require('./OrderedGroup.js');
 const PanelElement = require('./PanelElement.js');
-
-const __surfaceListViewTemplate = require('../templates/mixins/surface-list-view.pug');
-
-//TODO: add a SurfaceListView class to simplif the draw method.
+const SurfaceListView = require('./SurfaceListView.js');
 
 //interface SurfaceSelectorEvent 
 //{
@@ -15,31 +12,31 @@ const __surfaceListViewTemplate = require('../templates/mixins/surface-list-view
 module.exports = class SurfaceSelector extends OrderedGroup
 {
 	constructor (groupElement) {
-		super(groupElement, null, ['select']);
+		super(groupElement, SurfaceListView, ['select', 'remove', 'duplicate']);
 
 		//init
 		this.classes('iris-surface-selector');
 	}
 
-	onClickChild (panelElement, e) {
-		panelElement.class('selected');
-		this.each(panelElement, el => {
+	onClickChild (listView, e) {
+		listView.class('selected');
+		this.each(listView, el => {
 			el.unclass('selected');
-			el.surface.selected = false;
+			el.selected = false;
 		});
 		this.emit('select', {
-			surface: panelElement.surface,
-			panelElement: panelElement,
+			surface: listView.surface,
+			panelElement: listView,
 			event: e
 		});
 	}
-	grabChild (panelElement, e) {
+	grabChild (listView, e) {
 
 	}
-	moveChild (panelElement, e) {
+	moveChild (listView, e) {
 
 	}
-	reorderChild (panelElement, e) {
+	reorderChild (listView, e) {
 
 	}
 
@@ -47,15 +44,12 @@ module.exports = class SurfaceSelector extends OrderedGroup
 		this.empty();
 
 		let i = surfaces.length;
-		while (--i >= 0) {
-			const s = surfaces[i];
-			const html = __surfaceListViewTemplate({ name }= s);
-			const pe = new PanelElement(null, html);
-			pe.class('iris-surface-list-view');
-			if (s.selected) pe.class('selected');
-			pe.surface = s;
-			this.add(pe);
-		}
+		while (--i >= 0) 
+		this.add(
+			new SurfaceListView(surfaces[i]).on('remove', listView => {
+				this.emit('remove', listView.surface);
+			})
+		);
 
 		return this;
 	}

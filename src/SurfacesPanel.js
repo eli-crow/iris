@@ -15,7 +15,8 @@ module.exports = class SurfacesPanel extends Panel
 		this._fileSelect = new Panel.FileSelect(__uploadMessage, __dropMessage, window)
 			.on('load', data => this.emit('load', data));
 		this._surfaceSelector = new Panel.SurfaceSelector()
-			.on('select', data => this.emit('select', data));
+			.on('select', data => this.emit('select', data))
+			.on('remove', data => this.emit('remove', data));
 
 		//init
 		const x = new Panel.Group(this._element.querySelector('.controls'))

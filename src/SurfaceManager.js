@@ -30,7 +30,7 @@ module.exports = class SurfaceManager extends Emitter
 		this.panel.on('load', data => this.addFromDataUrl(data.dataUrl, data.name));
 		this.panel.on('select', sse => this.select(sse.surface));
 		this.panel.on('add', () => this.add(new Surface(null, 'new surface')));
-		this.panel.on('remove', () => this.remove(this._selectedSurface));
+		this.panel.on('remove', surface => this.remove(surface));
 	}
 
 	draw () {
@@ -62,7 +62,7 @@ module.exports = class SurfaceManager extends Emitter
 			return this;
 		}
 
-		const index = surfaces.indexOf(surface);
+		const index = surfaces.indexOf(surface || this._selectedSurface);
 		surfaces.splice(index, 1);
 
 		const newIndex = mathutils.clamp(index, 0, surfaces.length -1);
