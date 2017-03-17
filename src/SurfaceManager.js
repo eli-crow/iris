@@ -43,15 +43,14 @@ module.exports = class SurfaceManager extends Emitter
 		surface.resize(this._renderer.width, this._renderer.height);
 		this._surfaces.push(surface);
 		this.select(surface);
-
-		this.draw();
 		this.panel.drawSurfaceListView(this._surfaces);
 
-		this.emit(['add', 'select'], {
+		this.emit('add', {
 			surfaces: this._surfaces,
 			surface: surface
 		});
 
+		this.draw();
 		return this;
 	}
 
@@ -65,8 +64,7 @@ module.exports = class SurfaceManager extends Emitter
 		const index = surfaces.indexOf(surface || this._selectedSurface);
 		surfaces.splice(index, 1);
 
-		const newIndex = mathutils.clamp(index, 0, surfaces.length -1);
-		this.select(surfaces[newIndex]);
+		this.select(surfaces[mathutils.clamp(index - 1, 0, surfaces.length - 1)]);
 
 		this.draw();
 		this.panel.drawSurfaceListView(this._surfaces);
@@ -81,6 +79,7 @@ module.exports = class SurfaceManager extends Emitter
 
 	select(surface) {
 		surface.selected = true;
+		this._selectedSurface = surface;
 		arrayutils.eachExcluding(this._surfaces, surface, s => s.selected = false);
 
 		this.emit('select', {

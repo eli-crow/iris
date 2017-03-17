@@ -1,0 +1,24 @@
+name: Gouache
+shape: gouache-shape.jpg
+variables:
+  dirtColor: 
+    type: vec3
+  reach:
+    type: Range 0 to 1
+  
+----
+Color myMix = mix(@color, dirtColor, reach * @pressure);
+Point myPosition = @position * 
+
+@color = myMix;
+@position = 
+
+
+@time
+@distance
+@speed
+@angle
+@pressure
+@tilt
+@position
+@
