@@ -109,4 +109,4 @@ module.exports = class SurfaceManager extends Emitter
 
 		return this;
 	}
-}
+};

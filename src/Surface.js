@@ -38,9 +38,10 @@ module.exports = class Surface extends Emitter
 
 	setPosition (x, y) {
 		this.position = [x, y];
+		console.log([x,y].join('			'));
 	}
 
-	resize(w,h,x = 0,y = 0) {
+	resize(w, h, x = 0, y = 0) {
 		const canvas = this.canvas;
 		
 		this._tempCanvas.width = canvas.width;
@@ -64,11 +65,14 @@ module.exports = class Surface extends Emitter
 		const r = Math.max(sa.right, sb.right);
 		const b = Math.max(sa.bottom, sb.bottom);
 
-		const x = sb.left - sa.left;
-		const y = sb.top - sa.top;
+		//todo: this isn't right. but it's better than nothing for now.
+		const x = Math.max(sa.left, sb.left);
+		const y = Math.max(sa.top, sb.top);
 
-		this.setPosition(x, y);
+		// console.log([x, y, r-l, b-t].join('			'));
+
 		this.resize(r - l, b - t, x, y);
+		this.setPosition(l, t);
 	}
 
 	appendTo (element) {
@@ -106,6 +110,6 @@ module.exports = class Surface extends Emitter
 
 		return surface;
 	}
-}
+};
 
 module.exports.BlendMode = BlendMode;

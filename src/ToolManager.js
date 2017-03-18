@@ -13,7 +13,7 @@ let __instance = null;
 module.exports = class ToolManager extends Emitter
 {
 	constructor() {
-		super(['toolchanged', 'sample', 'draw']);
+		super(['toolchanged', 'sample', 'draw', 'transform']);
 		if (!__instance) __instance = this;
 
 		const eyedropper = new Eyedropper()
@@ -42,7 +42,7 @@ module.exports = class ToolManager extends Emitter
 			.on('draw', () => this.emit('draw'));
 
 		const mover = new SurfaceMover()
-			.on('move', () => this.emit('draw'));
+			.on('move', () => this.emit(['draw']));
 
 		this.Tools = {
 			brush: brush,
@@ -54,6 +54,7 @@ module.exports = class ToolManager extends Emitter
 		this.panel = new BrushPanel();
 		this._currentTool = brush;
 		this._color = [190,190,190,255];
+		this._surface = null;
 
 		//init
 		this.panel.setBrush(brush);
@@ -72,8 +73,8 @@ module.exports = class ToolManager extends Emitter
 		this._currentTool.onMove(this._surface, e); 
 	}
 	
-	onUp (e)   { 
-		this._currentTool.onUp(this._surface, e); 
+	onUp (e)  { 
+		this._currentTool.onUp(this._surface, e);
 	}
 
 	setTool (toolname) {

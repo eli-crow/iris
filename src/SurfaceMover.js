@@ -5,7 +5,7 @@ const mathutils = require('./mathutils.js');
 module.exports = class SurfaceMover extends Tool
 {
 	constructor () {
-		super(['move']);
+		super(['move', 'moveend']);
 		this._lastPos = null;
 	}
 
@@ -22,6 +22,7 @@ module.exports = class SurfaceMover extends Tool
 	}
 
 	onUp (surface, e) {
+		surface.needsResizing = true;
 		this._lastPos = null;
 	}
 }

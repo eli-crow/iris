@@ -25,7 +25,7 @@ $neutral-dark-1: darken($neutral, 5%);
 $neutral-dark-2: darken($neutral, 15%);
 $theme-1: #919191;
 
-$drop-shadow-1: 0px 2px 2px transparentize($ambient, 0.7);
+$drop-shadow-1: 0px 1.5px 2.5px 0.8px transparentize($ambient, 0.8);
 
 $gradient-neutral-white: linear-gradient(to bottom, $neutral, white 30%);
 $gradient-hcl-hue: linear-gradient(to right, #FF6395, #FF6637, #E48802, #48B12F, #00BFC9, #568FFF, #F46CDF, #FF6092);
