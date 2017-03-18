@@ -36,6 +36,7 @@ inputManager.on('pointerstatechange', e => {
 	switch (e.state) {
 		case PointerStates.Pan:     console.log('panning state');         break;
 		case PointerStates.Brush:   toolManager.setTool('brush');         break;
+		case PointerStates.Erase:   toolManager.setTool('eraser');        break;
 		case PointerStates.Sample:  toolManager.setTool('eyedropper');    break;
 		case PointerStates.Move:    toolManager.setTool('move');          break;
 	}

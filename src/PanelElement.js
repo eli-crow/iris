@@ -23,7 +23,8 @@ module.exports = class PanelElement extends Emitter
 	}
 
 	remove() {
-		this._element.parentNode.removeChild(this._element);
+		if (this._element.parentNode)
+			this._element.parentNode.removeChild(this._element);
 		return this;
 	}
 

@@ -7,7 +7,8 @@ const PointerStates = {
 	Brush:  0,
 	Pan:    1,
 	Sample: 2,
-	Move:   3
+	Erase:  3,
+	Move:   4
 };
 
 // interface PointerStateEvent {
@@ -47,7 +48,7 @@ module.exports = class InputManager extends Emitter
 		});
 
 		listenerutils.keyboard({
-			//pointer states
+			//========================================================= PointerStates
 			'space': {
 				preventDefault: true,
 				down: e => this.emitPointerStateEvent(e, PointerStates.Pan),
@@ -64,7 +65,19 @@ module.exports = class InputManager extends Emitter
 				up:   e => this.revertPointerState(e)
 			},
 
-			//commands
+
+			//========================================================= Tool Shortcuts
+			'e':  { //eraser
+				preventDefault: true,
+				down: e => this.setPointerState(e, PointerStates.Erase)
+			},
+			'b':  { //brush
+				preventDefault: true,
+				down: e => this.setPointerState(e, PointerStates.Brush)
+			},
+
+
+			//========================================================= Commands
 			'z': {
 				preventDefault: true,
 				down: e => this.emit('undo')
@@ -81,8 +94,8 @@ module.exports = class InputManager extends Emitter
 	}
 
 	setPointerState (e, state) {
-		emitPointerStateEvent(e, state);
-		this.state = state;
+		this.emitPointerStateEvent(e, state);
+		this.pointerState = state;
 	}
 
 	revertPointerState(e) {
@@ -95,7 +108,9 @@ function __getCursorString(state) {
 		case PointerStates.Move: return 'move';
 		case PointerStates.Pan: return 'default';
 		case PointerStates.Brush: return 'default';
+		case PointerStates.Erase: return 'default';
 		case PointerStates.Sample: return 'crosshair';
+		default: return 'initial';
 	}
 }
 

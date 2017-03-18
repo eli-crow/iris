@@ -30,14 +30,15 @@ module.exports = class ToolManager extends Emitter
 			.on('draw', () => this.emit('draw'));
 
 		const eraser = new Brush()
+			.setErase(true)
 			.addEffector('Angle', 'size', -50, 50, e => Math.sin(e.direction), false)
 			.addEffector('Direction', 'angle', 0, 1, e => e.direction, false)
 			.addEffector('Pressure', 'size', -50, 50, e => e.penPressure, true)
 			.addEffector('Pressure', 'flow', -1, 1, e => e.penPressure, true)
 			.addEffector('Speed', 'size', -50, 50, e => { const s = Math.sqrt(e.squaredSpeed); return s/(s+200); }, false)	
 			.addEffector('Speed', 'flow', -1, 1, e => { const s = Math.sqrt(e.squaredSpeed); return s/(s+200); }, false)
-			.on('changeend', () => this.emit('toolchanged', eraser));
-		eraser.erase = true;
+			.on('changeend', () => this.emit('toolchanged', eraser))
+			.on('draw', () => this.emit('draw'));
 
 		// const mover = new SurfaceMover ();
 
@@ -50,7 +51,7 @@ module.exports = class ToolManager extends Emitter
 
 		this.panel = new BrushPanel();
 		this._currentTool = brush;
-		this._color = [127, 127, 127];
+		this._color = [190,190,190,255];
 
 		//init
 		this.panel.setBrush(brush);
@@ -74,8 +75,13 @@ module.exports = class ToolManager extends Emitter
 	}
 
 	setTool (toolname) {
-		this._currentTool = this.Tools[ toolname.toLowerCase() ];
+		const tool = this.Tools[ toolname.toLowerCase() ];
+		this._currentTool = tool;
 		this.setColor(this._color);
+		if (tool instanceof Brush) { 
+			this.panel.setBrush(tool);
+			this.panel.draw();
+		}
 	}
 
 	setSurface(surface) {

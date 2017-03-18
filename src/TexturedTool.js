@@ -46,6 +46,10 @@ module.exports = class TexturedTool extends Tool
 	}
 
 	getInputs () {
+		if (this._inputs) {
+			return this._inputs;
+		}
+		
 		const inputs = super.getInputs();
 		inputs.shape = [ this._shapeSelector, this._shapeSelector.getInputs() ];
 		return inputs;

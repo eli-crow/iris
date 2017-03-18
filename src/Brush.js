@@ -8,7 +8,7 @@ module.exports = class Brush extends TexturedTool
 	constructor(options) {
 		super(['draw'], options);
 
-		this._properties.size = {min: 0, max: 5, value: 3, map: x => Math.exp(x)};
+		this._properties.size = {min: 0, max: 10, value: 4, map: x => x*x};
 		this._properties.flow = {min: 0, max: 1, value: 1};
 		this._properties.angle = {min: 0, max: 360, value: 135, map: x => mathutils.radians(x)};
 		this._dirty = true;
@@ -65,11 +65,21 @@ module.exports = class Brush extends TexturedTool
 		super.onDown(surface, e);
 	}
 
+	setErase (bool) {
+		this.erase = bool;
+
+		return this;
+	}
+
 	getInputs() {
+		if (this._inputs) {
+			return this._inputs;
+		}
+		
 		const inputs = super.getInputs();
 
 		inputs.base.push(new Panel.Spacer());
-		inputs.base.push(new Panel.Toggle('Erase', false)
+		inputs.base.push(new Panel.Toggle('Erase', this.erase)
 			.bind(isToggled => {
 				console.log(isToggled);
 				this.erase = isToggled;

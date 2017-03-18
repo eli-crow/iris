@@ -14,6 +14,7 @@ module.exports = class Tool extends Emitter
 		this._smoothedEffectors = [];
 		this._properties = {};
 		this._baseProps = null;
+		this._inputs = null;
 	}
 
 	onDown (surface, e) {} //abstract
@@ -55,6 +56,10 @@ module.exports = class Tool extends Emitter
 	}
 
 	getInputs () {
+		if (this._inputs) {
+			return this._inputs;
+		}
+
 		const inputs = {
 			base: [],
 		};
@@ -64,7 +69,8 @@ module.exports = class Tool extends Emitter
 			const prop = this._properties[name];
 
 			const slider = new Slider(prop.value, prop.min, prop.max, 0.005, strutils.titleCase(name));
-			if (fnutils.isFunction(prop.map))slider.transform(prop.map);
+			if (fnutils.isFunction(prop.map))
+				slider.map(prop.map);
 			slider.bind(val => {
 				this._properties[name].value = +val;
 				this._dirty = true;
@@ -82,6 +88,8 @@ module.exports = class Tool extends Emitter
 				inputs[eff.type] = [];
 			inputs[eff.type].push(eff.getInputs());
 		}
+
+		this._inputs = inputs;
 		
 		return inputs;
 	}

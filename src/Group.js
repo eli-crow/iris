@@ -38,6 +38,8 @@ module.exports = class Group extends PanelElement
 			if (exclude === this._panelElements[i]) continue;
 			fn(this._panelElements[i]);
 		}
+
+		return this;
 	}
 
 	
@@ -46,5 +48,7 @@ module.exports = class Group extends PanelElement
 		while (el.lastChild) {
 			el.removeChild(el.lastChild);
 		}
+
+		return this;
 	}
 }

@@ -5,9 +5,7 @@ const strutils = require('./strutils.js');
 module.exports = class InputBase extends PanelElement
 {
 	constructor(type, attributes, events) {
-		const emitterEvents = ['input', 'change'];
-		if (events) emitterEvents.concat(events);
-		super(emitterEvents);
+		super(['input', 'change'].concat(events));
 		
 		let html = attributes['name'] ? `<label for="${attributes.name}">
 			${strutils.titleCase(attributes.name)}
@@ -22,19 +20,22 @@ module.exports = class InputBase extends PanelElement
 
 		this._element = element;
 		this._input = element.children[element.children.length - 1];
-		this._input.addEventListener('input', this._onInput.bind(this), false);
-		this._input.addEventListener('change', this._onChange.bind(this), false);
+		this._map = null;
+
+		//init
+		this._input.addEventListener('input', () => this._emitValue('input'), false);
+		this._input.addEventListener('change', () => this._emitValue('change'), false);
 	}
 
-	_onInput () {
+	_emitValue (eventname) {
 		let val = +this._input.value; 
-		if (typeof this.transform === 'function') val = this.transform(val);
-		this.emit('input', val);
+		if (this._map) 
+			val = this._map(val);
+		this.emit(eventname, val);
 	}
-	_onChange () {
-		let val = +this._input.value; 
-		if (typeof this.transform === 'function') val = this.transform(val);
-		this.emit('change', val);
+
+	map (fn) {
+		if (typeof fn === 'function') this._map = fn;
 	}
 
 	bind (subject, prop) {
