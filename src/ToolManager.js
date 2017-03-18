@@ -3,6 +3,7 @@ const Emitter = require('./Emitter.js');
 const Panel = require('./Panel.js');
 const Eyedropper = require('./Eyedropper.js');
 const BrushPanel = require('./BrushPanel.js');
+const SurfaceMover = require('./SurfaceMover.js');
 
 const fnutils = require('./fnutils.js');
 const mathutils = require('./mathutils.js');
@@ -40,13 +41,14 @@ module.exports = class ToolManager extends Emitter
 			.on('changeend', () => this.emit('toolchanged', eraser))
 			.on('draw', () => this.emit('draw'));
 
-		// const mover = new SurfaceMover ();
+		const mover = new SurfaceMover()
+			.on('move', () => this.emit('draw'));
 
 		this.Tools = {
 			brush: brush,
 			eyedropper: eyedropper,
 			eraser: eraser,
-			move: brush
+			move: mover
 		};
 
 		this.panel = new BrushPanel();
@@ -62,7 +64,7 @@ module.exports = class ToolManager extends Emitter
 	}
 
 	//e : IrisMouseEvent
-	onDown (e) { 
+	onDown (e) {
 		this._currentTool.onDown(this._surface, e); 
 	}
 

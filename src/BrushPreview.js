@@ -1,11 +1,11 @@
 const Brush = require('./Brush.js');
 const mathutils = require('./mathutils.js');
+const Surface = require('./Surface.js');
 
 module.exports = class BrushPreview
 {
 	constructor(canvas) {
-		this._canvas = canvas;
-		this._ctx = canvas.getContext('2d');
+		this._surface = new Surface(canvas);
 		this._brush = null;
 		this._pts = null;
 		this._nPts = 100;
@@ -15,7 +15,7 @@ module.exports = class BrushPreview
 	}
 
 	onResize() {
-		const canvas = this._canvas;
+		const canvas = this._surface.canvas;
 		const cs = window.getComputedStyle(canvas);
 
 		canvas.width = parseInt(cs.width);
@@ -37,15 +37,18 @@ module.exports = class BrushPreview
 
 	//TODO: fake the pressure, speed, along the curve
 	draw() {
+		const canvas = this._surface.canvas;
+		const ctx = this._surface.ctx;
+
 		if (this._brush.erase) {
-			this._ctx.fillStyle = `rgba(${this._brush._color.slice(0,3).join(',')},1)`;
-			this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
+			ctx.fillStyle = `rgba(${this._brush._color.slice(0,3).join(',')},1)`;
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
 		} else {
-			this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
 		}
 		
 		for (var i = 0, ii = this._pts.length; i < ii; i+=2) {
-			this._brush.drawPoints(this._ctx, {
+			this._brush.drawPoints(this._surface, {
 				lastPressure: 1-(Math.cos(i/ii * Math.PI * 2) * 0.5 + 0.5), 
 				penPressure: 1-(Math.cos((i+1)/ii * Math.PI * 2) * 0.5 + 0.5),  
 				squaredSpeed: (1-(Math.cos(i/ii * Math.PI * 2) * 0.5 + 0.5)) * 10000 + 1,
