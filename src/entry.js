@@ -34,18 +34,10 @@ const PointerStates = InputManager.PointerStates;
 const Tools = ToolManager.Tools;
 inputManager.on('pointerstatechange', e => {
 	switch (e.state) {
-		case PointerStates.Pan:
-			console.log('panning state');
-			break;
-		case PointerStates.Brush:
-			console.log('brush state');
-			break;
-		case PointerStates.Sample:
-			console.log('sample state');
-			break;
-		case PointerStates.Move:
-			// toolManager.setTool(Tools.)
-			break;
+		case PointerStates.Pan:     console.log('panning state');         break;
+		case PointerStates.Brush:   toolManager.setTool('brush');         break;
+		case PointerStates.Sample:  toolManager.setTool('eyedropper');    break;
+		case PointerStates.Move:    toolManager.setTool('move');          break;
 	}
 });
 

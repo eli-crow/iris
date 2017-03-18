@@ -39,15 +39,18 @@ module.exports = class ToolManager extends Emitter
 			.on('changeend', () => this.emit('toolchanged', eraser));
 		eraser.erase = true;
 
-		ToolManager.Tools = {
-			Brush: brush,
-			Eyedropper: eyedropper,
-			Eraser: eraser,
-			Move: brush
+		// const mover = new SurfaceMover ();
+
+		this.Tools = {
+			brush: brush,
+			eyedropper: eyedropper,
+			eraser: eraser,
+			move: brush
 		};
 
 		this.panel = new BrushPanel();
 		this._currentTool = brush;
+		this._color = [127, 127, 127];
 
 		//init
 		this.panel.setBrush(brush);
@@ -70,11 +73,17 @@ module.exports = class ToolManager extends Emitter
 		this._currentTool.onUp(this._surface, e); 
 	}
 
+	setTool (toolname) {
+		this._currentTool = this.Tools[ toolname.toLowerCase() ];
+		this.setColor(this._color);
+	}
+
 	setSurface(surface) {
 		this._surface = surface;
 	}
 
 	setColor(colorArr) {
-		this._currentTool.setColor(colorArr);
+		this._color = colorArr;
+		if (this._currentTool.setColor) this._currentTool.setColor(this._color);
 	}
 }

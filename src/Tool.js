@@ -5,7 +5,8 @@ const fnutils = require('./fnutils.js');
 const ToolEffector = require('./ToolEffector.js');
 
 //abstract
-module.exports = class Tool extends Emitter {
+module.exports = class Tool extends Emitter 
+{
 	constructor (events, options) {
 		super(['change', 'changeend'].concat(events));
 
