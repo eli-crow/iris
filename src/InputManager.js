@@ -32,7 +32,9 @@ module.exports = class InputManager extends Emitter
 			'pointerstatechange',
 			'pointerdown',
 			'pointermove',
-			'pointerup'
+			'pointerup',
+
+			'clear'
 		]);
 
 		this.pointerState = PointerStates.Brush;
@@ -81,6 +83,10 @@ module.exports = class InputManager extends Emitter
 			'z': {
 				preventDefault: true,
 				down: e => this.emit('undo')
+			},
+			'backspace': {
+				preventDefault: true,
+				down: e => this.emit('clear')
 			}
 		});
 	}

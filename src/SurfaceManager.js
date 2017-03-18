@@ -95,6 +95,7 @@ module.exports = class SurfaceManager extends Emitter
 
 	clearCurrentSurface () {
 		this._selectedSurface.clear();
+		this._selectedSurface.resize(this._renderer.width, this._renderer.height);
 		this.draw();
 
 		return this;

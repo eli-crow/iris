@@ -145,7 +145,6 @@ function listenOnce (element, eventname, fn, useCapture) {
 
 
 
-
 const parseKeyMappings = function (descriptor) {
 	let keyMap = [];
 
@@ -178,6 +177,7 @@ const parseKeyMappings = function (descriptor) {
 	return keyMap;
 }
 
+//todo: safari does not support KeyboardEvent.key, detect this, and adjust to keypress or some other method
 const getKeyListenerObject = function (keyMap, downEvent) {
 	for (let i = 0, ii = keyMap.length; i < ii; i++) {
 		if (arrayutils.isAnyOf(downEvent.key, keyMap[i].keys)) return keyMap[i].on;
@@ -185,7 +185,7 @@ const getKeyListenerObject = function (keyMap, downEvent) {
 };
 
 /**
- * creates a listener configuration that, for each string key of the descriptor, fires a keypress event once and a key up when that key is released
+ * creates a listener configuration that, for each string key of the descriptor, fires a keydown event once and a key up when that key is released
  * @param  {object} descriptor an object that is structured like so: `{'abcd':{down: e => console.log('a, b, c, or d pressed'), up: down: e => console.log('a, b, c, or d released')}}`
  * @return {void}
  */

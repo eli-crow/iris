@@ -42,6 +42,8 @@ inputManager.on('pointerstatechange', e => {
 	}
 });
 
+inputManager.on('clear', () => surfaceManager.clearCurrentSurface());
+
 
 
 toolManager.setSurface(surfaceManager._selectedSurface);
