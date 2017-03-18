@@ -10,7 +10,6 @@
 .iris-surface {
 	z-index: 0;
 	
-	cursor: default;
 	background-color: white;
 }
 
@@ -19,8 +18,6 @@
 	left: 35rem;
 	height: 100%;
 	width: auto;
-	
-	cursor: default;
 
 	pointer-events: none;
 	user-select: none;

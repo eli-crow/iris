@@ -7,7 +7,7 @@ const PointerStates = {
 	Brush:  0,
 	Pan:    1,
 	Sample: 2,
-	Move: 3
+	Move:   3
 };
 
 // interface PointerStateEvent {
@@ -23,7 +23,7 @@ const PointerStates = {
 //  etc...
 // }
 
-//manages input state for application. emits effective action and returns to actual tool selection.
+//manages input state for application. emits effective action and returns to actual tool selection. also manages cursor style;
 module.exports = class InputManager extends Emitter
 {
 	constructor (relativeElmnt) {
@@ -72,11 +72,8 @@ module.exports = class InputManager extends Emitter
 		});
 	}
 
-	emitIrisPointerEvent (e) {
-		
-	}
-
 	emitPointerStateEvent (e, state) {
+		document.body.style.cursor = __getCursorString(state);
 		this.emit('pointerstatechange', {
 			preventDefault: () => e.preventDefault.call(e),
 			state: state
@@ -92,5 +89,14 @@ module.exports = class InputManager extends Emitter
 		this.emitPointerStateEvent(e, this.pointerState);
 	}
 };
+
+function __getCursorString(state) {
+	switch (state) {
+		case PointerStates.Move: return 'move';
+		case PointerStates.Pan: return 'default';
+		case PointerStates.Brush: return 'default';
+		case PointerStates.Sample: return 'crosshair';
+	}
+}
 
 module.exports.PointerStates = PointerStates;
