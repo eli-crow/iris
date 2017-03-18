@@ -26,6 +26,7 @@ module.exports = class Surface extends Emitter
 
 		this._tempCanvas = document.createElement('canvas');
 		this._tempCtx = this._tempCanvas.getContext('2d');
+		//todo: add a defined bounds based on where a marking tool has touched
 
 		//init
 		this.canvas.oncontextmenu = () => false;
@@ -35,7 +36,11 @@ module.exports = class Surface extends Emitter
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); 
 	}
 
-	resize(w,h) {
+	setPosition (x, y) {
+		this.position = [x, y];
+	}
+
+	resize(w,h,x = 0,y = 0) {
 		const canvas = this.canvas;
 		
 		this._tempCanvas.width = canvas.width;
@@ -43,7 +48,27 @@ module.exports = class Surface extends Emitter
 		this._tempCtx.drawImage(canvas, 0, 0);
 		canvas.width = w;
 		canvas.height = h;
-		this.ctx.drawImage(this._tempCanvas, 0, 0);
+		this.ctx.drawImage(this._tempCanvas, x, y);
+	}
+
+	get width () { return this.canvas.width }
+	get height () { return this.canvas.height }
+
+	//todo: make this the primary way of resizing
+	resizeToSurface(surface) {
+		const sa = this.getBounds();
+		const sb = surface.getBounds();
+
+		const l = Math.min(sa.left, sb.left);
+		const t = Math.min(sa.top, sb.top);
+		const r = Math.max(sa.right, sb.right);
+		const b = Math.max(sa.bottom, sb.bottom);
+
+		const x = sb.left - sa.left;
+		const y = sb.top - sa.top;
+
+		this.setPosition(x, y);
+		this.resize(r - l, b - t, x, y);
 	}
 
 	appendTo (element) {
@@ -52,6 +77,16 @@ module.exports = class Surface extends Emitter
 
 	getDataURL (filename) {
 		return this.canvas.toDataURL();
+	}
+
+	getBounds () {
+		const self = this;
+		return {
+			left:   self.position[0], 
+			right:  self.position[0] + self.width,
+			top:    self.position[1], 
+			bottom: self.position[1] + self.height
+		};
 	}
 
 	static fromDataUrl (url, name) {
