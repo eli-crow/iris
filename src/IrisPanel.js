@@ -14,12 +14,17 @@ module.exports = class IrisPanel extends Panel
 
 		this.iris = new Iris(this._wheel);
 		this.iris.on(['pick', 'pickend'], rgbArr => this.setIndicatorColor(rgbArr));
-		this.iris.setMode('Colors');
+		this.iris.setMode('Colors B');
 
 		//init
 		const lightnessSlider = new Panel.Slider(77, 0, 100, 1/255)
 			.classes('lightness')
-			.bind(this.iris.palettes['Colors'].uniforms, "lightness")
+			.bind(this.iris.palettes['Colors A'].uniforms, "lightness")
+			.on('change', () => this.iris.emitColors('pickend', null, false))
+			.hide();
+		const HSLSlider = new Panel.Slider(.77, 0, 1, 1/255)
+			.classes('lightness')
+			.bind(this.iris.palettes['Colors B'].uniforms, "lightness")
 			.on('change', () => this.iris.emitColors('pickend', null, false));
 		const hueSlider = new Panel.Slider(0, 0, 360, 1)
 			.classes('hue')
@@ -29,6 +34,7 @@ module.exports = class IrisPanel extends Panel
 			.hide();
 		const inputs = new Panel.Group(this._inputs)
 			.add(lightnessSlider)
+			.add(HSLSlider)
 			.add(hueSlider);
 
 		//TODO: refactor into iris.
@@ -40,18 +46,24 @@ module.exports = class IrisPanel extends Panel
 			button._element.style.borderTopColor = '';
 			inputs.each(slider, input => input.hide() );
 			modeButtonGroup.each(button, btn => btn._element.style.borderTopColor = 'transparent');
+			this.iris.emitColors('pickend', null, null, false);
 		}
 
-		const sameLightnessButton = new Panel.Button('Colors')
+		const sameLightnessButton = new Panel.Button('Colors A')
 			.class('iris-tab')
 			.unclass('iris-button')
-			.bind(() => setMode("Colors", lightnessSlider, sameLightnessButton));
+			.bind(() => setMode("Colors A", lightnessSlider, sameLightnessButton));
+		const HSLButton = new Panel.Button('Colors B')
+			.class('iris-tab')
+			.unclass('iris-button')
+			.bind(() => setMode("Colors B", HSLSlider, HSLButton));
 		const sameHueButton = new Panel.Button('Shades')
 			.class('iris-tab')
 			.unclass('iris-button')
 			.bind(() => setMode("Tones", hueSlider, sameHueButton));
 		const modeButtonGroup = new Panel.ButtonGroup()
 			.add(sameLightnessButton)
+			.add(HSLButton)
 			.add(sameHueButton);
 
 		const modes = new Panel.Group(this._modes)
@@ -72,7 +84,7 @@ module.exports = class IrisPanel extends Panel
 
 	onResize() {
 		this.iris.onResize();
-		this.iris.setMode('Colors');
+		this.iris.setMode('Colors B');
 		this.iris.emitColors('pick', null, null, false);
 	}
 }

@@ -45,8 +45,8 @@ module.exports = class Iris extends Emitter
 			}
 		});
 
-		this.addPalette('Colors', require('../shaders/frag/same_lightness.frag'),     {lightness: {type: '1f', value: 77}});
-		// this.addPalette('Colors B', require('../shaders/frag/same_lightness_hsl.frag'), {lightness: {type: '1f', value: .5}});
+		this.addPalette('Colors A', require('../shaders/frag/same_lightness.frag'),     {lightness: {type: '1f', value: 77}});
+		this.addPalette('Colors B', require('../shaders/frag/same_lightness_hsl.frag'), {lightness: {type: '1f', value: .77}});
 		this.addPalette('Tones',    require('../shaders/frag/same_hue.frag'),           {hue: {type: '1f', value: 0}});
 
 		this._pupil.on('huerotate', e =>	{
