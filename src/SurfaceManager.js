@@ -28,7 +28,9 @@ module.exports = class SurfaceManager extends Emitter
 		this._renderer = new SurfaceRenderer(containerElement, settings.document);
 
 		//init
-		this.add(new Surface(null, 'new surface'));
+		this.add(new Surface(null, 'background'));
+		this.draw();
+
 		this.panel.on('load', data => this.addFromDataUrl(data.dataUrl, data.name));
 		this.panel.on('select', sse => this.select(sse.surface));
 		this.panel.on('add', () => this.add(new Surface(null, 'new surface')));

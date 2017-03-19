@@ -32,12 +32,23 @@ module.exports = class Surface extends Emitter
 		this.canvas.oncontextmenu = () => false;
 	}
 
-	clear () { 
-		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); 
+	clear () {
+		this.ctx.clearRect(0, 0, this.width, this.height);
+
+		return this;
+	}
+
+	fill (color) {
+		if (color) this.ctx.fillStyle = color;
+		this.ctx.fillRect(0, 0, this.width, this.height);
+
+		return this;
 	}
 
 	setPosition (x, y) {
 		this.position = [x, y];
+
+		return this;
 	}
 
 	resize(w, h, x = 0, y = 0) {
@@ -49,6 +60,8 @@ module.exports = class Surface extends Emitter
 		canvas.width = w;
 		canvas.height = h;
 		this.ctx.drawImage(this._tempCanvas, x, y);
+
+		return this;
 	}
 
 	get width () { return this.canvas.width }
@@ -72,14 +85,20 @@ module.exports = class Surface extends Emitter
 
 		this.resize(r - l, b - t, x, y);
 		this.setPosition(l, t);
+
+		return this;
 	}
 
 	appendTo (element) {
 		element.appendChild(this.canvas);
+
+		return this;
 	}
 
 	getDataURL (filename) {
 		return this.canvas.toDataURL();
+
+		return this;
 	}
 
 	getBounds () {

@@ -26,19 +26,19 @@ module.exports = class SurfaceRenderer extends Emitter
 
 		options = objutils.copyDefaults(options, __defaults);
 		this.surface = new Surface();
-		this._transparencySurface = new Surface();
 		this._element = containerElement || document.createElement('div');
+		// this._transparencySurface = new Surface();
 
 		//init
 		this.surface.resize( options.width, options.height );
 		this.surface.appendTo( this._element );
-		this._transparencySurface.resize( options.width, options.height );
-		canvasutils.drawTransparencyGrid(
-			this._transparencySurface.canvas, 
-			options['gridSize'],
-			options['gridColor1'],
-			options['gridColor2']
-		);
+		// this._transparencySurface.resize( options.width, options.height );
+		// // canvasutils.drawTransparencyGrid(
+		// // 	this._transparencySurface.canvas, 
+		// // 	options['gridSize'],
+		// // 	options['gridColor1'],
+		// // 	options['gridColor2']
+		// // );
 	}
 
 	get width () { return this.surface.width }
@@ -47,10 +47,10 @@ module.exports = class SurfaceRenderer extends Emitter
 	resize () {}
 
 	draw (surfaces) {
-		this.clear();
 
 		//draw the grid
-		SurfaceRenderer.compose(this.surface, this._transparencySurface);
+		// SurfaceRenderer.compose(this.surface, this._transparencySurface);
+		this.surface.fill('white');
 
 		//then the surfaces
 		for (let i = 0, ii = surfaces.length; i < ii; i++) {
@@ -66,7 +66,7 @@ module.exports = class SurfaceRenderer extends Emitter
 	}
 
 	clear () {
-		this.surface.ctx.clearRect(0, 0, this.width, this.height); 
+		this.surface.clear();
 	}
 
 	static compose (targetSurface, surface) {

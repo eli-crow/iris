@@ -9,7 +9,7 @@ module.exports = class Brush extends TexturedTool
 		super(['draw'], options);
 
 		this._properties.size = {min: 0, max: 10, value: 4, map: x => x*x};
-		this._properties.flow = {min: 0, max: 1, value: 1};
+		this._properties.flow = {min: 0.3, max: 1, value: 1};
 		this._properties.angle = {min: 0, max: 360, value: 135, map: x => mathutils.radians(x)};
 		this._dirty = true;
 		
