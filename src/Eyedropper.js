@@ -9,10 +9,13 @@ module.exports = class Eyedropper extends Tool
 	}
 
 	sample (ctx, eventname, e) {
-		const p = canvasutils.getPixel(ctx, e.offsetX, e.offsetY);
+		//p:Uint8ClampedArray
+		const p = canvasutils.getPixel(ctx, e.relX, e.relY);
 		if (p[3] > 0) {
-			const rgba = [p[0], p[1], p[2], 255];
-			this.emit(eventname, {rgba: rgba, hsl: hsluv.rgbToHsluv(rgba.map(x => x/255))});
+			p[3] = 255;
+
+			const hsl = hsluv.rgbToHsluv([p[0]/255, p[1]/255, p[2]/255, 1]);
+			this.emit(eventname, {rgba: p, hsl});
 		}
 		e.preventDefault();
 	}

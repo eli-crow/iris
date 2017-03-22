@@ -8,17 +8,20 @@ variables:
   
 ----
 Color myMix = mix(@color, dirtColor, reach * @pressure);
-Point myPosition = @position * 
+Point myPosition = @position *
 
-@color = myMix;
-@position = 
+//read and write
+@color 					 the color of the stamp
+@position        distance from top left corner of drawing area
+@time            time since stroke started in seconds
+@distance				 the distance from the starting point
+@speed           the distance between two stamps
+@angle           the angle of rotation of the brush texture
+@position        distance from top left corner of drawing surface
 
-
-@time
-@distance
-@speed
-@angle
-@pressure
-@tilt
-@position
-@
+//read-only uniforms
+iLength					 the overall length of the brush stroke
+iDirection       the angle of pointer movement, in radians.
+iStartDirection  the direction the pointer started moving in         
+iPressure        pressure of a stylus from 0 to 1
+iTilt            tilt of a stylus, if supported

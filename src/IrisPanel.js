@@ -71,7 +71,7 @@ module.exports = class IrisPanel extends Panel
 	}
 
 	setIndicatorColor(rgbArr) {
-		this._indicator.style.backgroundColor = `rgba(${rgbArr.slice(0,3).join(',')}, 1)`;
+		this._indicator.style.backgroundColor = `rgba(${[rgbArr[0], rgbArr[1], rgbArr[2]].join(',')}, 1)`;
 	}
 
 	setColorData(data) {
