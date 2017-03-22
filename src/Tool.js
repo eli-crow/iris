@@ -81,13 +81,13 @@ module.exports = class Tool extends Emitter
 		}
 
 		// then effector sliders
-		const effs = this._effectors.concat(this._smoothedEffectors);
-		for (let i = 0, ii = effs.length; i < ii; i++) {
-			const eff = effs[i];
-			if (!Array.isArray(inputs[eff.type]))
-				inputs[eff.type] = [];
-			inputs[eff.type].push(eff.getInputs());
-		}
+		// const effs = this._effectors.concat(this._smoothedEffectors);
+		// for (let i = 0, ii = effs.length; i < ii; i++) {
+		// 	const eff = effs[i];
+		// 	if (!Array.isArray(inputs[eff.type]))
+		// 		inputs[eff.type] = [];
+		// 	inputs[eff.type].push(eff.getInputs());
+		// }
 
 		this._inputs = inputs;
 		
