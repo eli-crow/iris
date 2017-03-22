@@ -18,7 +18,7 @@ const arrayutils = require('./arrayutils.js');
 module.exports = class SurfaceManager extends Emitter
 {
 	constructor (containerElement, settings) {
-		super(['select', 'add', 'remove', 'reorder', 'duplicate']);
+		super(['select', 'add', 'remove', 'reorder', 'duplicate', 'download']);
 
 		this.panel = new SurfacesPanel();
 
@@ -37,6 +37,7 @@ module.exports = class SurfaceManager extends Emitter
 		this.panel.on('remove', surface => this.remove(surface));
 		this.panel.on('reorderup', surface => this.adjustSurfaceOrder(surface, 1));
 		this.panel.on('reorderdown', surface => this.adjustSurfaceOrder(surface, -1));
+		this.panel.on('download', () => this._renderer.download());
 	}
 
 	draw () {
