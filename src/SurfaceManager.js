@@ -79,7 +79,7 @@ module.exports = class SurfaceManager extends Emitter
 
 		if (change === 0) return false;
 		if (change < 0 && i <= 0) return false;
-		if (change < 0 && i >= this._surfaces.length-1) return false;
+		if (change > 0 && i >= this._surfaces.length-1) return false;
 
 		arrayutils.swap(this._surfaces, i, i + change);
 		this.panel.drawSurfaceListView(this._surfaces);
