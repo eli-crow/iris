@@ -1,6 +1,7 @@
 const Emitter = require('./Emitter.js');
 const SmoothPointer = require('./SmoothPointer.js');
 const listenerutils = require('./listenerutils.js');
+const ResizeListener = require('./ResizeListener.js');
 
 //enum
 const PointerStates = {
@@ -34,12 +35,15 @@ module.exports = class InputManager extends Emitter
 			'pointermove',
 			'pointerup',
 
-			'clear'
+			'clear',
+			'undo',
+
+			'zoom'
 		]);
 
 		this.pointerState = PointerStates.Brush;
 		this.pointer = new SmoothPointer(document.documentElement, {
-			minDistance: 4,
+			minDistance: 2,
 			steps: 2,
 			smoothing: 0.5,
 			relativeTo: relativeElmnt,
@@ -80,7 +84,7 @@ module.exports = class InputManager extends Emitter
 
 
 			//========================================================= Commands
-			'z': {
+			'meta + z': {
 				preventDefault: true,
 				down: e => this.emit('undo')
 			},
@@ -88,6 +92,10 @@ module.exports = class InputManager extends Emitter
 				preventDefault: true,
 				down: e => this.emit('clear')
 			}
+		});
+
+		this.resize = new ResizeListener({
+			after: e => setPointerScale(e.zoom)
 		});
 	}
 
@@ -107,12 +115,21 @@ module.exports = class InputManager extends Emitter
 	revertPointerState(e) {
 		this.emitPointerStateEvent(e, this.pointerState);
 	}
+
+	setPointerScale (zoom) {
+		console.log(zoom);
+		// const scale = this.pointer.scale + change/10;
+		// this.pointer.scale = scale;
+		// this.emit('zoom', scale);
+		// this.scale += change/10;
+		// this.emit('zoom', this.scale);
+	}
 };
 
 function __getCursorString(state) {
 	switch (state) {
 		case PointerStates.Move: return 'move';
-		case PointerStates.Pan: return 'default';
+		case PointerStates.Pan: return 'grab';
 		case PointerStates.Brush: return 'default';
 		case PointerStates.Erase: return 'default';
 		case PointerStates.Sample: return 'crosshair';

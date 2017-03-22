@@ -26,9 +26,9 @@ const colorManager    = new ColorManager();
 
 
 
-inputManager.on('pointerdown', e => toolManager.onDown(e));
-inputManager.on('pointermove', e => toolManager.onMove(e));
-inputManager.on('pointerup', e => toolManager.onUp(e));
+inputManager.on('pointerdown', e => toolManager.onDown(e, surfaceManager.zoom));
+inputManager.on('pointermove', e => toolManager.onMove(e, surfaceManager.zoom));
+inputManager.on('pointerup', e => toolManager.onUp(e, surfaceManager.zoom));
 
 const PointerStates = InputManager.PointerStates;
 const Tools = ToolManager.Tools;
@@ -43,7 +43,7 @@ inputManager.on('pointerstatechange', e => {
 });
 
 inputManager.on('clear', () => surfaceManager.clearCurrentSurface());
-
+inputManager.on('zoom', () => panelGroup.resize());
 
 
 toolManager.setSurface(surfaceManager._selectedSurface);
@@ -53,7 +53,6 @@ toolManager.on('draw', () => surfaceManager.draw());
 surfaceManager.on('select', smEvent => toolManager.setSurface(smEvent.surface));
 
 colorManager.on('pickend', data => toolManager.setColor(data));
-
 
 
 panelGroup

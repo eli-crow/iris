@@ -35,6 +35,8 @@ module.exports = class SurfaceManager extends Emitter
 		this.panel.on('select', sse => this.select(sse.surface));
 		this.panel.on('add', () => this.add(new Surface(null, 'new surface')));
 		this.panel.on('remove', surface => this.remove(surface));
+		this.panel.on('reorderup', surface => this.adjustSurfaceOrder(surface, 1));
+		this.panel.on('reorderdown', surface => this.adjustSurfaceOrder(surface, -1));
 	}
 
 	draw () {
@@ -42,6 +44,12 @@ module.exports = class SurfaceManager extends Emitter
 
 		return this;
 	}
+
+	setZoom (scale) {
+		this._renderer.setZoom(scale);
+	}
+
+	get zoom () { return this._renderer.zoom; }
 
 	add (surface) {
 		surface.resize(this._renderer.width, this._renderer.height);
@@ -57,6 +65,17 @@ module.exports = class SurfaceManager extends Emitter
 		this.draw();
 		
 		return this;
+	}
+
+	adjustSurfaceOrder(surface, change) {
+		const i = this._surfaces.indexOf(surface);
+		console.log(i);
+		if (i >= this._surfaces.length-1 || i <= 0) return false;
+
+		arrayutils.swap(this._surfaces, i, i + change);
+		this.panel.drawSurfaceListView(this._surfaces);
+		this.select(surface);
+		this.draw();
 	}
 
 	remove (surface) {

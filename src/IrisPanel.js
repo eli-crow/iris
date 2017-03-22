@@ -2,6 +2,9 @@ const Panel = require('./Panel.js');
 const Iris = require('./Iris.js');
 const mathutils = require('./mathutils.js');
 
+// todo: refactor inputs into iris.getinputs() <- irispalette.getinputs() so
+// irispalette can bind sliders and configure internally.
+
 module.exports = class IrisPanel extends Panel
 {
 	constructor () {
@@ -77,7 +80,10 @@ module.exports = class IrisPanel extends Panel
 	setColorData(data) {
 		const iris = this.iris;
 		iris._highlight.movePolarNormal(-1 * mathutils.radians(data.hsl[0]), data.hsl[1]/100);
-		iris.palettes['Colors'].uniforms.lightness = data.hsl[2];
+
+		const cpu = iris.currentPalette.uniforms;
+		if (cpu.lightness) cpu.lightness = data.hsl[2];
+
 		this.setIndicatorColor(data.rgba);
 		this._lightnessSlider._input.value = data.hsl[2]
 	}

@@ -12,7 +12,7 @@ const SurfaceListView = require('./SurfaceListView.js');
 module.exports = class SurfaceSelector extends OrderedGroup
 {
 	constructor (groupElement) {
-		super(groupElement, SurfaceListView, ['select', 'remove', 'duplicate']);
+		super(groupElement, SurfaceListView, ['select', 'remove', 'duplicate', 'reorderup', 'reorderdown']);
 
 		//init
 		this.classes('iris-surface-selector');
@@ -44,12 +44,13 @@ module.exports = class SurfaceSelector extends OrderedGroup
 		this.empty();
 
 		let i = surfaces.length;
-		while (--i >= 0) 
-		this.add(
-			new SurfaceListView(surfaces[i]).on('remove', listView => {
-				this.emit('remove', listView.surface);
-			})
-		);
+		while (--i >= 0) {
+			const s = new SurfaceListView(surfaces[i]);
+			s.on('up', listView => this.emit('reorderup', listView.surface));
+			s.on('down', listView => this.emit('reorderdown', listView.surface));
+			s.on('remove', listView => this.emit('remove', listView.surface));
+			this.add(s);
+		}
 
 		return this;
 	}

@@ -38,7 +38,14 @@ function eachExcluding (array, excludedItem, callback) {
 	}
 }
 
+function swap (array, i, j) {
+  const temp = array[i];
+  array[i] = array[j];
+  array[j] = temp;
+};
+
 module.exports.eachExcluding = eachExcluding;
 module.exports.isAnyOf = isAnyOf
 module.exports.rotateArray = rotateArray;
 module.exports.flatten = flatten;
+module.exports.swap = swap;

@@ -1,6 +1,7 @@
 const Surface = require('./Surface.js');
 const Emitter = require('./Emitter.js');
 const canvasutils = require('./canvasutils.js');
+const domutils = require('./domutils.js');
 const objutils = require('./objutils.js');
 
 const __defaults = {
@@ -26,6 +27,7 @@ module.exports = class SurfaceRenderer extends Emitter
 
 		options = objutils.copyDefaults(options, __defaults);
 		this.surface = new Surface();
+		this.zoom = 1;
 		this._element = containerElement || document.createElement('div');
 		// this._transparencySurface = new Surface();
 
@@ -39,12 +41,21 @@ module.exports = class SurfaceRenderer extends Emitter
 		// // 	options['gridColor1'],
 		// // 	options['gridColor2']
 		// // );
-	}
+		const offset = domutils.getAbsoluteOffset(containerElement);
+		document.body.scrollTop = offset.top;
+		document.body.scrollLeft = offset.left - 340;
+		}
 
 	get width () { return this.surface.width }
 	get height () { return this.surface.height }
 
-	resize () {}
+	setZoom (zoom) {
+		this.zoom = zoom;
+		domutils.setVendorCss(this._element, 'transform', 'scale('+ zoom +')');
+		console.log (this._element.style);
+		console.log ('scale('+ zoom +')');
+		console.log('anything');
+	}
 
 	draw (surfaces) {
 

@@ -24,6 +24,7 @@ class SmoothPointer extends Emitter
     this.minDistance = options['minDistance'] || __defaults['minDistance'];
     this.minSquaredDistance = Math.pow(this.minDistance, 2);
     this.smoothing = options['smoothing'] || __defaults['smoothing'];
+    this.scale = 1;
   
     if (fnutils.isFunction(options['down'])) this.on('down', options['down']);
     if (fnutils.isFunction(options['move'])) this.on('move', options['move']);
@@ -38,16 +39,16 @@ class SmoothPointer extends Emitter
 
       down: e => {
         for (var i = 0; i < 4; i++) {
-          _posBuffer[2*i]    = e.relX;
-          _posBuffer[2*i +1] = e.relY;
+          _posBuffer[2*i]    = e.relX/this.scale;
+          _posBuffer[2*i +1] = e.relY/this.scale;
         }
         _lastPressure = 0;
         this.emit('down', e);
       },
 
       move: e => {
-        const diffX = e.relX - _posBuffer[0];
-        const diffY = e.relY - _posBuffer[1];
+        const diffX = e.relX/this.scale - _posBuffer[0];
+        const diffY = e.relY/this.scale - _posBuffer[1];
         const pressure = 
           (listenerutils.eventName === 'pointer') ? e.pressure :
           (listenerutils.eventName === 'touch') ? e.targetTouches[0].force :
@@ -59,8 +60,8 @@ class SmoothPointer extends Emitter
 
         arrayutils.rotateArray(_posBuffer, 2);
         const smoothingDist = 1 - (__baseSmoothing + pressure * this.smoothing * (1 - __baseSmoothing));
-        _posBuffer[0] += (e.relX - _posBuffer[0]) * smoothingDist;
-        _posBuffer[1] += (e.relY - _posBuffer[1]) * smoothingDist;
+        _posBuffer[0] += (e.relX/this.scale - _posBuffer[0]) * smoothingDist;
+        _posBuffer[1] += (e.relY/this.scale - _posBuffer[1]) * smoothingDist;
 
         e.pts = mathutils.getLerpedCubicPoints2d(_posBuffer, this.steps, 2);
         e.squaredSpeed = _squaredSpeed;

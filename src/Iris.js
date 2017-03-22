@@ -107,6 +107,8 @@ module.exports = class Iris extends Emitter
 		this._currentPalette.draw();
 	}
 
+	get currentPalette () { return this._currentPalette }
+
 	getInputs () {
 		const inputs = [];
 

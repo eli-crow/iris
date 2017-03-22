@@ -65,15 +65,21 @@ module.exports = class ToolManager extends Emitter
 	}
 
 	//e : IrisMouseEvent
-	onDown (e) {
+	onDown (e, zoom) {
+		e.relX /= zoom;
+		e.relY /= zoom;
 		this._currentTool.onDown(this._surface, e); 
 	}
 
-	onMove (e) {
+	onMove (e, zoom) {
+		e.relX /= zoom;
+		e.relY /= zoom;
 		this._currentTool.onMove(this._surface, e); 
 	}
 	
-	onUp (e)  { 
+	onUp (e, zoom)  { 
+		e.relX /= zoom;
+		e.relY /= zoom;
 		this._currentTool.onUp(this._surface, e);
 	}
 
