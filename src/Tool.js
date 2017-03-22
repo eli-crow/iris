@@ -23,8 +23,8 @@ module.exports = class Tool extends Emitter
 	}
 	onUp (surface, e) {}   //abstract
 
-	addEffector (name, effectorType, min, max, fn, isSmoothedEffector) {
-		const effector = new ToolEffector(this, name, effectorType, min, max, fn, isSmoothedEffector);
+	addEffector (name, effectorType, val, min, max, fn, isSmoothedEffector) {
+		const effector = new ToolEffector(this, name, effectorType, val, min, max, fn, isSmoothedEffector);
 
 		if (effector.type in this.EffectorTypes) {
 			effector.targetProp = this.EffectorTypes[effector.type];

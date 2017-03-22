@@ -52,7 +52,12 @@ module.exports = class SurfaceManager extends Emitter
 	get zoom () { return this._renderer.zoom; }
 
 	add (surface) {
-		surface.resize(this._renderer.width, this._renderer.height);
+		if (surface.contains(this._renderer.surface)) {
+			surface.resize(this._renderer.width, this._renderer.height);
+		} else {
+			surface.resize(this._renderer.width, this._renderer.height, 0, 0, true);
+		}
+
 		this._surfaces.push(surface);
 		this.select(surface);
 		this.panel.drawSurfaceListView(this._surfaces);
@@ -70,7 +75,10 @@ module.exports = class SurfaceManager extends Emitter
 	adjustSurfaceOrder(surface, change) {
 		const i = this._surfaces.indexOf(surface);
 		console.log(i);
-		if (i >= this._surfaces.length-1 || i <= 0) return false;
+
+		if (change === 0) return false;
+		if (change < 0 && i <= 0) return false;
+		if (change < 0 && i >= this._surfaces.length-1) return false;
 
 		arrayutils.swap(this._surfaces, i, i + change);
 		this.panel.drawSurfaceListView(this._surfaces);
