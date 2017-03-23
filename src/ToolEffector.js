@@ -3,7 +3,7 @@ const strutils = require('./strutils.js');
 
 module.exports = class ToolEffector
 {
-	constructor (tool, name, effectorType, min, max, transform) {
+	constructor (tool, name, effectorType, val, min, max, transform) {
 		this.scale = 1;
 		this.type = effectorType;
 		this.targetProp = null;
@@ -11,7 +11,7 @@ module.exports = class ToolEffector
 		this._transform = transform || null;
 
 		if (min != null && max != null) {
-			this._input = new Slider(0, min, max, 0.01, strutils.titleCase(name))
+			this._input = new Slider(val, min, max, 0.01, strutils.titleCase(name))
 				.bind(val => {
 					this.scale = val;
 					tool.emit('changeend');

@@ -2,6 +2,7 @@ const Emitter = require('./Emitter.js');
 const listenerutils = require('./listenerutils.js');
 const fnutils = require('./fnutils.js');
 const canvasutils = require('./canvasutils.js');
+const domutils = require('./domutils.js');
 const Tool = require('./Tool.js');
 
 const BlendMode = {
@@ -51,15 +52,27 @@ module.exports = class Surface extends Emitter
 		return this;
 	}
 
-	resize(w, h, x = 0, y = 0) {
+	resize(w, h, x = 0, y = 0, resample = false) {
 		const canvas = this.canvas;
-		
+
 		this._tempCanvas.width = canvas.width;
 		this._tempCanvas.height = canvas.height;
 		this._tempCtx.drawImage(canvas, 0, 0);
 		canvas.width = w;
 		canvas.height = h;
-		this.ctx.drawImage(this._tempCanvas, x, y);
+
+		if (resample){
+			const ratio = this._tempCanvas.width / this._tempCanvas.height;
+			if (ratio >= 1) { //wide
+				this.ctx.drawImage(this._tempCanvas, x, y, w, w/ratio);
+			} else { //tall
+				this.ctx.drawImage(this._tempCanvas, x, y, h * ratio, h);
+			}
+		} 
+		else {
+			this.ctx.drawImage(this._tempCanvas, x, y);
+		}
+
 
 		return this;
 	}
@@ -99,6 +112,14 @@ module.exports = class Surface extends Emitter
 		return this.canvas.toDataURL();
 
 		return this;
+	}
+
+	intersects (surface) {
+		return domutils.rectsIntersect(this.getBounds(), surface.getBounds());
+	}
+
+	contains (surface) {
+		return domutils.rectContains(this.getBounds(), surface.getBounds());
 	}
 
 	getBounds () {

@@ -22,3 +22,30 @@ module.exports.setVendorCss = function (element, property, value) {
 	element.style["ms" + p] = value;
 	element.style["o" + p] = value;
 };
+
+function rectsIntersect (a, b) {
+	return !(
+		a.right < b.left ||
+		a.left > b.right ||
+		a.bottom < b.top ||
+		a.top > b.bottom
+	)
+}
+function rectContains (a, b) {
+	return !(
+		a.right > b.right ||
+		a.left < b.left ||
+		a.bottom > b.bottom ||
+		a.top < b.top
+	)
+}
+
+module.exports.elementBoundsIntersect = function (a, b) {
+	return rectsIntersect (
+		a.getBoundingClientRect(),
+		b.getBoundingClientRect()
+	);
+}
+
+module.exports.rectsIntersect = rectsIntersect;
+module.exports.rectContains = rectContains;

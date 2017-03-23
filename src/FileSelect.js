@@ -18,7 +18,8 @@ module.exports = class FileSelect extends PanelElement
 		this.classes('iris-file-select', 'iris-button');
 
 		//TODO: add feature-detection
-		this._input.addEventListener('click', e => this._onFileSelect(e, this._input.value), false);
+		this._input.addEventListener('click', e => this._input.value = null); //same file twice
+		this._input.addEventListener('change', e => this._onFileSelect(e), false);
 		dragContext.addEventListener('dragover', e => this._onDragOver(e), false);
 		dragContext.addEventListener('dragenter', e => this._onDragEnter(e), false);
 		dragContext.addEventListener('dragexit', e => this._onDragLeave(e), false);
@@ -33,8 +34,8 @@ module.exports = class FileSelect extends PanelElement
 		});
 	}
 
-	_onFileSelect (e, value) {
-		this.emit('load');
+	_onFileSelect (e) {
+		this._loadFiles(this._input.files);
 	}
 
 	_onDrop (e) {
@@ -42,9 +43,10 @@ module.exports = class FileSelect extends PanelElement
 		e.preventDefault();
 
 		this.unclass('drop');
+		this._loadFiles(e.dataTransfer.files);
+	}
 
-		const files = e.dataTransfer.files;
-
+	_loadFiles (files) {
 		for (let i = 0, ii = files.length; i < ii; i++) {
 			const f = files[i];
 			this._fileReader.readAsDataURL(f);

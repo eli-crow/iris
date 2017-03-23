@@ -18,7 +18,7 @@ const arrayutils = require('./arrayutils.js');
 module.exports = class SurfaceManager extends Emitter
 {
 	constructor (containerElement, settings) {
-		super(['select', 'add', 'remove', 'reorder', 'duplicate']);
+		super(['select', 'add', 'remove', 'reorder', 'duplicate', 'download']);
 
 		this.panel = new SurfacesPanel();
 
@@ -37,6 +37,7 @@ module.exports = class SurfaceManager extends Emitter
 		this.panel.on('remove', surface => this.remove(surface));
 		this.panel.on('reorderup', surface => this.adjustSurfaceOrder(surface, 1));
 		this.panel.on('reorderdown', surface => this.adjustSurfaceOrder(surface, -1));
+		this.panel.on('download', () => this._renderer.download());
 	}
 
 	draw () {
@@ -52,7 +53,12 @@ module.exports = class SurfaceManager extends Emitter
 	get zoom () { return this._renderer.zoom; }
 
 	add (surface) {
-		surface.resize(this._renderer.width, this._renderer.height);
+		if (surface.contains(this._renderer.surface)) {
+			surface.resize(this._renderer.width, this._renderer.height);
+		} else {
+			surface.resize(this._renderer.width, this._renderer.height, 0, 0, true);
+		}
+
 		this._surfaces.push(surface);
 		this.select(surface);
 		this.panel.drawSurfaceListView(this._surfaces);
@@ -70,7 +76,10 @@ module.exports = class SurfaceManager extends Emitter
 	adjustSurfaceOrder(surface, change) {
 		const i = this._surfaces.indexOf(surface);
 		console.log(i);
-		if (i >= this._surfaces.length-1 || i <= 0) return false;
+
+		if (change === 0) return false;
+		if (change < 0 && i <= 0) return false;
+		if (change > 0 && i >= this._surfaces.length-1) return false;
 
 		arrayutils.swap(this._surfaces, i, i + change);
 		this.panel.drawSurfaceListView(this._surfaces);

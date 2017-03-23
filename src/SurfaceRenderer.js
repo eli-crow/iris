@@ -4,6 +4,8 @@ const canvasutils = require('./canvasutils.js');
 const domutils = require('./domutils.js');
 const objutils = require('./objutils.js');
 
+const download = require('downloadjs');
+
 const __defaults = {
 	width: 800,
 	height: 1200,
@@ -55,6 +57,10 @@ module.exports = class SurfaceRenderer extends Emitter
 		console.log (this._element.style);
 		console.log ('scale('+ zoom +')');
 		console.log('anything');
+	}
+
+	download () {
+		download(this.surface.canvas.toDataURL());
 	}
 
 	draw (surfaces) {
