@@ -17,7 +17,7 @@ module.exports = class OrderedGroup extends Group
 
 	}
 	reorderChild (panelElement, e) {
-		this.emit('orderchanged', this._panelElements);
+		
 	}
 
 	add (panelElement) {

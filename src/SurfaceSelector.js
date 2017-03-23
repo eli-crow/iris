@@ -12,31 +12,28 @@ const SurfaceListView = require('./SurfaceListView.js');
 module.exports = class SurfaceSelector extends OrderedGroup
 {
 	constructor (groupElement) {
-		super(groupElement, SurfaceListView, ['select', 'remove', 'duplicate', 'reorderup', 'reorderdown']);
+		super(groupElement, SurfaceListView, ['select', 'remove', 'duplicate', 'reorder']);
 
 		//init
 		this.classes('iris-surface-selector');
 	}
 
-	onClickChild (listView, e) {
-		listView.class('selected');
-		this.each(listView, el => {
+	onClickChild (surfaceListView, e) {
+		surfaceListView.class('selected');
+		this.each(surfaceListView, el => {
 			el.unclass('selected');
 			el.selected = false;
 		});
 		this.emit('select', {
-			surface: listView.surface,
-			panelElement: listView,
+			surface: surfaceListView.surface,
+			panelElement: surfaceListView,
 			event: e
 		});
 	}
-	grabChild (listView, e) {
+	grabChild (surfaceListView, e) {
 
 	}
-	moveChild (listView, e) {
-
-	}
-	reorderChild (listView, e) {
+	moveChild (surfaceListView, e) {
 
 	}
 
@@ -46,8 +43,8 @@ module.exports = class SurfaceSelector extends OrderedGroup
 		let i = surfaces.length;
 		while (--i >= 0) {
 			const s = new SurfaceListView(surfaces[i]);
-			s.on('up', listView => this.emit('reorderup', listView.surface));
-			s.on('down', listView => this.emit('reorderdown', listView.surface));
+			s.on('up', listView => this.emit('reorder', {surface: s.surface, change: 1}));
+			s.on('down', listView => this.emit('reorder', {surface: s.surface, change: -1}));
 			s.on('remove', listView => this.emit('remove', listView.surface));
 			this.add(s);
 		}

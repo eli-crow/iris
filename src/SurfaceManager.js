@@ -1,6 +1,7 @@
 const Emitter = require('./Emitter.js');
 const Surface = require('./Surface.js');
 const SurfacesPanel = require('./SurfacesPanel.js');
+const SurfaceSelector = require('./SurfaceSelector.js');
 const SurfaceRenderer = require('./SurfaceRenderer.js');
 
 const mathutils = require('./mathutils.js');
@@ -20,28 +21,30 @@ module.exports = class SurfaceManager extends Emitter
 	constructor (containerElement, settings) {
 		super(['select', 'add', 'remove', 'reorder', 'duplicate', 'download']);
 
-		this.panel = new SurfacesPanel();
+		this._renderer = new SurfaceRenderer(containerElement, settings.document);
+		this._surfaceSelector = new SurfaceSelector()
+			.on('select', data => this.select(data.surface))
+			.on('remove', data => this.remove(data.surface))
+			.on('reorder', data => this.adjustSurfaceOrder(data.surface, data.change));
+		this.panel = new SurfacesPanel(this._surfaceSelector)
+			.on('load', data => this.addFromDataUrl(data.dataUrl, data.name))
+			.on('select', sse => this.select(sse.surface))
+			.on('add', () => this.add(new Surface(null, 'new surface')))
+			.on('remove', surface => this.remove(surface))
+			.on('download', () => this._renderer.download());
 
 		this._selectedSurface = null;
 		this._surfaces = [];
 		this._drawingSurface = new Surface();
-		this._renderer = new SurfaceRenderer(containerElement, settings.document);
-
+		
 		//init
 		this.add(new Surface(null, 'background'));
 		this.draw();
-
-		this.panel.on('load', data => this.addFromDataUrl(data.dataUrl, data.name));
-		this.panel.on('select', sse => this.select(sse.surface));
-		this.panel.on('add', () => this.add(new Surface(null, 'new surface')));
-		this.panel.on('remove', surface => this.remove(surface));
-		this.panel.on('reorderup', surface => this.adjustSurfaceOrder(surface, 1));
-		this.panel.on('reorderdown', surface => this.adjustSurfaceOrder(surface, -1));
-		this.panel.on('download', () => this._renderer.download());
 	}
 
 	draw () {
 		this._renderer.draw(this._surfaces);
+		this._surfaceSelector.draw(this._surfaces);
 
 		return this;
 	}
@@ -61,7 +64,6 @@ module.exports = class SurfaceManager extends Emitter
 
 		this._surfaces.push(surface);
 		this.select(surface);
-		this.panel.drawSurfaceListView(this._surfaces);
 
 		this.emit('add', {
 			surfaces: this._surfaces,
@@ -82,8 +84,6 @@ module.exports = class SurfaceManager extends Emitter
 		if (change > 0 && i >= this._surfaces.length-1) return false;
 
 		arrayutils.swap(this._surfaces, i, i + change);
-		this.panel.drawSurfaceListView(this._surfaces);
-		this.select(surface);
 		this.draw();
 	}
 
@@ -100,7 +100,6 @@ module.exports = class SurfaceManager extends Emitter
 		this.select(surfaces[mathutils.clamp(index - 1, 0, surfaces.length - 1)]);
 
 		this.draw();
-		this.panel.drawSurfaceListView(this._surfaces);
 
 		this.emit(['remove'], {
 			surfaces: this._surfaces,
