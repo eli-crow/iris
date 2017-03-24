@@ -29,6 +29,7 @@ module.exports = class PanelElement extends Emitter
 	}
 
 	classes (names) {
+		if (names === null) return this;
 		for (let i = 0, ii = arguments.length; i < ii; i++) {
 			this._element.classList.add(arguments[i]);
 		}

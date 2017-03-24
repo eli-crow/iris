@@ -1,33 +1,52 @@
-const glutils = require('./glutils.js');
-const primatives = require('./primatives');
 const Emitter = require('./Emitter.js');
+const Slider = require('./Slider.js');
+
+const glutils = require('./glutils.js');
+const objutils = require('./objutils.js');
+const primatives = require('./primatives');
+
+// interface IrisPaletteUniform
+// {
+//   type : string,
+//   value : any
+// }
+
+// interface IrisPaletteProperty extends IrisPaletteUniform
+// {
+//   min : number,
+//   max : number,
+//   step : number,
+//   ?map : Function,
+//   ?name : string,
+//   ?classes : string || string[]
+// }
 
 // maintains own programs, uniforms, geometry, and attributes.
-// intended to be extended.
 module.exports = class IrisPalette extends Emitter
 {
-	constructor (iris, fragmentSrc, vertexSrc, uniforms) {
-		super(['uniformupdated']);
+	constructor (iris, fragmentSrc, vertexSrc, properties, name) {
+		super(['uniformupdated', 'inputchange']);
 
-		this.uniforms = {};
+		this.name = name;
 
+		this._uniforms = {};
+		this._properties = {};
+		this._inputs = null;
+		
 		this._gl = iris._gl;
-		this._uniforms = uniforms;
 		this._pts = primatives.circle(1, 100);
 		this._program = glutils.createAndLinkProgramFromSource(this._gl, vertexSrc, fragmentSrc);
 		this._buffer = this._gl.createBuffer();
 
-		this.init();
-	}
-
-	init () {
+		//init
 		this.activate();
 
-		for (let name in this._uniforms) 
-			this.addUniform(name, this._uniforms[name]);
 		this.addUniform('resolution', {type: '2f', value: [0,0]});
 		this.addUniform('blend_focus', {type: '1f', value: 0});
 		this.addUniform('indicator_radius', {type: '1f', value: PUPIL_RADIUS});
+		for (let name in properties) {
+			this.addProperty(name, properties[name]);
+		}
 	}
 
 	use () {
@@ -50,31 +69,56 @@ module.exports = class IrisPalette extends Emitter
 		gl.drawArrays(gl.TRIANGLE_FAN, 0, this._pts.length/2);
 	}
 
-	addUniform(name, uniform) {
-		uniform.location = this._gl.getUniformLocation(this._program, name);
-		this._uniforms[name] = uniform;
-
-		//a get/set interface to uniforms object.
-		//would be simpler as two methods.
-		Object.defineProperty(this.uniforms, name, {
-			get: () => this._uniforms[name].value,
-			set: value => {
-				const uniform = this._uniforms[name];
-				this.use();
-				glutils.uniformByType(this._gl, uniform.type, uniform.location, value);
-				uniform.value = value;
-				this.draw();
-				this.emit('uniformupdated', uniform.value);
-			}
-		});
-
-		glutils.uniformByType(this._gl, uniform.type, uniform.location, uniform.value);
+	addUniform(name, descriptor) {
+		descriptor.location = this._gl.getUniformLocation(this._program, name);
+		this._uniforms[name] = descriptor;
+		glutils.uniformByType(this._gl, descriptor.type, descriptor.location, descriptor.value);
 	}
 
-	getPositionFromLch (lchArr) {
-		console.log('get position from lch');
+	addProperty(name, descriptor) {
+		this._properties[name] = descriptor;
+		this.addUniform(name, descriptor);
 	}
 
-	getInputs () {
+	setUniform (name, value) {
+		this.use();
+
+		const u = this._uniforms[name];
+		glutils.uniformByType(this._gl, u.type, u.location, value);
+		u.value = value;
+
+		this.draw();
+		this.emit('uniformupdated');
 	}
-}
+
+	getUniform (name) {
+		return this._uniforms[name].value;
+	}
+
+	resize (width, height) {
+		this.setUniform('resolution', [width, height]);
+	}
+
+	getInputs() {
+		if (this._inputs !== null) {
+			return this._inputs;
+		}
+
+		const inputs = [];
+
+		for (let name in this._properties) {
+			const p = this._properties[name];
+			const s = new Slider(p.value, p.min, p.max, p.step, p.name)
+				.class(p.classes || null)
+				.map(p.map || null)
+				.bind(val => this.setUniform(name, val))
+				.on('input', () => this.emit('uniformupdated'))
+				.on('change', () => this.emit('inputchange'));
+
+			inputs.push(s);
+		}
+
+		this._inputs = inputs;
+		return inputs;
+	}
+};

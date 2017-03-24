@@ -30,17 +30,23 @@ module.exports = class TabbedView extends PanelElement
 		return this;
 	}
 
-	add(tabName, panelElements) {
+	add(tabName, panelElements, options) {
 		panelElements = arrayutils.flatten(panelElements);
+
 		const view = new Group();
 		for (let i = 0, ii = panelElements.length; i < ii; i++) {
 			view.add(panelElements[i]);
 		}
 		view.hide();
+
 		const tab = new Button(tabName)
 			.classes('iris-tab')
 			.unclass('iris-button')
 			.bind(() => this.switchView(tab, view));
+
+		if (options && options.onSwitch) {
+			tab.bind(() => options.onSwitch());
+		}
 
 		this._tabs.add(tab);
 		this._views.add(view);
@@ -58,4 +64,4 @@ module.exports = class TabbedView extends PanelElement
 
 		return this;
 	}
-} 
+};

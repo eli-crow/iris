@@ -7,3 +7,7 @@ module.exports.copyDefaults = function (options, defaults) {
 
 	return result;
 }
+
+module.exports.copyShallow = function copyShallow(o) {
+	return JSON.parse(JSON.stringify(o));
+}
