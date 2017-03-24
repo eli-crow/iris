@@ -9,29 +9,22 @@ module.exports = class BrushPreview
 		this._brush = null;
 		this._pts = null;
 		this._nPts = 100;
-
-		//init
-		// this._ctx.fillStyle = COLORS.AMBIENT_GROOVE;
 	}
 
-	_calculatePoints () {
-		const canvas = this._surface.canvas;
-		const cs = window.getComputedStyle(canvas);
-
-		canvas.width = parseInt(cs.width);
-		canvas.height = parseInt(cs.height);
-		
-		this._pts = mathutils.getSinePoints2d(
-			canvas.width - 90, canvas.height/3 - 14,
-			this._nPts,
-			22 , canvas.height / 2
-		);
+	_calculatePoints (width, height) {
+		this._pts = mathutils.getSinePoints2d(width - 90, height / 3 - 14, this._nPts, 22, height / 2);
 		this._pts = mathutils.lerpMinDistance(this._pts, 2);
-		this._pts.push (canvas.width - 30, canvas.height/2);
+		this._pts.push(width - 30, height/2);
 	}
 
 	onResize() {
-		this._calculatePoints();
+		const surface = this._surface;
+		const cs = window.getComputedStyle(surface.canvas);
+		const w = parseInt(cs.width);
+		const h = parseInt(cs.height);
+
+		surface.resize(w, h);
+		this._calculatePoints(w, h);
 
 		this.draw();
 	}
@@ -40,19 +33,15 @@ module.exports = class BrushPreview
 		this._brush = brush;
 	}
 
-	//TODO: fake the pressure, speed, along the curve
 	draw() {
-		const canvas = this._surface.canvas;
-		const ctx = this._surface.ctx;
-
 		if (this._brush.erase) {
-			ctx.fillStyle = `rgba(${this._brush._color.slice(0,3).join(',')},1)`;
-			ctx.fillRect(0, 0, canvas.width, canvas.height);
+			this._surface.fill(COLORS.AMBIENT_GROOVE);
 		} else {
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			this._surface.clear();
 		}
 		
-		for (var i = 0, ii = this._pts.length - 2; i < ii; i+=2) {
+		//everything but the stamp preview
+		for (let i = 0, ii = this._pts.length - 2; i < ii; i+=2) {
 			this._brush.drawPoints(this._surface, {
 				lastPressure: 1-(Math.cos(i/ii * Math.PI * 2) * 0.5 + 0.5), 
 				penPressure: 1-(Math.cos((i+1)/ii * Math.PI * 2) * 0.5 + 0.5),  
