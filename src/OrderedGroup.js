@@ -16,7 +16,7 @@ module.exports = class OrderedGroup extends Group
 	moveChild (panelElement, e) {
 
 	}
-	reorderChild (panelElement, e) {
+	dropChild (panelElement, e) {
 		
 	}
 
@@ -27,7 +27,7 @@ module.exports = class OrderedGroup extends Group
 
 			down:  e => this.grabChild(panelElement, e),
 			move:  e => this.moveChild(panelElement, e),
-			up:    e => this.reorderChild(panelElement, e),
+			up:    e => this.dropChild(panelElement, e),
 			click: e => this.onClickChild(panelElement, e)
 		});
 

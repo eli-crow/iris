@@ -1,5 +1,7 @@
 const PanelElement = require('./PanelElement.js');
 
+const arrayutils = require('./arrayutils.js');
+
 module.exports = class Group extends PanelElement
 {
 	constructor (groupElement, accepts, events) {
@@ -34,10 +36,7 @@ module.exports = class Group extends PanelElement
 	}
 
 	each (exclude, fn) {
-		for (let i = 0, ii = this._panelElements.length; i < ii; i++) {
-			if (exclude === this._panelElements[i]) continue;
-			fn(this._panelElements[i]);
-		}
+		arrayutils.eachExcluding(this._panelElements, exclude, fn);
 
 		return this;
 	}

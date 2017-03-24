@@ -19,11 +19,6 @@ module.exports = class SurfaceSelector extends OrderedGroup
 	}
 
 	onClickChild (surfaceListView, e) {
-		surfaceListView.class('selected');
-		this.each(surfaceListView, el => {
-			el.unclass('selected');
-			el.selected = false;
-		});
 		this.emit('select', {
 			surface: surfaceListView.surface,
 			panelElement: surfaceListView,
@@ -36,19 +31,22 @@ module.exports = class SurfaceSelector extends OrderedGroup
 	moveChild (surfaceListView, e) {
 
 	}
+	dropChild (surfaceListView, e) {
+
+	}
 
 	draw (surfaces) {
 		this.empty();
 
 		let i = surfaces.length;
 		while (--i >= 0) {
-			const s = new SurfaceListView(surfaces[i]);
-			s.on('up', listView => this.emit('reorder', {surface: s.surface, change: 1}));
-			s.on('down', listView => this.emit('reorder', {surface: s.surface, change: -1}));
-			s.on('remove', listView => this.emit('remove', listView.surface));
-			this.add(s);
+			this.add( new SurfaceListView(surfaces[i])
+				.on('up', surfaceListView => this.emit('reorder', {surface: surfaceListView.surface, change: 1}))
+				.on('down', surfaceListView => this.emit('reorder', {surface: surfaceListView.surface, change: -1}))
+				.on('remove', surfaceListView => this.emit('remove', surfaceListView.surface))
+			);
 		}
 
 		return this;
 	}
-}
+};

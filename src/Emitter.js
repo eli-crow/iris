@@ -1,3 +1,5 @@
+//todo: consider moving to pub/sub for application events.
+
 //class for dispatching events to attached handlers.
 class EmitterEvent 
 {

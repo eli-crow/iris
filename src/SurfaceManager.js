@@ -44,13 +44,14 @@ module.exports = class SurfaceManager extends Emitter
 
 	draw () {
 		this._renderer.draw(this._surfaces);
-		this._surfaceSelector.draw(this._surfaces);
 
 		return this;
 	}
 
 	setZoom (scale) {
 		this._renderer.setZoom(scale);
+
+		return this;
 	}
 
 	get zoom () { return this._renderer.zoom; }
@@ -63,13 +64,13 @@ module.exports = class SurfaceManager extends Emitter
 		}
 
 		this._surfaces.push(surface);
-		this.select(surface);
-
 		this.emit('add', {
 			surfaces: this._surfaces,
 			surface: surface
 		});
 
+		this.select(surface);
+		this._surfaceSelector.draw(this._surfaces);
 		this.draw();
 		
 		return this;
@@ -77,14 +78,17 @@ module.exports = class SurfaceManager extends Emitter
 
 	adjustSurfaceOrder(surface, change) {
 		const i = this._surfaces.indexOf(surface);
-		console.log(i);
 
 		if (change === 0) return false;
 		if (change < 0 && i <= 0) return false;
 		if (change > 0 && i >= this._surfaces.length-1) return false;
 
 		arrayutils.swap(this._surfaces, i, i + change);
+
+		this._surfaceSelector.draw(this._surfaces);
 		this.draw();
+
+		return this;
 	}
 
 	remove (surface) {
@@ -98,13 +102,13 @@ module.exports = class SurfaceManager extends Emitter
 		surfaces.splice(index, 1);
 
 		this.select(surfaces[mathutils.clamp(index - 1, 0, surfaces.length - 1)]);
-
+		this._surfaceSelector.draw(this._surfaces);
 		this.draw();
 
-		this.emit(['remove'], {
+		this.emit('remove', {
 			surfaces: this._surfaces,
 			surface: surfaces[index]
-		})
+		});
 
 		return this;
 	}
