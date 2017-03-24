@@ -31,9 +31,9 @@ module.exports = class IrisPanel extends Panel
 			.on('change', () => this.iris.emitColors('pickend', null, false));
 		const hueSlider = new Panel.Slider(0, 0, 360, 1)
 			.classes('hue')
+			.map(x => x/180*Math.PI)
 			.bind(this.iris.palettes['Tones'].uniforms, "hue")
 			.on('change', () => this.iris.emitColors('pickend', null, false))
-			.transform(x => x/180*Math.PI)
 			.hide();
 		const inputs = new Panel.Group(this._inputs)
 			.add(lightnessSlider)
@@ -85,7 +85,7 @@ module.exports = class IrisPanel extends Panel
 		if (cpu.lightness) cpu.lightness = data.hsl[2];
 
 		this.setIndicatorColor(data.rgba);
-		this._lightnessSlider._input.value = data.hsl[2]
+		this._lightnessSlider.setValue(data.hsl[2]);
 	}
 
 	onResize() {

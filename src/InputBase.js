@@ -42,6 +42,9 @@ module.exports = class InputBase extends PanelElement
 		const val = window.parseFloat(this._input.value);
 		return this._map ? this._map(val) : val;
 	}
+	setValue (val) {
+		this._input.value = val;
+	}
 
 	bind (subject, prop) {
 		if (fnutils.isFunction(subject)) {
