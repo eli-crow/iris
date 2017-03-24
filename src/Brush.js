@@ -5,7 +5,7 @@ const objutils = require('./objutils.js');
 const Panel = require('./Panel.js');
 
 const __defaults = {
-	size: {min: 0, max: 10, value: 12, map: x => x*x},
+	size: {min: 0, max: 10, value: 4, map: x => x*x},
 	flow: {min: 0.3, max: 1, value: 0.3},
 	angle: {min: 0, max: 360, value: 135, map: x => mathutils.radians(x)}
 };
@@ -16,10 +16,7 @@ module.exports = class Brush extends TexturedTool
 	constructor(options, properties) {
 		super(['draw'], options);
 
-		this._properties = properties ?
-			objutils.copyDefaults(properties, __defaults) :
-			__defaults;
-
+		this._properties = properties ? objutils.copyDefaults(properties, __defaults) : __defaults;
 		this._dirty = true;
 		
 		this.erase = false;
@@ -73,12 +70,6 @@ module.exports = class Brush extends TexturedTool
 
 	onUp (surface, e) {
 		super.onDown(surface, e);
-	}
-
-	setErase (bool) {
-		this.erase = bool;
-
-		return this;
 	}
 
 	getInputs() {

@@ -194,12 +194,12 @@ const parseKeyMappings = function (descriptor) {
 			break;
 		}
 
-		console.log(keyMapObject.on);
+		// console.log(keyMapObject.on);
 
 		keyMap.push(keyMapObject);
 	}
 
-	console.log(keyMap);
+	// console.log(keyMap);
 	return keyMap;
 }
 

@@ -50,10 +50,10 @@ module.exports = class ToolShapeSelector extends Group
 	}
 
 	getInputs () {
-		return new Slider(1, 0.05, 1, .01, 'Ratio')
-			.transform(x => 4*x*x)
+		return new Slider(0, -1, 1, .01, 'Ratio')
+			.map(x => Math.pow(10, x))
 			.bind(val => {
-				this._shape.ratio = val;
+				this._shape.ratio = window.parseFloat(val);
 				this.emit('changeend', this._shape);
 			});
 	}

@@ -44,7 +44,7 @@ module.exports = class ToolManager extends Emitter
 		const mover = new SurfaceMover()
 			.on('move', () => this.emit(['draw']));
 
-		this.Tools = {
+		this.tools = {
 			brush: brush,
 			eyedropper: eyedropper,
 			eraser: eraser,
@@ -84,7 +84,7 @@ module.exports = class ToolManager extends Emitter
 	}
 
 	setTool (toolname) {
-		const tool = this.Tools[ toolname.toLowerCase() ];
+		const tool = this.tools[ toolname.toLowerCase() ];
 		this._currentTool = tool;
 		this.setColor(this._color);
 		if (tool instanceof Brush) { 

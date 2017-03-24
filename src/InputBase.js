@@ -28,24 +28,29 @@ module.exports = class InputBase extends PanelElement
 	}
 
 	_emitValue (eventname) {
-		let val = +this._input.value; 
-		if (this._map) 
-			val = this._map(val);
+		let val = this.getValue(); 
 		this.emit(eventname, val);
 	}
 
 	map (fn) {
-		if (typeof fn === 'function') this._map = fn;
+		if (fnutils.isFunction(fn)) this._map = fn;
+
+		return this;
+	}
+
+	getValue () {
+		const val = window.parseFloat(this._input.value);
+		return this._map ? this._map(val) : val;
 	}
 
 	bind (subject, prop) {
 		if (fnutils.isFunction(subject)) {
-			this.on('input', val => subject(val));
-			this.emit('change', subject(this._input.value));
+			this.on('input', val => subject(this.getValue()));
+			this.emit('change', subject(this.getValue()));
 		}
 		else if (subject.hasOwnProperty(prop)) {
-			this.on('input', val => subject[prop] = val);
-			this.emit('change', this._input.value);
+			this.on('input', val => subject[prop] = this.getValue());
+			this.emit('change', this.getValue());
 		}
 
 		this.name(prop);

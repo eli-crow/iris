@@ -21,12 +21,12 @@ module.exports = class TexturedTool extends Tool
 		this._shapeSelector = new ToolShapeSelector(__shapeUrls);
 
 		this._brushImg.onload = () => this._redrawTexture();
-		this._shapeSelector.on(['changeend', 'load'], data => this.setShape(data));
+		this._shapeSelector.on(['changeend', 'load'], shape => this.setShape(shape));
 	}
 
-	setShape (shape) {
-		this._brushImg.src = shape.brushSrc;
-		this._sizeRatio = shape.ratio;
+	setShape (brushShape) {
+		this._brushImg.src = brushShape.brushSrc;
+		this._sizeRatio = brushShape.ratio;
 	}
 
 	//color array is rgba, all in the range of 0-255;

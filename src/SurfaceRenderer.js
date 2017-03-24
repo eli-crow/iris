@@ -8,10 +8,7 @@ const download = require('downloadjs');
 
 const __defaults = {
 	width: 800,
-	height: 1200,
-	gridSize: 10,
-	gridColor1: 'rgb(255, 255, 255)',
-	gridColor2: 'rgb(236, 236, 236)'
+	height: 1200
 }
 
 //todo: cache layers below current and consecutive compatible layers above.
@@ -31,18 +28,11 @@ module.exports = class SurfaceRenderer extends Emitter
 		this.surface = new Surface();
 		this.zoom = 1;
 		this._element = containerElement || document.createElement('div');
-		// this._transparencySurface = new Surface();
 
 		//init
 		this.surface.resize( options.width, options.height );
 		this.surface.appendTo( this._element );
-		// this._transparencySurface.resize( options.width, options.height );
-		// // canvasutils.drawTransparencyGrid(
-		// // 	this._transparencySurface.canvas, 
-		// // 	options['gridSize'],
-		// // 	options['gridColor1'],
-		// // 	options['gridColor2']
-		// // );
+
 		const offset = domutils.getAbsoluteOffset(containerElement);
 		document.body.scrollTop = offset.top;
 		document.body.scrollLeft = offset.left - 340;
@@ -64,9 +54,6 @@ module.exports = class SurfaceRenderer extends Emitter
 	}
 
 	draw (surfaces) {
-
-		//draw the grid
-		// SurfaceRenderer.compose(this.surface, this._transparencySurface);
 		this.surface.fill('white');
 
 		//then the surfaces

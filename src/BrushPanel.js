@@ -7,15 +7,14 @@ module.exports = class BrushPanel extends Panel
 		super(null, require('../templates/panel-brush.pug'));
 
 		this._inputsElement = this._element.querySelector('.iris-input-group');
-		this._preview = this._element.querySelector('.brush-preview');
+		this._previewCanvas = this._element.querySelector('.brush-preview');
 		this._brushInputTabs = new Panel.Group(this._inputsElement);
 
-		this.brushPreview = new BrushPreview(this._preview);
+		this.brushPreview = new BrushPreview(this._previewCanvas);
 	}
 
 	setBrush(brush) {
 		this.brushPreview.setBrush(brush);
-
 		this._brushInputTabs
 			.empty()
 			.add(new Panel.TabbedView()
