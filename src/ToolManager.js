@@ -14,8 +14,8 @@ let __instance = null;
 module.exports = class ToolManager extends Emitter
 {
 	constructor() {
+		if (__instance) return __instance;
 		super(['toolchanged', 'sample', 'draw', 'transform']);
-		if (!__instance) __instance = this;
 
 		const eyedropper = new Eyedropper()
 			.on('pick', fnutils.throttle(data => this.emit('sample', data)), 50)
@@ -53,7 +53,7 @@ module.exports = class ToolManager extends Emitter
 
 		this.panel = new BrushPanel();
 		this._currentTool = brush;
-		this._color = [190,190,190,255];
+		this._color = [190, 190, 190, 255];
 		this._surface = null;
 
 		//init
@@ -61,7 +61,7 @@ module.exports = class ToolManager extends Emitter
 		this.on('toolchanged', () => this.panel.brushPreview.draw());
 
 		//singleton
-		return __instance;
+		__instance = this;
 	}
 
 	//e : IrisMouseEvent
@@ -77,7 +77,7 @@ module.exports = class ToolManager extends Emitter
 		this._currentTool.onMove(this._surface, e); 
 	}
 	
-	onUp (e, zoom)  { 
+	onUp (e, zoom) { 
 		e.relX /= zoom;
 		e.relY /= zoom;
 		this._currentTool.onUp(this._surface, e);
