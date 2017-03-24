@@ -52,6 +52,7 @@
 
 		> .panel-label {
 			margin-top: 1rem;
+			margin-left: 2px;
 
 			direction: rtl;
 			text-align: right;
@@ -59,8 +60,10 @@
 		
 			cursor: default;
 			color: black;
-
+			
+			transform-origin: 50% 61%;
 			transform: rotate(-90deg);
+			font-smooth: antialias;
 		}
 	}
 
