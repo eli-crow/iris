@@ -19,11 +19,10 @@ module.exports = class IrisPanel extends Panel
 
 		// init
 		this.iris.on(['pick', 'pickend'], rgbArr => this.setIndicatorColor(rgbArr));
-		this.iris.setMode('Colors B');
 
-		const ins = this.iris.getInputs();
-		const inputs = new Panel.Group(this._inputs)
-			.add(ins);
+		const tabbedView = this.iris.getInputs();
+		tabbedView._tabs.class('iris-tab-bar-side');
+		tabbedView.init(this._modes, this._inputs);
 	}
 
 	setIndicatorColor(rgbArr) {
@@ -34,16 +33,14 @@ module.exports = class IrisPanel extends Panel
 		const iris = this.iris;
 		iris._highlight.movePolarNormal(-1 * mathutils.radians(data.hsl[0]), data.hsl[1]/100);
 
-		const cpu = iris.currentPalette.uniforms;
-		if (cpu.lightness) cpu.lightness = data.hsl[2];
+		iris.currentPalette.setProperty('lightness', data.hsl[2]);
 
 		this.setIndicatorColor(data.rgba);
-		this._lightnessSlider.setValue(data.hsl[2]);
 	}
 
 	onResize() {
 		this.iris.onResize();
-		this.iris.setMode('Colors B');
+		this.iris.setMode('Colors');
 		this.iris.emitColors('pick', null, null, false);
 	}
 }

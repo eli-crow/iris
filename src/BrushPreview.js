@@ -46,7 +46,7 @@ module.exports = class BrushPreview
 				lastPressure: 1-(Math.cos(i/ii * Math.PI * 2) * 0.5 + 0.5), 
 				penPressure: 1-(Math.cos((i+1)/ii * Math.PI * 2) * 0.5 + 0.5),  
 				squaredSpeed: (1-(Math.cos(i/ii * Math.PI * 2) * 0.5 + 0.5)) * 10000 + 1,
-				direction: Math.cos(i/ii * Math.PI * 2) * 0.5 + 0.5,
+				direction: Math.cos(i/ii * Math.PI * 2 + Math.PI) * 0.5 + 0.5,
 			}, [this._pts[i], this._pts[i+1]]);
 		}
 

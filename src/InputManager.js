@@ -97,6 +97,8 @@ module.exports = class InputManager extends Emitter
 		this.resize = new ResizeListener({
 			after: e => setPointerScale(e.zoom)
 		});
+
+		window.addEventListener('focus', e => this.revertPointerState(e));
 	}
 
 	emitPointerStateEvent (e, state) {

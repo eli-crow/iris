@@ -30,8 +30,7 @@ module.exports = class SurfaceManager extends Emitter
 			.on('load', data => this.addFromDataUrl(data.dataUrl, data.name))
 			.on('select', sse => this.select(sse.surface))
 			.on('add', () => this.add(new Surface(null, 'new surface')))
-			.on('remove', surface => this.remove(surface))
-			.on('download', () => this._renderer.download());
+			.on('remove', surface => this.remove(surface));
 
 		this._selectedSurface = null;
 		this._surfaces = [];
@@ -101,7 +100,10 @@ module.exports = class SurfaceManager extends Emitter
 		const index = surfaces.indexOf(surface || this._selectedSurface);
 		surfaces.splice(index, 1);
 
-		this.select(surfaces[mathutils.clamp(index - 1, 0, surfaces.length - 1)]);
+		const selectionIndex = mathutils.clamp(index - 1, 0, surfaces.length - 1);
+		console.log(selectionIndex);
+		this.select(surfaces[selectionIndex]);
+
 		this._surfaceSelector.draw(this._surfaces);
 		this.draw();
 
@@ -123,6 +125,9 @@ module.exports = class SurfaceManager extends Emitter
 			surface: surface
 		});
 
+		this._surfaceSelector.draw(this._surfaces);
+		this.draw();
+
 		return this;
 	}
 
@@ -132,6 +137,10 @@ module.exports = class SurfaceManager extends Emitter
 		this.draw();
 
 		return this;
+	}
+
+	downloadFlattened () {
+		this._renderer.download();
 	}
 
 	addFromDataUrl (dataUrl, name) {

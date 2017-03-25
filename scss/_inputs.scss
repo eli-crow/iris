@@ -7,11 +7,7 @@
 	border-top: $rule-stack-groove;
 	 
 	.iris-input {
-		margin: spacing(3) $panel-padding-horizontal;
-	}
-
-	hr + .iris-input {
-		margin-top: 0;
+		margin: spacing(3.5) $panel-padding-horizontal;
 	}
 }
 

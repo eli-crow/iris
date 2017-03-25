@@ -1,8 +1,8 @@
 .iris-range > input {
-	@include range-setup ( $thumb-width: 1.27rem, $thumb-height: 1.27rem, $track-height: 0.5rem);
+	@include range-setup ( $thumb-width: 18px, $thumb-height: 18px, $track-height: 8px);
 	@include range-thumb {
 		background-color: transparent;
-		border: 5px solid white;
+		border: 6px solid white;
 		border-radius: 50%;
 		box-shadow: 
 			0px 2px 8px transparentize($ambient, 0.7),

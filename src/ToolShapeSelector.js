@@ -7,7 +7,7 @@ module.exports = class ToolShapeSelector extends Group
 {
 	constructor(urls) {
 		super(null, null, ['change', 'changeend', 'load']);
-		this.classes('brush-shape-selector');
+		this.classes('brush-shape-selector', 'iris-input');
 
 		this._urls = urls;
 		this._ratio = 

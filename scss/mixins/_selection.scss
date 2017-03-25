@@ -1,6 +1,7 @@
 @mixin selection (
 	$bordered: true,
 	$highlight: true,
+	$underline: false,
 	$edge: outline
 ) {
 	&:active {
@@ -22,11 +23,21 @@
 			@include edge($edge, $activated);
 		}
 	}
+
+	@if ($underline) {
+		border-bottom: solid 2px transparent;
+		&.toggled, &.selected {
+			border-color: $activated;
+		}
+		&:hover:not(.selected):not(.toggled) {
+			border-color: $ambient-groove;
+		}
+	}
 	
-	@if ($bordered) {
+	@if $bordered == true {
 		@include edge($edge, $ambient-groove);
 	}
-	@else {
+	@elseif $underline == false {
 		&:hover:not(.selected):not(.toggled) {
 			@include edge($edge, $ambient-groove);
 		}

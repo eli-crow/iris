@@ -6,9 +6,9 @@ const SurfaceManager = require('./SurfaceManager.js');
 const ToolManager = require('./ToolManager.js');
 const ColorManager = require('./ColorManager.js');
 const PanelGroup = require('./PanelGroup.js');
+const ControlsPanel = require('./ControlsPanel.js');
 
 const settings = require('./settings.json');
-
 
 
 // app
@@ -19,9 +19,13 @@ const toolManager     = new ToolManager(); //TODO: remove this dependency
 const surfaceManager  = new SurfaceManager(mainDrawingArea, settings);
 const colorManager    = new ColorManager();
 
-const panelGroup = new PanelGroup(document.getElementById('panel-group'))
+const controlsPanel = new ControlsPanel();
+
+const panelGroupLeft = new PanelGroup(document.getElementById('panel-group-left'))
 	.add(colorManager.panel)
 	.add(toolManager.panel)
+const panelGroupRight = new PanelGroup(document.getElementById('panel-group-right'))
+	.add(controlsPanel)
 	.add(surfaceManager.panel);
 
 
@@ -38,10 +42,13 @@ inputManager.on('pointerstatechange', e => {
 	}
 });
 inputManager.on('clear', () => surfaceManager.clearCurrentSurface());
-inputManager.on('zoom', () => panelGroup.resize());
 inputManager.on('pointerdown', e => toolManager.onDown(e, surfaceManager.zoom));
 inputManager.on('pointermove', e => toolManager.onMove(e, surfaceManager.zoom));
 inputManager.on('pointerup', e => toolManager.onUp(e, surfaceManager.zoom));
+inputManager.on('zoom', () => {
+	panelGroupLeft.resize();
+	panelGroupRight.resize();
+});
 
 toolManager.setSurface(surfaceManager._selectedSurface);
 toolManager.on('sample', data => colorManager.setColorData(data));
@@ -50,3 +57,5 @@ toolManager.on('draw', () => surfaceManager.draw());
 surfaceManager.on('select', smEvent => toolManager.setSurface(smEvent.surface));
 
 colorManager.on('pickend', data => toolManager.setColor(data));
+
+controlsPanel.on('download', () => surfaceManager.downloadFlattened());

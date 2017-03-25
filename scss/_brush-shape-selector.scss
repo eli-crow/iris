@@ -1,0 +1,23 @@
+//.iris-input.brush-shape-selector
+
+.brush-shape-selector {
+	// padding: spacing(2);
+	// width: 100%;
+	white-space: nowrap;
+	// overflow-y: auto;
+	// overflow-x: scroll;
+	border: none !important;
+
+	> .brush-shape-preview {
+		display: inline-block;
+		height: 3rem;
+		margin-right: spacing(1);
+		padding: 3px;
+
+		border-radius: radius(1);
+
+		&:hover {
+			@include outline(1px, $ambient-groove);
+		}
+	}	
+}

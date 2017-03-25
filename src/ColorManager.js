@@ -14,6 +14,5 @@ module.exports = class ColorManager extends Emitter
 
 	setColorData (data) {
 		this.panel.setColorData(data);
-		
 	}
 };

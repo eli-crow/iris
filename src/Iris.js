@@ -7,6 +7,7 @@ const TabbedView = require('./TabbedView.js');
 const listenerutils = require('./listenerutils.js');
 const mathutils = require('./mathutils.js');
 
+const __palettes = require('./palettes.js');
 const __scrollAdjustSpeed = 0.2;
 const __webglConfig = {
 	preserveDrawingBuffer: true,
@@ -21,8 +22,6 @@ module.exports = class Iris extends Emitter
 {
 	constructor (canvas) {
 		super(['pick', 'pickend', 'zoom']);
-
-		console.trace(canvas);
 
 		this._canvas = canvas;
 		this._gl = canvas.getContext('webgl', __webglConfig) || canvas.getContext('experimental-webgl', __webglConfig);
@@ -51,54 +50,14 @@ module.exports = class Iris extends Emitter
 			}
 		});
 
-		this.addPalette({
-			name: 'Colors A',
-			fragmentSource: require('../shaders/frag/same_lightness.frag'),
-			properties: {
-				lightness: {
-					type: '1f', 
-					value: 77, 
-					min: 0,
-					max: 100, 
-					step: 0.01,
-					classes: 'lightness', 
-					name: 'Lightness'
-				}
-			}
-		});
+		for (var i = 0, ii = __palettes.length; i < ii; i++) {
+			const spec = __palettes[i];
+			if (spec.enabled) {
+		 		this.addPalette(spec);
+		 	}
+		}
 
-		this.addPalette({
-			name: 'Colors B',
-			fragmentSource: require('../shaders/frag/same_lightness_hsl.frag'),
-			properties: {
-				lightness: {
-					type: '1f', 
-					value: .77, 
-					min: 0,
-					max: 1, 
-					step: 0.01,
-					classes: 'lightness', 
-					name: 'Lightness'
-				}
-			}
-		});
-
-		this.addPalette({
-			name: 'Tones',
-			fragmentSource: require('../shaders/frag/same_hue.frag'),
-			properties: {
-				hue: {
-					type: '1f', 
-					value: 0, 
-					min: 0,
-					max: 100, 
-					step: 0.01,
-					map: x => mathutils.radians(x),
-					classes: 'hue', 
-					name: 'Hue'
-				}
-			}
-		});
+		this.setMode('Colors');
 
 		this._pupil.on('huerotate', e => {
 			this._highlight.movePolar(Math.PI/2 - e.getAngle(), this._highlight.getDistance());
@@ -122,6 +81,8 @@ module.exports = class Iris extends Emitter
 		ip.on('uniformupdated', () => this.emitColors('pick', null, false));
 		ip.on('inputchange', () => this.emitColors('pickend', null, false));
 		this.palettes[descriptor.name] = ip;
+
+		this._currentPalette = ip;
 	}
 
 	emitColors (eventName, x, y, updateHilight) {
@@ -157,7 +118,6 @@ module.exports = class Iris extends Emitter
 	}
 
 	setMode(modeName) {
-		console.log(modeName);
 		this._currentPalette = this.palettes[modeName];
 		this._currentPalette.activate();
 		this._currentPalette.draw();
@@ -166,7 +126,7 @@ module.exports = class Iris extends Emitter
 	get currentPalette () { return this._currentPalette }
 
 	getInputs() {
-		const tv = new TabbedView();
+		const tv = new TabbedView(null, {style: 'manual'});
 		const tabs = {};
 
 		for (let name in this.palettes) {
@@ -178,9 +138,6 @@ module.exports = class Iris extends Emitter
 			});
 			tabs[p.name] = ins;
 		}
-
-		tv.on('change', data => console.log(data.tab));
-		tv.init();
 
 		this._inputs = tv;
 		return tv;

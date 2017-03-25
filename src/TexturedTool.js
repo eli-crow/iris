@@ -1,4 +1,5 @@
 const Tool = require('./Tool.js');
+const Spacer = require('./Spacer.js');
 const ToolShapeSelector = require('./ToolShapeSelector.js');
 
 const __shapeUrls = [
@@ -51,7 +52,7 @@ module.exports = class TexturedTool extends Tool
 		}
 		
 		const inputs = super.getInputs();
-		inputs.shape = [ this._shapeSelector, this._shapeSelector.getInputs() ];
+		inputs.base = [ this._shapeSelector, this._shapeSelector.getInputs(), new Spacer()].concat(inputs.base);
 		return inputs;
 	}
 

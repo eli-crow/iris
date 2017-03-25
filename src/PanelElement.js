@@ -1,5 +1,6 @@
 const Emitter = require('./Emitter.js');
 const fnutils = require('./fnutils.js');
+const domutils = require('./domutils.js');
 
 //abstraction layer for managing and manipulating the dom in panels.
 module.exports = class PanelElement extends Emitter
@@ -48,7 +49,8 @@ module.exports = class PanelElement extends Emitter
 	}
 
 	transform (transform) {
-		this.transform = transform;
+		domutils.setVendorCss(this._element, 'transform', transform);
+
 		return this;
 	}
 

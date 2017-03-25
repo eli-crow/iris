@@ -37,13 +37,18 @@ module.exports = class InputBase extends PanelElement
 
 		return this;
 	}
+	unmap (fn) {
+		if (fnutils.isFunction(fn)) this._unmap = fn;
+
+		return this;
+	}
 
 	getValue () {
 		const val = window.parseFloat(this._input.value);
 		return this._map ? this._map(val) : val;
 	}
 	setValue (val) {
-		this._input.value = val;
+		this._input.value = this._unmap ? this._unmap(val) : val;
 	}
 
 	bind (subject, prop) {

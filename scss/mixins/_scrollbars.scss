@@ -1,7 +1,8 @@
 
 
 @mixin scrollbars(
-	$size, 
+	$size,
+	$track-size: $size, 
 	$radius: 0, 
 	$padding: 0px, 
 	$foreground-color: gray, 
@@ -16,6 +17,7 @@
 		height: $size;
 	}
 	::-webkit-scrollbar-thumb {
+		-webkit-appearance: none;
 		background: $foreground-color;
 		border-radius: $radius;
 
@@ -24,16 +26,20 @@
 		}
 	}
 	::-webkit-scrollbar-track {
+		-webkit-appearance: none;
 		background: $background-color;
-		width: $size + $padding;
-		height: $size + $padding;
+		// border: solid 1px $background-color;
+		width: $size;
+		height: $size;
 	}
 	::-webkit-scrollbar-button {
+		-webkit-appearance: none;
 		width: 0;
 		height: 0;
 		display: none;
 	}
 	::-webkit-scrollbar-corner {
+		-webkit-appearance: none;
 		background-color: $background-color;
 		display: none;
 	}

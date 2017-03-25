@@ -1,10 +1,9 @@
 @import "mixins/scrollbars";
 
 @include scrollbars(
-  $size: 10px,
-  $radius: radii(2),
+  $size: 13px,
   $padding: 2px,
-  $foreground-color: darkgray,
+  $foreground-color: $ambient-groove,
   $background-color: $ambient-groove,
   $foreground-color-hover: $activated
 ); 

@@ -10,13 +10,33 @@ module.exports = class TabbedView extends PanelElement
 
 		this._element = hostElement || document.createElement('div');
 		this._views = new Group();
-		this._tabs = new Group().classes('iris-tab-bar');
+		this._tabs = new Group()
+			.classes('iris-tab-bar');
 	}
 
-	init () {
+	init (tabParent, viewParent) {
 		this.classes('iris-tabbed-view');
-		this._tabs.appendTo(this._element);
-		this._views.appendTo(this._element);
+
+		if (tabParent instanceof Group) {
+			tabParent.add(this._tabs);
+		} 
+		else if (tabParent instanceof HTMLElement) {
+			this._tabs.appendTo(tabParent);
+		} 
+		else {
+			this._tabs.appendTo(this._element);
+		}
+
+		if (viewParent instanceof Group) {
+			viewParent.add(this._views);
+		} 
+		else if (viewParent instanceof HTMLElement) {
+			this._views.appendTo(viewParent);
+		}
+		else {
+			this._views.appendTo(this._element);
+		}
+
 		this.switchView(this._tabs.item(0), this._views.item(0));
 
 		return this;

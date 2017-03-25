@@ -1,21 +1,21 @@
-.iris-tabbed-view {
+.iris-tab {
+	float: left;
+	padding: 4.5px spacing(3);
+	margin: 0 !important;
 }
 
 .iris-tab-bar {
-	background-color: $ambient-groove;
+	border-bottom: solid 1px $ambient-groove;
+
+	> .iris-tab {
+		@include selection(
+			$bordered: false,
+			$highlight: false,
+			$underline: true
+		);
+	}
 }
 
-.iris-tab {
-	@include selection(
-		$bordered: false,
-		$highlight: false
-	);
-
-	float: left;
-	padding: spacing(1) spacing(3);
-	margin: 0 !important;
-
-	&.selected {
-		background: white;
-	}
+.iris-tab-bar-side {
+	border-bottom: none;
 }

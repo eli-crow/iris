@@ -90,9 +90,25 @@ module.exports = class IrisPalette extends Emitter
 		this.draw();
 		this.emit('uniformupdated');
 	}
-
 	getUniform (name) {
 		return this._uniforms[name].value;
+	}
+	setProperty (name, value) {
+		this.setUniform(name, value);
+		const p = this._properties[name];
+		glutils.uniformByType(this._gl, p.type, p.location, value);
+		p.value = value;
+
+		for (var i = 0, ii = this._inputs.length; i < ii; i++) {
+			const input = this._inputs[i];
+			if (input.propName === name) {
+				input.setValue(value);
+				break;
+			}
+		}
+	}
+	getProperty (name) {
+		return this._properties[name].value;
 	}
 
 	resize (width, height) {
@@ -111,10 +127,12 @@ module.exports = class IrisPalette extends Emitter
 			const s = new Slider(p.value, p.min, p.max, p.step, p.name)
 				.class(p.classes || null)
 				.map(p.map || null)
+				.unmap(p.unmap || null)
 				.bind(val => this.setUniform(name, val))
 				.on('input', () => this.emit('uniformupdated'))
 				.on('change', () => this.emit('inputchange'));
 
+			s.propName = name;
 			inputs.push(s);
 		}
 

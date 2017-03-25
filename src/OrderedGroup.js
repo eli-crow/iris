@@ -8,16 +8,14 @@ module.exports = class OrderedGroup extends Group
 	}
 
 	onClickChild (panelElement, e) {
-
 	}
-	grabChild (panelElement, e) {
 
-	}
-	moveChild (panelElement, e) {
-
+	dragChild (panelElement, e) {
+		panelElement.transform(`translate3d(${e.diffX}px,${e.diffY}px,0px)`);
 	}
 	dropChild (panelElement, e) {
-		
+		panelElement.transform('');
+		this.emit('orderchanged');
 	}
 
 	add (panelElement) {
@@ -25,8 +23,7 @@ module.exports = class OrderedGroup extends Group
 			preventDefault: true,
 			stopPropagation: true,
 
-			down:  e => this.grabChild(panelElement, e),
-			move:  e => this.moveChild(panelElement, e),
+			move:  e => this.dragChild(panelElement, e),
 			up:    e => this.dropChild(panelElement, e),
 			click: e => this.onClickChild(panelElement, e)
 		});

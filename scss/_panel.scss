@@ -1,14 +1,22 @@
-//not related (yet) to PanelGroup.js
-.iris-panel-group {
-	@include clearfix;
+
+#panel-group-right{
+	float: right;
+	top: spacing(2);
+	right: spacing(2);
+}
+#panel-group-left{
 	float: left;
 	position: fixed;
 	top: spacing(2);
 	left: spacing(2);
+}
+
+.iris-panel-group {
+	@include clearfix;
+	position: fixed;
 
 	// transform: translate3d(-19.8rem, 0, 0);
 	transform: translate3d(0, 0, 0px);
-	backface-visibility: hidden;
 	will-change: transform;
 	
 	> .panel {
@@ -37,7 +45,7 @@
 	clear: both;
 	position: relative;
 
-	min-height: 3rem;
+	min-height: 5rem;
 
 	background-color: $panel-color;
 	box-shadow: $drop-shadow-1;

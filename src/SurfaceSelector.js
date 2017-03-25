@@ -25,14 +25,12 @@ module.exports = class SurfaceSelector extends OrderedGroup
 			event: e
 		});
 	}
-	grabChild (surfaceListView, e) {
-
-	}
-	moveChild (surfaceListView, e) {
-
+	
+	dragChild (surfaceListView, e) {
+		super.dragChild(surfaceListView, e);
 	}
 	dropChild (surfaceListView, e) {
-
+		super.dropChild(surfaceListView, e);
 	}
 
 	draw (surfaces) {
@@ -43,7 +41,7 @@ module.exports = class SurfaceSelector extends OrderedGroup
 			this.add( new SurfaceListView(surfaces[i])
 				.on('up', surfaceListView => this.emit('reorder', {surface: surfaceListView.surface, change: 1}))
 				.on('down', surfaceListView => this.emit('reorder', {surface: surfaceListView.surface, change: -1}))
-				.on('remove', surfaceListView => this.emit('remove', surfaceListView.surface))
+				.on('remove', surfaceListView => this.emit('remove', {surface: surfaceListView.surface}))
 			);
 		}
 
