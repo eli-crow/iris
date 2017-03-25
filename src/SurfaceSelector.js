@@ -12,7 +12,9 @@ const SurfaceListView = require('./SurfaceListView.js');
 module.exports = class SurfaceSelector extends OrderedGroup
 {
 	constructor (groupElement) {
-		super(groupElement, SurfaceListView, ['select', 'remove', 'duplicate', 'reorder']);
+		super(groupElement, SurfaceListView, ['select', 'remove', 'duplicate', 'reorder', 'draw']);
+
+		this.dragging = false;
 
 		//init
 		this.classes('iris-surface-selector');
@@ -26,11 +28,32 @@ module.exports = class SurfaceSelector extends OrderedGroup
 		});
 	}
 	
+	downChild (surfaceListView, e) {
+		super.dragChild(surfaceListView, e);
+		this.dragging = true;
+	}	
 	dragChild (surfaceListView, e) {
 		super.dragChild(surfaceListView, e);
+		surfaceListView.surface.previewBackground = false;
+		this.emit('draw');
 	}
 	dropChild (surfaceListView, e) {
 		super.dropChild(surfaceListView, e);
+		this.dragging = false;
+	}
+	enterChild (surfaceListView, e) {
+		super.enterChild(surfaceListView, e);
+		if (!this.dragging) {
+			surfaceListView.surface.previewBackground = true;
+			this.emit('draw');
+		}
+	}
+	exitChild (surfaceListView, e) {
+		super.exitChild(surfaceListView, e);
+		if (!this.dragging) {
+			surfaceListView.surface.previewBackground = false;
+			this.emit('draw');
+		}
 	}
 
 	draw (surfaces) {

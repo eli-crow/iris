@@ -44,22 +44,29 @@ module.exports = class SurfaceRenderer extends Emitter
 	setZoom (zoom) {
 		this.zoom = zoom;
 		domutils.setVendorCss(this._element, 'transform', 'scale('+ zoom +')');
-		console.log (this._element.style);
-		console.log ('scale('+ zoom +')');
-		console.log('anything');
 	}
 
 	download () {
 		download(this.surface.canvas.toDataURL());
 	}
 
+	//todo: refactor this when adding rendering cache;
 	draw (surfaces) {
 		this.surface.fill('white');
 
-		//then the surfaces
+		let drawRestWithTint = false;
+
 		for (let i = 0, ii = surfaces.length; i < ii; i++) {
 			const s = surfaces[i];
-			SurfaceRenderer.compose(this.surface, s);
+			if (s.previewBackground) {
+				canvasutils.drawCheckerboard(this.surface.canvas, 14, 'rgb(245, 245, 245)', 'white');
+				s.previewBackground = false;
+				SurfaceRenderer.compose(this.surface, s);
+				break;
+			} else {
+				SurfaceRenderer.compose(this.surface, s);
+			}
+
 			if (s.needsResizing) {
 				s.resizeToSurface(this.surface);
 				s.needsResizing = false;
@@ -73,9 +80,24 @@ module.exports = class SurfaceRenderer extends Emitter
 		this.surface.clear();
 	}
 
-	static compose (targetSurface, surface) {
+	static compose (targetSurface, surface, tint) {
 		const ctx = targetSurface.ctx;
-		ctx.globalCompositeOperation = surface.blendMode;
-		ctx.drawImage(surface.canvas, surface.position[0], surface.position[1]);
+
+		if (tint) {
+			ctx.globalCompositeOperation = 'source-over';
+			canvasutils.stamp(
+				ctx, 
+				surface.canvas, 
+				surface.position[0], 
+				surface.position[1], 
+				surface.width, 
+				surface.height,
+				tint,
+				0.9
+			);
+		} else {
+			ctx.globalCompositeOperation = surface.blendMode;
+			ctx.drawImage(surface.canvas, surface.position[0], surface.position[1]);
+		}
 	}
 }// do stuff

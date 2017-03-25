@@ -13,21 +13,40 @@ if (Modernizr.hasEvent('pointermove')) {
 	__events.down = 'pointerdown';
 	__events.move = 'pointermove';
 	__events.up = 'pointerup';
+	__events.enter = 'pointerenter';
+	__events.exit = 'pointerleave';
 }
 else if (Modernizr.hasEvent('touchmove')) {
 	__eventName = 'touch'
 	__events.down = 'touchstart';
 	__events.move = 'touchmove';
 	__events.up = 'touchend';
+	__events.enter = 'touchenter';
+	__events.exit = 'touchleave';
 }
 else {
 	__eventName = 'mouse'
 	__events.down = 'mousedown';
 	__events.move = 'mousemove';
 	__events.up = 'mouseup';
+	__events.enter = 'mouseenter';
+	__events.exit = 'mouseleave';
 }
 
 const __doubleClickTime = 300;
+
+function doubleClick (fn, delay) {
+	let then;
+	delay = delay || __doubleClickTime;
+
+	return function (e) {
+		if (Date.now() - then < delay) {
+			fn(e);
+		}
+
+		then = Date.now();
+	}
+};
 
 
 module.exports.simplePointer = (context, events, transform) => {
@@ -85,20 +104,14 @@ module.exports.simplePointer = (context, events, transform) => {
 		window.addEventListener(__events.up, upHandler, false);
 	}, false);
 
-	if (events.dblClick) {
-		let lastClickTime;
-
-		const doubleClickHandler = function (e) {
-			if (Date.now() - lastClickTime < __doubleClickTime) {
-				events.dblClick(e);
-			}
-			lastClickTime = Date.now();
-		}
-
-		context.addEventListener('click', doubleClickHandler, false);
-	}
-
-	if (events.click) context.addEventListener('click', events.click, false);
+	if (fnutils.isFunction(events.enter))    
+		context.addEventListener(__events['enter'], events.enter, false);
+	if (fnutils.isFunction(events.exit))     
+		context.addEventListener(__events['exit'], events.exit, false);
+	if (fnutils.isFunction(events.click))    
+		context.addEventListener('click', events.click, false);
+	if (fnutils.isFunction(events.dblClick)) 
+		context.addEventListener('click', doubleClick(events.dblClick), false);
 };
 
 module.exports.normalPointer = (context, events) => {
@@ -259,6 +272,7 @@ module.exports.keyboard = function (descriptor) {
 	return window.addEventListener('keydown', createKeyboardListenerMachine(descriptor), false);
 };
 
+module.exports.doubleClick = doubleClick;
 module.exports.listenOnce = listenOnce;
 module.exports.events = __events;
 module.exports.eventName = __eventName;

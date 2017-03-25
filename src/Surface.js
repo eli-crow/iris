@@ -24,6 +24,7 @@ module.exports = class Surface extends Emitter
 		this.position = [0,0];
 		this.name = name || 'surface';
 		this.blendMode = BlendMode.Normal;
+		this.previewBackground = false;
 
 		this._tempCanvas = document.createElement('canvas');
 		this._tempCtx = this._tempCanvas.getContext('2d');
