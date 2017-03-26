@@ -1,8 +1,9 @@
 const Emitter = require('./Emitter.js');
 const Slider = require('./Slider.js');
+const ToolEffector = require('./ToolEffector.js');
+
 const strutils = require('./strutils.js');
 const fnutils = require('./fnutils.js');
-const ToolEffector = require('./ToolEffector.js');
 
 //abstract
 module.exports = class Tool extends Emitter 
@@ -23,8 +24,11 @@ module.exports = class Tool extends Emitter
 	}
 	onUp (surface, e) {}   //abstract
 
-	addEffector (name, effectorType, val, min, max, fn, isSmoothedEffector) {
+	addEffector (name, effectorType, val, min, max, fn, isSmoothedEffector, group) {
 		const effector = new ToolEffector(this, name, effectorType, val, min, max, fn, isSmoothedEffector);
+		if (group) {
+			effector.group = group;
+		}
 
 		if (effector.type in this.EffectorTypes) {
 			effector.targetProp = this.EffectorTypes[effector.type];
@@ -42,17 +46,14 @@ module.exports = class Tool extends Emitter
 		return this;
 	}
 
-	static applyEffectors(effectorGroup, event, props) {
-		const result = JSON.parse(JSON.stringify(props));
-		const evt = JSON.parse(JSON.stringify(event));
+	addEffectorGroup (name, effectorArgsArray) {
+		for (let i = 0, ii = effectorArgsArray.length; i < ii; i++) {
+			const args = effectorArgsArray[i];
+			args.push(name);
+			this.addEffector.apply(this, args);
+		}
 
-	  for (let i = 0, ii = effectorGroup.length; i < ii; i++) {
-	  	const effector = effectorGroup[i];
-	    result[effector.targetProp] =
-	    	result[effector.targetProp] + effector.transform(evt);
-	  };
-
-	  return result;
+		return this;
 	}
 
 	getInputs () {
@@ -81,12 +82,17 @@ module.exports = class Tool extends Emitter
 		}
 
 		// then effector sliders
-		const effs = this._effectors.concat(this._smoothedEffectors);
-		for (let i = 0, ii = effs.length; i < ii; i++) {
-			const eff = effs[i];
-			if (!Array.isArray(inputs[eff.type]))
-				inputs[eff.type] = [];
-			inputs[eff.type].push(eff.getInputs());
+		const effectors = this._effectors.concat(this._smoothedEffectors);
+		for (let i = 0, ii = effectors.length; i < ii; i++) {
+			const e = effectors[i];
+			if (e.group) {
+				if (!Array.isArray(inputs[e.group]))
+					inputs[e.group] = [];
+				inputs[e.group].push(e.getInputs());
+			}
+			else {
+				inputs.base.push(e.getInputs());
+			}
 		}
 
 		this._inputs = inputs;
@@ -103,5 +109,18 @@ module.exports = class Tool extends Emitter
 			this._dirty = false; 
 		}
 		return this._baseProps;
+	}
+
+	static applyEffectors(effectorGroup, event, props) {
+		const result = JSON.parse(JSON.stringify(props));
+		const evt = JSON.parse(JSON.stringify(event));
+
+	  for (let i = 0, ii = effectorGroup.length; i < ii; i++) {
+	  	const effector = effectorGroup[i];
+	    result[effector.targetProp] =
+	    	result[effector.targetProp] + effector.transform(evt);
+	  };
+
+	  return result;
 	}
 };

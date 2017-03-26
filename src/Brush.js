@@ -81,10 +81,10 @@ module.exports = class Brush extends TexturedTool
 
 		return inputs;
 	}
-}
+};
 
 module.exports.prototype.EffectorTypes = {
 	size: 'size',
 	flow: 'flow',
 	angle: 'angle'
-}
+};
