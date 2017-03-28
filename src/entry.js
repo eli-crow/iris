@@ -38,7 +38,7 @@ inputManager.on('pointerstatechange', e => {
 		case PointerStates.Brush:   toolManager.setTool('brush');         break;
 		case PointerStates.Erase:   toolManager.setTool('eraser');        break;
 		case PointerStates.Sample:  toolManager.setTool('eyedropper');    break;
-		case PointerStates.Move:    toolManager.setTool('move');          break;
+		case PointerStates.Move:    toolManager.setTool('mover');          break;
 	}
 });
 inputManager.on('clear', () => surfaceManager.clearCurrentSurface());

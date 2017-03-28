@@ -1,3 +1,9 @@
 .cursor-color-inspector {
-	cursor: url(./img/icons/inspector-cursor.svg) 8 8, auto;
+	cursor: url(./img/icons/inspector-cursor.svg) 8 8, auto ;
+}
+.cursor-move {
+	cursor: move ;
+}
+.cursor-brush {
+	cursor: default ;
 }

@@ -102,7 +102,6 @@ module.exports = class InputManager extends Emitter
 	}
 
 	emitPointerStateEvent (e, state) {
-		document.body.style.cursor = __getCursorString(state);
 		this.emit('pointerstatechange', {
 			preventDefault: () => e.preventDefault.call(e),
 			state: state
@@ -127,17 +126,5 @@ module.exports = class InputManager extends Emitter
 		// this.emit('zoom', this.scale);
 	}
 };
-
-//TODO: move to toolmanager
-function __getCursorString(state) {
-	switch (state) {
-		case PointerStates.Move: return 'move';
-		case PointerStates.Pan: return 'grab';
-		case PointerStates.Brush: return 'default';
-		case PointerStates.Erase: return 'default';
-		case PointerStates.Sample: return 'crosshair';
-		default: return 'initial';
-	}
-}
 
 module.exports.PointerStates = PointerStates;
