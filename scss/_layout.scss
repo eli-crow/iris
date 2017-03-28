@@ -4,8 +4,8 @@
 @include scrollbars(
   $size: 13px,
   $padding: 2px,
-  $foreground-color: $ambient-groove,
-  $background-color: $ambient-groove,
+  $foreground-color: $ambient-groove-transparent,
+  $background-color: $ambient-groove-transparent,
   $foreground-color-hover: $activated
 ); 
 
