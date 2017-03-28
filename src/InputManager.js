@@ -128,6 +128,7 @@ module.exports = class InputManager extends Emitter
 	}
 };
 
+//TODO: move to toolmanager
 function __getCursorString(state) {
 	switch (state) {
 		case PointerStates.Move: return 'move';

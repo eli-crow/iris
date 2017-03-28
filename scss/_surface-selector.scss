@@ -1,4 +1,6 @@
 .iris-surface-selector {
+	background-color: $ambient-groove-light-1;
+	border-bottom: $rule-stack-groove;
 	padding: spacing(1);
 }
 
@@ -11,7 +13,9 @@
 	@include clearfix;
 
 	padding: 0.2rem spacing(1);
+
 	cursor: pointer;
+	background-color: white;
 
 	&:first-of-type {
 		border-top-left-radius: $radius-2;

@@ -1,12 +1,9 @@
 //.iris-input.brush-shape-selector
 
 .brush-shape-selector {
-	// padding: spacing(2);
-	// width: 100%;
 	white-space: nowrap;
-	// overflow-y: auto;
-	// overflow-x: scroll;
 	border: none !important;
+	width: auto !important;
 
 	> .brush-shape-preview {
 		display: inline-block;

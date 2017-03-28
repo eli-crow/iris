@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+  <title>add</title>
+  <g id="f21f9c3d-b25e-481f-ae5f-afc218606f36" data-name="Layer 2">
+    <g id="96599e6a-181c-474b-910e-55612095cf7f" data-name="Layer 2">
+      <g>
+        <rect width="21" height="21" fill="none"/>
+        <line x1="10.5" y1="5" x2="10.5" y2="16" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+        <line x1="5" y1="10.5" x2="16" y2="10.5" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+      </g>
+    </g>
+  </g>
+</svg>

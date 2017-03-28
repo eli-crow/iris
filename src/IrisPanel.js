@@ -15,6 +15,8 @@ module.exports = class IrisPanel extends Panel
 		this._modes = this._element.querySelector('.iris-modes');
 		this._inputs = this._element.querySelector('.iris-input-group');
 
+		this.inspectorButton = new Panel.Button(null, null, this._element.querySelector('.inspector-tool'));
+
 		this.iris = new Iris(this._wheel);
 
 		// init

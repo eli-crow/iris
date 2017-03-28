@@ -57,5 +57,6 @@ toolManager.on('draw', () => surfaceManager.draw());
 surfaceManager.on('select', smEvent => toolManager.setSurface(smEvent.surface));
 
 colorManager.on('pickend', data => toolManager.setColor(data));
+colorManager.on('toolselect', name => toolManager.setTool(name));
 
 controlsPanel.on('download', () => surfaceManager.downloadFlattened());

@@ -124,7 +124,7 @@ module.exports = class IrisPalette extends Emitter
 
 		for (let name in this._properties) {
 			const p = this._properties[name];
-			const s = new Slider(p.value, p.min, p.max, p.step, p.name)
+			const s = new Slider(p.value, p.min, p.max, p.step, p.name, {icon: p.icon})
 				.class(p.classes || null)
 				.map(p.map || null)
 				.unmap(p.unmap || null)

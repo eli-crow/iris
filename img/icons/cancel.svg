@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+  <title>cancel</title>
+  <g id="740b112e-69b3-4978-91c3-ec035df0cb90" data-name="Layer 2">
+    <g id="86504a2f-5f57-484d-bd4e-d69afe349973" data-name="Layer 2">
+      <g>
+        <rect width="21" height="21" fill="none"/>
+        <g>
+          <line x1="6" y1="6" x2="15" y2="15" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+          <line x1="6" y1="15" x2="15" y2="6" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

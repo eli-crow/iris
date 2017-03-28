@@ -1,4 +1,5 @@
 @import "mixins/scrollbars";
+@import "mixins/clearfix";
 
 @include scrollbars(
   $size: 13px,
@@ -27,7 +28,7 @@ html, body {
 
 body {
   position: relative;
-  background-color: transparentize($ambient-groove, 0.08);
+  background-color: $ambient-groove-light-1;
 }
 
 main {

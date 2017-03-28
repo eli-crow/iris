@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+  <title>inspector-tool</title>
+  <g id="2e595895-2e74-4a32-b6a1-aff0364c338a" data-name="Layer 2">
+    <g id="623faad8-b27d-4431-bc59-badcbeac481e" data-name="Layer 2">
+      <g>
+        <rect width="21" height="21" fill="none"/>
+        <g>
+          <circle cx="7.5" cy="7.5" r="6.5" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+          <circle cx="7.5" cy="7.5" r="2.5"/>
+          <line x1="13" y1="13" x2="19" y2="19" fill="#fff" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

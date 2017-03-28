@@ -3,26 +3,33 @@ const plumber = require('gulp-plumber')
 const sourcemaps = require('gulp-sourcemaps')
 const autoprefixer = require('gulp-autoprefixer')
 const sass = require('gulp-sass')
+const base64 = require('gulp-base64')
 
 const paths = {
-	src: './scss/**/*.scss',
-	dest: './dist',
-	watch: ['./scss/**/*.scss', './scss/*.scss']
+	scss: {
+		src: ['./scss/**/*.scss'],
+		dest: './dist',
+		watch: ['./scss/**/*.scss', './scss/*.scss'],
+	}
 }
-const config = {
+const sassConfig = {
+
+}
+const base64Config = {
 
 }
 
 gulp.task('styles:sass', () => {
-	gulp.src(paths.src)
+	return gulp.src(paths.scss.src)
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
-		.pipe(sass(config))
+		.pipe(sass(sassConfig))
+		.pipe(base64(base64Config))
 		.pipe(autoprefixer())
 		.pipe(sourcemaps.write())
-		.pipe(gulp.dest(paths.dest))
+		.pipe(gulp.dest(paths.scss.dest))
 })
 
-gulp.task('styles',['styles:sass'], () => {
-	gulp.watch(paths.src, ['styles:sass'])
+gulp.task('styles', ['styles:sass'], () => {
+	gulp.watch(paths.scss.src, ['styles:sass'])
 })

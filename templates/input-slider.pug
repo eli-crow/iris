@@ -1,0 +1,6 @@
+if icon
+	span.iris-icon-small(class=('i-'+icon))
+else if name
+	label(for=name)= name
+.iris-input-wrapper
+	input(type="range", min=min, max=max, step=step, name=name, value=value)

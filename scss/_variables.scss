@@ -16,9 +16,9 @@ $transparent: 0.00000001;
 $activated: #00B4F8;
 
 $ambient: #321B09;
-$ambient-groove: transparentize($ambient, 0.9);
+$ambient-groove: rgba(234, 231, 229, 1.00);
 $ambient-over: transparentize(rgba(190, 190, 190, 1.00), 0.2);
-$ambient-groove-light-1: transparentize($ambient-groove, 0.06);
+$ambient-groove-light-1: rgba(247, 246, 245, 1.00);
 
 $neutral: #f2f2f2;
 $neutral-dark-1: darken($neutral, 5%);

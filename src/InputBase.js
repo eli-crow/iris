@@ -4,22 +4,32 @@ const strutils = require('./strutils.js');
 
 module.exports = class InputBase extends PanelElement
 {
-	constructor(type, attributes, events) {
+	constructor(type, attributes, events, templateHTML) {
 		super(['input', 'change'].concat(events));
 		
-		let html = attributes['name'] ? `<label for="${attributes.name}">
-			${strutils.titleCase(attributes.name)}
-		</label>` : '';
-		html += `<input type="${type}"`;
-		for (let name in attributes) html += ` ${name}="${attributes[name]}"`;
-		html += '>';
+		let html = '';
+
+		if (templateHTML) {
+			html = templateHTML;
+		} else {
+			if (options && options['icon']) {
+				html = `<span class="iris-icon i-${options['icon']}"></span>`;
+			}
+			else if (attributes['name']) {
+				html = `<label for="${attributes.name}">${attributes.name}</label>`;
+			}
+
+			html += `<input type="${type}"`;
+			for (let name in attributes) html += ` ${name}="${attributes[name]}"`;
+			html += '>';
+		}
 
 		const element = document.createElement('div');
 		element.innerHTML = html;
 		element.classList.add('iris-input');
 
 		this._element = element;
-		this._input = element.children[element.children.length - 1];
+		this._input = element.querySelector('input');
 		this._map = null;
 
 		//init

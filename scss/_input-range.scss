@@ -1,51 +1,87 @@
-.iris-range > input {
-	@include range-setup ( $thumb-width: 18px, $thumb-height: 18px, $track-height: 8px);
-	@include range-thumb {
-		background-color: transparent;
-		border: 6px solid white;
-		border-radius: 50%;
-		box-shadow: 
-			0px 2px 8px transparentize($ambient, 0.7),
-			0px 1px 1px transparentize($ambient, 0.7);
-	}
-	@include range-track {
-		background: $ambient-groove;
-		border: $rule-stack-groove;
-		border-radius: 5px;
-		border-color: $neutral-dark-1 !important;
-	}
-}
+.iris-range {
+	display: table;
+	width: 100%;
+	margin: 0 !important;
+	padding: spacing(1) $panel-padding-horizontal;
 
-//TODO: figure out any z index workarounds.
-.iris-range.signed > input {
-	position: relative;
-	z-index: 1;
+	$label-width: 20%;
+	$icon-width: 12%;
+	%children {
+		display: table-cell !important;
+		vertical-align: middle;
+		float: none;
+	}
 
-	&:after {
-		content: '';
-		width: 10px;
+	.iris-input-wrapper {
+		@extend %children;
+		width: 100%;
 		height: 100%;
+	}
 
-		position: absolute;
-		left: 50%;
-		left: calc(50% - 5px);
-		top: 0;
-		background-color: $ambient-groove; 
+	input {
+		@include range-setup ( $thumb-width: 18px, $thumb-height: 18px, $track-height: 8px);
+		@include range-thumb {
+			background-color: transparent;
+			border: 6px solid white;
+			border-radius: 50%;
+			box-shadow: 
+				0px 2px 8px transparentize($ambient, 0.7),
+				0px 1px 1px transparentize($ambient, 0.7);
+		}
+		@include range-track {
+			background: $ambient-groove-light-1;
+			border: $rule-stack-groove;
+			border-radius: 5px;
+			border-color: $neutral-dark-1 !important;
+		}
 
-		z-index: -1;
+		width: 100%;
+	}
+
+	> label {
+		width: $label-width;
+	}
+	> label + .iris-input-wrapper {
+		width: 100% - $label-width;
+	}
+
+	> .iris-icon {
+		@extend %children;
+	}
+	> .iris-icon + .iris-input-wrapper,
+	> .iris-icon-small + .iris-input-wrapper {
+		width: 100% - $icon-width;
 	}
 }
-.iris-range.hue > input {
+
+.iris-range.signed input {
+	position: relative;
+	
+	$width: 4%;
+	$start: 50% - $width/2;
+	$end: 50% + $width/2;
+
+	@include range-track {
+		background: linear-gradient(to right, 
+			$ambient-groove-light-1 0%, 
+			$ambient-groove-light-1 $start, 
+			$ambient-groove $start, 
+			$ambient-groove $end,
+			$ambient-groove-light-1 $end,
+			$ambient-groove-light-1 100%)
+	}
+}
+.iris-range.hue input {
 	@include range-track {
 		background: $gradient-hsl-hue;
 	}
 }
-.iris-range.lightness > input {
+.iris-range.lightness input {
 	@include range-track {
 		background: linear-gradient(to right, black, lightgray, white);
 	}
 }
-.iris-range.colorfulness > input {
+.iris-range.colorfulness input {
 	@include range-track {
 		background: linear-gradient(to right, black, lightgray, white);
 	}

@@ -1,0 +1,38 @@
+%icons-shared {
+	display: block;
+	float: left;
+	vertical-align: middle;
+	width: 21px;
+	height: 21px;
+
+	background-size: cover;
+}
+
+.iris-icon {
+	@extend %icons-shared;
+	width: 21px;
+	height: 21px;
+}
+
+.iris-icon-small {
+	@extend %icons-shared;
+	width: 17px;
+	height: 17px;
+}
+
+.iris-icon-tiny {
+	@extend %icons-shared;
+	width: 13px;
+	height: 13px;
+}
+
+.i-lightness        { background-image: url(./img/icons/lightness.svg) }
+.i-hue              { background-image: url(./img/icons/hue.svg) }
+.i-vividness        { background-image: url(./img/icons/vividness.svg) }
+.i-angle-up         { background-image: url(./img/icons/angle-up.svg) }
+.i-angle-down       { background-image: url(./img/icons/angle-down.svg) }
+.i-cancel           { background-image: url(./img/icons/cancel.svg) }
+.i-add              { background-image: url(./img/icons/add.svg) }
+.i-subtract         { background-image: url(./img/icons/subtract.svg) }
+.i-brush            { background-image: url(./img/icons/brush.svg) }
+.i-inspector-tool   { background-image: url(./img/icons/inspector-tool.svg) }

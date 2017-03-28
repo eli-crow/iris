@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+  <title>inspector-cursor</title>
+  <g id="0307a2c4-7c68-44f7-bf4f-27be7a66255c" data-name="Layer 2">
+    <g id="162ac916-ce62-482c-936e-c0b7616f0139" data-name="Layer 2">
+      <g>
+        <rect width="21" height="21" fill="none" shape-rendering="optimizeQuality"/>
+        <path d="M7.5,0A7.5,7.5,0,1,0,15,7.5,7.5,7.5,0,0,0,7.5,0Zm0,11A3.5,3.5,0,1,1,11,7.5,3.5,3.5,0,0,1,7.5,11Z" shape-rendering="optimizeQuality"/>
+        <line x1="12.5" y1="12.5" x2="19" y2="19" fill="#fff" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4" shape-rendering="optimizeQuality"/>
+      </g>
+    </g>
+  </g>
+</svg>

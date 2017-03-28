@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21" height="21" viewBox="0 0 21 21">
+  <defs>
+    <symbol id="24952e3c-524c-4f32-a364-e86ce9f76249" data-name="vert angle" viewBox="0 0 11.41 7.12">
+      <polyline points="0.71 0.71 5.71 5.71 10.71 0.71" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+    </symbol>
+  </defs>
+  <title>angle-down</title>
+  <g id="e2ba7006-ad57-4636-804a-f25d1ec751f5" data-name="Layer 2">
+    <g id="3a6bc730-c7ae-4209-a5bf-034d22f9dc06" data-name="Layer 2">
+      <g>
+        <rect width="21" height="21" fill="none"/>
+        <use id="2472a8a1-8500-4bad-a2ae-263109b11efe" data-name="vert angle" width="11.41" height="7.12" transform="translate(4.79 6.79)" xlink:href="#24952e3c-524c-4f32-a364-e86ce9f76249"/>
+      </g>
+    </g>
+  </g>
+</svg>

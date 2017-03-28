@@ -8,6 +8,7 @@ module.exports = [
 		properties: {
 			lightness: {
 				type: '1f', 
+				icon: 'lightness',
 				value: 77, 
 				min: 0,
 				max: 100, 
@@ -22,7 +23,8 @@ module.exports = [
 		fragmentSource: require('../shaders/frag/same_lightness_hsl.frag'),
 		properties: {
 			lightness: {
-				type: '1f', 
+				type: '1f',
+				icon: 'lightness',
 				value: .77, 
 				min: 0,
 				max: 1, 
@@ -38,6 +40,7 @@ module.exports = [
 		properties: {
 			hue: {
 				type: '1f', 
+				icon: 'hue',
 				value: 0, 
 				min: 0,
 				max: 360, 
