@@ -15,11 +15,11 @@ let __instance = null;
 
 class ToolManager extends Emitter
 {
-	constructor() {
+	constructor(surfaceRenderer) {
 		if (__instance) return __instance;
 		super(['toolchanged', 'sample', 'draw', 'transform']);
 
-		__tools.eyedropper = new Eyedropper()
+		__tools.eyedropper = new Eyedropper(surfaceRenderer)
 			.on('pick', fnutils.throttle(data => this.emit('sample', data)), 50)
 			.on('pickend', data => this.setColor(data.rgba));
 		

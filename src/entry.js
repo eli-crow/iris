@@ -15,8 +15,8 @@ const settings = require('./settings.json');
 const mainDrawingArea = document.getElementById('main-drawing-area');
 
 const inputManager    = new InputManager(mainDrawingArea);
-const toolManager     = new ToolManager(); //TODO: remove this dependency
 const surfaceManager  = new SurfaceManager(mainDrawingArea, settings);
+const toolManager     = new ToolManager(surfaceManager._renderer); //TODO: remove this dependency
 const colorManager    = new ColorManager();
 
 const controlsPanel = new ControlsPanel();
