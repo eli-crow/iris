@@ -2,6 +2,7 @@ const domutils = require('./domutils.js');
 const fnutils = require('./fnutils.js');
 const arrayutils = require('./arrayutils.js');
 const strutils = require('./strutils.js');
+require('keyboardevent-key-polyfill').polyfill();
 
 //todo: currently nothing here is responsible for destroying own listeners. In future versions, this will be necessary.
 
@@ -207,12 +208,9 @@ const parseKeyMappings = function (descriptor) {
 			break;
 		}
 
-		// console.log(keyMapObject.on);
-
 		keyMap.push(keyMapObject);
 	}
 
-	// console.log(keyMap);
 	return keyMap;
 }
 
