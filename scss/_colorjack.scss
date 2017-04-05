@@ -1,0 +1,30 @@
+.icon {
+  pointer-events: none;
+  fill: black;
+  opacity: 0.25;
+}
+
+.colorjack {
+  position: absolute;
+  top: 200;
+  left: 200;
+  
+  box-shadow: 
+    0px 2px 3px rgba(0,0,0,0.1),
+    0px 4px 15px rgba(0,0,0,0.1);
+  border-radius: 50%;
+}
+
+.colorjack-indicator {
+  cursor: move;
+}
+
+.cursor-grabbing {
+  cursor: grabbing !important;
+}
+
+.colorjack-up {cursor: n-resize;}
+.colorjack-left {cursor: w-resize;}
+.colorjack-right {cursor: e-resize;}
+.colorjack-down {cursor: s-resize;}
+.colorjack-bg {cursor: grab;}

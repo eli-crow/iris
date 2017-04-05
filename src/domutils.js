@@ -1,5 +1,19 @@
 const strutils = require('./strutils.js');
 
+//returns an HTMLCollection
+function HTMLToElements (html) {
+	const el = document.createElement('div');
+	el.innerHTML = html;
+	return el.children;
+}
+
+function formatRgbaString (rgbaArr) {
+	if (rgbaArr.length === 3) {
+		rgbaArr[3] = 1; //alpha
+	}
+	return 'rgba('+ rgbaArr.join(',') + ')';
+}
+
 module.exports.remove = function (element) {
 	element.parentElement.removeChild(element);
 }
@@ -11,6 +25,19 @@ module.exports.getAbsoluteOffset = function (element) {
 		offset.top += element.offsetTop;
 	}
 	return offset;
+}
+
+function getBoundingPageRect (el) {
+	const body = document.body.getBoundingClientRect();
+	const rect = el.getBoundingClientRect();
+	return {
+		left: rect.left - body.left,
+		right: rect.right - body.left,
+		top: rect.top - body.top,
+		bottom: rect.bottom - body.top,
+		width: rect.width,
+		height: rect.height
+	}
 }
 
 module.exports.setVendorCss = function (element, property, value) {
@@ -49,3 +76,6 @@ module.exports.elementBoundsIntersect = function (a, b) {
 
 module.exports.rectsIntersect = rectsIntersect;
 module.exports.rectContains = rectContains;
+module.exports.HTMLToElements = HTMLToElements;
+module.exports.formatRgbaString = formatRgbaString;
+module.exports.getBoundingPageRect = getBoundingPageRect;

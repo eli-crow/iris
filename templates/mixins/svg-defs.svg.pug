@@ -1,0 +1,30 @@
+mixin svg-defs(lineWidth)
+	- lineWidth = lineWidth || 2;
+	defs
+		path#saturation(d="M0 0 C 0,0 13,18 0,18 C -13,18 0,0 0,0")
+
+		g#lightness
+			- var lR = 4;
+			circle(cx=0 cy=0 r=lR)
+			g
+				rect(x=-1  y=6   width=lineWidth height=4)
+				rect(x=-1  y=-10 width=lineWidth height=4)
+				rect(x=6   y=-1  width=4         height=lineWidth)
+				rect(x=-10 y=-1  width=4         height=lineWidth)
+			g(transform="rotate(45)")
+				rect(x=-1  y=6   width=lineWidth height=4)
+				rect(x=-1  y=-10 width=lineWidth height=4)
+				rect(x=6   y=-1  width=4         height=lineWidth)
+				rect(x=-10 y=-1  width=4         height=lineWidth)
+
+		g#plus
+			- var pH = 10
+			rect(x=0 y=-(pH/2 - lineWidth/2) width=lineWidth height=pH)
+			rect(x=-(pH/2 - lineWidth/2) y=0 width=pH        height=lineWidth)
+
+		g#minus
+			- var mH = 8
+			rect(x=-(mH/2 - lineWidth/2) y=0 width=mH height=lineWidth)
+
+		if (block)
+			block

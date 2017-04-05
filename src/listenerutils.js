@@ -49,6 +49,49 @@ function doubleClick (fn, delay) {
 	}
 };
 
+function addDnDListener (context, handlers) {
+  let lastX, lastY, downX, downY;
+    
+  function _down (e) {
+    if (handlers['down']) {
+      handlers['down'](e);
+    }
+    downX = lastX = e.pageX;
+    downY = lastY = e.pageY;
+    window.addEventListener('mousemove', _drag, false);
+    window.addEventListener('mouseup', _up, false);
+  }
+  function _drag (e) {
+    const data = {};
+    data.downX = downX;
+    data.downY = downY;
+    data.distance = {
+      x: e.pageX - downX,
+      y: e.pageY - downY,
+      squared: Math.pow(e.pageY - downY, 2) + Math.pow(e.pageX - downX, 2)
+    };
+    data.delta = {
+      x: e.pageX - lastX,
+      y: e.pageY - lastY
+    };
+    data.direction = Math.atan2(data.distance.y, data.distance.x);
+    
+    handlers['drag'](e, data);
+    
+    lastX = e.pageX;
+    lastY = e.pageY;
+  }
+  function _up (e) {
+    if (handlers['up']) {
+      handlers['up'](e);
+    }
+    window.removeEventListener('mousemove', _drag, false);
+    window.removeEventListener('mouseup', _up, false);
+  }
+  
+  context.addEventListener('mousedown', _down, false);
+}
+
 
 module.exports.simplePointer = (context, events, transform) => {
 	let rect, button = 0, downX, downY;
@@ -246,6 +289,8 @@ const createKeyboardListenerMachine = function (descriptor) {
 		const on = getKeyListenerObject(keyMap, downEvent);		
 
 		if (!on) return false;
+		if (on.preventDefault) downEvent.preventDefault();
+		if (on.stopPropagation) downEvent.stopPropagation();
 		if (fnutils.isFunction(keyUpListeners[downKeyCode])) return false;
 		if (!checkAllModifiersMet(downEvent, on.modifiers)) return false;
 
@@ -260,9 +305,6 @@ const createKeyboardListenerMachine = function (descriptor) {
 			}
 		};
 		window.addEventListener('keyup', keyUpListeners[downKeyCode], false);
-
-		if (on.preventDefault) downEvent.preventDefault();
-		if (on.stopPropagation) downEvent.stopPropagation();
 	};
 };
 
@@ -272,5 +314,6 @@ module.exports.keyboard = function (descriptor) {
 
 module.exports.doubleClick = doubleClick;
 module.exports.listenOnce = listenOnce;
+module.exports.addDnDListener = addDnDListener;
 module.exports.events = __events;
 module.exports.eventName = __eventName;

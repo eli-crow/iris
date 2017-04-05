@@ -8,6 +8,8 @@ const ColorManager = require('./ColorManager.js');
 const PanelGroup = require('./PanelGroup.js');
 const ControlsPanel = require('./ControlsPanel.js');
 
+const Colorjack = require('./Colorjack.js');
+
 const settings = require('./settings.json');
 
 
@@ -18,6 +20,7 @@ const inputManager    = new InputManager(mainDrawingArea);
 const surfaceManager  = new SurfaceManager(mainDrawingArea, settings);
 const toolManager     = new ToolManager(surfaceManager._renderer); //TODO: remove this dependency
 const colorManager    = new ColorManager();
+const colorjack       = new Colorjack();
 
 const controlsPanel = new ControlsPanel();
 
