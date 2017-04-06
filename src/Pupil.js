@@ -7,18 +7,12 @@ export default class Pupil extends Emitter
 		super(['huerotate', 'huerotateend', 'center']);
 
 		this._canvas = canvas;
-		this._element = null;
+		this._element = document.createElement('div');
 
-		this.init();
-	}
+		//init
+		this._element.classList.add('iris-pupil');
 
-	init() {
-		const element = document.createElement('div');
-		element.classList.add('iris-pupil');
-		this._canvas.insertAdjacentElement('afterend', element);
-		this._element = element;
-
-		listenerutils.normalPointer(element, {
+		listenerutils.normalPointer(this._element, {
 			move:        e => this.emit('huerotate', e),
 			up:          e => this.emit('huerotateend', e),
 			dblClick:    e => this.emit('center', e)
@@ -26,6 +20,7 @@ export default class Pupil extends Emitter
 	}
 
 	resize () {
+		this._canvas.insertAdjacentElement('afterend', this._element);
 		const canvas = this._canvas;
 		const width = canvas.width;
 		const height = canvas.height;

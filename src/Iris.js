@@ -5,7 +5,8 @@ import Emitter from './Emitter.js';
 import TabbedView from './TabbedView.js';
 
 import * as listenerutils from './listenerutils.js';
-import * as mathutils from './mathutils.js';
+import * as omutils from './mathutils.js';
+import * as domutils from './domutils.js';
 
 import {palettes as __palettes} from './palettes.js';
 const __scrollAdjustSpeed = 0.2;
@@ -20,18 +21,20 @@ const __webglConfig = {
 //manages the canvas and its own IrisPalettes.
 export default class Iris extends Emitter
 {
-	constructor (canvas) {
-		super(['pick', 'pickend', 'zoom']);
+	constructor () {
+		super(['pick', 'pickend']);
 
-		this._canvas = canvas;
-		this._gl = canvas.getContext('webgl', __webglConfig) || canvas.getContext('experimental-webgl', __webglConfig);
+		this._canvas = document.createElement('canvas');
+		this._gl = this._canvas.getContext('webgl', __webglConfig) || this._canvas.getContext('experimental-webgl', __webglConfig);
 		this._currentPalette = null;
-		this._pupil = new Pupil(canvas);
-		this._highlight = new Highlight(canvas, this._gl);
+		this._pupil = new Pupil(this._canvas);
+		this._highlight = new Highlight(this._canvas, this._gl);
 		this._inputs = null;
 		this.palettes = {};
 
 		//init
+		this._canvas.classList.add('iris-wheel');
+
 		listenerutils.normalPointer(this._canvas, {
 			contained: true,
 			down: e => this.emitColors('pick', e.centerX, e.centerY, true), 
@@ -50,12 +53,11 @@ export default class Iris extends Emitter
 			}
 		});
 
-		for (var i = 0, ii = __palettes.length; i < ii; i++) {
-			const spec = __palettes[i];
+		__palettes.forEach(spec => {
 			if (spec.enabled) {
 		 		this.addPalette(spec);
 		 	}
-		}
+		})
 
 		this.setMode('Colors');
 
@@ -108,6 +110,7 @@ export default class Iris extends Emitter
 		canvas.height = height;
 		this._gl.viewport(0,0, width, height);
 
+		this._highlight.onResize();
 		this._highlight.move(0,0);
 		this._pupil.resize();
 		this._currentPalette.draw();
@@ -142,4 +145,10 @@ export default class Iris extends Emitter
 		this._inputs = tv;
 		return tv;
 	}
-};
+
+	replaceElement (el) {
+		el.insertAdjacentElement('beforebegin', this._canvas);
+		domutils.remove(el);
+		this.onResize();
+	} 
+}

@@ -22,6 +22,10 @@ export default class Highlight
 		this.movePolar(0,0);
 	}
 
+	onResize () {
+		this._canvas.insertAdjacentElement('afterend', this._element);
+	}
+
 	move (x, y) {
 		this._x = x;
 		this._y = y;
