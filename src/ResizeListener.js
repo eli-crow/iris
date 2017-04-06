@@ -1,4 +1,4 @@
-module.exports = class ResizeListener
+export default class ResizeListener
 {
 	constructor (descriptor) {
 		const resizeElement = descriptor.element || document.body;

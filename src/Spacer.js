@@ -1,11 +1,9 @@
-const PanelElement = require('./PanelElement.js');
+import PanelElement from './PanelElement.js';
 
-class Spacer extends PanelElement
+export default class Spacer extends PanelElement
 {
 	constructor () {
 		super();
 		this._element = document.createElement('hr');
 	}
 }
-
-module.exports = Spacer;

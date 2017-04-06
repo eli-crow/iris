@@ -1,6 +1,6 @@
-const Tool = require('./Tool.js');
-const Spacer = require('./Spacer.js');
-const ToolShapeSelector = require('./ToolShapeSelector.js');
+import Tool from './Tool.js';
+import Spacer from './Spacer.js';
+import ToolShapeSelector from './ToolShapeSelector.js';
 
 const __shapeUrls = [
 	'./img/brush_smooth.png',
@@ -8,7 +8,7 @@ const __shapeUrls = [
 	'./img/brush_inky.png'
 ];
 
-module.exports = class TexturedTool extends Tool
+export default class TexturedTool extends Tool
 {
 	constructor(events, options) {
 		super(events, options);

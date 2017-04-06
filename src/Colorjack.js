@@ -1,19 +1,18 @@
-const hsluv = require('hsluv');
-const Emitter = require('./Emitter.js');
-const domutils = require('./domutils.js');
-const listenerutils = require('./listenerutils.js');
-const mathutils = require('./mathutils.js');
-const fnutils = require('./fnutils.js');
+import * as hsluv from 'hsluv';
+import Emitter from './Emitter.js';
+import * as domutils from './domutils.js';
+import * as listenerutils from './listenerutils.js';
+import * as mathutils from './mathutils.js';
 
 const __template = require('../templates/colorjack.svg.pug');
 
-class Colorjack extends Emitter
+export default class Colorjack extends Emitter
 {
 	constructor(radius) {
 		super(['adjust', 'adjustend']);
 
 		const jackEl = domutils.HTMLToElements(__template({
-			radius: 85,
+			radius: radius,
 			iconScale: 0.7
 		}))[0];
 		const els = {
@@ -31,14 +30,24 @@ class Colorjack extends Emitter
 		this._elements = els;
 		this._bounds = null;
 		this._color = [225, 100, 70]; //hsluv
+		this._mouse = [];
+		this._offset = [-200, -radius];
 
 		//init		
-		els.left.addEventListener('click',  () => this.adjustChroma(-2), false);
-		els.right.addEventListener('click', () => this.adjustChroma(2), false);
-		els.down.addEventListener('click',  () => this.adjustLightness(-2), false);
-		els.up.addEventListener('click',    () => this.adjustLightness(2), false);
+		els.left.addEventListener('click',  () => this.adjustChroma(-4), true);
+		els.right.addEventListener('click', () => this.adjustChroma(4), true);
+		els.down.addEventListener('click',  () => this.adjustLightness(-2), true);
+		els.up.addEventListener('click',    () => this.adjustLightness(2), true);
 
-		document.addEventListener('resize', () => this._onResize());
+		document.addEventListener('resize', () => this._onResize(), true);
+
+		window.addEventListener(
+			listenerutils.events.move, 
+			e => {
+				this._mouse[0] = e.pageX;
+				this._mouse[1] = e.pageY;
+			}
+		);
 
 		listenerutils.addDnDListener(els.indicator, {
 			down: () => els.indicator.classList.add('cursor-grabbing'),
@@ -76,6 +85,22 @@ class Colorjack extends Emitter
 		this.draw(this._color);
 	}
 
+	showAt (pageX, pageY) {
+		const el = this._elements.jackEl;
+		el.style.transform = `translate3d(${pageX}px,${pageY}px,0px)`;
+		el.style.visibility = 'visible';
+	}
+	show () {
+		this.showAt(
+			this._mouse[0] + this._offset[0],
+			this._mouse[1] + this._offset[1]
+		);
+	}
+	hide () {
+		this._elements.jackEl.style.visibility = 'hidden';
+	}
+
+	//TODO: refactor
 	draw (color) {
 		const els = this._elements;
 
@@ -84,11 +109,11 @@ class Colorjack extends Emitter
 		els.hueIndicator.style.fill = currColor;
 
 		const desaturated = color.concat();
-		desaturated[1] = mathutils.clamp(desaturated[1] - 2, 0, 100);
+		desaturated[1] = mathutils.clamp(desaturated[1] - 4, 0, 100);
 		els.left.style.fill = domutils.formatRgbaString(this.getRgb(desaturated));
 
 		const saturated = color.concat();
-		saturated[1] = mathutils.clamp(saturated[1] + 2, 0, 100);
+		saturated[1] = mathutils.clamp(saturated[1] + 4, 0, 100);
 		els.right.style.fill = domutils.formatRgbaString(this.getRgb(saturated));
 
 		const darker = color.concat();
@@ -136,5 +161,3 @@ class Colorjack extends Emitter
 		this._bounds = bounds;
 	}
 }
-
-module.exports = Colorjack;

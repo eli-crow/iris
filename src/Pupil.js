@@ -1,7 +1,7 @@
-const Emitter = require('./Emitter.js');
-const listenerutils = require('./listenerutils.js');
+import Emitter from './Emitter.js';
+import * as listenerutils from './listenerutils.js';
 
-module.exports = class Pupil extends Emitter
+export default class Pupil extends Emitter
 {
 	constructor(canvas) {
 		super(['huerotate', 'huerotateend', 'center']);

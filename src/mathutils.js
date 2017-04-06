@@ -1,26 +1,26 @@
-const cubicHermite = require('cubic-hermite');
+import * as cubicHermite from 'cubic-hermite';
 
-const clamp = (x, a, b) => Math.min(Math.max(x, a), b);
-const wrap = (x, n) => ((x%n)+n)%n;
-const radians = degrees => degrees/180*Math.PI;
-const degrees = radians => radians/Math.PI*180;
+export const clamp = (x, a, b) => Math.min(Math.max(x, a), b);
+export const wrap = (x, n) => ((x%n)+n)%n;
+export const radians = degrees => degrees/180*Math.PI;
+export const degrees = radians => radians/Math.PI*180;
 
-const doVector = (v, w, fn) => v.slice(0).map((v,i) => fn(v,w.length ? w[i] : w));
-const vMul = (v, w) => doVector(v,w,(v,w) => v * s, v, w);
-const vSub = (v, w) => doVector(v,w,(v,w) => v - w, v, w);
-const vAdd = (v, w) => doVector(v,w,(v,w) => v + w, v, w);
-const vDiv = (v, w) => doVector(v,w,(v,w) => v / w, v, w);
+export const doVector = (v, w, fn) => v.slice(0).map((v,i) => fn(v,w.length ? w[i] : w));
+export const vMul = (v, w) => doVector(v,w,(v,w) => v * s, v, w);
+export const vSub = (v, w) => doVector(v,w,(v,w) => v - w, v, w);
+export const vAdd = (v, w) => doVector(v,w,(v,w) => v + w, v, w);
+export const vDiv = (v, w) => doVector(v,w,(v,w) => v / w, v, w);
 
-const distance = (ptArray1, ptArray2) => {
+export const distance = (ptArray1, ptArray2) => {
 	let squareSum = 0;
 	for (var i = 0, ii = ptArray1.length; i < ii; ++i) 
 		squareSum += Math.pow(ptArray2[i] - ptArray1[i], 2);
 	return Math.sqrt(squareSum);
 }
-const squareDistance2d = (p0x, p0y, p1x, p1y) => Math.pow(p1x - p0x, 2) + Math.pow(p1y - p0y, 2);
-const distance2d = (p0x, p0y, p1x, p1y) => Math.sqrt(squareDistance2d(p0x, p0y, p1x, p1y));
+export const squareDistance2d = (p0x, p0y, p1x, p1y) => Math.pow(p1x - p0x, 2) + Math.pow(p1y - p0y, 2);
+export const distance2d = (p0x, p0y, p1x, p1y) => Math.sqrt(squareDistance2d(p0x, p0y, p1x, p1y));
 
-module.exports.dotProduct = (v1, v2) => {
+export function dotProduct(v1, v2) {
 	let result = 0;
 	for (var i = 0, ii = v1.length; i < ii; i++) {
 		result += v1[i] * v2[i];
@@ -28,13 +28,13 @@ module.exports.dotProduct = (v1, v2) => {
 	return result;
 } 
 
+
 function cubicComponent (t, y0, y1, y2, y3) {
 	const a0 = y3 - y2 - y0 + y1;
 	const a1 = y0 - y1 - a0;
 	const a2 = y2 - y0;
 	return(a0*t*t*t + a1*t*t + a2*t + y1);
 }
-
 
 /**
  * takes a 1d buffer of 4 consecutive points of nComponents dimensions, returns a buffer of 
@@ -45,7 +45,7 @@ function cubicComponent (t, y0, y1, y2, y3) {
  * @param  {array} output      optional buffer to use, default behavior returns a new array.
  * @return {array}             a buffer of points interpolated between y2 and y3
  */
-module.exports.getCubicPoints = function getCubicPoints(input, nSteps, nComponents, output) {
+export function getCubicPoints (input, nSteps, nComponents, output) {
 	output = output || new Array(nSteps * nComponents);
 
 	const p0x = input[0], p0y = input[1];
@@ -61,8 +61,8 @@ module.exports.getCubicPoints = function getCubicPoints(input, nSteps, nComponen
 	return output;
 };
 
-const linearComponent = (t, p0, p1) => (1 - t) * p0 + t * p1;
-module.exports.getLerpedCubicPoints2d = function getCubicPoints(input, nSteps, minDistance) {
+export const lerp = (t, p0, p1) => (1 - t) * p0 + t * p1;
+export function getLerpedCubicPoints2d (input, nSteps, minDistance) {
 	const output = [];
 
 	const p0x = input[0], p0y = input[1];
@@ -78,8 +78,8 @@ module.exports.getLerpedCubicPoints2d = function getCubicPoints(input, nSteps, m
 		dist = Math.sqrt(squareDistance2d(lastX, lastY, currX, currY));
 		for (let l = 0; l < dist; l+=minDistance) {
 			output.push(
-				linearComponent(l/dist, lastX, currX),
-				linearComponent(l/dist, lastY, currY)
+				lerp(l/dist, lastX, currX),
+				lerp(l/dist, lastY, currY)
 			);
 		}
 		lastX = currX;
@@ -89,14 +89,14 @@ module.exports.getLerpedCubicPoints2d = function getCubicPoints(input, nSteps, m
 	return output;
 };
 
-module.exports.lerpMinDistance = function (pts, minDistance) {
+export function lerpMinDistance (pts, minDistance) {
 	const output = [];
 
 	for (var i = 0, ii = pts.length; i <= ii; i += 2) {
 		const p0x = pts[i]  , p0y = pts[i+1];
 		const p1x = pts[i+2], p1y = pts[i+3];
 		for (let l = 0, ll = distance2d(p0x, p0y, p1x, p1y); l < ll; l+=minDistance) {
-			output.push( linearComponent(l/ll, p0x, p1x), linearComponent(l/ll, p0y, p1y) );
+			output.push( lerp(l/ll, p0x, p1x), lerp(l/ll, p0y, p1y) );
 		}
 	}
 
@@ -139,7 +139,7 @@ const getCentripetalCRPoints2d = function (input, nSteps) {
 };
 
 
-const getLerpedCentripetalCRPoints2d = function (input, nSteps, minDistance) {
+export function getLerpedCentripetalCRPoints2d (input, nSteps, minDistance) {
 	//todo: statically size the array with inputs x nSteps?
 	const p0x = input[0], p0y = input[1];
 	const p1x = input[2], p1y = input[3];
@@ -162,8 +162,8 @@ const getLerpedCentripetalCRPoints2d = function (input, nSteps, minDistance) {
 		dist = distance2d(lastX, lastY, currX, currY);
 		for (let l = 0; l < dist; l+=minDistance) {
 			pts.push(
-				linearComponent(l/dist, lastX, currX),
-				linearComponent(l/dist, lastY, currY)
+				lerp(l/dist, lastX, currX),
+				lerp(l/dist, lastY, currY)
 			);
 		}
 
@@ -171,8 +171,8 @@ const getLerpedCentripetalCRPoints2d = function (input, nSteps, minDistance) {
 		dist = distance2d(lastX, lastY, p2x, p2y);
 		for (let l = 0; l < dist; l+=minDistance) {
 			pts.push(
-				linearComponent(l/dist, currX, p2x),
-				linearComponent(l/dist, currY, p2y)
+				lerp(l/dist, currX, p2x),
+				lerp(l/dist, currY, p2y)
 			);
 		}
 
@@ -183,7 +183,7 @@ const getLerpedCentripetalCRPoints2d = function (input, nSteps, minDistance) {
 	return pts;
 };
 
-const getLerpedCubicHermitePoints2d = function (input, nSteps, minDistance) {
+export const getLerpedCubicHermitePoints2d = function (input, nSteps, minDistance) {
 	const output = [];
 
 	// todo: fork function to accept input buffer directly.
@@ -205,8 +205,8 @@ const getLerpedCubicHermitePoints2d = function (input, nSteps, minDistance) {
 		dist = Math.sqrt(squareDistance2d(lastPos[0], lastPos[1], currPos[0], currPos[1]));
 		for (let l = 0; l < dist; l+=minDistance) {
 			output.push(
-				linearComponent(l/dist, lastPos[0], currPos[0]),
-				linearComponent(l/dist, lastPos[1], currPos[1])
+				lerp(l/dist, lastPos[0], currPos[0]),
+				lerp(l/dist, lastPos[1], currPos[1])
 			);
 		}
 		lastPos = currPos;
@@ -216,7 +216,7 @@ const getLerpedCubicHermitePoints2d = function (input, nSteps, minDistance) {
 };
 
 
-module.exports.getSinePoints2d = function(width, amplitude, nPts, xOffset, yOffset, output) {
+export function getSinePoints2d (width, amplitude, nPts, xOffset, yOffset, output) {
 	output = output || new Array(nPts * 2);
 
 	for (let i = 0; i < nPts; i++) {
@@ -227,7 +227,7 @@ module.exports.getSinePoints2d = function(width, amplitude, nPts, xOffset, yOffs
 	return output;
 }
 
-module.exports.getSinePoints1d = function(amplitude, nPts, output) {
+export function getSinePoints1d (amplitude, nPts, output) {
 	output = output || new Array(nPts);
 
 	for (let i = 0; i < nPts; i++)
@@ -235,17 +235,3 @@ module.exports.getSinePoints1d = function(amplitude, nPts, output) {
 
 	return output;
 }
-module.exports.vMul = vMul;
-module.exports.vSub = vSub;
-module.exports.vAdd = vAdd;
-module.exports.vDiv = vDiv;
-module.exports.wrap = wrap;
-module.exports.clamp = clamp;
-module.exports.radians = radians;
-module.exports.degrees = degrees;
-module.exports.squareDistance2d = squareDistance2d;
-module.exports.distance = distance;
-module.exports.lerp = linearComponent;
-module.exports.getLerpedCubicHermitePoints2d = getLerpedCubicHermitePoints2d;
-module.exports.getCentripetalCRPoints2d = getCentripetalCRPoints2d;
-module.exports.getLerpedCentripetalCRPoints2d = getLerpedCentripetalCRPoints2d;

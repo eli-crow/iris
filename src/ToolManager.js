@@ -1,25 +1,25 @@
-const Brush = require('./Brush.js');
-const Eraser = require('./Eraser.js');
-const Emitter = require('./Emitter.js');
-const Panel = require('./Panel.js');
-const Eyedropper = require('./Eyedropper.js');
-const BrushPanel = require('./BrushPanel.js');
-const SurfaceMover = require('./SurfaceMover.js');
-const ToolEffector = require('./ToolEffector.js');
+import Brush from './Brush.js';
+import Eraser from './Eraser.js';
+import Emitter from './Emitter.js';
+import Panel from './Panel.js';
+import ColorInspector from './ColorInspector.js';
+import BrushPanel from './BrushPanel.js';
+import SurfaceMover from './SurfaceMover.js';
+import ToolEffector from './ToolEffector.js';
 
-const fnutils = require('./fnutils.js');
-const mathutils = require('./mathutils.js');
+import * as fnutils from './fnutils.js';
+import * as mathutils from './mathutils.js';
 
-const __tools = {};
+export const __tools = {};
 let __instance = null;
 
-class ToolManager extends Emitter
+export default class ToolManager extends Emitter
 {
 	constructor(surfaceRenderer) {
 		if (__instance) return __instance;
 		super(['toolchanged', 'sample', 'draw', 'transform']);
 
-		__tools.eyedropper = new Eyedropper(surfaceRenderer)
+		__tools.eyedropper = new ColorInspector(surfaceRenderer)
 			.on('pick', fnutils.throttle(data => this.emit('sample', data)), 50)
 			.on('pickend', data => this.setColor(data.rgba));
 		
@@ -73,7 +73,6 @@ class ToolManager extends Emitter
 
 		//singleton
 		__instance = this;
-		ToolManager.Tools = __tools;
 	}
 
 	//e : IrisMouseEvent
@@ -96,8 +95,17 @@ class ToolManager extends Emitter
 	}
 
 	setTool (toolName) {
+		if (this._currentTool.onToolDisable) {
+			this._currentTool.onToolDisable();
+		}
+
 		const tool = __tools[ toolName.toLowerCase() ];
 		this._currentTool = tool;
+
+		if (tool.onToolEnable) {
+			tool.onToolEnable();
+		}
+
 		this.setColor(this._color);
 		if (tool instanceof Brush) { 
 			this.panel.setBrush(tool);
@@ -133,5 +141,3 @@ function __setCursor(toolName) {
 	document.body.classList.add(cursor);
 	document.body.setAttribute('data-iris-cursor', cursor);
 }
-
-module.exports = ToolManager;

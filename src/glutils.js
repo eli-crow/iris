@@ -1,10 +1,10 @@
-function getPixel (canvas, gl, x, y) {
+export function getPixel (canvas, gl, x, y) {
 	var pixel = new Uint8Array(4);
 	gl.readPixels(x, canvas.height - y, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
 	return [pixel[0], pixel[1], pixel[2], pixel[3]];
 }
 
-function uniformByType (gl, type, location, values) {
+export function uniformByType (gl, type, location, values) {
 	switch(type) {
 		case '1f': gl.uniform1f(location, values); break;
 		case '2f': gl.uniform2f(location, ...values); break;
@@ -12,7 +12,7 @@ function uniformByType (gl, type, location, values) {
 	}
 };
 
-function createShader(gl, sourceCode, type) {
+export function createShader(gl, sourceCode, type) {
 	var shader = gl.createShader( type );
 	gl.shaderSource( shader, sourceCode );
 	gl.compileShader( shader );
@@ -24,7 +24,7 @@ function createShader(gl, sourceCode, type) {
 	return shader;
 };
 
-function createAndLinkProgram(gl, vertexShader, fragmentShader) {
+export function createAndLinkProgram(gl, vertexShader, fragmentShader) {
 	var program = gl.createProgram();
 	gl.attachShader(program, vertexShader);
 	gl.attachShader(program, fragmentShader);
@@ -37,14 +37,8 @@ function createAndLinkProgram(gl, vertexShader, fragmentShader) {
 	return program;
 };
 
-function createAndLinkProgramFromSource (gl, vertexSrc, fragmentSrc) {
+export function createAndLinkProgramFromSource (gl, vertexSrc, fragmentSrc) {
 	const vertShader = createShader(gl, vertexSrc, gl.VERTEX_SHADER);
 	const fragShader = createShader(gl, fragmentSrc, gl.FRAGMENT_SHADER);
 	return createAndLinkProgram(gl, vertShader, fragShader);
 }
-
-module.exports.getPixel = getPixel;
-module.exports.uniformByType = uniformByType;
-module.exports.createShader = createShader;
-module.exports.createAndLinkProgram = createAndLinkProgram;
-module.exports.createAndLinkProgramFromSource = createAndLinkProgramFromSource;

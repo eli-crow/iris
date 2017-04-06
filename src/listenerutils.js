@@ -1,7 +1,9 @@
-const domutils = require('./domutils.js');
-const fnutils = require('./fnutils.js');
-const arrayutils = require('./arrayutils.js');
-const strutils = require('./strutils.js');
+import * as domutils from './domutils.js';
+import * as fnutils from './fnutils.js';
+import * as arrayutils from './arrayutils.js';
+import * as strutils from './strutils.js';
+
+//todo: rewrite for es6 safely
 require('keyboardevent-key-polyfill').polyfill();
 
 //todo: currently nothing here is responsible for destroying own listeners. In future versions, this will be necessary.
@@ -88,8 +90,7 @@ function addDnDListener (context, handlers) {
     window.removeEventListener('mousemove', _drag, false);
     window.removeEventListener('mouseup', _up, false);
   }
-  
-  context.addEventListener('mousedown', _down, false);
+  context.addEventListener('mousedown', _down, handlers.useCapture);
 }
 
 

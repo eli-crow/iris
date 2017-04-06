@@ -1,4 +1,4 @@
-module.exports.copyDefaults = function (options, defaults) {
+export function copyDefaults (options, defaults) {
 	const result = {};
 
 	for (let name in defaults) {
@@ -8,6 +8,6 @@ module.exports.copyDefaults = function (options, defaults) {
 	return result;
 }
 
-module.exports.copyShallow = function copyShallow(o) {
+export function copyShallow (o) {
 	return JSON.parse(JSON.stringify(o));
 }

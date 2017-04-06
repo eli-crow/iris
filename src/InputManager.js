@@ -1,10 +1,10 @@
-const Emitter = require('./Emitter.js');
-const SmoothPointer = require('./SmoothPointer.js');
-const listenerutils = require('./listenerutils.js');
-const ResizeListener = require('./ResizeListener.js');
+import Emitter from './Emitter.js';
+import SmoothPointer from './SmoothPointer.js';
+import ResizeListener from './ResizeListener.js';
+import * as listenerutils from './listenerutils.js';
 
 //enum
-const PointerStates = {
+export const PointerStates = {
 	Brush:  0,
 	Pan:    1,
 	Sample: 2,
@@ -24,9 +24,10 @@ const PointerStates = {
 //  relY : number,
 //  etc...
 // }
+// 
 
 //manages input state for application. emits effective action and returns to actual tool selection. also manages cursor style;
-module.exports = class InputManager extends Emitter
+export default class InputManager extends Emitter
 {
 	constructor (relativeElmnt) {
 		super([
@@ -126,5 +127,3 @@ module.exports = class InputManager extends Emitter
 		// this.emit('zoom', this.scale);
 	}
 };
-
-module.exports.PointerStates = PointerStates;

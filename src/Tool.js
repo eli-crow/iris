@@ -1,12 +1,12 @@
-const Emitter = require('./Emitter.js');
-const Slider = require('./Slider.js');
-const ToolEffector = require('./ToolEffector.js');
+import Emitter from './Emitter.js';
+import Slider from './Slider.js';
+import ToolEffector from './ToolEffector.js';
 
-const strutils = require('./strutils.js');
-const fnutils = require('./fnutils.js');
+import * as strutils from './strutils.js';
+import * as fnutils from './fnutils.js';
 
 //abstract
-module.exports = class Tool extends Emitter 
+export default class Tool extends Emitter 
 {
 	constructor (events, options) {
 		super(['change', 'changeend'].concat(events));

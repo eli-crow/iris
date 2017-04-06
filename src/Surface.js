@@ -1,20 +1,20 @@
-const Emitter = require('./Emitter.js');
-const listenerutils = require('./listenerutils.js');
-const fnutils = require('./fnutils.js');
-const canvasutils = require('./canvasutils.js');
-const domutils = require('./domutils.js');
-const Tool = require('./Tool.js');
+import Emitter from './Emitter.js';
+import Tool from './Tool.js';
+import * as listenerutils from './listenerutils.js';
+import * as fnutils from './fnutils.js';
+import * as canvasutils from './canvasutils.js';
+import * as domutils from './domutils.js';
 
-const BlendMode = {
+export const BlendMode = {
 	Normal: 'source-over',
 	Filter: 'multiply',
 	Inside: 'source-atop',
 	Hide: 'destination-out',
 	Mask: 'destination-out'
-}
+};
 
 //an abstraction layer for canvas.
-module.exports = class Surface extends Emitter
+export default class Surface extends Emitter
 {
 	constructor(canvas, name) {
 		super(['sample', 'load']);
@@ -151,5 +151,3 @@ module.exports = class Surface extends Emitter
 		return surface;
 	}
 };
-
-module.exports.BlendMode = BlendMode;

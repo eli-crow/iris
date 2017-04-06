@@ -1,15 +1,14 @@
-const InfoLogger = require('./InfoLogger.js');
+import InfoLogger from './InfoLogger.js';
 new InfoLogger().log();
 
-const InputManager = require('./InputManager.js');
-const SurfaceManager = require('./SurfaceManager.js');
-const ToolManager = require('./ToolManager.js');
-const ColorManager = require('./ColorManager.js');
-const PanelGroup = require('./PanelGroup.js');
-const ControlsPanel = require('./ControlsPanel.js');
+import InputManager, {PointerStates} from './InputManager.js';
+import SurfaceManager from './SurfaceManager.js';
+import ToolManager from './ToolManager.js';
+import ColorManager from './ColorManager.js';
+import PanelGroup from './PanelGroup.js';
+import ControlsPanel from './ControlsPanel.js';
 
-const Colorjack = require('./Colorjack.js');
-
+//todo: es6 json?
 const settings = require('./settings.json');
 
 
@@ -20,7 +19,6 @@ const inputManager    = new InputManager(mainDrawingArea);
 const surfaceManager  = new SurfaceManager(mainDrawingArea, settings);
 const toolManager     = new ToolManager(surfaceManager._renderer); //TODO: remove this dependency
 const colorManager    = new ColorManager();
-const colorjack       = new Colorjack();
 
 const controlsPanel = new ControlsPanel();
 
@@ -34,7 +32,6 @@ const panelGroupRight = new PanelGroup(document.getElementById('panel-group-righ
 
 
 // wiring
-const PointerStates = InputManager.PointerStates;
 inputManager.on('pointerstatechange', e => {
 	switch (e.state) {
 		case PointerStates.Pan:     console.log('panning state');         break;

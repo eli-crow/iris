@@ -1,9 +1,9 @@
-const InputBase = require('./InputBase.js');
-const objutils = require('./objutils.js');
+import InputBase from './InputBase.js';
+import * as objutils from './objutils.js';
 
 const __template = require('../templates/input-slider.pug');
 
-module.exports = class Slider extends InputBase 
+export default class Slider extends InputBase 
 {
   constructor (value, min, max, step, name, options) {
     super('range', null , null, __template({ 

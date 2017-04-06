@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"getboun",
+				"getBoundingPageRect"
+			],
+			[
+				"listen",
+				"listenerutils〔variable〕"
+			],
+			[
+				"quer",
+				"querySelector\t( selectors: DOMString ): Element Document"
+			],
+			[
 				"mod",
 				"modernizr/2.8.3"
 			],
@@ -502,23 +514,20 @@
 			[
 				"over",
 				"overflow"
-			],
-			[
-				"key",
-				"keydown\t.keydown()"
-			],
-			[
-				"query",
-				"querySelector"
-			],
-			[
-				"lightbox",
-				"lightbox-main\t(index.html)"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "src/entry.js",
+			"settings":
+			{
+				"buffer_size": 2549,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -544,15 +553,47 @@
 	"command_palette":
 	{
 		"height": 354.0,
-		"last_filter": "rena",
+		"last_filter": "tabs",
 		"selected_items":
 		[
 			[
-				"rena",
-				"File: Rename"
+				"tabs",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"new file",
+				"File: New File Relative to Current View"
 			],
 			[
 				"rename",
+				"File: Rename"
+			],
+			[
+				"renae",
+				"File: Rename"
+			],
+			[
+				"select",
+				"Emmet: Select Next Item"
+			],
+			[
+				"move",
+				"File: Move"
+			],
+			[
+				"new",
+				"File: New File Relative to Current View"
+			],
+			[
+				"dele",
+				"File: Delete"
+			],
+			[
+				"ele",
+				"SublimeLinter: Enable Debug Mode"
+			],
+			[
+				"rena",
 				"File: Rename"
 			],
 			[
@@ -568,14 +609,6 @@
 				"SnippetMaker: Make Snippet"
 			],
 			[
-				"new",
-				"File: New File Relative to Current View"
-			],
-			[
-				"new file",
-				"File: New File Relative to Current View"
-			],
-			[
 				"new ",
 				"File: New File Relative to Current View"
 			],
@@ -588,10 +621,6 @@
 				"File: Rename"
 			],
 			[
-				"dele",
-				"File: Delete"
-			],
-			[
 				"dup",
 				"File: Duplicate"
 			],
@@ -602,10 +631,6 @@
 			[
 				"lower",
 				"Convert Case: Lower Case"
-			],
-			[
-				"tabs",
-				"Indentation: Convert to Tabs"
 			],
 			[
 				"javas",
@@ -626,10 +651,6 @@
 			[
 				"tab",
 				"Indentation: Convert to Tabs"
-			],
-			[
-				"move",
-				"File: Move"
 			],
 			[
 				"c#",
@@ -714,10 +735,6 @@
 			[
 				"del",
 				"File: Delete"
-			],
-			[
-				"renae",
-				"File: Rename"
 			],
 			[
 				"new fi",
@@ -1050,17 +1067,9 @@
 			[
 				"word w",
 				"Word Wrap: Toggle"
-			],
-			[
-				"prev",
-				"Markdown Preview: Preview in Browser"
-			],
-			[
-				"previe",
-				"Markdown Preview: Preview in Browser"
 			]
 		],
-		"width": 740.0
+		"width": 631.0
 	},
 	"console":
 	{
@@ -1081,19 +1090,33 @@
 	"expanded_folders":
 	[
 		"/Users/EliCrow/Desktop/Web/Iris/Iris",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/dist",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/dist/img"
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/lib",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/mixins"
 	],
 	"file_history":
 	[
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Colorjack.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_colorjack.scss",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/domutils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/colorjack.svg.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/fnutils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Eyedropper.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/mathutils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/listenerutils.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/entry.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/base.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/strutils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/arrayutils.js",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/mixins/svg-defs.svg.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/compiled.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/index.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/colorjack.pug",
+		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/base.pug",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/ToolManager.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Tool.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/SmoothPointer.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Brush.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/listenerutils.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/BrushPreview.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/BrushShapeSelector.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Iris.js",
@@ -1112,12 +1135,10 @@
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_tabbed-view.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_input-button.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Button.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/arrayutils.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/TabbedView.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_panel.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/ToolEffector.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/InputBase.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/strutils.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/BrushManager.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/TexturedTool.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/BrushShapeView.js",
@@ -1127,15 +1148,12 @@
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_typography.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Surface.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/panel-iris.pug",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Eyedropper.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_panel-iris.scss",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/compiled.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Pupil.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_panel-element.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_panel-group.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/VectorBox.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/TabGroup.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/mathutils.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_panel-picker.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/globals.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/shaders/includes/sigmoidBlend.glsl",
@@ -1146,7 +1164,6 @@
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/ButtonGroup.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Toggle.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/panel.pug",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/fnutils.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Highlight.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_layout.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/_input-range.scss",
@@ -1182,7 +1199,6 @@
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Guides.js",
 		"/Users/EliCrow/Desktop/Web/Experiments/Eyeriss/index.html",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/spec/IrisPaletteSpec.js",
-		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/domutils.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/mixins/_input-range.scss",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/Spacer.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/src/ButtonRadioGroup.js",
@@ -1208,12 +1224,7 @@
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/templates/picker-base.pug",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/gulpfile.js",
 		"/Users/EliCrow/Desktop/Web/Iris/Iris/scss/scripts",
-		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/entry.js",
-		"/Users/EliCrow/Desktop/Web/_assets/Smallplates/examples/examples.sp",
-		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/Iris.js",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AIToolbox.h",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/samplecode/IrisPlugin/Source/IrisPlugin.h",
-		"/Users/EliCrow/Desktop/Development/Adobe Illustrator CC 2017 SDK/illustratorapi/illustrator/AITool.h"
+		"/Users/EliCrow/Library/Application Support/Adobe/CEP/extensions/com.elicrow.iris/js/entry.js"
 	],
 	"find":
 	{
@@ -1232,6 +1243,50 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"e.",
+			"]);\n",
+			"0.2",
+			"this._color",
+			"this._els",
+			"_elements",
+			"this._color",
+			"hex",
+			"this.getRgb(this._color)",
+			"this._color",
+			"_startColor",
+			"[1]",
+			"getRgba",
+			"{rgba: ",
+			"getRGBA",
+			"getRgba",
+			"chroma",
+			"elements.",
+			"elements",
+			"els.hue",
+			"elements",
+			"el",
+			"El",
+			"el",
+			"El",
+			"el",
+			"indicator",
+			"up",
+			"down",
+			"right",
+			"left",
+			"#colorjack",
+			" ",
+			") + scale",
+			"transform('translate', [",
+			"2/3/2",
+			"h",
+			"center",
+			"s",
+			"r",
+			"=r",
+			"lW",
+			")\n",
+			"\t ",
 			"brushManager",
 			"true",
 			"effectors",
@@ -1315,51 +1370,7 @@
 			"new ButtonGroup",
 			"new Slider",
 			"Slider",
-			"Spacer",
-			"Button",
-			"fnuti",
-			"isFu",
-			"element",
-			"handler",
-			"onInput",
-			"InputBase",
-			"prop",
-			"ambient",
-			"cos",
-			"sin",
-			"0.5",
-			"clamp",
-			"handler",
-			"myimage",
-			"context",
-			"handler",
-			"callback",
-			"MouseWheelHandler",
-			"this.gl",
-			"iris",
-			"this.iris",
-			"_uniform",
-			"descriptor",
-			"_uniform",
-			"bind",
-			"Controller",
-			"display",
-			"BrushPrev",
-			"getContext",
-			"input",
-			"tempEl",
-			"ONINPUT_EVENTNAME",
-			"evt",
-			"uniformByType",
-			"createShader",
-			"createAndLinkProgram",
-			"glutils",
-			"linework",
-			"user-select",
-			"simplePoi",
-			"offsetX",
-			"stopProp",
-			"preventDefault"
+			"Spacer"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1434,6 +1445,45 @@
 			"sheets":
 			[
 			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/entry.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2549,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1785,
+								1785
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"glslvalidator_configured": true,
+							"glslvalidator_enabled": 1,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"syntax_mgr_loaded": true,
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 475.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
 		}
 	],
 	"incremental_find":
@@ -1453,11 +1503,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -1517,6 +1574,82 @@
 		"selected_items":
 		[
 			[
+				"co",
+				"src/Colorjack.js"
+			],
+			[
+				"colorj",
+				"scss/_colorjack.scss"
+			],
+			[
+				"en",
+				"src/entry.js"
+			],
+			[
+				"dom",
+				"src/domutils.js"
+			],
+			[
+				"coj",
+				"src/Colorjack.js"
+			],
+			[
+				"cojsp",
+				"templates/colorjack.svg.pug"
+			],
+			[
+				"colorja",
+				"scss/_colorjack.scss"
+			],
+			[
+				"color",
+				"src/Colorjack.js"
+			],
+			[
+				"colorjacks",
+				"templates/colorjack.svg.pug"
+			],
+			[
+				"fn",
+				"src/fnutils.js"
+			],
+			[
+				"lit",
+				"src/listenerutils.js"
+			],
+			[
+				"stir",
+				"src/strutils.js"
+			],
+			[
+				"matu",
+				"src/mathutils.js"
+			],
+			[
+				"eyd",
+				"src/Eyedropper.js"
+			],
+			[
+				"list",
+				"src/listenerutils.js"
+			],
+			[
+				"array",
+				"src/arrayutils.js"
+			],
+			[
+				"domu",
+				"src/domutils.js"
+			],
+			[
+				"colo",
+				"scss/_colorjack.scss"
+			],
+			[
+				"ind",
+				"templates/index.pug"
+			],
+			[
 				"base",
 				"templates/base.pug"
 			],
@@ -1531,10 +1664,6 @@
 			[
 				"brushma",
 				"src/BrushManager.js"
-			],
-			[
-				"en",
-				"src/entry.js"
 			],
 			[
 				"tool",
@@ -1691,10 +1820,6 @@
 			[
 				"panelb",
 				"scss/_panel-brush.scss"
-			],
-			[
-				"list",
-				"src/listenerutils.js"
 			],
 			[
 				"shape",
@@ -1857,10 +1982,6 @@
 				"src/VectorBox.js"
 			],
 			[
-				"matu",
-				"src/mathutils.js"
-			],
-			[
 				"pupi",
 				"src/Pupil.js"
 			],
@@ -1917,10 +2038,6 @@
 				"shaders/includes/hsluv.glsl"
 			],
 			[
-				"eyd",
-				"src/Eyedropper.js"
-			],
-			[
 				"brus",
 				"src/Brush.js"
 			],
@@ -1967,66 +2084,6 @@
 			[
 				"ty",
 				"scss/_typography.scss"
-			],
-			[
-				"variab",
-				"scss/_variables.scss"
-			],
-			[
-				"layou",
-				"scss/_layout.scss"
-			],
-			[
-				"math",
-				"src/mathutils.js"
-			],
-			[
-				"high",
-				"src/Highlight.js"
-			],
-			[
-				"fn",
-				"src/fnutils.js"
-			],
-			[
-				"pu",
-				"src/Pupil.js"
-			],
-			[
-				"iri",
-				"src/Iris.js"
-			],
-			[
-				"listi",
-				"src/listenerutils.js"
-			],
-			[
-				"pup",
-				"src/Pupil.js"
-			],
-			[
-				"panel-too",
-				"templates/panel-tools.pug"
-			],
-			[
-				"panel-",
-				"scss/_panel-brush.scss"
-			],
-			[
-				"ind",
-				"templates/index.pug"
-			],
-			[
-				"slider",
-				"src/Slider.js"
-			],
-			[
-				"inputra",
-				"scss/_input-range.scss"
-			],
-			[
-				"hilig",
-				"src/Highlight.js"
 			]
 		],
 		"width": 0.0
@@ -2072,7 +2129,7 @@
 	"show_minimap": true,
 	"show_open_files": true,
 	"show_tabs": true,
-	"side_bar_visible": false,
+	"side_bar_visible": true,
 	"side_bar_width": 274.0,
 	"status_bar_visible": true,
 	"template_settings":

@@ -1,8 +1,8 @@
-const arrayutils = require('./arrayutils.js');
-const mathutils = require('./mathutils.js');
-const fnutils = require('./fnutils.js');
-const listenerutils = require('./listenerutils.js');
-const Emitter = require('./Emitter.js');
+import Emitter from './Emitter.js';
+import * as arrayutils from './arrayutils.js';
+import * as mathutils from './mathutils.js';
+import * as fnutils from './fnutils.js';
+import * as listenerutils from './listenerutils.js';
 
 const __baseSmoothing = .12;
 
@@ -12,7 +12,7 @@ const __defaults = {
   steps: 2
 }
 
-class SmoothPointer extends Emitter
+export default class SmoothPointer extends Emitter
 { 
   constructor(context, options) {
     super(['down', 'move', 'up'])
@@ -77,5 +77,3 @@ class SmoothPointer extends Emitter
     })
   }
 }
-
-module.exports = SmoothPointer;

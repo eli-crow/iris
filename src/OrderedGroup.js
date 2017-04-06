@@ -1,7 +1,7 @@
-const Group = require('./Group.js');
-const listenerutils = require('./listenerutils.js');
+import Group from './Group.js';
+import * as listenerutils from './listenerutils.js';
 
-module.exports = class OrderedGroup extends Group
+export default class OrderedGroup extends Group
 {
 	constructor (groupElement, accepts, events) {
 		super(groupElement, accepts, ['orderchanged'].concat(events || []));

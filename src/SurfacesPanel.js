@@ -1,24 +1,27 @@
-const Panel = require('./Panel.js');
+import Panel from './Panel.js';
+import Group from './Group.js';
+import Button from './Button.js';
+import FileSelect from './FileSelect.js';
 
 const __uploadMessage = 'Upload';
 const __dropMessage = 'Drop files here to create a new layer.';
 
-module.exports = class SurfacesPanel extends Panel
+export default class SurfacesPanel extends Panel
 {
 	constructor (surfaceSelector) {
 		super(['load', 'add', 'remove', 'select'], require('../templates/panel-surfaces.pug'));		
 
-		this._add = new Panel.Button('', null, this._element.querySelector('.add'))
+		this._add = new Button('', null, this._element.querySelector('.add'))
 			.on('click', () => this.emit('add'));
-		this._remove = new Panel.Button('', null, this._element.querySelector('.remove'))
+		this._remove = new Button('', null, this._element.querySelector('.remove'))
 			.on('click', () => this.emit('remove'));
-		this._fileSelect = new Panel.FileSelect(__uploadMessage, __dropMessage, window)
+		this._fileSelect = new FileSelect(__uploadMessage, __dropMessage, window)
 			.on('load', data => this.emit('load', data));
 
 		//init
-		const x = new Panel.Group(this._element.querySelector('.selector'))
+		const x = new Group(this._element.querySelector('.selector'))
 			.add(surfaceSelector);
-		const y = new Panel.Group(this._element.querySelector('.controls'))
+		const y = new Group(this._element.querySelector('.controls'))
 			.add(this._fileSelect);
 	}
 

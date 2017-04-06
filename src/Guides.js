@@ -1,4 +1,4 @@
-class Guides
+export default class Guides
 {
   constructor (canvas, spacing, angle, color) {
     this.canvas = canvas;
@@ -34,5 +34,3 @@ class Guides
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 }
-
-module.exports = Guides;

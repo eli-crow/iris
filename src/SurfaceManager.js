@@ -1,11 +1,11 @@
-const Emitter = require('./Emitter.js');
-const Surface = require('./Surface.js');
-const SurfacesPanel = require('./SurfacesPanel.js');
-const SurfaceSelector = require('./SurfaceSelector.js');
-const SurfaceRenderer = require('./SurfaceRenderer.js');
+import Emitter from './Emitter.js';
+import Surface from './Surface.js';
+import SurfacesPanel from './SurfacesPanel.js';
+import SurfaceSelector from './SurfaceSelector.js';
+import SurfaceRenderer from './SurfaceRenderer.js';
 
-const mathutils = require('./mathutils.js');
-const arrayutils = require('./arrayutils.js');
+import * as mathutils from './mathutils.js';
+import * as arrayutils from './arrayutils.js';
 
 //todo: cache layers below current while drawing.
 //todo: look into caching methods for surfaces above. 
@@ -16,7 +16,7 @@ const arrayutils = require('./arrayutils.js');
 //   surface : Surface
 // }
 
-module.exports = class SurfaceManager extends Emitter
+export default class SurfaceManager extends Emitter
 {
 	constructor (containerElement, settings) {
 		super(['select', 'add', 'remove', 'reorder', 'duplicate', 'download']);

@@ -3818,6 +3818,10 @@ public-encrypt@^4.0.0:
     parse-asn1 "^5.0.0"
     randombytes "^2.0.1"
 
+pubsub-js@^1.5.6:
+  version "1.5.6"
+  resolved "https://registry.yarnpkg.com/pubsub-js/-/pubsub-js-1.5.6.tgz#8bf6adbb810ffb7ec5129d178084bd7d7bb97de2"
+
 pug-attrs@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/pug-attrs/-/pug-attrs-2.0.2.tgz#8be2b2225568ffa75d1b866982bff9f4111affcb"

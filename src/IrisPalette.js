@@ -1,9 +1,9 @@
-const Emitter = require('./Emitter.js');
-const Slider = require('./Slider.js');
+import Emitter from './Emitter.js';
+import Slider from './Slider.js';
 
-const glutils = require('./glutils.js');
-const objutils = require('./objutils.js');
-const primatives = require('./primatives');
+import * as glutils from './glutils.js';
+import * as objutils from './objutils.js';
+import * as primatives from './primatives';
 
 // interface IrisPaletteUniform
 // {
@@ -22,7 +22,7 @@ const primatives = require('./primatives');
 // }
 
 // maintains own programs, uniforms, geometry, and attributes.
-module.exports = class IrisPalette extends Emitter
+export default class IrisPalette extends Emitter
 {
 	constructor (iris, fragmentSrc, vertexSrc, properties, name) {
 		super(['uniformupdated', 'inputchange']);

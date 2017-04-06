@@ -1,6 +1,6 @@
-const OrderedGroup = require('./OrderedGroup.js');
-const PanelElement = require('./PanelElement.js');
-const SurfaceListView = require('./SurfaceListView.js');
+import OrderedGroup from './OrderedGroup.js';
+import PanelElement from './PanelElement.js';
+import SurfaceListView from './SurfaceListView.js';
 
 //interface SurfaceSelectorEvent 
 //{
@@ -9,7 +9,7 @@ const SurfaceListView = require('./SurfaceListView.js');
 //	event : SimplePointerEvent
 //}
 
-module.exports = class SurfaceSelector extends OrderedGroup
+export default class SurfaceSelector extends OrderedGroup
 {
 	constructor (groupElement) {
 		super(groupElement, SurfaceListView, ['select', 'remove', 'duplicate', 'reorder', 'draw']);

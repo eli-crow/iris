@@ -1,7 +1,7 @@
-const Group = require('./Group.js');
-const Button = require('./Button.js');
+import Group from './Group.js';
+import Button from './Button.js';
 
-module.exports = class ButtonGroup extends Group
+export default class ButtonGroup extends Group
 {
 	constructor(groupElement) {
 		const element = groupElement || document.createElement('div');

@@ -1,4 +1,4 @@
-function rotateArray (arr, step) {
+export function rotateArray (arr, step) {
 	var offset = 0;
 	var copy = arr.concat();
 	for (var i = 0, ii = arr.length; i < ii; i++) {
@@ -11,7 +11,7 @@ function rotateArray (arr, step) {
 	};
 }
 
-function flatten (arr) {
+export function flatten (arr) {
 	if (arr.length <= 1) return arr;
 	return arr.reduce((flat, toFlatten) => {
 		flat = Array.isArray(flat) ? flat : [flat];
@@ -23,14 +23,14 @@ function flatten (arr) {
  * returns a boolean that is true if value matches any member of array
  * @return {Boolean} a boolean that is true if value matches any member of array
  */
-function isAnyOf(value, array) {
+export function isAnyOf(value, array) {
 	for (var i = 0, ii = array.length; i < ii; i++) {
 		if (value === array[i]) return true;
 	}
 	return false;
 }
 
-function eachExcluding (array, excludedItem, callback) {
+export function eachExcluding (array, excludedItem, callback) {
 	for (var index = 0, limit = array.length; index < limit; index++) {
 		const item = array[index];
 		if (item === excludedItem) continue;
@@ -38,14 +38,8 @@ function eachExcluding (array, excludedItem, callback) {
 	}
 }
 
-function swap (array, i, j) {
+export function swap (array, i, j) {
   const temp = array[i];
   array[i] = array[j];
   array[j] = temp;
 };
-
-module.exports.eachExcluding = eachExcluding;
-module.exports.isAnyOf = isAnyOf
-module.exports.rotateArray = rotateArray;
-module.exports.flatten = flatten;
-module.exports.swap = swap;

@@ -1,13 +1,13 @@
-const IrisPalette = require('./IrisPalette.js');
-const Highlight = require('./Highlight.js');
-const Pupil = require('./Pupil.js');
-const Emitter = require('./Emitter.js');
-const TabbedView = require('./TabbedView.js');
+import IrisPalette from './IrisPalette.js';
+import Highlight from './Highlight.js';
+import Pupil from './Pupil.js';
+import Emitter from './Emitter.js';
+import TabbedView from './TabbedView.js';
 
-const listenerutils = require('./listenerutils.js');
-const mathutils = require('./mathutils.js');
+import * as listenerutils from './listenerutils.js';
+import * as mathutils from './mathutils.js';
 
-const __palettes = require('./palettes.js');
+import {palettes as __palettes} from './palettes.js';
 const __scrollAdjustSpeed = 0.2;
 const __webglConfig = {
 	preserveDrawingBuffer: true,
@@ -18,7 +18,7 @@ const __webglConfig = {
 };
 
 //manages the canvas and its own IrisPalettes.
-module.exports = class Iris extends Emitter
+export default class Iris extends Emitter
 {
 	constructor (canvas) {
 		super(['pick', 'pickend', 'zoom']);

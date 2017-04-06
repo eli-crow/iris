@@ -1,8 +1,8 @@
-const domutils = require('./domutils.js');
-const glutils = require('./glutils.js');
-const mathutils = require('./mathutils.js');
+import * as domutils from './domutils.js';
+import * as glutils from './glutils.js';
+import * as mathutils from './mathutils.js';
 
-module.exports = class Highlight
+export default class Highlight
 {
 	constructor (canvas, gl) {
 		const element = document.createElement('div');

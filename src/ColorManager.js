@@ -1,7 +1,7 @@
-const Emitter = require('./Emitter.js');
-const IrisPanel = require('./IrisPanel.js');
+import Emitter from './Emitter.js';
+import IrisPanel from './IrisPanel.js';
 
-module.exports = class ColorManager extends Emitter
+export default class ColorManager extends Emitter
 {
 	constructor () {
 		super(['pick', 'pickend', 'toolselect']);

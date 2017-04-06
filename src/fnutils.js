@@ -1,4 +1,4 @@
-module.exports.curry = function (fn, thisarg = window) {
+export function curry (fn, thisarg = window) {
 	const args = new Array(arguments.length - 2);
 	for (let i = 2, ii = arguments.length; i < ii; ++i) {
 			args[i] = arguments[i];
@@ -7,12 +7,12 @@ module.exports.curry = function (fn, thisarg = window) {
 		fn.apply(thisarg, args);
 	}
 };
-module.exports.isFunction = function (functionToCheck) {
+export function isFunction (functionToCheck) {
 	 var getType = {};
 	 return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
 };
 // from https://remysharp.com/2010/07/21/throttling-function-calls
-module.exports.throttle = function(fn, threshhold, scope) {
+export function throttle(fn, threshhold, scope) {
 	threshhold || (threshhold = 250);
 	let last, deferTimer;
 	return function () {
@@ -32,7 +32,7 @@ module.exports.throttle = function(fn, threshhold, scope) {
 	};
 }
 //david walsh
-module.exports.debounce = function debounce (func, wait, immediate) {
+export function debounce (func, wait, immediate) {
 	wait = wait || 150;
 	let timeout;
 	return function() {

@@ -1,8 +1,8 @@
-const TexturedTool = require('./TexturedTool.js');
-const canvasutils = require('./canvasutils.js');
-const mathutils = require('./mathutils.js');
-const objutils = require('./objutils.js');
-const Panel = require('./Panel.js');
+import TexturedTool from './TexturedTool.js';
+import Panel from './Panel.js';
+import * as canvasutils from './canvasutils.js';
+import * as mathutils from './mathutils.js';
+import * as objutils from './objutils.js';
 
 const __defaults = {
 	size: {min: 0, max: 10, value: 4, map: x => x*x},
@@ -11,7 +11,7 @@ const __defaults = {
 };
 
 
-module.exports = class Brush extends TexturedTool
+export default class Brush extends TexturedTool
 {
 	constructor(options, properties) {
 		super(['draw'], options);
@@ -83,7 +83,7 @@ module.exports = class Brush extends TexturedTool
 	}
 };
 
-module.exports.prototype.EffectorTypes = {
+Brush.prototype.EffectorTypes = {
 	size: 'size',
 	flow: 'flow',
 	angle: 'angle'

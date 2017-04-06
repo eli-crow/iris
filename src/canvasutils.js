@@ -1,4 +1,4 @@
-function getDataFromImgElement(img) {
+export function getDataFromImgElement(img) {
 	const canvas = document.createElement('canvas');
 	canvas.width = img.width;
 	canvas.height = img.height;
@@ -7,7 +7,7 @@ function getDataFromImgElement(img) {
 	return ctx.getImageData(0, 0, img.width, img.height);
 }
 
-function tintImageData (ctx, srcData, colorTuple, amount = 1) {
+export function tintImageData (ctx, srcData, colorTuple, amount = 1) {
 	const outImg = ctx.createImageData(srcData);
 
 	if (amount < 1) {
@@ -29,7 +29,7 @@ function tintImageData (ctx, srcData, colorTuple, amount = 1) {
 	return outImg;
 }
 
-function getCanvasFromImageData (data) {
+export function getCanvasFromImageData (data) {
 	const canvas = document.createElement('canvas');
 	canvas.width = data.width;
 	canvas.height = data.height;
@@ -37,7 +37,7 @@ function getCanvasFromImageData (data) {
 	return canvas;
 }
 
-function stamp (ctx, img, x, y, width, height, colorTuple, blend) {
+export function stamp (ctx, img, x, y, width, height, colorTuple, blend) {
 	let data;
 
 	if (img instanceof HTMLImageElement || img instanceof Image) {
@@ -53,7 +53,7 @@ function stamp (ctx, img, x, y, width, height, colorTuple, blend) {
 	ctx.drawImage(tinted, x, y, width, height);
 }
 
-function drawTexture (context, img, x, y, width, height, rotation, opacity, erase) {
+export function drawTexture (context, img, x, y, width, height, rotation, opacity, erase) {
 	context.save();
 	context.translate(x,y);
 	context.rotate(rotation);
@@ -63,17 +63,17 @@ function drawTexture (context, img, x, y, width, height, rotation, opacity, eras
 	context.restore();
 };
 
-function getPixel (context, x, y) { 
+export function getPixel (context, x, y) { 
 	return context.getImageData(x,y,1,1).data;
 };
 
-function resizeCanvasComputed (canvas) {
+export function resizeCanvasComputed (canvas) {
 	const cs = window.getComputedStyle(canvas);
 	canvas.width = parseInt(cs.width);
 	canvas.height = parseInt(cs.height);
 }
 
-function resizeToParent (canvas) {
+export function resizeToParent (canvas) {
 	if (!canvas.parentElement) {
 		console.warn('canvas not in DOM tree');
 		return false;
@@ -84,7 +84,7 @@ function resizeToParent (canvas) {
 	canvas.height = parseInt(cs.height);
 }
 
-function drawCheckerboard (canvas, size, color1, color2) {
+export function drawCheckerboard (canvas, size, color1, color2) {
 	const ctx = canvas.getContext('2d');
 	ctx.save();
 
@@ -111,12 +111,3 @@ function drawCheckerboard (canvas, size, color1, color2) {
 
 	ctx.restore();
 }
-
-module.exports.stamp = stamp;
-module.exports.getDataFromImgElement = getDataFromImgElement;
-module.exports.tintImageData = tintImageData;
-module.exports.drawTexture = drawTexture;
-module.exports.drawCheckerboard = drawCheckerboard;
-module.exports.resizeToParent = resizeToParent;
-module.exports.resizeCanvasComputed = resizeCanvasComputed;
-module.exports.getPixel = getPixel;

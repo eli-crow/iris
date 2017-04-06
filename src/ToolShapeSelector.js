@@ -1,9 +1,10 @@
-const Group = require('./Group.js');
-const Slider = require('./Slider.js');
-const PanelElement = require('./PanelElement.js');
-const listenerutils = require('./listenerutils.js');
+import Group from './Group.js';
+import Slider from './Slider.js';
+import PanelElement from './PanelElement.js';
 
-module.exports = class ToolShapeSelector extends Group
+import listenerutils from './listenerutils.js';
+
+export default class ToolShapeSelector extends Group
 {
 	constructor(urls) {
 		super(null, null, ['change', 'changeend', 'load']);

@@ -1,8 +1,8 @@
-const PanelElement = require('./PanelElement.js');
-const fnutils = require('./fnutils.js');
-const strutils = require('./strutils.js');
+import PanelElement from './PanelElement.js';
+import * as fnutils from './fnutils.js';
+import * as strutils from './strutils.js';
 
-module.exports = class InputBase extends PanelElement
+export default class InputBase extends PanelElement
 {
 	constructor(type, attributes, events, templateHTML) {
 		super(['input', 'change'].concat(events));

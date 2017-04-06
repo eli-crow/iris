@@ -1,6 +1,6 @@
-const mathutils = require('./mathutils.js');
+import * as mathutils from './mathutils.js';
 
-module.exports = [
+export const palettes = [
 	{
 		name: 'Colors',
 		enabled: true,

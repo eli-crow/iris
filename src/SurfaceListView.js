@@ -1,8 +1,8 @@
-const PanelElement = require('./PanelElement.js');
+import PanelElement from './PanelElement.js';
 
 const __template = require('../templates/mixins/surface-list-view.pug');
 
-module.exports = class SurfaceListView extends PanelElement 
+export default class SurfaceListView extends PanelElement 
 {
 	constructor (surface) {
 		super(['remove', 'down', 'up'], __template({ name }= surface));

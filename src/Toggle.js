@@ -1,6 +1,6 @@
-const Button = require('./Button.js');
+import Button from './Button.js';
 
-module.exports = class Toggle extends Button
+export default class Toggle extends Button
 {
 	constructor(text, isToggled) {
 		super(text);

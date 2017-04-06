@@ -1,9 +1,9 @@
-const Emitter = require('./Emitter.js');
-const fnutils = require('./fnutils.js');
-const domutils = require('./domutils.js');
+import Emitter from './Emitter.js';
+import * as fnutils from './fnutils.js';
+import * as domutils from './domutils.js';
 
 //abstraction layer for managing and manipulating the dom in panels.
-module.exports = class PanelElement extends Emitter
+export default class PanelElement extends Emitter
 {
 	constructor (events, element) {
 		super(events);

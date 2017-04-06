@@ -1,8 +1,8 @@
-const Panel = require('./Panel.js');
-const Group = require('./Group.js');
-const listenerutils = require('./listenerutils.js');
+import Panel from './Panel.js';
+import Group from './Group.js';
+import * as listenerutils from './listenerutils.js';
 
-module.exports = class PanelGroup extends Group
+export default class PanelGroup extends Group
 {
 	constructor (groupElement, accepts, events) {
 		super(groupElement, Panel);

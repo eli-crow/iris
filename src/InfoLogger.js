@@ -1,8 +1,8 @@
-const listenerutils = require('./listenerutils.js');
+import * as listenerutils from './listenerutils.js';
 
 const __gutter = 4;
 
-module.exports = class InfoLogger {
+export default class InfoLogger {
 	constructor() {
 		this.items = [
 			['user agent', navigator.userAgent],

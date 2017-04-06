@@ -1,9 +1,10 @@
-const Group = require('./Group.js');
-const Button = require('./Button.js');
-const PanelElement = require('./PanelElement.js');
-const arrayutils = require('./arrayutils.js');
+import Group from './Group.js';
+import Button from './Button.js';
+import PanelElement from './PanelElement.js';
 
-module.exports = class TabbedView extends PanelElement
+import * as arrayutils from './arrayutils.js';
+
+export default class TabbedView extends PanelElement
 {
 	constructor (hostElement) {
 		super(['change']);
@@ -84,4 +85,4 @@ module.exports = class TabbedView extends PanelElement
 
 		return this;
 	}
-};
+}

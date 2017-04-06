@@ -1,14 +1,17 @@
-const Tool = require('./Tool.js');
-const canvasutils = require('./canvasutils.js');
-const hsluv = require('hsluv');
+import * as hsluv from 'hsluv';
+import Tool from './Tool.js';
+import Colorjack from './Colorjack.js';
+import * as canvasutils from './canvasutils.js';
 
-module.exports = class Eyedropper extends Tool
+export default class ColorInspector extends Tool
 {
 	constructor (surfaceRenderer) {
 		super(['pick', 'pickend']);
 
 		this.mergedSurface = surfaceRenderer.surface;
 		this.shouldSampleFinal = true;
+
+		this._colorjack = new Colorjack(85);
 	}
 
 	sample (surface, eventname, e) {
@@ -39,5 +42,13 @@ module.exports = class Eyedropper extends Tool
 
 	onUp (surface, e) {
 		this.sample(surface, 'pickend', e);
+	}
+
+	onToolEnable () {
+		this._colorjack.show();
+	}
+
+	onToolDisable () {
+		this._colorjack.hide();
 	}
 }

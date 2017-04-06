@@ -1,8 +1,8 @@
-const PanelElement = require('./PanelElement.js');
+import PanelElement from './PanelElement.js';
 
-const arrayutils = require('./arrayutils.js');
+import * as arrayutils from './arrayutils.js';
 
-module.exports = class Group extends PanelElement
+export default class Group extends PanelElement
 {
 	constructor (groupElement, accepts, events) {
 		super(events || []);

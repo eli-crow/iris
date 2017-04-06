@@ -15,7 +15,7 @@ class EmitterEvent
 	}
 }
 
-module.exports = class Emitter
+export default class Emitter
 {
 	constructor(eventNames) {
 		if (eventNames) {

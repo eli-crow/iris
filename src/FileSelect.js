@@ -1,8 +1,8 @@
-const PanelElement = require('./PanelElement.js');
+import PanelElement from './PanelElement.js';
 
 const __template = require('../templates/file-select.pug');
 
-module.exports = class FileSelect extends PanelElement 
+export default class FileSelect extends PanelElement 
 {
 	constructor (uploadMessage, dropMessage, dragContext) {
 		dragContext = dragContext || window;

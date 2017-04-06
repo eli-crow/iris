@@ -1,6 +1,6 @@
-const Brush = require('./Brush.js');
+import Brush from './Brush.js';
 
-module.exports = class Eraser extends Brush
+export default class Eraser extends Brush
 {
 	constructor(options) {
 		super(options, {

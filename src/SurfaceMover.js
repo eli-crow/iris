@@ -1,8 +1,8 @@
-const Tool = require('./Tool.js');
+import Tool from './Tool.js';
 
-const mathutils = require('./mathutils.js');
+import * as mathutils from './mathutils.js';
 
-module.exports = class SurfaceMover extends Tool
+export default class SurfaceMover extends Tool
 {
 	constructor () {
 		super(['move', 'moveend']);

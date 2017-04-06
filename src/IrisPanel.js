@@ -1,6 +1,8 @@
-const Panel = require('./Panel.js');
-const Iris = require('./Iris.js');
-const mathutils = require('./mathutils.js');
+import Panel from './Panel.js';
+import Button from './Button.js';
+import Iris from './Iris.js';
+
+import * as mathutils from './mathutils.js';
 
 // todo: refactor inputs into iris.getinputs() <- irispalette.getinputs() so
 // irispalette can bind sliders and configure internally.
@@ -15,7 +17,7 @@ module.exports = class IrisPanel extends Panel
 		this._modes = this._element.querySelector('.iris-modes');
 		this._inputs = this._element.querySelector('.iris-input-group');
 
-		this.inspectorButton = new Panel.Button(null, null, this._element.querySelector('.inspector-tool'));
+		this.inspectorButton = new Button(null, null, this._element.querySelector('.inspector-tool'));
 
 		this.iris = new Iris(this._wheel);
 

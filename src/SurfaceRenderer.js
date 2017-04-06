@@ -1,10 +1,12 @@
-const Surface = require('./Surface.js');
-const Emitter = require('./Emitter.js');
-const canvasutils = require('./canvasutils.js');
-const domutils = require('./domutils.js');
-const objutils = require('./objutils.js');
+import * as download from 'downloadjs';
 
-const download = require('downloadjs');
+import Surface from './Surface.js';
+import Emitter from './Emitter.js';
+
+import * as canvasutils from './canvasutils.js';
+import * as domutils from './domutils.js';
+import * as objutils from './objutils.js';
+
 
 const __defaults = {
 	width: 800,
@@ -19,7 +21,7 @@ const __defaults = {
 // }
 	
 // the final drawing surface, combines and displays surfaces. 
-module.exports = class SurfaceRenderer extends Emitter
+export default class SurfaceRenderer extends Emitter
 {
 	constructor (containerElement, options) {
 		super(['draw']);

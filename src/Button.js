@@ -1,7 +1,7 @@
-const PanelElement = require('./PanelElement.js');
-const fnutils = require('./fnutils.js');
+import PanelElement from './PanelElement.js';
+import * as fnutils from './fnutils.js';
 
-module.exports = class Button extends PanelElement
+export default class Button extends PanelElement
 {
 	constructor (text, events, element) {
 		super(['click'].concat(events || []));

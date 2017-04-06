@@ -1,7 +1,7 @@
-const Slider = require('./Slider.js');
-const strutils = require('./strutils.js');
+import Slider from './Slider.js';
+import * as strutils from './strutils.js';
 
-module.exports = class ToolEffector
+export default class ToolEffector
 {
 	constructor (tool, name, effectorType, val, min, max, transform) {
 		this.scale = 1;

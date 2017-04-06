@@ -1,8 +1,8 @@
-const Brush = require('./Brush.js');
-const mathutils = require('./mathutils.js');
-const Surface = require('./Surface.js');
+import Brush from './Brush.js';
+import Surface from './Surface.js';
+import * as mathutils from './mathutils.js';
 
-module.exports = class BrushPreview
+export default class BrushPreview
 {
 	constructor(canvas) {
 		this._surface = new Surface(canvas);

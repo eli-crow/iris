@@ -1,24 +1,24 @@
-const strutils = require('./strutils.js');
+import * as strutils from './strutils.js';
 
 //returns an HTMLCollection
-function HTMLToElements (html) {
+export function HTMLToElements (html) {
 	const el = document.createElement('div');
 	el.innerHTML = html;
 	return el.children;
 }
 
-function formatRgbaString (rgbaArr) {
+export function formatRgbaString (rgbaArr) {
 	if (rgbaArr.length === 3) {
 		rgbaArr[3] = 1; //alpha
 	}
 	return 'rgba('+ rgbaArr.join(',') + ')';
 }
 
-module.exports.remove = function (element) {
+export function remove (element) {
 	element.parentElement.removeChild(element);
 }
 
-module.exports.getAbsoluteOffset = function (element) {
+export function getAbsoluteOffset(element) {
 	const offset = {left: element.offsetLeft, top: element.offsetTop};
 	while (element = element.parent) {
 		offset.left += element.offsetLeft;
@@ -27,7 +27,7 @@ module.exports.getAbsoluteOffset = function (element) {
 	return offset;
 }
 
-function getBoundingPageRect (el) {
+export function getBoundingPageRect (el) {
 	const body = document.body.getBoundingClientRect();
 	const rect = el.getBoundingClientRect();
 	return {
@@ -40,7 +40,7 @@ function getBoundingPageRect (el) {
 	}
 }
 
-module.exports.setVendorCss = function (element, property, value) {
+export function setVendorCss (element, property, value) {
 	element.style[property] = value;
 
 	const p = strutils.titleCase(property);
@@ -50,7 +50,7 @@ module.exports.setVendorCss = function (element, property, value) {
 	element.style["o" + p] = value;
 };
 
-function rectsIntersect (a, b) {
+export function rectsIntersect (a, b) {
 	return !(
 		a.right < b.left ||
 		a.left > b.right ||
@@ -58,7 +58,7 @@ function rectsIntersect (a, b) {
 		a.top > b.bottom
 	)
 }
-function rectContains (a, b) {
+export function rectContains (a, b) {
 	return !(
 		a.right > b.right ||
 		a.left < b.left ||
@@ -67,15 +67,9 @@ function rectContains (a, b) {
 	)
 }
 
-module.exports.elementBoundsIntersect = function (a, b) {
+export function elementBoundsIntersect (a, b) {
 	return rectsIntersect (
 		a.getBoundingClientRect(),
 		b.getBoundingClientRect()
 	);
 }
-
-module.exports.rectsIntersect = rectsIntersect;
-module.exports.rectContains = rectContains;
-module.exports.HTMLToElements = HTMLToElements;
-module.exports.formatRgbaString = formatRgbaString;
-module.exports.getBoundingPageRect = getBoundingPageRect;
