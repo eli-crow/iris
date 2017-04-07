@@ -100,6 +100,7 @@ module.exports.simplePointer = (context, events, transform) => {
 	const xformIsFn = fnutils.isFunction(transform);
 	const moveCtx = events['moveEl'] || (events['contained']) ? context : window;
 	const relativeTo = events['relativeTo'] || context;
+	const useCapture = events['useCapture'] || false;
 
 	function fixupSimplePointerEvent(e, rect) {
 		e = e || window.event;
@@ -127,7 +128,7 @@ module.exports.simplePointer = (context, events, transform) => {
 			if (xformIsFn) transform(e, rect);
 			events.up(e);
 		}
-		if (moveHandler) moveCtx.removeEventListener(__events.move, moveHandler, false);
+		if (moveHandler) moveCtx.removeEventListener(__events.move, moveHandler, useCapture);
 		window.removeEventListener(__events.up, upHandler, false);
 	};
 
@@ -145,18 +146,18 @@ module.exports.simplePointer = (context, events, transform) => {
 			if (xformIsFn) transform(e, rect);
 			events.down(e);
 		}
-		if (moveHandler) moveCtx.addEventListener(__events.move, moveHandler, false);
+		if (moveHandler) moveCtx.addEventListener(__events.move, moveHandler, useCapture);
 		window.addEventListener(__events.up, upHandler, false);
-	}, false);
+	}, useCapture);
 
 	if (fnutils.isFunction(events.enter))    
-		context.addEventListener(__events['enter'], events.enter, false);
+		context.addEventListener(__events['enter'], events.enter, useCapture);
 	if (fnutils.isFunction(events.exit))     
-		context.addEventListener(__events['exit'], events.exit, false);
+		context.addEventListener(__events['exit'], events.exit, useCapture);
 	if (fnutils.isFunction(events.click))    
-		context.addEventListener('click', events.click, false);
+		context.addEventListener('click', events.click, useCapture);
 	if (fnutils.isFunction(events.dblClick)) 
-		context.addEventListener('click', doubleClick(events.dblClick), false);
+		context.addEventListener('click', doubleClick(events.dblClick), useCapture);
 };
 
 module.exports.normalPointer = (context, events) => {

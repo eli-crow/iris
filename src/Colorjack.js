@@ -33,11 +33,11 @@ export default class Colorjack extends Emitter
 		this._mouse = [];
 		this._offset = [-200, -radius];
 
-		//init		
-		els.left.addEventListener('click',  () => this.adjustChroma(-4), true);
-		els.right.addEventListener('click', () => this.adjustChroma(4), true);
-		els.down.addEventListener('click',  () => this.adjustLightness(-2), true);
-		els.up.addEventListener('click',    () => this.adjustLightness(2), true);
+		//init
+		els.left.addEventListener('click', () => this.adjustChroma(-4, 'adjustend'), true);
+		els.right.addEventListener('click', () => this.adjustChroma(4, 'adjustend'), true);
+		els.down.addEventListener('click', () => this.adjustLightness(-2, 'adjustend'), true);
+		els.up.addEventListener('click', () => this.adjustLightness(2, 'adjustend'), true);
 
 		document.addEventListener('resize', () => this._onResize(), true);
 
@@ -50,18 +50,27 @@ export default class Colorjack extends Emitter
 		);
 
 		listenerutils.addDnDListener(els.indicator, {
-			down: () => els.indicator.classList.add('cursor-grabbing'),
+			down: () => {
+				els.indicator.classList.add('cursor-grabbing');
+				this.emit('adjust');
+			},
 			drag: (e, data) => {
 				this.adjustLightness(-data.delta.y/30);
 				this.adjustChroma(data.delta.x/30);
+				e.stopPropagation();
+				e.preventDefault();
 			},
-			up: () => els.indicator.classList.remove('cursor-grabbing')
+			up: () => {
+				this.emit('adjustend', this.getRgb(this._color));
+				els.indicator.classList.remove('cursor-grabbing');
+			}
 		});
 
 		let _startHue;
 		listenerutils.addDnDListener(els.bg, {
 			down: () => {
 				_startHue = this._color[0];
+				this.emit('adjust');
 			},
 			drag: (e, data) => {
 				const cx = this._bounds.centerX;
@@ -77,6 +86,11 @@ export default class Colorjack extends Emitter
 				);
 
 				this.setHue(_startHue + mathutils.degrees(currAngle - startAngle));
+				e.stopPropagation();
+				e.preventDefault();
+			},
+			up: () => {
+				this.emit('adjustend', this.getRgb(this._color));
 			}
 		})
 
@@ -89,6 +103,8 @@ export default class Colorjack extends Emitter
 		const el = this._elements.jackEl;
 		el.style.transform = `translate3d(${pageX}px,${pageY}px,0px)`;
 		el.style.visibility = 'visible';
+
+		this._onResize();
 	}
 	show () {
 		this.showAt(
@@ -129,25 +145,25 @@ export default class Colorjack extends Emitter
 		return hsluv.hsluvToRgb(color).map(x => x*255 | 0);
 	}
 	
-	adjustHue (amount) {
+	adjustHue (amount, eventName = 'adjust') {
 		this.setHue(this._color[0] + amount);
 	}
-	adjustChroma (amount) {
+	adjustChroma (amount, eventName = 'adjust') {
 		this._color[1] = mathutils.clamp(this._color[1] + amount, 0, 100);
 		this.draw(this._color);
-		this.emit('adjustend', {rgb: this.getRgb()});
+		this.emit(eventName, {rgb: this.getRgb()});
 	}
-	adjustLightness (amount) {
+	adjustLightness (amount, eventName = 'adjust') {
 		this._color[2] = mathutils.clamp(this._color[2] + amount, 0, 100);
 		this.draw(this._color);
-		this.emit('adjustend', {rgb: this.getRgb()});
+		this.emit(eventName, {rgb: this.getRgb()});
 	}
 	
-	setHue(hue) {
+	setHue(hue, eventName = 'adjust') {
 		this._color[0] = mathutils.wrap(hue, 360);
 		this.moveHueIndicator(this._color[0]);
 		this.draw(this._color);
-		this.emit('adjustend', {rgb: this.getRgb()});
+		this.emit(eventName, {rgb: this.getRgb()});
 	}
 	
 	moveHueIndicator(hue) {

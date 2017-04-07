@@ -43,7 +43,7 @@ export default class InputManager extends Emitter
 		]);
 
 		this.pointerState = PointerStates.Brush;
-		this.pointer = new SmoothPointer(document.documentElement, {
+		this.pointer = new SmoothPointer(document.querySelector('main'), {
 			minDistance: 2,
 			steps: 2,
 			smoothing: 0.5,

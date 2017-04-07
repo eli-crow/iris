@@ -32,9 +32,8 @@ export default class SmoothPointer extends Emitter
 
     let _squaredSpeed = 0;
     listenerutils.simplePointer(context, {
+      useCapture: options['useCapture'],
       contained: false,
-      preventDefault: options['preventDefault'],
-      stopPropagation: options['stopPropagation'],
       relativeTo: options['relativeTo'],
 
       down: e => {

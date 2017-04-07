@@ -2,6 +2,8 @@ import Emitter from './Emitter.js';
 import Iris from './Iris.js';
 import IrisPanel from './IrisPanel.js';
 
+import * as mathutils from './mathutils.js';
+
 export default class ColorManager extends Emitter
 {
 	constructor () {
