@@ -13,8 +13,14 @@ export default class ColorInspector extends Tool
 
 		this._colorjackActive = false;
 		this._colorjack = new Colorjack(85)
-			.on('adjust', () => this._colorjackActive = true)
-			.on('adjustend', () => this._colorjackActive = false);
+			.on('adjust', data => {
+				this._colorjackActive = true;
+				this.emit('pick', data);
+			})
+			.on('adjustend', data => {
+				this._colorjackActive = false;
+				this.emit('pickend', data);
+			});
 	}
 
 	sample (surface, eventname, e) {
@@ -38,6 +44,10 @@ export default class ColorInspector extends Tool
 			this.emit(eventname, {rgba, hsl});
 		}
 		e.preventDefault();
+	}
+
+	_emitColors() {
+
 	}
 
 	onDown (surface, e) {

@@ -18,10 +18,10 @@ Point myPosition = @position *
 @speed           the distance between two stamps
 @angle           the angle of rotation of the brush texture
 @position        distance from top left corner of drawing surface
+@direction       the angle of pointer movement, in radians.
 
 //read-only uniforms
-iLength					 the overall length of the brush stroke
-iDirection       the angle of pointer movement, in radians.
-iStartDirection  the direction the pointer started moving in         
-iPressure        pressure of a stylus from 0 to 1
-iTilt            tilt of a stylus, if supported
+_Length          the overall length of the brush stroke
+_StartDirection  the direction the pointer started moving in         
+_Pressure        pressure of a stylus from 0 to 1
+_Tilt            tilt of a stylus, if supported

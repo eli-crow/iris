@@ -34,10 +34,10 @@ export default class Colorjack extends Emitter
 		this._offset = [-200, -radius];
 
 		//init
-		els.left.addEventListener('click', () => this.adjustChroma(-4, 'adjustend'), true);
-		els.right.addEventListener('click', () => this.adjustChroma(4, 'adjustend'), true);
-		els.down.addEventListener('click', () => this.adjustLightness(-2, 'adjustend'), true);
-		els.up.addEventListener('click', () => this.adjustLightness(2, 'adjustend'), true);
+		els.left.addEventListener('click', () => this.adjustChroma(-4, ['adjust', 'adjustend']), true);
+		els.right.addEventListener('click', () => this.adjustChroma(4, ['adjust', 'adjustend']), true);
+		els.down.addEventListener('click', () => this.adjustLightness(-2, ['adjust', 'adjustend']), true);
+		els.up.addEventListener('click', () => this.adjustLightness(2, ['adjust', 'adjustend']), true);
 
 		document.addEventListener('resize', () => this._onResize(), true);
 
@@ -52,7 +52,7 @@ export default class Colorjack extends Emitter
 		listenerutils.addDnDListener(els.indicator, {
 			down: () => {
 				els.indicator.classList.add('cursor-grabbing');
-				this.emit('adjust');
+				this._emitColors('adjust', this._color);
 			},
 			drag: (e, data) => {
 				this.adjustLightness(-data.delta.y/30);
@@ -61,7 +61,7 @@ export default class Colorjack extends Emitter
 				e.preventDefault();
 			},
 			up: () => {
-				this.emit('adjustend', this.getRgb(this._color));
+				this._emitColors('adjustend', this._color);
 				els.indicator.classList.remove('cursor-grabbing');
 			}
 		});
@@ -70,19 +70,19 @@ export default class Colorjack extends Emitter
 		listenerutils.addDnDListener(els.bg, {
 			down: () => {
 				_startHue = this._color[0];
-				this.emit('adjust');
+				this._emitColors('adjust', this._color);
 			},
 			drag: (e, data) => {
 				const cx = this._bounds.centerX;
 				const cy = this._bounds.centerY;
 
 				const startAngle = Math.atan2(
-					data.downY - cy,
-					data.downX - cx
+					data.downX - cx,
+					data.downY - cy
 				);
 				const currAngle = Math.atan2(
-					e.pageY - cy, 
-					e.pageX - cx
+					e.pageX - cx,
+					e.pageY - cy
 				);
 
 				this.setHue(_startHue + mathutils.degrees(currAngle - startAngle));
@@ -90,7 +90,7 @@ export default class Colorjack extends Emitter
 				e.preventDefault();
 			},
 			up: () => {
-				this.emit('adjustend', this.getRgb(this._color));
+				this._emitColors('adjustend', this._color);
 			}
 		})
 
@@ -139,35 +139,45 @@ export default class Colorjack extends Emitter
 		const lighter = color.concat();
 		lighter[2] = mathutils.clamp(lighter[2] + 2, 0, 100);
 		els.up.style.fill = domutils.formatRgbaString(this.getRgb(lighter));
+
+		this._moveHueIndicator(color[0]);
 	}
 
 	getRgb (color = this._color) {
 		return hsluv.hsluvToRgb(color).map(x => x*255 | 0);
 	}
+
 	
-	adjustHue (amount, eventName = 'adjust') {
+	adjustHue (amount, eventname='adjust') {
 		this.setHue(this._color[0] + amount);
 	}
-	adjustChroma (amount, eventName = 'adjust') {
+
+	adjustChroma (amount, eventname='adjust') {
 		this._color[1] = mathutils.clamp(this._color[1] + amount, 0, 100);
 		this.draw(this._color);
-		this.emit(eventName, {rgb: this.getRgb()});
+		this._emitColors(eventname, this._color);
 	}
-	adjustLightness (amount, eventName = 'adjust') {
+
+	adjustLightness (amount, eventname='adjust') {
 		this._color[2] = mathutils.clamp(this._color[2] + amount, 0, 100);
 		this.draw(this._color);
-		this.emit(eventName, {rgb: this.getRgb()});
+		this._emitColors(eventname, this._color);
 	}
 	
-	setHue(hue, eventName = 'adjust') {
+	setHue(hue, eventname='adjust') {
 		this._color[0] = mathutils.wrap(hue, 360);
-		this.moveHueIndicator(this._color[0]);
 		this.draw(this._color);
-		this.emit(eventName, {rgb: this.getRgb()});
+		this._emitColors(eventname, this._color);
+	}
+
+
+	_emitColors(eventname, hsl) {
+		const rgba = this.getRgb(this._color).concat(1);
+		this.emit(eventname, {rgba, hsl});
 	}
 	
-	moveHueIndicator(hue) {
-		this._elements.hueTransforms.setAttribute('transform', 'rotate('+(hue + 90)+')');
+	_moveHueIndicator(hue) {
+		this._elements.hueTransforms.setAttribute('transform', 'rotate('+(90-hue)+')');
 	}
 
 	_onResize() {

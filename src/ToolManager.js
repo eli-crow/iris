@@ -121,7 +121,9 @@ export default class ToolManager extends Emitter
 
 	setColor(colorArr) {
 		this._color = colorArr;
-		if (this._currentTool.setColor) this._currentTool.setColor(this._color);
+		if (this._currentTool.setColor) {
+			this._currentTool.setColor(this._color);
+		}
 	}
 }
 
