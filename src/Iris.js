@@ -37,19 +37,19 @@ export default class Iris extends Emitter
 
 		listenerutils.normalPointer(this._canvas, {
 			contained: true,
-			down: e => this.emitColors('pick', e.centerX, e.centerY, true), 
-			move: e => this.emitColors('pick', e.centerX, e.centerY, true),
-			up:   e => this.emitColors('pickend', e.centerX, e.centerY, false),
+			down: e => this._emitColors('pick', e.centerX, e.centerY, true), 
+			move: e => this._emitColors('pick', e.centerX, e.centerY, true),
+			up:   e => this._emitColors('pickend', e.centerX, e.centerY, false),
 		});
 
 		listenerutils.mouseWheel(this._canvas, {
 			preventDefault: true,
 			debounce: { wait: 100, immediate: false,
-				handler: () => this.emitColors('pickend', null, null, false),
+				handler: () => this._emitColors('pickend', null, null, false),
 			},
 			handler: e => {
 				this._highlight.adjustPolar(0, -e.delta * __scrollAdjustSpeed);
-				this.emitColors('pick', null, null, false);
+				this._emitColors('pick', null, null, false);
 			}
 		});
 
@@ -63,13 +63,15 @@ export default class Iris extends Emitter
 
 		this._pupil.on('huerotate', e => {
 			this._highlight.movePolar(Math.PI/2 - e.getAngle(), this._highlight.getDistance());
-			this.emitColors('pick', null, null, false);
+			this._emitColors('pick', null, null, false);
 		});
-		this._pupil.on('huerotateend', e => this.emitColors('pickend', null, null, false));
+		this._pupil.on('huerotateend', e => this._emitColors('pickend', null, null, false));
 		this._pupil.on('center', e => {
 			this._highlight.move(0,0);
-			this.emitColors('pickend', null, null, false);
+			this._emitColors('pickend', null, null, false);
 		});
+
+		this._emitColors('pickend', null, null, false);
 	}
 
 	addPalette (descriptor) {
@@ -80,14 +82,14 @@ export default class Iris extends Emitter
 			descriptor.properties,
 			descriptor.name
 		);
-		ip.on('uniformupdated', () => this.emitColors('pick', null, false));
-		ip.on('inputchange', () => this.emitColors('pickend', null, false));
+		ip.on('uniformupdated', () => this._emitColors('pick', null, false));
+		ip.on('inputchange', () => this._emitColors('pickend', null, false));
 		this.palettes[descriptor.name] = ip;
 
 		this._currentPalette = ip;
 	}
 
-	emitColors (eventName, x, y, updateHilight) {
+	_emitColors (eventName, x, y, updateHilight) {
 		if (updateHilight) this._highlight.move(x, y);
 		const c = this._highlight.sample();
 

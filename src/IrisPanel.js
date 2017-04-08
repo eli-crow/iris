@@ -16,7 +16,13 @@ export default class IrisPanel extends Panel
 		this._modes = this._element.querySelector('.iris-modes');
 		this._inputs = this._element.querySelector('.iris-input-group');
 
-		this.inspectorButton = new Button(null, null, this._element.querySelector('.inspector-tool'));
+		this.inspectorButton = new Button(null, null, this._element.querySelector('.inspector-tool'))
+			.on('click', () => {
+				PubSub.publish(
+					Events.Tools.Select,
+					'eyedropper'
+				);
+			});
 		this.iris = iris;
 		this.iris.replaceElement(this._wheel);
 
@@ -35,6 +41,6 @@ export default class IrisPanel extends Panel
 	onResize() {
 		this.iris.onResize();
 		this.iris.setMode('Colors');
-		this.iris.emitColors('pick', null, null, false);
+		this.iris._emitColors('pick', null, null, false);
 	}
 }

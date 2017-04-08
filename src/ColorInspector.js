@@ -1,4 +1,4 @@
-import {rgbToHsluv} from 'hsluv';
+import * as hsluv from 'hsluv';
 import Tool from './Tool.js';
 import Colorjack from './Colorjack.js';
 import * as canvasutils from './canvasutils.js';
@@ -31,7 +31,7 @@ export default class ColorInspector extends Tool
 
 		const ctx = this.shouldSampleFinal ? 
 			this.mergedSurface.ctx 
-			: surface;
+			: surface.ctx;
 
 		//rgba:Uint8ClampedArray
 		const x = e.relX - surface.position[0];
@@ -39,15 +39,11 @@ export default class ColorInspector extends Tool
 		const rgba = canvasutils.getPixel(ctx, x, y);
 		if (rgba[3] > 0) {
 			rgba[3] = 255;
-
-			const hsl = rgbToHsluv([rgba[0]/255, rgba[1]/255, rgba[2]/255, 1]);
+			const hsl = hsluv.rgbToHsluv([rgba[0]/255, rgba[1]/255, rgba[2]/255, 1]);
 			this.emit(eventname, {rgba, hsl});
 		}
+
 		e.preventDefault();
-	}
-
-	_emitColors() {
-
 	}
 
 	onDown (surface, e) {
@@ -68,5 +64,9 @@ export default class ColorInspector extends Tool
 
 	onToolDisable () {
 		this._colorjack.hide();
+	}
+
+	setColor(colorData) {
+		this._colorjack.setColor(colorData);
 	}
 }

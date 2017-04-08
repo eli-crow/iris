@@ -9,6 +9,9 @@ export default class BrushPreview
 		this._brush = null;
 		this._pts = null;
 		this._nPts = 100;
+
+		//init
+		
 	}
 
 	_calculatePoints (width, height) {
@@ -34,6 +37,8 @@ export default class BrushPreview
 	}
 
 	draw() {
+		if (!this._pts) return;
+
 		if (this._brush.erase) {
 			this._surface.fill(COLORS.AMBIENT_GROOVE);
 		} else {

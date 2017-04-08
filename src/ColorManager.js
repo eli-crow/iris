@@ -1,20 +1,30 @@
-import Emitter from './Emitter.js';
+import * as hsluv from 'hsluv';
+
 import Iris from './Iris.js';
 import IrisPanel from './IrisPanel.js';
 
 import * as mathutils from './mathutils.js';
 
-export default class ColorManager extends Emitter
+//TODO: this should be where colorData is stored and modified. It can also instruct its members to
+//redraw their views. We can also keep the colorjack here, independent of the ColorInspector,
+
+//in other words, ColorManager is the ViewController.
+//it can have as many views as it needs, they all just send commands back to the manager.
+export default class ColorManager
 {
 	constructor () {
-		super(['pick', 'pickend', 'toolselect']);
-
 		this.iris = new Iris();
 		this.panel = new IrisPanel(this.iris);
 
 		//init
-		this.iris.on('pickend', data => this.emit('pickend', data));
-		this.panel.inspectorButton.on('click', () => this.emit('toolselect', 'eyedropper'));
+		this.iris.on('pickend', rgba => {
+			PubSub.publish(
+				Events.Color.ActiveColorChangedCommit,
+				{rgba: rgba, hsl: hsluv.rgbToHsluv(rgba.map(x => x/255))}
+			);
+		});
+
+		PubSub.subscribe(Events.Tools.Sample, (msg, data) => this.setColorData(data));
 	}
 
 	setColorData (data) {

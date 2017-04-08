@@ -40,6 +40,9 @@ export default class SurfaceManager extends Emitter
 		//init
 		this.add(new Surface(null, 'background'));
 		this.draw();
+
+		PubSub.subscribe(Events.Input.Clear, (msg, data) => this.clearCurrentSurface());
+		PubSub.subscribe(Events.Tools.Draw, (msg, data) => this.draw());
 	}
 
 	draw () {

@@ -75,7 +75,7 @@ export default class Tool extends Emitter
 			slider.bind(val => {
 				this._properties[name].value = +val;
 				this._dirty = true;
-				this.emit('changeend');
+				this.emit('changeend', this);
 			});
 
 			inputs.base.push(slider);

@@ -63,8 +63,10 @@ export function drawTexture (context, img, x, y, width, height, rotation, opacit
 	context.restore();
 };
 
-export function getPixel (context, x, y) { 
-	return context.getImageData(x,y,1,1).data;
+export function getPixel (context, x, y, toArray) { 
+	// return context.getImageData(x,y,1,1).data;
+	const p = context.getImageData(x,y,1,1).data;
+	return toArray ? [p[0], p[1], p[2], p[3]] : p;
 };
 
 export function resizeCanvasComputed (canvas) {

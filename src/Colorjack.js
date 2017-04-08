@@ -29,7 +29,7 @@ export default class Colorjack extends Emitter
 
 		this._elements = els;
 		this._bounds = null;
-		this._color = [225, 100, 70]; //hsluv
+		this._color = null; 
 		this._mouse = [];
 		this._offset = [-200, -radius];
 
@@ -92,7 +92,7 @@ export default class Colorjack extends Emitter
 			up: () => {
 				this._emitColors('adjustend', this._color);
 			}
-		})
+		});
 
 		document.body.insertAdjacentElement('beforeend', jackEl);
 		this._onResize();
@@ -118,6 +118,8 @@ export default class Colorjack extends Emitter
 
 	//TODO: refactor
 	draw (color) {
+		if (!color) return;
+
 		const els = this._elements;
 
 		const currColor = domutils.formatRgbaString(this.getRgb(color));
@@ -144,9 +146,14 @@ export default class Colorjack extends Emitter
 	}
 
 	getRgb (color = this._color) {
+		if (!color) return;
 		return hsluv.hsluvToRgb(color).map(x => x*255 | 0);
 	}
 
+	setColor (colorData) {
+		this._color = colorData.hsl || hsluv.rgbToHsluv(colorData.rgba);
+		this.draw(this._color);
+	}
 	
 	adjustHue (amount, eventname='adjust') {
 		this.setHue(this._color[0] + amount);

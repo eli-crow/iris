@@ -3,6 +3,9 @@ import SmoothPointer from './SmoothPointer.js';
 import ResizeListener from './ResizeListener.js';
 import * as listenerutils from './listenerutils.js';
 
+//todo: replace 'move' with drag
+//PubSub events
+
 //enum
 export const PointerStates = {
 	Brush:  0,
@@ -26,22 +29,10 @@ export const PointerStates = {
 // }
 // 
 
-//manages input state for application. emits effective action and returns to actual tool selection. also manages cursor style;
-export default class InputManager extends Emitter
+//manages input state for application.
+export default class InputManager
 {
 	constructor (relativeElmnt) {
-		super([
-			'pointerstatechange',
-			'pointerdown',
-			'pointermove',
-			'pointerup',
-
-			'clear',
-			'undo',
-
-			'zoom'
-		]);
-
 		this.pointerState = PointerStates.Brush;
 		this.pointer = new SmoothPointer(document.querySelector('main'), {
 			minDistance: 2,
@@ -49,26 +40,26 @@ export default class InputManager extends Emitter
 			smoothing: 0.5,
 			relativeTo: relativeElmnt,
 
-			down: e => this.emit('pointerdown', e),
-			move: e => this.emit('pointermove', e),
-			up:   e => this.emit('pointerup', e)
+			down: e => PubSub.publish(Events.Input.PointerDown, e),
+			move: e => PubSub.publish(Events.Input.PointerDrag, e),
+			up:   e => PubSub.publish(Events.Input.PointerUp, e)
 		});
 
 		listenerutils.keyboard({
 			//========================================================= PointerStates
 			'space': {
 				preventDefault: true,
-				down: e => this.emitPointerStateEvent(e, PointerStates.Pan),
+				down: e => this.publishPointerStateEvent(e, PointerStates.Pan),
 				up:   e => this.revertPointerState(e)
 			},
 			'alt': {
 				preventDefault: true,
-				down: e => this.emitPointerStateEvent(e, PointerStates.Sample),
+				down: e => this.publishPointerStateEvent(e, PointerStates.Sample),
 				up:   e => this.revertPointerState(e)
 			},
 			'meta': {
 				preventDefault: true,
-				down: e => this.emitPointerStateEvent(e, PointerStates.Move),
+				down: e => this.publishPointerStateEvent(e, PointerStates.Move),
 				up:   e => this.revertPointerState(e)
 			},
 
@@ -87,11 +78,11 @@ export default class InputManager extends Emitter
 			//========================================================= Commands
 			'meta + z': {
 				preventDefault: true,
-				down: e => this.emit('undo')
+				down: e => PubSub.publish(Events.Input.Undo)
 			},
 			'backspace': {
 				preventDefault: true,
-				down: e => this.emit('clear')
+				down: e => PubSub.publish(Events.Input.Clear)
 			}
 		});
 
@@ -102,28 +93,19 @@ export default class InputManager extends Emitter
 		window.addEventListener('focus', e => this.revertPointerState(e));
 	}
 
-	emitPointerStateEvent (e, state) {
-		this.emit('pointerstatechange', {
+	publishPointerStateEvent (e, state) {
+		PubSub.publish(Events.Input.PointerStateChange, {
 			preventDefault: () => e.preventDefault.call(e),
 			state: state
-		});
+		})
 	}
 
 	setPointerState (e, state) {
-		this.emitPointerStateEvent(e, state);
+		this.publishPointerStateEvent(e, state);
 		this.pointerState = state;
 	}
 
 	revertPointerState(e) {
-		this.emitPointerStateEvent(e, this.pointerState);
-	}
-
-	setPointerScale (zoom) {
-		console.log(zoom);
-		// const scale = this.pointer.scale + change/10;
-		// this.pointer.scale = scale;
-		// this.emit('zoom', scale);
-		// this.scale += change/10;
-		// this.emit('zoom', this.scale);
+		this.publishPointerStateEvent(e, this.pointerState);
 	}
 };

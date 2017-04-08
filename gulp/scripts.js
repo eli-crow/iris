@@ -31,7 +31,8 @@ config.webpackStream = {
 	plugins: [
 		new webpackStream.webpack.DefinePlugin(globals),
 		new webpackStream.webpack.ProvidePlugin({
-			PubSub: 'pubsub-js'
+			PubSub: 'pubsub-js',
+			Events: './Events.js'
 		})
 	],
 

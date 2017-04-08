@@ -20,6 +20,10 @@
   cursor: move;
 }
 
+.colorjack-hue-indicator {
+  pointer-events: none;
+}
+
 .cursor-grabbing {
   cursor: grabbing !important;
 }

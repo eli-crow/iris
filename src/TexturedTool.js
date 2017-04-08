@@ -21,7 +21,7 @@ export default class TexturedTool extends Tool
 		this._brushImg = new Image();
 		this._shapeSelector = new ToolShapeSelector(__shapeUrls);
 
-		this._brushImg.onload = () => this._redrawTexture();
+		this._brushImg.onload = () => this._redrawTexture(this._color);
 		this._shapeSelector.on(['changeend', 'load'], shape => this.setShape(shape));
 	}
 
@@ -30,20 +30,9 @@ export default class TexturedTool extends Tool
 		this._sizeRatio = brushShape.ratio;
 	}
 
-	//color array is rgba, all in the range of 0-255;
-	setColor (colorArray) {
-	  this._resetTempCanvas();
-
-	  const out = this._textureCtx.getImageData(0, 0, this._texture.width, this._texture.height);
-	  for (let data = out.data, i = 0, ii = data.length; i < ii; i+=4) {
-	    data[i + 0] = colorArray[0];
-	    data[i + 1] = colorArray[1];
-	    data[i + 2] = colorArray[2];
-	  }
-
-	  this._textureCtx.putImageData(out,0,0);
-	  this._color = colorArray;
-	  this.emit('changeend');
+	setColor(colorData) {
+		this._color = colorData.rgba;
+		this._redrawTexture(this._color);
 	}
 
 	getInputs () {
@@ -61,10 +50,25 @@ export default class TexturedTool extends Tool
 		this._textureCtx.drawImage(this._brushImg, 0, 0);
 	}
 
-	_redrawTexture() {
-		const brushImg = this._brushImg;
-	  this._texture.width = brushImg.width;
-	  this._texture.height = brushImg.height;
-		this.setColor(this._color);
+	_redrawTexture(rgba) {
+		const b = this._brushImg;
+		const t = this._texture;
+		const ctx = this._textureCtx;
+
+	  t.width = b.width;
+	  t.height = b.height;
+
+		this._resetTempCanvas();
+
+		const out = ctx.getImageData(0, 0, t.width, t.height);
+		for (let data = out.data, i = 0, ii = data.length; i < ii; i+=4) {
+		  data[i + 0] = rgba[0];
+		  data[i + 1] = rgba[1];
+		  data[i + 2] = rgba[2];
+		}
+
+		ctx.putImageData(out,0,0);
+		this._color = rgba;
+		this.emit('changeend');
 	}
 }

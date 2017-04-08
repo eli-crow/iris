@@ -54,6 +54,7 @@ export default class SurfaceRenderer extends Emitter
 
 	//todo: refactor this when adding rendering cache;
 	draw (surfaces) {
+		this.clear();
 		this.surface.fill('white');
 
 		let drawRestWithTint = false;
